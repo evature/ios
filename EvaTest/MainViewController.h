@@ -7,7 +7,7 @@
 //
 
 #import "FlipsideViewController.h"
-#import <EvaFw/Eva.h>
+#import <Eva/Eva.h>
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate,EvaDelegate>{
     Eva *evaModule;
