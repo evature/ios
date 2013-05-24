@@ -248,7 +248,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -272,7 +272,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -284,9 +284,6 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/EvaTest/Frameworks\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/EvaFw-enftigxjxjazslgacsgmynlkvscg/Build/Products/Debug-iphoneos/EvaFw.embeddedframework\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -295,10 +292,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Debug-iphoneos\"",
 					"\"$(SRCROOT)/EvaTest\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Release-iphoneos\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -310,13 +304,10 @@
 		CFFA4E6E17401C7100303425 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Idan Sheetrit";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Idan Sheetrit";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/EvaTest/Frameworks\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/EvaFw-enftigxjxjazslgacsgmynlkvscg/Build/Products/Debug-iphoneos/EvaFw.embeddedframework\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -325,14 +316,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Debug-iphoneos\"",
 					"\"$(SRCROOT)/EvaTest\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-afiephvqpyxkkrafunhiujwpyogw/Build/Products/Release-iphoneos\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "61CECBF9-1C8A-4DAB-B2D8-A981E78856DD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "61CECBF9-1C8A-4DAB-B2D8-A981E78856DD";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
