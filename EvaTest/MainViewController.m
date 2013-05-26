@@ -129,6 +129,7 @@
     // Set optional parameters //
     //evaModule.home = @"paris";
     //evaModule.version = @"v1.0";
+    //evaModule.uid=@"TestUID";
     
     // View settings //
     [self loadViewParameters];
