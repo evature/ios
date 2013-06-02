@@ -21,6 +21,9 @@
     IBOutlet UIButton *stopButton;
     
     IBOutlet UILabel *indicationLabel;
+    
+    IBOutlet UIProgressView *micLevel;
+
     //////////////////
 }
 
@@ -36,6 +39,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *stopButton;
 
 @property(nonatomic,retain) IBOutlet UILabel *indicationLabel;
+
+@property(nonatomic,retain) IBOutlet UIProgressView *micLevel;
 //////////////////
 
 @property(nonatomic,retain) NSString *apiKeyString, *siteCodeString;

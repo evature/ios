@@ -25,6 +25,8 @@
 @synthesize apiKeyString,siteCodeString;
 
 
+@synthesize micLevel;
+
 
 
 #pragma mark - View parameters
@@ -72,6 +74,9 @@
     [self showLabelWithText:@"Record has started"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
     
+    
+    [continueButton setHidden:FALSE];
+    
 }
 
 -(IBAction)continueRecordButton:(id)sender{
@@ -79,8 +84,6 @@
 }
 -(IBAction)stopRecordButton:(id)sender{
     [evaModule stopRecord];
-    [continueButton setHidden:FALSE];
-    
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
@@ -90,7 +93,10 @@
         && apiKeyString!=[NSString stringWithFormat:@""] &&
         siteCodeString!=[NSString stringWithFormat:@""]
         ) {
-        [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
+        //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
+        [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
+        
+
         [startButton setHidden:FALSE];
         [stopButton setHidden:FALSE];
     }else{
@@ -109,11 +115,27 @@
     
     [self showLabelWithText:@"Recived data from Eva!"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+    
 }
 
 - (void)evaDidFailWithError:(NSError *)error{
     NSLog(@"Got error from Eva");
+    //[self.micLevel setHidden:TRUE];
 }
+
+- (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
+    NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
+    
+    [self.micLevel setProgress:(45+averagePower)/45];
+    [self.micLevel setHidden:FALSE];
+}
+
+- (void)evaMicStopRecording{
+    NSLog(@"Recording has stopped");
+    [self.micLevel setHidden:TRUE];
+}
+
+
 
 #pragma mark - View
 
@@ -127,16 +149,19 @@
     evaModule.delegate = self;
     
     // Set optional parameters //
+    
     //evaModule.home = @"paris";
     //evaModule.version = @"v1.0";
     //evaModule.uid=@"TestUID";
+    
     
     // View settings //
     [self loadViewParameters];
     [continueButton setHidden:TRUE];
     
     // Initialize Eva keys //
-    [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
+    //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
+    [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
     
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil

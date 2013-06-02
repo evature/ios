@@ -127,6 +127,10 @@
                                     <action selector="textFieldDoneEditing:" destination="2" eventType="touchUpInside" id="JiK-05-yJW"/>
                                 </connections>
                             </button>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" progressViewStyle="bar" id="wSs-PR-f86">
+                                <rect key="frame" x="85" y="314" width="150" height="11"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -134,6 +138,7 @@
                         <outlet property="apiKeyTextField" destination="5e9-4U-RUF" id="fID-kv-dAM"/>
                         <outlet property="continueButton" destination="yhi-3k-ULb" id="Vrm-hG-gdd"/>
                         <outlet property="indicationLabel" destination="Cgr-R6-T7s" id="f69-zW-Mx5"/>
+                        <outlet property="micLevel" destination="wSs-PR-f86" id="vVR-Fr-G4Y"/>
                         <outlet property="siteCodeTextField" destination="vCp-dL-228" id="A26-zX-oaE"/>
                         <outlet property="startButton" destination="5es-3y-zJX" id="QB4-kw-pfc"/>
                         <outlet property="stopButton" destination="1Lk-kF-8U1" id="2Uc-SD-Ul6"/>
@@ -185,6 +190,32 @@
             <point key="canvasLocation" x="368" y="182"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="FlipsideViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlipsideViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="dataTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="MainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="continueRecordButton:"/>
+                <relationship kind="action" name="setAPIKeysButton:"/>
+                <relationship kind="action" name="startRecordButton:"/>
+                <relationship kind="action" name="stopRecordButton:"/>
+                <relationship kind="action" name="textFieldDoneEditing:"/>
+                <relationship kind="outlet" name="apiKeyTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="continueButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="indicationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="micLevel" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="siteCodeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="stopButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
