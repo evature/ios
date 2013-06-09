@@ -15,7 +15,9 @@
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller;
 @end
 
-@interface FlipsideViewController : UIViewController
+@interface FlipsideViewController : UIViewController{
+    
+}
 
 @property (weak, nonatomic) id <FlipsideViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITextView *dataTextView;

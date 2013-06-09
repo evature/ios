@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF4AA926175B42980004E615 /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4AA925175B42980004E615 /* Eva.framework */; };
+		CFA28DB917646F1C00E24221 /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA28DB817646F1C00E24221 /* Eva.framework */; };
 		CFD337C117497CE6008576EC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD337C017497CE6008576EC /* CoreLocation.framework */; };
 		CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3417401C7000303425 /* UIKit.framework */; };
 		CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3617401C7000303425 /* Foundation.framework */; };
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		CF45C19D174AB28B00C12682 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		CF4AA925175B42980004E615 /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
+		CFA28DB817646F1C00E24221 /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
 		CFD337C017497CE6008576EC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CFFA4E3117401C7000303425 /* EvaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFA4E3417401C7000303425 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -60,7 +60,7 @@
 				CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */,
 				CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */,
 				CFFA4E3917401C7000303425 /* CoreGraphics.framework in Frameworks */,
-				CF4AA926175B42980004E615 /* Eva.framework in Frameworks */,
+				CFA28DB917646F1C00E24221 /* Eva.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 		CFFA4E2817401C7000303425 = {
 			isa = PBXGroup;
 			children = (
-				CF4AA925175B42980004E615 /* Eva.framework */,
+				CFA28DB817646F1C00E24221 /* Eva.framework */,
 				CFD337C017497CE6008576EC /* CoreLocation.framework */,
 				CFFA4E831740282400303425 /* AVFoundation.framework */,
 				CFFA4E3A17401C7000303425 /* EvaTest */,
@@ -298,7 +298,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -325,7 +325,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

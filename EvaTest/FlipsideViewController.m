@@ -18,12 +18,14 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [dataTextView setText:[[NSUserDefaults standardUserDefaults] stringForKey:kLastJsonStringFromEva]];
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,5 +40,6 @@
 {
     [self.delegate flipsideViewControllerDidFinish:self];
 }
+
 
 @end

@@ -14,7 +14,6 @@
 @end
 
 @implementation MainViewController
-@synthesize evaModule;
 
 @synthesize apiKeyTextField;
 @synthesize siteCodeTextField;
@@ -70,7 +69,7 @@
 -(IBAction)startRecordButton:(id)sender{
     [self textFieldDoneEditing:sender];
    
-    [evaModule startRecord:TRUE];
+    [[Eva sharedInstance] startRecord:TRUE];
     [self showLabelWithText:@"Record has started"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
     
@@ -80,10 +79,10 @@
 }
 
 -(IBAction)continueRecordButton:(id)sender{
-    [evaModule startRecord:FALSE];
+    [[Eva sharedInstance] startRecord:FALSE];
 }
 -(IBAction)stopRecordButton:(id)sender{
-    [evaModule stopRecord];
+    [[Eva sharedInstance] stopRecord];
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
@@ -94,7 +93,7 @@
         siteCodeString!=[NSString stringWithFormat:@""]
         ) {
         //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
-        [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
+        [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
         
 
         [startButton setHidden:FALSE];
@@ -139,29 +138,36 @@
 
 #pragma mark - View
 
+-(void)viewWillAppear:(BOOL)animated{
+    // New Setup //
+    [Eva sharedInstance].delegate = self; // Setting the delegate to this view //
+    // The delegate initiation is here for it to be set-up every time this view is called //
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    evaModule = [[Eva alloc] init];
-    
-    evaModule.delegate = self;
+    // Below old setup - You can still use it //
+    //evaModule = [[Eva alloc] init];
+    //evaModule.delegate = self;
+    // End old setup //
     
     // Set optional parameters //
     
-    //evaModule.home = @"paris";
-    //evaModule.version = @"v1.0";
-    //evaModule.uid=@"TestUID";
-    
+    //[Eva sharedInstance].home = @"paris";
+    //[Eva sharedInstance].version = @"v1.0";
+    //[Eva sharedInstance].uid=@"TestUID";
     
     // View settings //
     [self loadViewParameters];
     [continueButton setHidden:TRUE];
     
-    // Initialize Eva keys //
-    //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
-    [evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
+    // Initialize Eva keys - It is recommended to do that on your App delegate //
+    // [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString];
+    [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
     
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil
@@ -170,7 +176,9 @@
         [startButton setHidden:TRUE];
         [stopButton setHidden:TRUE];
     }
-}
+    
+    
+    }
 
 - (void)didReceiveMemoryWarning
 {

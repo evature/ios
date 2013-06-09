@@ -40,6 +40,8 @@
 @property(nonatomic,retain) NSString *version;
 
 
++ (Eva *)sharedInstance;
+
 // Set the API keys - Use one of those functions //
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code;
 

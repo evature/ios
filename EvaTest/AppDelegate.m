@@ -7,12 +7,23 @@
 //
 
 #import "AppDelegate.h"
+#import <Eva/Eva.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // It is recommended to set Eva here (if you plan to use Eva with multiple views) //
+    //[[Eva sharedInstance] setAPIkey:@"YOUR-API-KEY" withSiteCode:@"YOUR-SITE-CODE"];
+    
+    // Set optional parameters //
+    
+    //[Eva sharedInstance].home = @"paris";
+    //[Eva sharedInstance].version = @"v1.0";
+    //[Eva sharedInstance].uid=@"TestUID";
+    
     return YES;
 }
 							

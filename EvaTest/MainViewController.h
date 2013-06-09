@@ -10,7 +10,6 @@
 #import <Eva/Eva.h>
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate,EvaDelegate>{
-    Eva *evaModule;
     
     // View modules //
     IBOutlet UITextField *apiKeyTextField;
@@ -26,10 +25,6 @@
 
     //////////////////
 }
-
-
-// Would keep Eva Module //
-@property(nonatomic,retain) Eva *evaModule;
 
 // View modules //
 @property(nonatomic,retain) IBOutlet UITextField *apiKeyTextField;
