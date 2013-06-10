@@ -168,6 +168,7 @@
     // Initialize Eva keys - It is recommended to do that on your App delegate //
     // [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString];
     [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
+    //[[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE withRecordingTimeout:20.0f];
     
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil
