@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CF45C20117675948001F701D /* README_Xcode5.txt in Resources */ = {isa = PBXBuildFile; fileRef = CF45C20017675948001F701D /* README_Xcode5.txt */; };
-		CFC37EC2177CAA1A0035E96F /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EC1177CAA1A0035E96F /* Eva.framework */; };
+		CF72CD181799548F00EB89B9 /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF72CD171799548F00EB89B9 /* Eva.framework */; };
 		CFD337C117497CE6008576EC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD337C017497CE6008576EC /* CoreLocation.framework */; };
 		CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3417401C7000303425 /* UIKit.framework */; };
 		CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3617401C7000303425 /* Foundation.framework */; };
@@ -28,7 +28,7 @@
 /* Begin PBXFileReference section */
 		CF45C19D174AB28B00C12682 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CF45C20017675948001F701D /* README_Xcode5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README_Xcode5.txt; sourceTree = "<group>"; };
-		CFC37EC1177CAA1A0035E96F /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
+		CF72CD171799548F00EB89B9 /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework/Eva.framework"; sourceTree = "<group>"; };
 		CFD337C017497CE6008576EC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CFFA4E3117401C7000303425 /* EvaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFA4E3417401C7000303425 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -62,7 +62,7 @@
 				CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */,
 				CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */,
 				CFFA4E3917401C7000303425 /* CoreGraphics.framework in Frameworks */,
-				CFC37EC2177CAA1A0035E96F /* Eva.framework in Frameworks */,
+				CF72CD181799548F00EB89B9 /* Eva.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				CF45C20017675948001F701D /* README_Xcode5.txt */,
-				CFC37EC1177CAA1A0035E96F /* Eva.framework */,
+				CF72CD171799548F00EB89B9 /* Eva.framework */,
 				CFD337C017497CE6008576EC /* CoreLocation.framework */,
 				CFFA4E831740282400303425 /* AVFoundation.framework */,
 				CFFA4E3A17401C7000303425 /* EvaTest */,
@@ -302,6 +302,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
@@ -329,6 +330,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";

@@ -32,6 +32,7 @@
 @property(nonatomic,retain) IBOutlet UIButton *startButton;
 @property(nonatomic,retain) IBOutlet UIButton *continueButton;
 @property(nonatomic,retain) IBOutlet UIButton *stopButton;
+@property(nonatomic,retain) IBOutlet UIButton *cancelButton;
 
 @property(nonatomic,retain) IBOutlet UILabel *indicationLabel;
 
@@ -44,6 +45,7 @@
 -(IBAction)startRecordButton:(id)sender;
 -(IBAction)continueRecordButton:(id)sender;
 -(IBAction)stopRecordButton:(id)sender;
+-(IBAction)cancelRecordButton:(id)sender;
 
 - (IBAction)textFieldDoneEditing:(id)sender;
 

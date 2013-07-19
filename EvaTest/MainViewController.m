@@ -18,7 +18,7 @@
 @synthesize apiKeyTextField;
 @synthesize siteCodeTextField;
 
-@synthesize startButton, continueButton, stopButton;
+@synthesize startButton, continueButton, stopButton,cancelButton;
 @synthesize indicationLabel;
 
 @synthesize apiKeyString,siteCodeString;
@@ -75,14 +75,26 @@
     
     
     [continueButton setHidden:FALSE];
+    [cancelButton setHidden:FALSE];
+    [stopButton setHidden:FALSE];
     
 }
 
 -(IBAction)continueRecordButton:(id)sender{
     [[Eva sharedInstance] startRecord:FALSE];
+    [cancelButton setHidden:FALSE];
+    [stopButton setHidden:FALSE];
 }
 -(IBAction)stopRecordButton:(id)sender{
     [[Eva sharedInstance] stopRecord];
+    [cancelButton setHidden:TRUE];
+    [stopButton setHidden:TRUE];
+}
+-(IBAction)cancelRecordButton:(id)sender{
+    [[Eva sharedInstance] cancelRecord];
+    [cancelButton setHidden:TRUE];
+    [stopButton setHidden:TRUE];
+
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
@@ -97,7 +109,7 @@
         
 
         [startButton setHidden:FALSE];
-        [stopButton setHidden:FALSE];
+        [stopButton setHidden:TRUE];
     }else{
         [self showParameterErrorMessage];
     }
@@ -132,6 +144,8 @@
 - (void)evaMicStopRecording{
     NSLog(@"Recording has stopped");
     [self.micLevel setHidden:TRUE];
+    [cancelButton setHidden:TRUE];
+    [stopButton setHidden:TRUE];
 }
 
 
