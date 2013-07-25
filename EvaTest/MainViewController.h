@@ -7,7 +7,12 @@
 //
 
 #import "FlipsideViewController.h"
+
+#ifdef FLAC_VERSION
+#import <EvaFlac/Eva.h>
+#else
 #import <Eva/Eva.h>
+#endif
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate,EvaDelegate>{
     

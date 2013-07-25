@@ -7,7 +7,12 @@
 //
 
 #import "AppDelegate.h"
+
+#ifdef FLAC_VERSION
+#import <EvaFlac/Eva.h>
+#else
 #import <Eva/Eva.h>
+#endif
 
 @implementation AppDelegate
 

@@ -8,7 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		CF45C20117675948001F701D /* README_Xcode5.txt in Resources */ = {isa = PBXBuildFile; fileRef = CF45C20017675948001F701D /* README_Xcode5.txt */; };
-		CF95929917A023BA0022CFBF /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929817A023BA0022CFBF /* Eva.framework */; };
+		CF9592C017A15FC30022CFBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E4017401C7000303425 /* main.m */; };
+		CF9592C117A15FC30022CFBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E4417401C7100303425 /* AppDelegate.m */; };
+		CF9592C217A15FC30022CFBF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E5017401C7100303425 /* MainViewController.m */; };
+		CF9592C317A15FC30022CFBF /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E5317401C7100303425 /* FlipsideViewController.m */; };
+		CF9592C517A15FC30022CFBF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD337C017497CE6008576EC /* CoreLocation.framework */; };
+		CF9592C617A15FC30022CFBF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E831740282400303425 /* AVFoundation.framework */; };
+		CF9592C717A15FC30022CFBF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3417401C7000303425 /* UIKit.framework */; };
+		CF9592C817A15FC30022CFBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3617401C7000303425 /* Foundation.framework */; };
+		CF9592C917A15FC30022CFBF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3817401C7000303425 /* CoreGraphics.framework */; };
+		CF9592CD17A15FC30022CFBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CFFA4E3D17401C7000303425 /* InfoPlist.strings */; };
+		CF9592CE17A15FC30022CFBF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CFFA4E4617401C7100303425 /* Default.png */; };
+		CF9592CF17A15FC30022CFBF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CFFA4E4817401C7100303425 /* Default@2x.png */; };
+		CF9592D017A15FC30022CFBF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CFFA4E4A17401C7100303425 /* Default-568h@2x.png */; };
+		CF9592D117A15FC30022CFBF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFFA4E4C17401C7100303425 /* MainStoryboard.storyboard */; };
+		CF9592D217A15FC30022CFBF /* README_Xcode5.txt in Resources */ = {isa = PBXBuildFile; fileRef = CF45C20017675948001F701D /* README_Xcode5.txt */; };
+		CF9592E517A18EAB0022CFBF /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9592E417A18EAB0022CFBF /* Eva.framework */; };
+		CF9592E717A18EB70022CFBF /* EvaFlac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9592E617A18EB70022CFBF /* EvaFlac.framework */; };
 		CFD337C117497CE6008576EC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD337C017497CE6008576EC /* CoreLocation.framework */; };
 		CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3417401C7000303425 /* UIKit.framework */; };
 		CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFA4E3617401C7000303425 /* Foundation.framework */; };
@@ -28,7 +44,10 @@
 /* Begin PBXFileReference section */
 		CF45C19D174AB28B00C12682 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CF45C20017675948001F701D /* README_Xcode5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README_Xcode5.txt; sourceTree = "<group>"; };
-		CF95929817A023BA0022CFBF /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
+		CF9592D617A15FC30022CFBF /* EvaTest flac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EvaTest flac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF9592D717A15FC30022CFBF /* EvaTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "EvaTest copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/FORMAL REPO/ios/EvaTest copy-Info.plist"; sourceTree = "<absolute>"; };
+		CF9592E417A18EAB0022CFBF /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
+		CF9592E617A18EB70022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EvaFlac.framework; path = EvaTest/EvaFramework/EvaFlac.framework; sourceTree = "<group>"; };
 		CFD337C017497CE6008576EC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CFFA4E3117401C7000303425 /* EvaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFA4E3417401C7000303425 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -53,6 +72,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CF9592C417A15FC30022CFBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592C517A15FC30022CFBF /* CoreLocation.framework in Frameworks */,
+				CF9592C617A15FC30022CFBF /* AVFoundation.framework in Frameworks */,
+				CF9592C717A15FC30022CFBF /* UIKit.framework in Frameworks */,
+				CF9592C817A15FC30022CFBF /* Foundation.framework in Frameworks */,
+				CF9592C917A15FC30022CFBF /* CoreGraphics.framework in Frameworks */,
+				CF9592E717A18EB70022CFBF /* EvaFlac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CFFA4E2E17401C7000303425 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -62,7 +94,7 @@
 				CFFA4E3517401C7000303425 /* UIKit.framework in Frameworks */,
 				CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */,
 				CFFA4E3917401C7000303425 /* CoreGraphics.framework in Frameworks */,
-				CF95929917A023BA0022CFBF /* Eva.framework in Frameworks */,
+				CF9592E517A18EAB0022CFBF /* Eva.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,12 +105,14 @@
 			isa = PBXGroup;
 			children = (
 				CF45C20017675948001F701D /* README_Xcode5.txt */,
-				CF95929817A023BA0022CFBF /* Eva.framework */,
+				CF9592E417A18EAB0022CFBF /* Eva.framework */,
+				CF9592E617A18EB70022CFBF /* EvaFlac.framework */,
 				CFD337C017497CE6008576EC /* CoreLocation.framework */,
 				CFFA4E831740282400303425 /* AVFoundation.framework */,
 				CFFA4E3A17401C7000303425 /* EvaTest */,
 				CFFA4E3317401C7000303425 /* Frameworks */,
 				CFFA4E3217401C7000303425 /* Products */,
+				CF9592D717A15FC30022CFBF /* EvaTest copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				CFFA4E3117401C7000303425 /* EvaTest.app */,
+				CF9592D617A15FC30022CFBF /* EvaTest flac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +169,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CF9592BE17A15FC30022CFBF /* EvaTest Flac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF9592D317A15FC30022CFBF /* Build configuration list for PBXNativeTarget "EvaTest Flac" */;
+			buildPhases = (
+				CF9592BF17A15FC30022CFBF /* Sources */,
+				CF9592C417A15FC30022CFBF /* Frameworks */,
+				CF9592CC17A15FC30022CFBF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EvaTest Flac";
+			productName = EvaTest;
+			productReference = CF9592D617A15FC30022CFBF /* EvaTest flac.app */;
+			productType = "com.apple.product-type.application";
+		};
 		CFFA4E3017401C7000303425 /* EvaTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CFFA4E6C17401C7100303425 /* Build configuration list for PBXNativeTarget "EvaTest" */;
@@ -173,11 +225,25 @@
 			projectRoot = "";
 			targets = (
 				CFFA4E3017401C7000303425 /* EvaTest */,
+				CF9592BE17A15FC30022CFBF /* EvaTest Flac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		CF9592CC17A15FC30022CFBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592CD17A15FC30022CFBF /* InfoPlist.strings in Resources */,
+				CF9592CE17A15FC30022CFBF /* Default.png in Resources */,
+				CF9592CF17A15FC30022CFBF /* Default@2x.png in Resources */,
+				CF9592D017A15FC30022CFBF /* Default-568h@2x.png in Resources */,
+				CF9592D117A15FC30022CFBF /* MainStoryboard.storyboard in Resources */,
+				CF9592D217A15FC30022CFBF /* README_Xcode5.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CFFA4E2F17401C7000303425 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,6 +260,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CF9592BF17A15FC30022CFBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592C017A15FC30022CFBF /* main.m in Sources */,
+				CF9592C117A15FC30022CFBF /* AppDelegate.m in Sources */,
+				CF9592C217A15FC30022CFBF /* MainViewController.m in Sources */,
+				CF9592C317A15FC30022CFBF /* FlipsideViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CFFA4E2D17401C7000303425 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +304,74 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		CF9592D417A15FC30022CFBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					FLAC_VERSION,
+				);
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "EvaTest copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EvaTest\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					EvaFlac,
+				);
+				PRODUCT_NAME = "EvaTest flac";
+				VALID_ARCHS = "armv7 armv7s";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CF9592D517A15FC30022CFBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = FLAC_VERSION;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "EvaTest copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/EvaTest\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					EvaFlac,
+				);
+				PRODUCT_NAME = "EvaTest flac";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				VALID_ARCHS = "armv7 armv7s";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		CFFA4E6A17401C7100303425 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -302,7 +447,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
@@ -330,7 +474,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
@@ -352,6 +495,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CF9592D317A15FC30022CFBF /* Build configuration list for PBXNativeTarget "EvaTest Flac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF9592D417A15FC30022CFBF /* Debug */,
+				CF9592D517A15FC30022CFBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CFFA4E2C17401C7000303425 /* Build configuration list for PBXProject "EvaTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
