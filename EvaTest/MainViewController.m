@@ -175,6 +175,7 @@
     //[Eva sharedInstance].home = @"paris";
     //[Eva sharedInstance].version = @"v1.0";
     //[Eva sharedInstance].uid=@"TestUID";
+    //[Eva sharedInstance].scope = @"h";
     
     // View settings //
     [self loadViewParameters];

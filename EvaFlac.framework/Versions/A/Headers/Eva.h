@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-
+   
 @protocol EvaDelegate <NSObject>
 @optional
 - (void)evaDidReceiveData:(NSData *)dataFromServer;  // Called when receiving valid data from Eva.
@@ -29,6 +29,10 @@
     NSString *home;
     
     NSString *version; // Optional, @"v1.0" is the default version
+    
+    NSString *scope; 
+    
+    //SpeexEncoder *speexEncoder_temp;
 }
 
 @property (nonatomic, weak) id <EvaDelegate> delegate;
@@ -39,6 +43,8 @@
 
 @property(nonatomic,retain) NSString *version;
 
+@property(nonatomic,retain) NSString *scope; 
+
 
 + (Eva *)sharedInstance;
 
@@ -48,7 +54,7 @@
 // if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel;
 
-// if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 8.0 sec)
+// if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 8.0 sec, max value is 10.0 sec)
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel withRecordingTimeout:(float)secToTimeout;
 
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session //

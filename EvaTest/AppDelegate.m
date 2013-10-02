@@ -14,7 +14,10 @@
 #import <Eva/Eva.h>
 #endif
 
+#import "MainViewController.h"
+
 @implementation AppDelegate
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -28,6 +31,7 @@
     //[Eva sharedInstance].home = @"paris";
     //[Eva sharedInstance].version = @"v1.0";
     //[Eva sharedInstance].uid=@"TestUID";
+    
     
     return YES;
 }
