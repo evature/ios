@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8C4BE16C151BA108007A311B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4BE16B151BA108007A311B /* UIKit.framework */; };
+		8C4BE16E151BA108007A311B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4BE16D151BA108007A311B /* Foundation.framework */; };
+		8C4BE170151BA108007A311B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4BE16F151BA108007A311B /* CoreGraphics.framework */; };
+		8C4BE176151BA108007A311B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8C4BE174151BA108007A311B /* InfoPlist.strings */; };
+		8C4BE178151BA108007A311B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4BE177151BA108007A311B /* main.m */; };
+		8C4BE17C151BA108007A311B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4BE17B151BA108007A311B /* AppDelegate.m */; };
+		8C4BE17F151BA108007A311B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4BE17E151BA108007A311B /* ViewController.m */; };
+		8C4BE182151BA108007A311B /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4BE180151BA108007A311B /* ViewController_iPhone.xib */; };
+		8C4BE185151BA108007A311B /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4BE183151BA108007A311B /* ViewController_iPad.xib */; };
+		8C4BE191151BA198007A311B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4BE18F151BA198007A311B /* AudioToolbox.framework */; };
+		8C4BE192151BA198007A311B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C4BE190151BA198007A311B /* AVFoundation.framework */; };
+		8C973263151BA2BF00E96F0F /* SpeexKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C973262151BA2BF00E96F0F /* SpeexKitDemo.framework */; };
+		8CE72773151F5BEC007ED349 /* Aesop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8CE7276B151F5BEC007ED349 /* Aesop.wav */; };
+		8CE72774151F5BEC007ED349 /* AudioQueueFallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE7276E151F5BEC007ED349 /* AudioQueueFallback.m */; };
+		8CE72775151F5BEC007ED349 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE72770151F5BEC007ED349 /* AudioSessionManager.m */; };
+		8CE72776151F5BEC007ED349 /* ContinuousAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE72772151F5BEC007ED349 /* ContinuousAudioUnit.m */; };
+		CF3019F6171178C9001A283D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019F5171178C9001A283D /* Default-568h@2x.png */; };
+		CF3019F81711AC05001A283D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3019F71711AC04001A283D /* CoreLocation.framework */; };
+		CF301A111711BEBD001A283D /* bubbleMine.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019FB1711BEBD001A283D /* bubbleMine.png */; };
+		CF301A121711BEBD001A283D /* bubbleMine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019FC1711BEBD001A283D /* bubbleMine@2x.png */; };
+		CF301A131711BEBD001A283D /* bubbleSomeone.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019FD1711BEBD001A283D /* bubbleSomeone.png */; };
+		CF301A141711BEBD001A283D /* bubbleSomeone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019FE1711BEBD001A283D /* bubbleSomeone@2x.png */; };
+		CF301A151711BEBD001A283D /* missingAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = CF3019FF1711BEBD001A283D /* missingAvatar.png */; };
+		CF301A161711BEBD001A283D /* missingAvatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A001711BEBD001A283D /* missingAvatar@2x.png */; };
+		CF301A171711BEBD001A283D /* typingMine.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A011711BEBD001A283D /* typingMine.png */; };
+		CF301A181711BEBD001A283D /* typingMine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A021711BEBD001A283D /* typingMine@2x.png */; };
+		CF301A191711BEBD001A283D /* typingSomeone.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A031711BEBD001A283D /* typingSomeone.png */; };
+		CF301A1A1711BEBD001A283D /* typingSomeone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A041711BEBD001A283D /* typingSomeone@2x.png */; };
+		CF301A1B1711BEBD001A283D /* NSBubbleData.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A071711BEBD001A283D /* NSBubbleData.m */; };
+		CF301A1C1711BEBD001A283D /* UIBubbleHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A091711BEBD001A283D /* UIBubbleHeaderTableViewCell.m */; };
+		CF301A1D1711BEBD001A283D /* UIBubbleTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A0B1711BEBD001A283D /* UIBubbleTableView.m */; };
+		CF301A1E1711BEBD001A283D /* UIBubbleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A0D1711BEBD001A283D /* UIBubbleTableViewCell.m */; };
+		CF301A1F1711BEBD001A283D /* UIBubbleTypingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A101711BEBD001A283D /* UIBubbleTypingTableViewCell.m */; };
+		CF301A211711C2D1001A283D /* evature.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF301A201711C2D1001A283D /* evature.jpg */; };
+		CF301A261711DFF9001A283D /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A241711DFF9001A283D /* ball.png */; };
+		CF301A271711DFF9001A283D /* SiriMic.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A251711DFF9001A283D /* SiriMic.png */; };
+		CF301A291711E134001A283D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A281711E134001A283D /* QuartzCore.framework */; };
+		CF301A2B1711ED39001A283D /* button-16.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF301A2A1711ED39001A283D /* button-16.wav */; };
+		CF301A2E1711F0FE001A283D /* button-19.wav in Resources */ = {isa = PBXBuildFile; fileRef = CF301A2D1711F0FE001A283D /* button-19.wav */; };
+		CF301A301711F3D1001A283D /* Business_Person.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A2F1711F3D1001A283D /* Business_Person.png */; };
+		CF301A321711FA16001A283D /* people_juliane.png in Resources */ = {isa = PBXBuildFile; fileRef = CF301A311711FA16001A283D /* people_juliane.png */; };
+		CF301A3617120235001A283D /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF301A3417120233001A283D /* DataViewController.m */; };
+		CF301A3717120235001A283D /* DataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF301A3517120234001A283D /* DataViewController.xib */; };
+		CF301A4D17148BF3001A283D /* cmu07a.dic in Resources */ = {isa = PBXBuildFile; fileRef = CF301A3D17148BF2001A283D /* cmu07a.dic */; };
+		CF301A4E17148BF3001A283D /* feat.params in Resources */ = {isa = PBXBuildFile; fileRef = CF301A3F17148BF2001A283D /* feat.params */; };
+		CF301A4F17148BF3001A283D /* mdef in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4017148BF2001A283D /* mdef */; };
+		CF301A5017148BF3001A283D /* means in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4117148BF2001A283D /* means */; };
+		CF301A5117148BF3001A283D /* noisedict in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4217148BF2001A283D /* noisedict */; };
+		CF301A5217148BF3001A283D /* sendump in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4317148BF2001A283D /* sendump */; };
+		CF301A5317148BF3001A283D /* transition_matrices in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4417148BF2001A283D /* transition_matrices */; };
+		CF301A5417148BF3001A283D /* variances in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4517148BF2001A283D /* variances */; };
+		CF301A5517148BF3001A283D /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A4617148BF2001A283D /* OpenEars.framework */; };
+		CF301A5617148BF3001A283D /* OpenEars1.dic in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4717148BF3001A283D /* OpenEars1.dic */; };
+		CF301A5717148BF3001A283D /* OpenEars1.gram in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4817148BF3001A283D /* OpenEars1.gram */; };
+		CF301A5817148BF3001A283D /* OpenEars1.languagemodel in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4917148BF3001A283D /* OpenEars1.languagemodel */; };
+		CF301A5917148BF3001A283D /* OpenEars2.gram in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4A17148BF3001A283D /* OpenEars2.gram */; };
+		CF301A5A17148BF3001A283D /* OpenEarsCorpus.txt in Resources */ = {isa = PBXBuildFile; fileRef = CF301A4B17148BF3001A283D /* OpenEarsCorpus.txt */; };
+		CF301A5B17148BF3001A283D /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A4C17148BF3001A283D /* Slt.framework */; };
+		CF301A661714B2F6001A283D /* Awb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A5D1714B2F6001A283D /* Awb.framework */; };
+		CF301A671714B2F6001A283D /* Awb8k.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A5E1714B2F6001A283D /* Awb8k.framework */; };
+		CF301A681714B2F6001A283D /* Kal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A5F1714B2F6001A283D /* Kal.framework */; };
+		CF301A691714B2F6001A283D /* Kal16.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A601714B2F6001A283D /* Kal16.framework */; };
+		CF301A6A1714B2F6001A283D /* Rms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A611714B2F6001A283D /* Rms.framework */; };
+		CF301A6B1714B2F6001A283D /* Rms8k.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A621714B2F6001A283D /* Rms8k.framework */; };
+		CF301A6C1714B2F6001A283D /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A631714B2F6001A283D /* Slt.framework */; };
+		CF301A6D1714B2F6001A283D /* Slt8k.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A641714B2F6001A283D /* Slt8k.framework */; };
+		CF301A6E1714B2F6001A283D /* TimeAwb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF301A651714B2F6001A283D /* TimeAwb.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8C4BE167151BA108007A311B /* EvaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C4BE16B151BA108007A311B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8C4BE16D151BA108007A311B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8C4BE16F151BA108007A311B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8C4BE173151BA108007A311B /* EvaDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EvaDemo-Info.plist"; sourceTree = "<group>"; };
+		8C4BE175151BA108007A311B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8C4BE177151BA108007A311B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8C4BE179151BA108007A311B /* EvaDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EvaDemo-Prefix.pch"; sourceTree = "<group>"; };
+		8C4BE17A151BA108007A311B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8C4BE17B151BA108007A311B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8C4BE17D151BA108007A311B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8C4BE17E151BA108007A311B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8C4BE181151BA108007A311B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		8C4BE184151BA108007A311B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		8C4BE18F151BA198007A311B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8C4BE190151BA198007A311B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8C973262151BA2BF00E96F0F /* SpeexKitDemo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpeexKitDemo.framework; path = framework/SpeexKitDemo.framework; sourceTree = "<group>"; };
+		8CE7276B151F5BEC007ED349 /* Aesop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Aesop.wav; path = SpeexKitDemoDistribution/Aesop.wav; sourceTree = "<group>"; };
+		8CE7276C151F5BEC007ED349 /* AudioConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioConstants.h; path = SpeexKitDemoDistribution/AudioConstants.h; sourceTree = "<group>"; };
+		8CE7276D151F5BEC007ED349 /* AudioQueueFallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioQueueFallback.h; path = SpeexKitDemoDistribution/AudioQueueFallback.h; sourceTree = "<group>"; };
+		8CE7276E151F5BEC007ED349 /* AudioQueueFallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioQueueFallback.m; path = SpeexKitDemoDistribution/AudioQueueFallback.m; sourceTree = "<group>"; };
+		8CE7276F151F5BEC007ED349 /* AudioSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSessionManager.h; path = SpeexKitDemoDistribution/AudioSessionManager.h; sourceTree = "<group>"; };
+		8CE72770151F5BEC007ED349 /* AudioSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioSessionManager.m; path = SpeexKitDemoDistribution/AudioSessionManager.m; sourceTree = "<group>"; };
+		8CE72771151F5BEC007ED349 /* ContinuousAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContinuousAudioUnit.h; path = SpeexKitDemoDistribution/ContinuousAudioUnit.h; sourceTree = "<group>"; };
+		8CE72772151F5BEC007ED349 /* ContinuousAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContinuousAudioUnit.m; path = SpeexKitDemoDistribution/ContinuousAudioUnit.m; sourceTree = "<group>"; };
+		CF3019F5171178C9001A283D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		CF3019F71711AC04001A283D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CF3019FB1711BEBD001A283D /* bubbleMine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleMine.png; sourceTree = "<group>"; };
+		CF3019FC1711BEBD001A283D /* bubbleMine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleMine@2x.png"; sourceTree = "<group>"; };
+		CF3019FD1711BEBD001A283D /* bubbleSomeone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleSomeone.png; sourceTree = "<group>"; };
+		CF3019FE1711BEBD001A283D /* bubbleSomeone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleSomeone@2x.png"; sourceTree = "<group>"; };
+		CF3019FF1711BEBD001A283D /* missingAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingAvatar.png; sourceTree = "<group>"; };
+		CF301A001711BEBD001A283D /* missingAvatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missingAvatar@2x.png"; sourceTree = "<group>"; };
+		CF301A011711BEBD001A283D /* typingMine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = typingMine.png; sourceTree = "<group>"; };
+		CF301A021711BEBD001A283D /* typingMine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typingMine@2x.png"; sourceTree = "<group>"; };
+		CF301A031711BEBD001A283D /* typingSomeone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = typingSomeone.png; sourceTree = "<group>"; };
+		CF301A041711BEBD001A283D /* typingSomeone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typingSomeone@2x.png"; sourceTree = "<group>"; };
+		CF301A061711BEBD001A283D /* NSBubbleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBubbleData.h; sourceTree = "<group>"; };
+		CF301A071711BEBD001A283D /* NSBubbleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBubbleData.m; sourceTree = "<group>"; };
+		CF301A081711BEBD001A283D /* UIBubbleHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleHeaderTableViewCell.h; sourceTree = "<group>"; };
+		CF301A091711BEBD001A283D /* UIBubbleHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleHeaderTableViewCell.m; sourceTree = "<group>"; };
+		CF301A0A1711BEBD001A283D /* UIBubbleTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableView.h; sourceTree = "<group>"; };
+		CF301A0B1711BEBD001A283D /* UIBubbleTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTableView.m; sourceTree = "<group>"; };
+		CF301A0C1711BEBD001A283D /* UIBubbleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableViewCell.h; sourceTree = "<group>"; };
+		CF301A0D1711BEBD001A283D /* UIBubbleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTableViewCell.m; sourceTree = "<group>"; };
+		CF301A0E1711BEBD001A283D /* UIBubbleTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTableViewDataSource.h; sourceTree = "<group>"; };
+		CF301A0F1711BEBD001A283D /* UIBubbleTypingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBubbleTypingTableViewCell.h; sourceTree = "<group>"; };
+		CF301A101711BEBD001A283D /* UIBubbleTypingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBubbleTypingTableViewCell.m; sourceTree = "<group>"; };
+		CF301A201711C2D1001A283D /* evature.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = evature.jpg; sourceTree = "<group>"; };
+		CF301A221711D99C001A283D /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		CF301A241711DFF9001A283D /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
+		CF301A251711DFF9001A283D /* SiriMic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SiriMic.png; sourceTree = "<group>"; };
+		CF301A281711E134001A283D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CF301A2A1711ED39001A283D /* button-16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-16.wav"; sourceTree = "<group>"; };
+		CF301A2D1711F0FE001A283D /* button-19.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "button-19.wav"; sourceTree = "<group>"; };
+		CF301A2F1711F3D1001A283D /* Business_Person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Business_Person.png; sourceTree = "<group>"; };
+		CF301A311711FA16001A283D /* people_juliane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = people_juliane.png; sourceTree = "<group>"; };
+		CF301A3317120233001A283D /* DataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
+		CF301A3417120233001A283D /* DataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
+		CF301A3517120234001A283D /* DataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataViewController.xib; sourceTree = "<group>"; };
+		CF301A3D17148BF2001A283D /* cmu07a.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmu07a.dic; sourceTree = "<group>"; };
+		CF301A3F17148BF2001A283D /* feat.params */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feat.params; sourceTree = "<group>"; };
+		CF301A4017148BF2001A283D /* mdef */ = {isa = PBXFileReference; lastKnownFileType = file; path = mdef; sourceTree = "<group>"; };
+		CF301A4117148BF2001A283D /* means */ = {isa = PBXFileReference; lastKnownFileType = file; path = means; sourceTree = "<group>"; };
+		CF301A4217148BF2001A283D /* noisedict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noisedict; sourceTree = "<group>"; };
+		CF301A4317148BF2001A283D /* sendump */ = {isa = PBXFileReference; lastKnownFileType = file; path = sendump; sourceTree = "<group>"; };
+		CF301A4417148BF2001A283D /* transition_matrices */ = {isa = PBXFileReference; lastKnownFileType = file; path = transition_matrices; sourceTree = "<group>"; };
+		CF301A4517148BF2001A283D /* variances */ = {isa = PBXFileReference; lastKnownFileType = file; path = variances; sourceTree = "<group>"; };
+		CF301A4617148BF2001A283D /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
+		CF301A4717148BF3001A283D /* OpenEars1.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.dic; sourceTree = "<group>"; };
+		CF301A4817148BF3001A283D /* OpenEars1.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.gram; sourceTree = "<group>"; };
+		CF301A4917148BF3001A283D /* OpenEars1.languagemodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.languagemodel; sourceTree = "<group>"; };
+		CF301A4A17148BF3001A283D /* OpenEars2.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars2.gram; sourceTree = "<group>"; };
+		CF301A4B17148BF3001A283D /* OpenEarsCorpus.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEarsCorpus.txt; sourceTree = "<group>"; };
+		CF301A4C17148BF3001A283D /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
+		CF301A5D1714B2F6001A283D /* Awb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Awb.framework; sourceTree = "<group>"; };
+		CF301A5E1714B2F6001A283D /* Awb8k.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Awb8k.framework; sourceTree = "<group>"; };
+		CF301A5F1714B2F6001A283D /* Kal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Kal.framework; sourceTree = "<group>"; };
+		CF301A601714B2F6001A283D /* Kal16.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Kal16.framework; sourceTree = "<group>"; };
+		CF301A611714B2F6001A283D /* Rms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rms.framework; sourceTree = "<group>"; };
+		CF301A621714B2F6001A283D /* Rms8k.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rms8k.framework; sourceTree = "<group>"; };
+		CF301A631714B2F6001A283D /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
+		CF301A641714B2F6001A283D /* Slt8k.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt8k.framework; sourceTree = "<group>"; };
+		CF301A651714B2F6001A283D /* TimeAwb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TimeAwb.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8C4BE164151BA108007A311B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF301A291711E134001A283D /* QuartzCore.framework in Frameworks */,
+				CF3019F81711AC05001A283D /* CoreLocation.framework in Frameworks */,
+				8C4BE191151BA198007A311B /* AudioToolbox.framework in Frameworks */,
+				8C4BE192151BA198007A311B /* AVFoundation.framework in Frameworks */,
+				8C4BE16C151BA108007A311B /* UIKit.framework in Frameworks */,
+				8C4BE16E151BA108007A311B /* Foundation.framework in Frameworks */,
+				8C4BE170151BA108007A311B /* CoreGraphics.framework in Frameworks */,
+				8C973263151BA2BF00E96F0F /* SpeexKitDemo.framework in Frameworks */,
+				CF301A5517148BF3001A283D /* OpenEars.framework in Frameworks */,
+				CF301A5B17148BF3001A283D /* Slt.framework in Frameworks */,
+				CF301A661714B2F6001A283D /* Awb.framework in Frameworks */,
+				CF301A671714B2F6001A283D /* Awb8k.framework in Frameworks */,
+				CF301A681714B2F6001A283D /* Kal.framework in Frameworks */,
+				CF301A691714B2F6001A283D /* Kal16.framework in Frameworks */,
+				CF301A6A1714B2F6001A283D /* Rms.framework in Frameworks */,
+				CF301A6B1714B2F6001A283D /* Rms8k.framework in Frameworks */,
+				CF301A6C1714B2F6001A283D /* Slt.framework in Frameworks */,
+				CF301A6D1714B2F6001A283D /* Slt8k.framework in Frameworks */,
+				CF301A6E1714B2F6001A283D /* TimeAwb.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8C4BE15C151BA107007A311B = {
+			isa = PBXGroup;
+			children = (
+				CF301A281711E134001A283D /* QuartzCore.framework */,
+				CF3019F71711AC04001A283D /* CoreLocation.framework */,
+				CF3019F5171178C9001A283D /* Default-568h@2x.png */,
+				8CE7276B151F5BEC007ED349 /* Aesop.wav */,
+				8C973262151BA2BF00E96F0F /* SpeexKitDemo.framework */,
+				8C973261151BA2A200E96F0F /* Audio Driver */,
+				8C4BE18F151BA198007A311B /* AudioToolbox.framework */,
+				8C4BE190151BA198007A311B /* AVFoundation.framework */,
+				8C4BE171151BA108007A311B /* SpeexKitDemoDistribution */,
+				8C4BE16A151BA108007A311B /* Frameworks */,
+				8C4BE168151BA108007A311B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8C4BE168151BA108007A311B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8C4BE167151BA108007A311B /* EvaDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8C4BE16A151BA108007A311B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A3C17148BF2001A283D /* Framework */,
+				8C4BE16B151BA108007A311B /* UIKit.framework */,
+				8C4BE16D151BA108007A311B /* Foundation.framework */,
+				8C4BE16F151BA108007A311B /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8C4BE171151BA108007A311B /* SpeexKitDemoDistribution */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A221711D99C001A283D /* Common.h */,
+				8C4BE17A151BA108007A311B /* AppDelegate.h */,
+				8C4BE17B151BA108007A311B /* AppDelegate.m */,
+				8C4BE17D151BA108007A311B /* ViewController.h */,
+				8C4BE17E151BA108007A311B /* ViewController.m */,
+				8C4BE180151BA108007A311B /* ViewController_iPhone.xib */,
+				8C4BE183151BA108007A311B /* ViewController_iPad.xib */,
+				8C4BE172151BA108007A311B /* Supporting Files */,
+				CF301A3317120233001A283D /* DataViewController.h */,
+				CF301A3417120233001A283D /* DataViewController.m */,
+				CF301A3517120234001A283D /* DataViewController.xib */,
+			);
+			path = SpeexKitDemoDistribution;
+			sourceTree = "<group>";
+		};
+		8C4BE172151BA108007A311B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A231711DFD5001A283D /* MicAnimation */,
+				CF301A201711C2D1001A283D /* evature.jpg */,
+				CF301A311711FA16001A283D /* people_juliane.png */,
+				CF301A2F1711F3D1001A283D /* Business_Person.png */,
+				CF3019F91711BE8B001A283D /* Bubbles */,
+				8C4BE173151BA108007A311B /* EvaDemo-Info.plist */,
+				8C4BE174151BA108007A311B /* InfoPlist.strings */,
+				8C4BE177151BA108007A311B /* main.m */,
+				8C4BE179151BA108007A311B /* EvaDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8C973261151BA2A200E96F0F /* Audio Driver */ = {
+			isa = PBXGroup;
+			children = (
+				8CE7276C151F5BEC007ED349 /* AudioConstants.h */,
+				8CE7276D151F5BEC007ED349 /* AudioQueueFallback.h */,
+				8CE7276E151F5BEC007ED349 /* AudioQueueFallback.m */,
+				8CE7276F151F5BEC007ED349 /* AudioSessionManager.h */,
+				8CE72770151F5BEC007ED349 /* AudioSessionManager.m */,
+				8CE72771151F5BEC007ED349 /* ContinuousAudioUnit.h */,
+				8CE72772151F5BEC007ED349 /* ContinuousAudioUnit.m */,
+			);
+			name = "Audio Driver";
+			sourceTree = "<group>";
+		};
+		CF3019F91711BE8B001A283D /* Bubbles */ = {
+			isa = PBXGroup;
+			children = (
+				CF3019FA1711BEBD001A283D /* images */,
+				CF301A051711BEBD001A283D /* src */,
+			);
+			name = Bubbles;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		CF3019FA1711BEBD001A283D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CF3019FB1711BEBD001A283D /* bubbleMine.png */,
+				CF3019FC1711BEBD001A283D /* bubbleMine@2x.png */,
+				CF3019FD1711BEBD001A283D /* bubbleSomeone.png */,
+				CF3019FE1711BEBD001A283D /* bubbleSomeone@2x.png */,
+				CF3019FF1711BEBD001A283D /* missingAvatar.png */,
+				CF301A001711BEBD001A283D /* missingAvatar@2x.png */,
+				CF301A011711BEBD001A283D /* typingMine.png */,
+				CF301A021711BEBD001A283D /* typingMine@2x.png */,
+				CF301A031711BEBD001A283D /* typingSomeone.png */,
+				CF301A041711BEBD001A283D /* typingSomeone@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		CF301A051711BEBD001A283D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A061711BEBD001A283D /* NSBubbleData.h */,
+				CF301A071711BEBD001A283D /* NSBubbleData.m */,
+				CF301A081711BEBD001A283D /* UIBubbleHeaderTableViewCell.h */,
+				CF301A091711BEBD001A283D /* UIBubbleHeaderTableViewCell.m */,
+				CF301A0A1711BEBD001A283D /* UIBubbleTableView.h */,
+				CF301A0B1711BEBD001A283D /* UIBubbleTableView.m */,
+				CF301A0C1711BEBD001A283D /* UIBubbleTableViewCell.h */,
+				CF301A0D1711BEBD001A283D /* UIBubbleTableViewCell.m */,
+				CF301A0E1711BEBD001A283D /* UIBubbleTableViewDataSource.h */,
+				CF301A0F1711BEBD001A283D /* UIBubbleTypingTableViewCell.h */,
+				CF301A101711BEBD001A283D /* UIBubbleTypingTableViewCell.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		CF301A231711DFD5001A283D /* MicAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A2D1711F0FE001A283D /* button-19.wav */,
+				CF301A2A1711ED39001A283D /* button-16.wav */,
+				CF301A241711DFF9001A283D /* ball.png */,
+				CF301A251711DFF9001A283D /* SiriMic.png */,
+			);
+			name = MicAnimation;
+			sourceTree = "<group>";
+		};
+		CF301A3C17148BF2001A283D /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A5C1714B2F6001A283D /* FliteVoices */,
+				CF301A3D17148BF2001A283D /* cmu07a.dic */,
+				CF301A3E17148BF2001A283D /* hub4wsj_sc_8k */,
+				CF301A4617148BF2001A283D /* OpenEars.framework */,
+				CF301A4717148BF3001A283D /* OpenEars1.dic */,
+				CF301A4817148BF3001A283D /* OpenEars1.gram */,
+				CF301A4917148BF3001A283D /* OpenEars1.languagemodel */,
+				CF301A4A17148BF3001A283D /* OpenEars2.gram */,
+				CF301A4B17148BF3001A283D /* OpenEarsCorpus.txt */,
+				CF301A4C17148BF3001A283D /* Slt.framework */,
+			);
+			name = Framework;
+			path = SpeexKitDemoDistribution/Framework;
+			sourceTree = "<group>";
+		};
+		CF301A3E17148BF2001A283D /* hub4wsj_sc_8k */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A3F17148BF2001A283D /* feat.params */,
+				CF301A4017148BF2001A283D /* mdef */,
+				CF301A4117148BF2001A283D /* means */,
+				CF301A4217148BF2001A283D /* noisedict */,
+				CF301A4317148BF2001A283D /* sendump */,
+				CF301A4417148BF2001A283D /* transition_matrices */,
+				CF301A4517148BF2001A283D /* variances */,
+			);
+			path = hub4wsj_sc_8k;
+			sourceTree = "<group>";
+		};
+		CF301A5C1714B2F6001A283D /* FliteVoices */ = {
+			isa = PBXGroup;
+			children = (
+				CF301A5D1714B2F6001A283D /* Awb.framework */,
+				CF301A5E1714B2F6001A283D /* Awb8k.framework */,
+				CF301A5F1714B2F6001A283D /* Kal.framework */,
+				CF301A601714B2F6001A283D /* Kal16.framework */,
+				CF301A611714B2F6001A283D /* Rms.framework */,
+				CF301A621714B2F6001A283D /* Rms8k.framework */,
+				CF301A631714B2F6001A283D /* Slt.framework */,
+				CF301A641714B2F6001A283D /* Slt8k.framework */,
+				CF301A651714B2F6001A283D /* TimeAwb.framework */,
+			);
+			path = FliteVoices;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8C4BE166151BA108007A311B /* EvaDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8C4BE188151BA108007A311B /* Build configuration list for PBXNativeTarget "EvaDemo" */;
+			buildPhases = (
+				8C4BE163151BA108007A311B /* Sources */,
+				8C4BE164151BA108007A311B /* Frameworks */,
+				8C4BE165151BA108007A311B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EvaDemo;
+			productName = SpeexKitDemoDistribution;
+			productReference = 8C4BE167151BA108007A311B /* EvaDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8C4BE15E151BA107007A311B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Politepix;
+			};
+			buildConfigurationList = 8C4BE161151BA107007A311B /* Build configuration list for PBXProject "EvaDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8C4BE15C151BA107007A311B;
+			productRefGroup = 8C4BE168151BA108007A311B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8C4BE166151BA108007A311B /* EvaDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8C4BE165151BA108007A311B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C4BE176151BA108007A311B /* InfoPlist.strings in Resources */,
+				8C4BE182151BA108007A311B /* ViewController_iPhone.xib in Resources */,
+				8C4BE185151BA108007A311B /* ViewController_iPad.xib in Resources */,
+				8CE72773151F5BEC007ED349 /* Aesop.wav in Resources */,
+				CF3019F6171178C9001A283D /* Default-568h@2x.png in Resources */,
+				CF301A111711BEBD001A283D /* bubbleMine.png in Resources */,
+				CF301A121711BEBD001A283D /* bubbleMine@2x.png in Resources */,
+				CF301A131711BEBD001A283D /* bubbleSomeone.png in Resources */,
+				CF301A141711BEBD001A283D /* bubbleSomeone@2x.png in Resources */,
+				CF301A151711BEBD001A283D /* missingAvatar.png in Resources */,
+				CF301A161711BEBD001A283D /* missingAvatar@2x.png in Resources */,
+				CF301A171711BEBD001A283D /* typingMine.png in Resources */,
+				CF301A181711BEBD001A283D /* typingMine@2x.png in Resources */,
+				CF301A191711BEBD001A283D /* typingSomeone.png in Resources */,
+				CF301A1A1711BEBD001A283D /* typingSomeone@2x.png in Resources */,
+				CF301A211711C2D1001A283D /* evature.jpg in Resources */,
+				CF301A261711DFF9001A283D /* ball.png in Resources */,
+				CF301A271711DFF9001A283D /* SiriMic.png in Resources */,
+				CF301A2B1711ED39001A283D /* button-16.wav in Resources */,
+				CF301A2E1711F0FE001A283D /* button-19.wav in Resources */,
+				CF301A301711F3D1001A283D /* Business_Person.png in Resources */,
+				CF301A321711FA16001A283D /* people_juliane.png in Resources */,
+				CF301A3717120235001A283D /* DataViewController.xib in Resources */,
+				CF301A4D17148BF3001A283D /* cmu07a.dic in Resources */,
+				CF301A4E17148BF3001A283D /* feat.params in Resources */,
+				CF301A4F17148BF3001A283D /* mdef in Resources */,
+				CF301A5017148BF3001A283D /* means in Resources */,
+				CF301A5117148BF3001A283D /* noisedict in Resources */,
+				CF301A5217148BF3001A283D /* sendump in Resources */,
+				CF301A5317148BF3001A283D /* transition_matrices in Resources */,
+				CF301A5417148BF3001A283D /* variances in Resources */,
+				CF301A5617148BF3001A283D /* OpenEars1.dic in Resources */,
+				CF301A5717148BF3001A283D /* OpenEars1.gram in Resources */,
+				CF301A5817148BF3001A283D /* OpenEars1.languagemodel in Resources */,
+				CF301A5917148BF3001A283D /* OpenEars2.gram in Resources */,
+				CF301A5A17148BF3001A283D /* OpenEarsCorpus.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8C4BE163151BA108007A311B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C4BE178151BA108007A311B /* main.m in Sources */,
+				8C4BE17C151BA108007A311B /* AppDelegate.m in Sources */,
+				8C4BE17F151BA108007A311B /* ViewController.m in Sources */,
+				8CE72774151F5BEC007ED349 /* AudioQueueFallback.m in Sources */,
+				8CE72775151F5BEC007ED349 /* AudioSessionManager.m in Sources */,
+				8CE72776151F5BEC007ED349 /* ContinuousAudioUnit.m in Sources */,
+				CF301A1B1711BEBD001A283D /* NSBubbleData.m in Sources */,
+				CF301A1C1711BEBD001A283D /* UIBubbleHeaderTableViewCell.m in Sources */,
+				CF301A1D1711BEBD001A283D /* UIBubbleTableView.m in Sources */,
+				CF301A1E1711BEBD001A283D /* UIBubbleTableViewCell.m in Sources */,
+				CF301A1F1711BEBD001A283D /* UIBubbleTypingTableViewCell.m in Sources */,
+				CF301A3617120235001A283D /* DataViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8C4BE174151BA108007A311B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C4BE175151BA108007A311B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8C4BE180151BA108007A311B /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C4BE181151BA108007A311B /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		8C4BE183151BA108007A311B /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C4BE184151BA108007A311B /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8C4BE186151BA108007A311B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8C4BE187151BA108007A311B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8C4BE189151BA108007A311B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/framework\"",
+					"\"$(SRCROOT)/SpeexKitDemoDistribution/Framework\"",
+					"\"$(SRCROOT)/SpeexKitDemoDistribution/Framework/FliteVoices\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKitDemoDistribution/EvaDemo-Prefix.pch";
+				INFOPLIST_FILE = "SpeexKitDemoDistribution/EvaDemo-Info.plist";
+				PRODUCT_NAME = EvaDemo;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8C4BE18A151BA108007A311B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/framework\"",
+					"\"$(SRCROOT)/SpeexKitDemoDistribution/Framework\"",
+					"\"$(SRCROOT)/SpeexKitDemoDistribution/Framework/FliteVoices\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKitDemoDistribution/EvaDemo-Prefix.pch";
+				INFOPLIST_FILE = "SpeexKitDemoDistribution/EvaDemo-Info.plist";
+				PRODUCT_NAME = EvaDemo;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8C4BE161151BA107007A311B /* Build configuration list for PBXProject "EvaDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8C4BE186151BA108007A311B /* Debug */,
+				8C4BE187151BA108007A311B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8C4BE188151BA108007A311B /* Build configuration list for PBXNativeTarget "EvaDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8C4BE189151BA108007A311B /* Debug */,
+				8C4BE18A151BA108007A311B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8C4BE15E151BA107007A311B /* Project object */;
+}

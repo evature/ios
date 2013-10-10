@@ -1,0 +1,28 @@
+var interface_speex_n_s_data_encoding_controller =
+[
+    [ "setSpeexEncodingOptions", "interface_speex_n_s_data_encoding_controller.html#a696c120d4f5f8665dc8c54b266fe0ae8", null ],
+    [ "convertNSDataToSpeex:", "interface_speex_n_s_data_encoding_controller.html#a2e844973afc7974481dd69ad9b966b9d", null ],
+    [ "asynchronouslyConvertNSDataToSpeex:", "interface_speex_n_s_data_encoding_controller.html#a5f76a7540364f38d1b8e57657d3a0370", null ],
+    [ "speexState", "interface_speex_n_s_data_encoding_controller.html#a73460badae51ad9c9ee8ae8c29def3b9", null ],
+    [ "speexBits", "interface_speex_n_s_data_encoding_controller.html#a924e1cf33aa958e7b918b2574a6af091", null ],
+    [ "preprocessState", "interface_speex_n_s_data_encoding_controller.html#ad33188985aa2b1a0e1a8dc6457880a36", null ],
+    [ "mode", "interface_speex_n_s_data_encoding_controller.html#a761cc9bc466bef36ad6cff844fe62f3f", null ],
+    [ "frameSize", "interface_speex_n_s_data_encoding_controller.html#a13ea41d6611356aec1522277364d5781", null ],
+    [ "denoise", "interface_speex_n_s_data_encoding_controller.html#a23c92739472d2127d7dab10ab0d4e836", null ],
+    [ "dereverb", "interface_speex_n_s_data_encoding_controller.html#a270a8566091f8a2ee09f0d1cfdc56fb4", null ],
+    [ "quality", "interface_speex_n_s_data_encoding_controller.html#ab77cecfd7c430935eadcedb9ddeb4415", null ],
+    [ "variableBitrate", "interface_speex_n_s_data_encoding_controller.html#af6efe95f4387ca75d1adb8fed12ee0db", null ],
+    [ "vbrBitrate", "interface_speex_n_s_data_encoding_controller.html#ac1cf928a0465395375599575a8063ed1", null ],
+    [ "averageBitRate", "interface_speex_n_s_data_encoding_controller.html#a61694d5002909cab33ffa8e4c87db6d6", null ],
+    [ "vad", "interface_speex_n_s_data_encoding_controller.html#a6c61889851c480827e2053ba2e6c4a8c", null ],
+    [ "complexity", "interface_speex_n_s_data_encoding_controller.html#adc5eaf5833f17b478c454d29fdfd4b50", null ],
+    [ "vbrQuality", "interface_speex_n_s_data_encoding_controller.html#aad00d74f0871d8dee828b4fc30a686e4", null ],
+    [ "verboseSpeexKit", "interface_speex_n_s_data_encoding_controller.html#a7c974618d8e835f9790a7f4371ce36db", null ],
+    [ "sampleRate", "interface_speex_n_s_data_encoding_controller.html#a763d140dadd3918130ae331d041b7431", null ],
+    [ "localQueueMutable", "interface_speex_n_s_data_encoding_controller.html#a8b383128f2272fdb06b8248961a435c2", null ],
+    [ "timeEncoding", "interface_speex_n_s_data_encoding_controller.html#aa89160479de8c9afcf84ff8c30d8fd80", null ],
+    [ "lookAhead", "interface_speex_n_s_data_encoding_controller.html#a7622a1b53c1cdaebc1323c35e9f900d4", null ],
+    [ "speexEncodingThread", "interface_speex_n_s_data_encoding_controller.html#a3ff2ade608821ab04022e1868160c74b", null ],
+    [ "delegate", "interface_speex_n_s_data_encoding_controller.html#a77044ec9424a841d9381625093fdcb26", null ],
+    [ "extraSamples", "interface_speex_n_s_data_encoding_controller.html#a6d85421dee5c2f610780a9c5364ce16b", null ]
+];

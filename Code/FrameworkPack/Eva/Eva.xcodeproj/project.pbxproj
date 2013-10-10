@@ -1,0 +1,975 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CF17473317BD029600CE68E3 /* Recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF17473117BD029600CE68E3 /* Recorder.h */; };
+		CF17473417BD029600CE68E3 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF17473217BD029600CE68E3 /* Recorder.m */; };
+		CF17473717BD02A000CE68E3 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF17473217BD029600CE68E3 /* Recorder.m */; };
+		CF17473817BD02A400CE68E3 /* Recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF17473117BD029600CE68E3 /* Recorder.h */; };
+		CF34FC2117AA730200EE96CD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF34FC2017AA730200EE96CD /* SenTestingKit.framework */; };
+		CF40829E174E653F00CCB667 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF40829C174E653F00CCB667 /* InfoPlist.strings */; };
+		CF4082A7174E65AA00CCB667 /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082A5174E65AA00CCB667 /* Eva.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF4082A8174E65AA00CCB667 /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
+		CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
+		CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
+		CF4082B6174E65BD00CCB667 /* SpeexEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */; };
+		CF4082B7174E65BD00CCB667 /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
+		CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
+		CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
+		CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
+		CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
+		CF4082CC174E68F600CCB667 /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082C9174E68F500CCB667 /* Speex.framework */; };
+		CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
+		CF59E5A817A8526C0002007C /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
+		CF6778DD17A7BABE000BB095 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DC17A7BABD000BB095 /* UIKit.framework */; };
+		CF6778DF17A7BABE000BB095 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DE17A7BABE000BB095 /* Foundation.framework */; };
+		CF67790817A7C26C000BB095 /* Eva.framework in Resources */ = {isa = PBXBuildFile; fileRef = CF408297174E653F00CCB667 /* Eva.framework */; };
+		CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
+		CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
+		CF95929617A0142D0022CFBF /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = CF95929417A0142D0022CFBF /* wav_to_flac.c */; };
+		CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
+		CF95929F17A15E2F0022CFBF /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
+		CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
+		CF9592A117A15E2F0022CFBF /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
+		CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
+		CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
+		CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CF9592A517A15E2F0022CFBF /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = CF95929417A0142D0022CFBF /* wav_to_flac.c */; };
+		CF9592A717A15E2F0022CFBF /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082C9174E68F500CCB667 /* Speex.framework */; };
+		CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
+		CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
+		CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
+		CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082A5174E65AA00CCB667 /* Eva.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
+		CF9592AE17A15E2F0022CFBF /* SpeexEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */; };
+		CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
+		CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
+		CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
+		CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
+		CF9592B417A15E2F0022CFBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF40829C174E653F00CCB667 /* InfoPlist.strings */; };
+		CF98AAF817C2A8C300E171E9 /* ChunkTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */; };
+		CF98AAF917C2A8C300E171E9 /* ChunkTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */; };
+		CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
+		CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
+		CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */; };
+		CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */; };
+		CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */; };
+		CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */; };
+		CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
+		CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
+		CF98AB0D17C3E6E600E171E9 /* NetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0117C3E6E600E171E9 /* NetworkManager.h */; };
+		CF98AB0E17C3E6E600E171E9 /* NetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0117C3E6E600E171E9 /* NetworkManager.h */; };
+		CF98AB0F17C3E6E600E171E9 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0217C3E6E600E171E9 /* NetworkManager.m */; };
+		CF98AB1017C3E6E600E171E9 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0217C3E6E600E171E9 /* NetworkManager.m */; };
+		CF98AB1117C3E6E600E171E9 /* NSData+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */; };
+		CF98AB1217C3E6E600E171E9 /* NSData+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */; };
+		CF98AB1317C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
+		CF98AB1417C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
+		CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CF67796B17A7E0A4000BB095 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CF67792217A7E0A2000BB095;
+			remoteInfo = EvaTestApp;
+		};
+		CF67796D17A7E0A4000BB095 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CF67794E17A7E0A2000BB095;
+			remoteInfo = EvaTestAppTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CF17473117BD029600CE68E3 /* Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
+		CF17473217BD029600CE68E3 /* Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recorder.m; sourceTree = "<group>"; };
+		CF34FC2017AA730200EE96CD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		CF408297174E653F00CCB667 /* Eva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Eva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF40829B174E653F00CCB667 /* Eva-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Eva-Info.plist"; sourceTree = "<group>"; };
+		CF40829D174E653F00CCB667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CF40829F174E653F00CCB667 /* Eva-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eva-Prefix.pch"; sourceTree = "<group>"; };
+		CF4082A5174E65AA00CCB667 /* Eva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Eva.h; path = ../../../Library/Eva/Eva/Eva.h; sourceTree = "<group>"; };
+		CF4082A6174E65AA00CCB667 /* Eva.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Eva.m; path = ../../../Library/Eva/Eva/Eva.m; sourceTree = "<group>"; };
+		CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomError.h"; sourceTree = "<group>"; };
+		CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomError.m"; sourceTree = "<group>"; };
+		CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeexEncoder.h; sourceTree = "<group>"; };
+		CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeexEncoder.m; sourceTree = "<group>"; };
+		CF4082B0174E65BD00CCB667 /* WaveInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveInfo.h; sourceTree = "<group>"; };
+		CF4082B1174E65BD00CCB667 /* WaveInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveInfo.m; sourceTree = "<group>"; };
+		CF4082B2174E65BD00CCB667 /* WaveParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveParser.h; sourceTree = "<group>"; };
+		CF4082B3174E65BD00CCB667 /* WaveParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveParser.m; sourceTree = "<group>"; };
+		CF4082C9174E68F500CCB667 /* Speex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speex.framework; path = ../../Library/Eva/Eva/Frameworks/Speex.framework; sourceTree = "<group>"; };
+		CF4082CA174E68F500CCB667 /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../../Library/Eva/Eva/Frameworks/Vorbis.framework; sourceTree = "<group>"; };
+		CF6778D817A7BABD000BB095 /* EvaFrameworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFrameworkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF6778DC17A7BABD000BB095 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		CF6778DE17A7BABE000BB095 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EvaTestApp.xcodeproj; path = EvaTestApp/EvaTestApp.xcodeproj; sourceTree = "<group>"; };
+		CF761A1B1752320B00C1A52A /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		CF761A1C1752320B00C1A52A /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
+		CF95929117A013AF0022CFBF /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = ../../Library/Eva/Eva/Frameworks/FLAC.framework; sourceTree = "<group>"; };
+		CF95929417A0142D0022CFBF /* wav_to_flac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
+		CF95929517A0142D0022CFBF /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
+		CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFlac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Eva copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/Code/FrameworkPack/Eva/Eva copy-Info.plist"; sourceTree = "<absolute>"; };
+		CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChunkTransfer.h; sourceTree = "<group>"; };
+		CF98AAF717C2A8C300E171E9 /* ChunkTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChunkTransfer.m; sourceTree = "<group>"; };
+		CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioStreamer-Prefix.pch"; sourceTree = "<group>"; };
+		CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioStreamer.h; sourceTree = "<group>"; };
+		CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAudioStreamer.m; sourceTree = "<group>"; };
+		CF98AB0117C3E6E600E171E9 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		CF98AB0217C3E6E600E171E9 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Additions.h"; sourceTree = "<group>"; };
+		CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
+		CFC37EB3177CA0D20035E96F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../../Library/Eva/Eva/Frameworks/Ogg.framework; sourceTree = "<group>"; };
+		CFD71B0517590A87002E114B /* Tasks */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tasks; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CF408291174E653F00CCB667 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF4082CC174E68F600CCB667 /* Speex.framework in Frameworks */,
+				CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */,
+				CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */,
+				CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF6778D417A7BABD000BB095 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF6778DD17A7BABE000BB095 /* UIKit.framework in Frameworks */,
+				CF6778DF17A7BABE000BB095 /* Foundation.framework in Frameworks */,
+				CF34FC2117AA730200EE96CD /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF9592A617A15E2F0022CFBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592A717A15E2F0022CFBF /* Speex.framework in Frameworks */,
+				CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */,
+				CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */,
+				CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CF407A0617B7F2DA003A4925 /* BufferSoundRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				CF17473117BD029600CE68E3 /* Recorder.h */,
+				CF17473217BD029600CE68E3 /* Recorder.m */,
+			);
+			name = BufferSoundRecorder;
+			sourceTree = "<group>";
+		};
+		CF40828A174E653F00CCB667 = {
+			isa = PBXGroup;
+			children = (
+				CFD71B0517590A87002E114B /* Tasks */,
+				CF95929117A013AF0022CFBF /* FLAC.framework */,
+				CFC37EB3177CA0D20035E96F /* Ogg.framework */,
+				CF4082C9174E68F500CCB667 /* Speex.framework */,
+				CF4082CA174E68F500CCB667 /* Vorbis.framework */,
+				CF408299174E653F00CCB667 /* Eva */,
+				CF6778E017A7BABE000BB095 /* EvaFrameworkTests */,
+				CF6778D917A7BABD000BB095 /* Frameworks */,
+				CF408298174E653F00CCB667 /* Products */,
+				CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		CF408298174E653F00CCB667 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF408297174E653F00CCB667 /* Eva.framework */,
+				CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */,
+				CF6778D817A7BABD000BB095 /* EvaFrameworkTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF408299174E653F00CCB667 /* Eva */ = {
+			isa = PBXGroup;
+			children = (
+				CF4082A5174E65AA00CCB667 /* Eva.h */,
+				CF4082A6174E65AA00CCB667 /* Eva.m */,
+				CF40829A174E653F00CCB667 /* Supporting Files */,
+			);
+			path = Eva;
+			sourceTree = "<group>";
+		};
+		CF40829A174E653F00CCB667 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */,
+				CF98AAF517C1465700E171E9 /* ChunkTransfer */,
+				CF407A0617B7F2DA003A4925 /* BufferSoundRecorder */,
+				CF95929317A014170022CFBF /* WavToFlac */,
+				CF761A1A175231F500C1A52A /* OpenUDID */,
+				CF4082A9174E65BD00CCB667 /* HelperCategories */,
+				CF4082AC174E65BD00CCB667 /* SpeexUtilities */,
+				CF4082AF174E65BD00CCB667 /* WaveUtilities */,
+				CF40829B174E653F00CCB667 /* Eva-Info.plist */,
+				CF40829C174E653F00CCB667 /* InfoPlist.strings */,
+				CF40829F174E653F00CCB667 /* Eva-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CF4082A9174E65BD00CCB667 /* HelperCategories */ = {
+			isa = PBXGroup;
+			children = (
+				CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */,
+				CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */,
+			);
+			name = HelperCategories;
+			path = ../../../Library/Eva/Eva/HelperCategories;
+			sourceTree = "<group>";
+		};
+		CF4082AC174E65BD00CCB667 /* SpeexUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */,
+				CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */,
+			);
+			name = SpeexUtilities;
+			path = ../../../Library/Eva/Eva/SpeexUtilities;
+			sourceTree = "<group>";
+		};
+		CF4082AF174E65BD00CCB667 /* WaveUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				CF4082B0174E65BD00CCB667 /* WaveInfo.h */,
+				CF4082B1174E65BD00CCB667 /* WaveInfo.m */,
+				CF4082B2174E65BD00CCB667 /* WaveParser.h */,
+				CF4082B3174E65BD00CCB667 /* WaveParser.m */,
+			);
+			name = WaveUtilities;
+			path = ../../../Library/Eva/Eva/WaveUtilities;
+			sourceTree = "<group>";
+		};
+		CF6778D917A7BABD000BB095 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF34FC2017AA730200EE96CD /* SenTestingKit.framework */,
+				CF6778DC17A7BABD000BB095 /* UIKit.framework */,
+				CF6778DE17A7BABE000BB095 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF6778E017A7BABE000BB095 /* EvaFrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */,
+			);
+			path = EvaFrameworkTests;
+			sourceTree = "<group>";
+		};
+		CF67796717A7E0A2000BB095 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF67796C17A7E0A4000BB095 /* EvaTestApp.app */,
+				CF67796E17A7E0A4000BB095 /* EvaTestAppTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF761A1A175231F500C1A52A /* OpenUDID */ = {
+			isa = PBXGroup;
+			children = (
+				CF761A1B1752320B00C1A52A /* OpenUDID.h */,
+				CF761A1C1752320B00C1A52A /* OpenUDID.m */,
+			);
+			name = OpenUDID;
+			sourceTree = "<group>";
+		};
+		CF95929317A014170022CFBF /* WavToFlac */ = {
+			isa = PBXGroup;
+			children = (
+				CF95929517A0142D0022CFBF /* wav_to_flac.h */,
+				CF95929417A0142D0022CFBF /* wav_to_flac.c */,
+			);
+			name = WavToFlac;
+			sourceTree = "<group>";
+		};
+		CF98AAF517C1465700E171E9 /* ChunkTransfer */ = {
+			isa = PBXGroup;
+			children = (
+				CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */,
+				CF98AAF717C2A8C300E171E9 /* ChunkTransfer.m */,
+			);
+			name = ChunkTransfer;
+			sourceTree = "<group>";
+		};
+		CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */ = {
+			isa = PBXGroup;
+			children = (
+				CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */,
+				CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */,
+				CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */,
+				CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */,
+				CF98AB0117C3E6E600E171E9 /* NetworkManager.h */,
+				CF98AB0217C3E6E600E171E9 /* NetworkManager.m */,
+				CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */,
+				CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */,
+			);
+			name = AudioStreamer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CF408292174E653F00CCB667 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF4082A7174E65AA00CCB667 /* Eva.h in Headers */,
+				CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */,
+				CF4082B6174E65BD00CCB667 /* SpeexEncoder.h in Headers */,
+				CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */,
+				CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */,
+				CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */,
+				CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */,
+				CF17473817BD02A400CE68E3 /* Recorder.h in Headers */,
+				CF98AAF817C2A8C300E171E9 /* ChunkTransfer.h in Headers */,
+				CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
+				CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */,
+				CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
+				CF98AB0D17C3E6E600E171E9 /* NetworkManager.h in Headers */,
+				CF98AB1117C3E6E600E171E9 /* NSData+Additions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF9592AB17A15E2F0022CFBF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */,
+				CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */,
+				CF9592AE17A15E2F0022CFBF /* SpeexEncoder.h in Headers */,
+				CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */,
+				CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */,
+				CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */,
+				CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */,
+				CF17473317BD029600CE68E3 /* Recorder.h in Headers */,
+				CF98AAF917C2A8C300E171E9 /* ChunkTransfer.h in Headers */,
+				CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
+				CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */,
+				CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
+				CF98AB0E17C3E6E600E171E9 /* NetworkManager.h in Headers */,
+				CF98AB1217C3E6E600E171E9 /* NSData+Additions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CF408296174E653F00CCB667 /* Eva */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF4082A2174E653F00CCB667 /* Build configuration list for PBXNativeTarget "Eva" */;
+			buildPhases = (
+				CF40828F174E653F00CCB667 /* ShellScript */,
+				CF408290174E653F00CCB667 /* Sources */,
+				CF408291174E653F00CCB667 /* Frameworks */,
+				CF408292174E653F00CCB667 /* Headers */,
+				CF408293174E653F00CCB667 /* Resources */,
+				CF408294174E653F00CCB667 /* ShellScript */,
+				CF408295174E653F00CCB667 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Eva;
+			productName = Eva;
+			productReference = CF408297174E653F00CCB667 /* Eva.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
+		CF6778D717A7BABD000BB095 /* EvaFrameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF6778EC17A7BABE000BB095 /* Build configuration list for PBXNativeTarget "EvaFrameworkTests" */;
+			buildPhases = (
+				CF6778D317A7BABD000BB095 /* Sources */,
+				CF6778D417A7BABD000BB095 /* Frameworks */,
+				CF6778D517A7BABD000BB095 /* Resources */,
+				CF6778D617A7BABD000BB095 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EvaFrameworkTests;
+			productName = EvaFrameworkTests;
+			productReference = CF6778D817A7BABD000BB095 /* EvaFrameworkTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		CF95929C17A15E2F0022CFBF /* EvaFlac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF9592B717A15E2F0022CFBF /* Build configuration list for PBXNativeTarget "EvaFlac" */;
+			buildPhases = (
+				CF95929D17A15E2F0022CFBF /* ShellScript */,
+				CF95929E17A15E2F0022CFBF /* Sources */,
+				CF9592A617A15E2F0022CFBF /* Frameworks */,
+				CF9592AB17A15E2F0022CFBF /* Headers */,
+				CF9592B317A15E2F0022CFBF /* Resources */,
+				CF9592B517A15E2F0022CFBF /* ShellScript */,
+				CF9592B617A15E2F0022CFBF /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EvaFlac;
+			productName = Eva;
+			productReference = CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CF40828B174E653F00CCB667 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Evature;
+			};
+			buildConfigurationList = CF40828E174E653F00CCB667 /* Build configuration list for PBXProject "Eva" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CF40828A174E653F00CCB667;
+			productRefGroup = CF408298174E653F00CCB667 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CF67796717A7E0A2000BB095 /* Products */;
+					ProjectRef = CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				CF408296174E653F00CCB667 /* Eva */,
+				CF95929C17A15E2F0022CFBF /* EvaFlac */,
+				CF6778D717A7BABD000BB095 /* EvaFrameworkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CF67796C17A7E0A4000BB095 /* EvaTestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = EvaTestApp.app;
+			remoteRef = CF67796B17A7E0A4000BB095 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CF67796E17A7E0A4000BB095 /* EvaTestAppTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = EvaTestAppTests.octest;
+			remoteRef = CF67796D17A7E0A4000BB095 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CF408293174E653F00CCB667 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF40829E174E653F00CCB667 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF6778D517A7BABD000BB095 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF67790817A7C26C000BB095 /* Eva.framework in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF9592B317A15E2F0022CFBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF9592B417A15E2F0022CFBF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CF40828F174E653F00CCB667 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n\tUFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version  from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Clean other platform if needed\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n\techo \"Platform \\\"$UFW_SDK_PLATFORM\\\" was cleaned recently. Cleaning \\\"$UFW_OTHER_PLATFORM\\\" as well\"\n\techo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\n\txcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\nfi\n\n\n# Make sure we are building from fresh binaries\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\n";
+		};
+		CF408294174E653F00CCB667 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "HEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Versions/$FRAMEWORK_VERSION/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$(find $FRAMEWORK_HEADERS_DIR/. -not -type d 2> /dev/null | sed -e \"s@.*/@@g\")\n\nFIND_OPTS=\"\"\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n  if [ -n \"$FIND_OPTS\" ]; then\n    FIND_OPTS=\"$FIND_OPTS -o\"\n  fi\n  FIND_OPTS=\"$FIND_OPTS -name '$PUBLIC_HEADER'\"\ndone\n\nif [ -n \"$FIND_OPTS\" ]; then\n  for ORIG_HEADER in $(eval \"find $HEADERS_ROOT/. $FIND_OPTS\" 2> /dev/null | sed -e \"s@^$HEADERS_ROOT/./@@g\"); do\n    PUBLIC_HEADER=$(basename $ORIG_HEADER)\n    RELATIVE_PATH=$(dirname $ORIG_HEADER)\n    if [ -e $FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER ]; then\n      mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n      mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\n    fi\n  done\nfi\n";
+		};
+		CF408295174E653F00CCB667 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
+		};
+		CF6778D617A7BABD000BB095 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		CF95929D17A15E2F0022CFBF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n\tUFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version  from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Clean other platform if needed\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n\techo \"Platform \\\"$UFW_SDK_PLATFORM\\\" was cleaned recently. Cleaning \\\"$UFW_OTHER_PLATFORM\\\" as well\"\n\techo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\n\txcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\nfi\n\n\n# Make sure we are building from fresh binaries\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\n";
+		};
+		CF9592B517A15E2F0022CFBF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "HEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Versions/$FRAMEWORK_VERSION/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$(find $FRAMEWORK_HEADERS_DIR/. -not -type d 2> /dev/null | sed -e \"s@.*/@@g\")\n\nFIND_OPTS=\"\"\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n  if [ -n \"$FIND_OPTS\" ]; then\n    FIND_OPTS=\"$FIND_OPTS -o\"\n  fi\n  FIND_OPTS=\"$FIND_OPTS -name '$PUBLIC_HEADER'\"\ndone\n\nif [ -n \"$FIND_OPTS\" ]; then\n  for ORIG_HEADER in $(eval \"find $HEADERS_ROOT/. $FIND_OPTS\" 2> /dev/null | sed -e \"s@^$HEADERS_ROOT/./@@g\"); do\n    PUBLIC_HEADER=$(basename $ORIG_HEADER)\n    RELATIVE_PATH=$(dirname $ORIG_HEADER)\n    if [ -e $FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER ]; then\n      mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n      mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\n    fi\n  done\nfi\n";
+		};
+		CF9592B617A15E2F0022CFBF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CF408290174E653F00CCB667 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF4082A8174E65AA00CCB667 /* Eva.m in Sources */,
+				CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */,
+				CF4082B7174E65BD00CCB667 /* SpeexEncoder.m in Sources */,
+				CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */,
+				CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */,
+				CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */,
+				CF95929617A0142D0022CFBF /* wav_to_flac.c in Sources */,
+				CF17473717BD02A000CE68E3 /* Recorder.m in Sources */,
+				CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
+				CF98AB0F17C3E6E600E171E9 /* NetworkManager.m in Sources */,
+				CF98AB1317C3E6E600E171E9 /* NSData+Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF6778D317A7BABD000BB095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF59E5A817A8526C0002007C /* SpeexEncoder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF95929E17A15E2F0022CFBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF95929F17A15E2F0022CFBF /* Eva.m in Sources */,
+				CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */,
+				CF9592A117A15E2F0022CFBF /* SpeexEncoder.m in Sources */,
+				CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */,
+				CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */,
+				CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */,
+				CF9592A517A15E2F0022CFBF /* wav_to_flac.c in Sources */,
+				CF17473417BD029600CE68E3 /* Recorder.m in Sources */,
+				CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
+				CF98AB1017C3E6E600E171E9 /* NetworkManager.m in Sources */,
+				CF98AB1417C3E6E600E171E9 /* NSData+Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CF40829C174E653F00CCB667 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF40829D174E653F00CCB667 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CF4082A0174E653F00CCB667 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CF4082A1174E653F00CCB667 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CF4082A3174E653F00CCB667 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Eva/Eva-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					USE_FLAC,
+				);
+				INFOPLIST_FILE = "Eva/Eva-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"$(inherited)",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = Eva;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				VALID_ARCHS = "armv7 i386 armv7s";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		CF4082A4174E653F00CCB667 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Eva/Eva-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FLAC;
+				INFOPLIST_FILE = "Eva/Eva-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"$(inherited)",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = Eva;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				VALID_ARCHS = "armv7 i386 armv7s";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		CF6778EA17A7BABE000BB095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Idan Sheetrit (4RLD2STT69)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphonesimulator/Eva.embeddedframework\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EvaFrameworkTests/EvaFrameworkTests-Prefix.pch";
+				INFOPLIST_FILE = "EvaFrameworkTests/EvaFrameworkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Eva,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
+				VALID_ARCHS = "armv7 armv7s i386";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		CF6778EB17A7BABE000BB095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Idan Sheetrit (4RLD2STT69)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphoneos/Eva.embeddedframework\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Release-iphonesimulator/Eva.embeddedframework\"",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EvaFrameworkTests/EvaFrameworkTests-Prefix.pch";
+				INFOPLIST_FILE = "EvaFrameworkTests/EvaFrameworkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Eva,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
+				VALID_ARCHS = "armv7 armv7s i386";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		CF9592B817A15E2F0022CFBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Eva/Eva-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					USE_FLAC,
+				);
+				INFOPLIST_FILE = "Eva copy-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"$(inherited)",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = EvaFlac;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				VALID_ARCHS = "armv7 i386 armv7s";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		CF9592B917A15E2F0022CFBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Eva/Eva-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FLAC;
+				INFOPLIST_FILE = "Eva copy-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Eva/Frameworks\"/**",
+					"$(inherited)",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = EvaFlac;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				VALID_ARCHS = "armv7 i386 armv7s";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CF40828E174E653F00CCB667 /* Build configuration list for PBXProject "Eva" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF4082A0174E653F00CCB667 /* Debug */,
+				CF4082A1174E653F00CCB667 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF4082A2174E653F00CCB667 /* Build configuration list for PBXNativeTarget "Eva" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF4082A3174E653F00CCB667 /* Debug */,
+				CF4082A4174E653F00CCB667 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF6778EC17A7BABE000BB095 /* Build configuration list for PBXNativeTarget "EvaFrameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF6778EA17A7BABE000BB095 /* Debug */,
+				CF6778EB17A7BABE000BB095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF9592B717A15E2F0022CFBF /* Build configuration list for PBXNativeTarget "EvaFlac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF9592B817A15E2F0022CFBF /* Debug */,
+				CF9592B917A15E2F0022CFBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CF40828B174E653F00CCB667 /* Project object */;
+}

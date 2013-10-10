@@ -1,0 +1,1146 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		940DC27A15A82C4900240B6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 940DC27915A82C4900240B6D /* UIKit.framework */; };
+		940DC27B15A82C4900240B6D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943F488115A681B5008AA02A /* Foundation.framework */; };
+		940DC27D15A82C4900240B6D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 940DC27C15A82C4900240B6D /* CoreGraphics.framework */; };
+		940DC28315A82C4900240B6D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 940DC28115A82C4900240B6D /* InfoPlist.strings */; };
+		940DC28515A82C4900240B6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 940DC28415A82C4900240B6D /* main.m */; };
+		940DC28915A82C4900240B6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 940DC28815A82C4900240B6D /* AppDelegate.m */; };
+		940DC28C15A82C4900240B6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940DC28B15A82C4900240B6D /* ViewController.m */; };
+		940DC28F15A82C4900240B6D /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940DC28D15A82C4900240B6D /* ViewController.xib */; };
+		940DC29515A82CA800240B6D /* libSpeexKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943F487E15A681B5008AA02A /* libSpeexKit.a */; };
+		943F489015A681B5008AA02A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943F488F15A681B5008AA02A /* SenTestingKit.framework */; };
+		943F489315A681B5008AA02A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943F488115A681B5008AA02A /* Foundation.framework */; };
+		943F489615A681B5008AA02A /* libSpeexKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943F487E15A681B5008AA02A /* libSpeexKit.a */; };
+		943F489C15A681B6008AA02A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 943F489A15A681B6008AA02A /* InfoPlist.strings */; };
+		943F489F15A681B6008AA02A /* SpeexKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F489E15A681B6008AA02A /* SpeexKitTests.m */; };
+		9441FD9E15AFEE4F00CEA6B3 /* config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD3A15AFEE4F00CEA6B3 /* config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FD9F15AFEE4F00CEA6B3 /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD3B15AFEE4F00CEA6B3 /* ogg.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDA015AFEE4F00CEA6B3 /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD3C15AFEE4F00CEA6B3 /* os_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDA115AFEE4F00CEA6B3 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD3D15AFEE4F00CEA6B3 /* libogg.a */; };
+		9441FDA215AFEE4F00CEA6B3 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD3D15AFEE4F00CEA6B3 /* libogg.a */; };
+		9441FDA315AFEE4F00CEA6B3 /* ogg.m4 in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4015AFEE4F00CEA6B3 /* ogg.m4 */; };
+		9441FDA415AFEE4F00CEA6B3 /* framing.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4315AFEE4F00CEA6B3 /* framing.html */; };
+		9441FDA515AFEE4F00CEA6B3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4415AFEE4F00CEA6B3 /* index.html */; };
+		9441FDA615AFEE4F00CEA6B3 /* bitpacking.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4615AFEE4F00CEA6B3 /* bitpacking.html */; };
+		9441FDA715AFEE4F00CEA6B3 /* datastructures.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4715AFEE4F00CEA6B3 /* datastructures.html */; };
+		9441FDA815AFEE4F00CEA6B3 /* decoding.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4815AFEE4F00CEA6B3 /* decoding.html */; };
+		9441FDA915AFEE4F00CEA6B3 /* encoding.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4915AFEE4F00CEA6B3 /* encoding.html */; };
+		9441FDAA15AFEE4F00CEA6B3 /* general.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4A15AFEE4F00CEA6B3 /* general.html */; };
+		9441FDAB15AFEE4F00CEA6B3 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4B15AFEE4F00CEA6B3 /* index.html */; };
+		9441FDAC15AFEE4F00CEA6B3 /* ogg_packet.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4C15AFEE4F00CEA6B3 /* ogg_packet.html */; };
+		9441FDAD15AFEE4F00CEA6B3 /* ogg_packet_clear.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4D15AFEE4F00CEA6B3 /* ogg_packet_clear.html */; };
+		9441FDAE15AFEE4F00CEA6B3 /* ogg_page.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4E15AFEE4F00CEA6B3 /* ogg_page.html */; };
+		9441FDAF15AFEE4F00CEA6B3 /* ogg_page_bos.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD4F15AFEE4F00CEA6B3 /* ogg_page_bos.html */; };
+		9441FDB015AFEE4F00CEA6B3 /* ogg_page_checksum_set.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5015AFEE4F00CEA6B3 /* ogg_page_checksum_set.html */; };
+		9441FDB115AFEE4F00CEA6B3 /* ogg_page_continued.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5115AFEE4F00CEA6B3 /* ogg_page_continued.html */; };
+		9441FDB215AFEE4F00CEA6B3 /* ogg_page_eos.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5215AFEE4F00CEA6B3 /* ogg_page_eos.html */; };
+		9441FDB315AFEE4F00CEA6B3 /* ogg_page_granulepos.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5315AFEE4F00CEA6B3 /* ogg_page_granulepos.html */; };
+		9441FDB415AFEE4F00CEA6B3 /* ogg_page_packets.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5415AFEE4F00CEA6B3 /* ogg_page_packets.html */; };
+		9441FDB515AFEE4F00CEA6B3 /* ogg_page_pageno.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5515AFEE4F00CEA6B3 /* ogg_page_pageno.html */; };
+		9441FDB615AFEE4F00CEA6B3 /* ogg_page_serialno.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5615AFEE4F00CEA6B3 /* ogg_page_serialno.html */; };
+		9441FDB715AFEE4F00CEA6B3 /* ogg_page_version.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5715AFEE4F00CEA6B3 /* ogg_page_version.html */; };
+		9441FDB815AFEE4F00CEA6B3 /* ogg_stream_clear.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5815AFEE4F00CEA6B3 /* ogg_stream_clear.html */; };
+		9441FDB915AFEE4F00CEA6B3 /* ogg_stream_destroy.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5915AFEE4F00CEA6B3 /* ogg_stream_destroy.html */; };
+		9441FDBA15AFEE4F00CEA6B3 /* ogg_stream_eos.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5A15AFEE4F00CEA6B3 /* ogg_stream_eos.html */; };
+		9441FDBB15AFEE4F00CEA6B3 /* ogg_stream_flush.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5B15AFEE4F00CEA6B3 /* ogg_stream_flush.html */; };
+		9441FDBC15AFEE4F00CEA6B3 /* ogg_stream_init.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5C15AFEE4F00CEA6B3 /* ogg_stream_init.html */; };
+		9441FDBD15AFEE4F00CEA6B3 /* ogg_stream_packetin.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5D15AFEE4F00CEA6B3 /* ogg_stream_packetin.html */; };
+		9441FDBE15AFEE4F00CEA6B3 /* ogg_stream_packetout.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5E15AFEE4F00CEA6B3 /* ogg_stream_packetout.html */; };
+		9441FDBF15AFEE4F00CEA6B3 /* ogg_stream_packetpeek.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD5F15AFEE4F00CEA6B3 /* ogg_stream_packetpeek.html */; };
+		9441FDC015AFEE4F00CEA6B3 /* ogg_stream_pagein.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6015AFEE4F00CEA6B3 /* ogg_stream_pagein.html */; };
+		9441FDC115AFEE4F00CEA6B3 /* ogg_stream_pageout.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6115AFEE4F00CEA6B3 /* ogg_stream_pageout.html */; };
+		9441FDC215AFEE4F00CEA6B3 /* ogg_stream_pageout_fill.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6215AFEE4F00CEA6B3 /* ogg_stream_pageout_fill.html */; };
+		9441FDC315AFEE4F00CEA6B3 /* ogg_stream_reset.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6315AFEE4F00CEA6B3 /* ogg_stream_reset.html */; };
+		9441FDC415AFEE4F00CEA6B3 /* ogg_stream_reset_serialno.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6415AFEE4F00CEA6B3 /* ogg_stream_reset_serialno.html */; };
+		9441FDC515AFEE4F00CEA6B3 /* ogg_stream_state.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6515AFEE4F00CEA6B3 /* ogg_stream_state.html */; };
+		9441FDC615AFEE4F00CEA6B3 /* ogg_sync_buffer.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6615AFEE4F00CEA6B3 /* ogg_sync_buffer.html */; };
+		9441FDC715AFEE4F00CEA6B3 /* ogg_sync_clear.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6715AFEE4F00CEA6B3 /* ogg_sync_clear.html */; };
+		9441FDC815AFEE4F00CEA6B3 /* ogg_sync_destroy.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6815AFEE4F00CEA6B3 /* ogg_sync_destroy.html */; };
+		9441FDC915AFEE4F00CEA6B3 /* ogg_sync_init.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6915AFEE4F00CEA6B3 /* ogg_sync_init.html */; };
+		9441FDCA15AFEE4F00CEA6B3 /* ogg_sync_pageout.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6A15AFEE4F00CEA6B3 /* ogg_sync_pageout.html */; };
+		9441FDCB15AFEE4F00CEA6B3 /* ogg_sync_pageseek.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6B15AFEE4F00CEA6B3 /* ogg_sync_pageseek.html */; };
+		9441FDCC15AFEE4F00CEA6B3 /* ogg_sync_reset.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6C15AFEE4F00CEA6B3 /* ogg_sync_reset.html */; };
+		9441FDCD15AFEE4F00CEA6B3 /* ogg_sync_state.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6D15AFEE4F00CEA6B3 /* ogg_sync_state.html */; };
+		9441FDCE15AFEE4F00CEA6B3 /* ogg_sync_wrote.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6E15AFEE4F00CEA6B3 /* ogg_sync_wrote.html */; };
+		9441FDCF15AFEE4F00CEA6B3 /* oggpack_adv.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD6F15AFEE4F00CEA6B3 /* oggpack_adv.html */; };
+		9441FDD015AFEE4F00CEA6B3 /* oggpack_adv1.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7015AFEE4F00CEA6B3 /* oggpack_adv1.html */; };
+		9441FDD115AFEE4F00CEA6B3 /* oggpack_bits.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7115AFEE4F00CEA6B3 /* oggpack_bits.html */; };
+		9441FDD215AFEE4F00CEA6B3 /* oggpack_buffer.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7215AFEE4F00CEA6B3 /* oggpack_buffer.html */; };
+		9441FDD315AFEE4F00CEA6B3 /* oggpack_bytes.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7315AFEE4F00CEA6B3 /* oggpack_bytes.html */; };
+		9441FDD415AFEE4F00CEA6B3 /* oggpack_get_buffer.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7415AFEE4F00CEA6B3 /* oggpack_get_buffer.html */; };
+		9441FDD515AFEE4F00CEA6B3 /* oggpack_look.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7515AFEE4F00CEA6B3 /* oggpack_look.html */; };
+		9441FDD615AFEE4F00CEA6B3 /* oggpack_look1.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7615AFEE4F00CEA6B3 /* oggpack_look1.html */; };
+		9441FDD715AFEE4F00CEA6B3 /* oggpack_read.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7715AFEE4F00CEA6B3 /* oggpack_read.html */; };
+		9441FDD815AFEE4F00CEA6B3 /* oggpack_read1.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7815AFEE4F00CEA6B3 /* oggpack_read1.html */; };
+		9441FDD915AFEE4F00CEA6B3 /* oggpack_readinit.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7915AFEE4F00CEA6B3 /* oggpack_readinit.html */; };
+		9441FDDA15AFEE4F00CEA6B3 /* oggpack_reset.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7A15AFEE4F00CEA6B3 /* oggpack_reset.html */; };
+		9441FDDB15AFEE4F00CEA6B3 /* oggpack_write.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7B15AFEE4F00CEA6B3 /* oggpack_write.html */; };
+		9441FDDC15AFEE4F00CEA6B3 /* oggpack_writealign.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7C15AFEE4F00CEA6B3 /* oggpack_writealign.html */; };
+		9441FDDD15AFEE4F00CEA6B3 /* oggpack_writeclear.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7D15AFEE4F00CEA6B3 /* oggpack_writeclear.html */; };
+		9441FDDE15AFEE4F00CEA6B3 /* oggpack_writecopy.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7E15AFEE4F00CEA6B3 /* oggpack_writecopy.html */; };
+		9441FDDF15AFEE4F00CEA6B3 /* oggpack_writeinit.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD7F15AFEE4F00CEA6B3 /* oggpack_writeinit.html */; };
+		9441FDE015AFEE4F00CEA6B3 /* oggpack_writetrunc.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8015AFEE4F00CEA6B3 /* oggpack_writetrunc.html */; };
+		9441FDE115AFEE4F00CEA6B3 /* overview.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8115AFEE4F00CEA6B3 /* overview.html */; };
+		9441FDE215AFEE4F00CEA6B3 /* reference.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8215AFEE4F00CEA6B3 /* reference.html */; };
+		9441FDE315AFEE4F00CEA6B3 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8315AFEE4F00CEA6B3 /* style.css */; };
+		9441FDE415AFEE4F00CEA6B3 /* ogg-multiplex.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8415AFEE4F00CEA6B3 /* ogg-multiplex.html */; };
+		9441FDE515AFEE4F00CEA6B3 /* oggstream.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8515AFEE4F00CEA6B3 /* oggstream.html */; };
+		9441FDE615AFEE4F00CEA6B3 /* rfc3533.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8615AFEE4F00CEA6B3 /* rfc3533.txt */; };
+		9441FDE715AFEE4F00CEA6B3 /* rfc5334.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8715AFEE4F00CEA6B3 /* rfc5334.txt */; };
+		9441FDE815AFEE4F00CEA6B3 /* skeleton.html in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8815AFEE4F00CEA6B3 /* skeleton.html */; };
+		9441FDE915AFEE4F00CEA6B3 /* stream.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8915AFEE4F00CEA6B3 /* stream.png */; };
+		9441FDEA15AFEE4F00CEA6B3 /* vorbisword2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8A15AFEE4F00CEA6B3 /* vorbisword2.png */; };
+		9441FDEB15AFEE4F00CEA6B3 /* white-ogg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8B15AFEE4F00CEA6B3 /* white-ogg.png */; };
+		9441FDEC15AFEE4F00CEA6B3 /* white-xifish.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441FD8C15AFEE4F00CEA6B3 /* white-xifish.png */; };
+		9441FDED15AFEE4F00CEA6B3 /* speex.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9015AFEE4F00CEA6B3 /* speex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDEE15AFEE4F00CEA6B3 /* speex_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9115AFEE4F00CEA6B3 /* speex_bits.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDEF15AFEE4F00CEA6B3 /* speex_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9215AFEE4F00CEA6B3 /* speex_buffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF015AFEE4F00CEA6B3 /* speex_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9315AFEE4F00CEA6B3 /* speex_callbacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF115AFEE4F00CEA6B3 /* speex_config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9415AFEE4F00CEA6B3 /* speex_config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF215AFEE4F00CEA6B3 /* speex_echo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9515AFEE4F00CEA6B3 /* speex_echo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF315AFEE4F00CEA6B3 /* speex_header.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9615AFEE4F00CEA6B3 /* speex_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF415AFEE4F00CEA6B3 /* speex_jitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9715AFEE4F00CEA6B3 /* speex_jitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF515AFEE4F00CEA6B3 /* speex_preprocess.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9815AFEE4F00CEA6B3 /* speex_preprocess.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF615AFEE4F00CEA6B3 /* speex_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9915AFEE4F00CEA6B3 /* speex_resampler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF715AFEE4F00CEA6B3 /* speex_stereo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9A15AFEE4F00CEA6B3 /* speex_stereo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF815AFEE4F00CEA6B3 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FD9B15AFEE4F00CEA6B3 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FDF915AFEE4F00CEA6B3 /* libspeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD9C15AFEE4F00CEA6B3 /* libspeex.a */; };
+		9441FDFA15AFEE4F00CEA6B3 /* libspeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD9C15AFEE4F00CEA6B3 /* libspeex.a */; };
+		9441FDFB15AFEE4F00CEA6B3 /* libspeexdsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD9D15AFEE4F00CEA6B3 /* libspeexdsp.a */; };
+		9441FDFC15AFEE4F00CEA6B3 /* libspeexdsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9441FD9D15AFEE4F00CEA6B3 /* libspeexdsp.a */; };
+		9441FE2615B010DE00CEA6B3 /* SpeexDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE2015B010DE00CEA6B3 /* SpeexDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FE2715B010DE00CEA6B3 /* SpeexDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE2115B010DE00CEA6B3 /* SpeexDecoder.m */; };
+		9441FE2815B010DE00CEA6B3 /* SpeexEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE2215B010DE00CEA6B3 /* SpeexEncoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FE2915B010DE00CEA6B3 /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE2315B010DE00CEA6B3 /* SpeexEncoder.m */; };
+		9441FE2A15B010DE00CEA6B3 /* SpeexKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE2415B010DE00CEA6B3 /* SpeexKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9441FE4315B3C53300CEA6B3 /* output.spx in Resources */ = {isa = PBXBuildFile; fileRef = 9441FE4215B3C53300CEA6B3 /* output.spx */; };
+		9441FE4515B3CEFB00CEA6B3 /* output.spx in Resources */ = {isa = PBXBuildFile; fileRef = 9441FE4215B3C53300CEA6B3 /* output.spx */; };
+		9441FE5015B3E10200CEA6B3 /* speexdec.c in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE4E15B3E10200CEA6B3 /* speexdec.c */; };
+		9441FE5115B3E10200CEA6B3 /* speexenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE4F15B3E10200CEA6B3 /* speexenc.c */; };
+		9441FE5615B3E47000CEA6B3 /* wav_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE5215B3E46F00CEA6B3 /* wav_io.c */; };
+		9441FE5715B3E47000CEA6B3 /* wav_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE5315B3E46F00CEA6B3 /* wav_io.h */; };
+		9441FE5815B3E47000CEA6B3 /* wave_out.c in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE5415B3E47000CEA6B3 /* wave_out.c */; };
+		9441FE5915B3E47000CEA6B3 /* wave_out.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE5515B3E47000CEA6B3 /* wave_out.h */; };
+		9441FE5C15B3E49300CEA6B3 /* skeleton.c in Sources */ = {isa = PBXBuildFile; fileRef = 9441FE5A15B3E49300CEA6B3 /* skeleton.c */; };
+		9441FE5D15B3E49300CEA6B3 /* skeleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 9441FE5B15B3E49300CEA6B3 /* skeleton.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		940DC29315A82C9D00240B6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 943F487515A681B4008AA02A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 943F487D15A681B5008AA02A;
+			remoteInfo = SpeexKit;
+		};
+		943F489415A681B5008AA02A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 943F487515A681B4008AA02A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 943F487D15A681B5008AA02A;
+			remoteInfo = SpeexKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		940DC27715A82C4800240B6D /* SpeexKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeexKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		940DC27915A82C4900240B6D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		940DC27C15A82C4900240B6D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		940DC28015A82C4900240B6D /* SpeexKitDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpeexKitDemo-Info.plist"; sourceTree = "<group>"; };
+		940DC28215A82C4900240B6D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		940DC28415A82C4900240B6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		940DC28615A82C4900240B6D /* SpeexKitDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpeexKitDemo-Prefix.pch"; sourceTree = "<group>"; };
+		940DC28715A82C4900240B6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		940DC28815A82C4900240B6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		940DC28A15A82C4900240B6D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		940DC28B15A82C4900240B6D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		940DC28E15A82C4900240B6D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		943F487E15A681B5008AA02A /* libSpeexKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSpeexKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		943F488115A681B5008AA02A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		943F488515A681B5008AA02A /* SpeexKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpeexKit-Prefix.pch"; sourceTree = "<group>"; };
+		943F488E15A681B5008AA02A /* SpeexKitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeexKitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		943F488F15A681B5008AA02A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		943F489915A681B6008AA02A /* SpeexKitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpeexKitTests-Info.plist"; sourceTree = "<group>"; };
+		943F489B15A681B6008AA02A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		943F489D15A681B6008AA02A /* SpeexKitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeexKitTests.h; sourceTree = "<group>"; };
+		943F489E15A681B6008AA02A /* SpeexKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeexKitTests.m; sourceTree = "<group>"; };
+		9441FD3A15AFEE4F00CEA6B3 /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
+		9441FD3B15AFEE4F00CEA6B3 /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
+		9441FD3C15AFEE4F00CEA6B3 /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
+		9441FD3D15AFEE4F00CEA6B3 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libogg.a; sourceTree = "<group>"; };
+		9441FD4015AFEE4F00CEA6B3 /* ogg.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ogg.m4; sourceTree = "<group>"; };
+		9441FD4315AFEE4F00CEA6B3 /* framing.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = framing.html; sourceTree = "<group>"; };
+		9441FD4415AFEE4F00CEA6B3 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		9441FD4615AFEE4F00CEA6B3 /* bitpacking.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bitpacking.html; sourceTree = "<group>"; };
+		9441FD4715AFEE4F00CEA6B3 /* datastructures.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = datastructures.html; sourceTree = "<group>"; };
+		9441FD4815AFEE4F00CEA6B3 /* decoding.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = decoding.html; sourceTree = "<group>"; };
+		9441FD4915AFEE4F00CEA6B3 /* encoding.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = encoding.html; sourceTree = "<group>"; };
+		9441FD4A15AFEE4F00CEA6B3 /* general.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = general.html; sourceTree = "<group>"; };
+		9441FD4B15AFEE4F00CEA6B3 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		9441FD4C15AFEE4F00CEA6B3 /* ogg_packet.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_packet.html; sourceTree = "<group>"; };
+		9441FD4D15AFEE4F00CEA6B3 /* ogg_packet_clear.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_packet_clear.html; sourceTree = "<group>"; };
+		9441FD4E15AFEE4F00CEA6B3 /* ogg_page.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page.html; sourceTree = "<group>"; };
+		9441FD4F15AFEE4F00CEA6B3 /* ogg_page_bos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_bos.html; sourceTree = "<group>"; };
+		9441FD5015AFEE4F00CEA6B3 /* ogg_page_checksum_set.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_checksum_set.html; sourceTree = "<group>"; };
+		9441FD5115AFEE4F00CEA6B3 /* ogg_page_continued.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_continued.html; sourceTree = "<group>"; };
+		9441FD5215AFEE4F00CEA6B3 /* ogg_page_eos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_eos.html; sourceTree = "<group>"; };
+		9441FD5315AFEE4F00CEA6B3 /* ogg_page_granulepos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_granulepos.html; sourceTree = "<group>"; };
+		9441FD5415AFEE4F00CEA6B3 /* ogg_page_packets.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_packets.html; sourceTree = "<group>"; };
+		9441FD5515AFEE4F00CEA6B3 /* ogg_page_pageno.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_pageno.html; sourceTree = "<group>"; };
+		9441FD5615AFEE4F00CEA6B3 /* ogg_page_serialno.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_serialno.html; sourceTree = "<group>"; };
+		9441FD5715AFEE4F00CEA6B3 /* ogg_page_version.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_page_version.html; sourceTree = "<group>"; };
+		9441FD5815AFEE4F00CEA6B3 /* ogg_stream_clear.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_clear.html; sourceTree = "<group>"; };
+		9441FD5915AFEE4F00CEA6B3 /* ogg_stream_destroy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_destroy.html; sourceTree = "<group>"; };
+		9441FD5A15AFEE4F00CEA6B3 /* ogg_stream_eos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_eos.html; sourceTree = "<group>"; };
+		9441FD5B15AFEE4F00CEA6B3 /* ogg_stream_flush.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_flush.html; sourceTree = "<group>"; };
+		9441FD5C15AFEE4F00CEA6B3 /* ogg_stream_init.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_init.html; sourceTree = "<group>"; };
+		9441FD5D15AFEE4F00CEA6B3 /* ogg_stream_packetin.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_packetin.html; sourceTree = "<group>"; };
+		9441FD5E15AFEE4F00CEA6B3 /* ogg_stream_packetout.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_packetout.html; sourceTree = "<group>"; };
+		9441FD5F15AFEE4F00CEA6B3 /* ogg_stream_packetpeek.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_packetpeek.html; sourceTree = "<group>"; };
+		9441FD6015AFEE4F00CEA6B3 /* ogg_stream_pagein.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_pagein.html; sourceTree = "<group>"; };
+		9441FD6115AFEE4F00CEA6B3 /* ogg_stream_pageout.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_pageout.html; sourceTree = "<group>"; };
+		9441FD6215AFEE4F00CEA6B3 /* ogg_stream_pageout_fill.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_pageout_fill.html; sourceTree = "<group>"; };
+		9441FD6315AFEE4F00CEA6B3 /* ogg_stream_reset.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_reset.html; sourceTree = "<group>"; };
+		9441FD6415AFEE4F00CEA6B3 /* ogg_stream_reset_serialno.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_reset_serialno.html; sourceTree = "<group>"; };
+		9441FD6515AFEE4F00CEA6B3 /* ogg_stream_state.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_stream_state.html; sourceTree = "<group>"; };
+		9441FD6615AFEE4F00CEA6B3 /* ogg_sync_buffer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_buffer.html; sourceTree = "<group>"; };
+		9441FD6715AFEE4F00CEA6B3 /* ogg_sync_clear.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_clear.html; sourceTree = "<group>"; };
+		9441FD6815AFEE4F00CEA6B3 /* ogg_sync_destroy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_destroy.html; sourceTree = "<group>"; };
+		9441FD6915AFEE4F00CEA6B3 /* ogg_sync_init.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_init.html; sourceTree = "<group>"; };
+		9441FD6A15AFEE4F00CEA6B3 /* ogg_sync_pageout.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_pageout.html; sourceTree = "<group>"; };
+		9441FD6B15AFEE4F00CEA6B3 /* ogg_sync_pageseek.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_pageseek.html; sourceTree = "<group>"; };
+		9441FD6C15AFEE4F00CEA6B3 /* ogg_sync_reset.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_reset.html; sourceTree = "<group>"; };
+		9441FD6D15AFEE4F00CEA6B3 /* ogg_sync_state.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_state.html; sourceTree = "<group>"; };
+		9441FD6E15AFEE4F00CEA6B3 /* ogg_sync_wrote.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ogg_sync_wrote.html; sourceTree = "<group>"; };
+		9441FD6F15AFEE4F00CEA6B3 /* oggpack_adv.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_adv.html; sourceTree = "<group>"; };
+		9441FD7015AFEE4F00CEA6B3 /* oggpack_adv1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_adv1.html; sourceTree = "<group>"; };
+		9441FD7115AFEE4F00CEA6B3 /* oggpack_bits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_bits.html; sourceTree = "<group>"; };
+		9441FD7215AFEE4F00CEA6B3 /* oggpack_buffer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_buffer.html; sourceTree = "<group>"; };
+		9441FD7315AFEE4F00CEA6B3 /* oggpack_bytes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_bytes.html; sourceTree = "<group>"; };
+		9441FD7415AFEE4F00CEA6B3 /* oggpack_get_buffer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_get_buffer.html; sourceTree = "<group>"; };
+		9441FD7515AFEE4F00CEA6B3 /* oggpack_look.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_look.html; sourceTree = "<group>"; };
+		9441FD7615AFEE4F00CEA6B3 /* oggpack_look1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_look1.html; sourceTree = "<group>"; };
+		9441FD7715AFEE4F00CEA6B3 /* oggpack_read.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_read.html; sourceTree = "<group>"; };
+		9441FD7815AFEE4F00CEA6B3 /* oggpack_read1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_read1.html; sourceTree = "<group>"; };
+		9441FD7915AFEE4F00CEA6B3 /* oggpack_readinit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_readinit.html; sourceTree = "<group>"; };
+		9441FD7A15AFEE4F00CEA6B3 /* oggpack_reset.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_reset.html; sourceTree = "<group>"; };
+		9441FD7B15AFEE4F00CEA6B3 /* oggpack_write.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_write.html; sourceTree = "<group>"; };
+		9441FD7C15AFEE4F00CEA6B3 /* oggpack_writealign.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_writealign.html; sourceTree = "<group>"; };
+		9441FD7D15AFEE4F00CEA6B3 /* oggpack_writeclear.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_writeclear.html; sourceTree = "<group>"; };
+		9441FD7E15AFEE4F00CEA6B3 /* oggpack_writecopy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_writecopy.html; sourceTree = "<group>"; };
+		9441FD7F15AFEE4F00CEA6B3 /* oggpack_writeinit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_writeinit.html; sourceTree = "<group>"; };
+		9441FD8015AFEE4F00CEA6B3 /* oggpack_writetrunc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggpack_writetrunc.html; sourceTree = "<group>"; };
+		9441FD8115AFEE4F00CEA6B3 /* overview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = overview.html; sourceTree = "<group>"; };
+		9441FD8215AFEE4F00CEA6B3 /* reference.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = reference.html; sourceTree = "<group>"; };
+		9441FD8315AFEE4F00CEA6B3 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		9441FD8415AFEE4F00CEA6B3 /* ogg-multiplex.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ogg-multiplex.html"; sourceTree = "<group>"; };
+		9441FD8515AFEE4F00CEA6B3 /* oggstream.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = oggstream.html; sourceTree = "<group>"; };
+		9441FD8615AFEE4F00CEA6B3 /* rfc3533.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rfc3533.txt; sourceTree = "<group>"; };
+		9441FD8715AFEE4F00CEA6B3 /* rfc5334.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rfc5334.txt; sourceTree = "<group>"; };
+		9441FD8815AFEE4F00CEA6B3 /* skeleton.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = skeleton.html; sourceTree = "<group>"; };
+		9441FD8915AFEE4F00CEA6B3 /* stream.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stream.png; sourceTree = "<group>"; };
+		9441FD8A15AFEE4F00CEA6B3 /* vorbisword2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vorbisword2.png; sourceTree = "<group>"; };
+		9441FD8B15AFEE4F00CEA6B3 /* white-ogg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-ogg.png"; sourceTree = "<group>"; };
+		9441FD8C15AFEE4F00CEA6B3 /* white-xifish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-xifish.png"; sourceTree = "<group>"; };
+		9441FD9015AFEE4F00CEA6B3 /* speex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex.h; sourceTree = "<group>"; };
+		9441FD9115AFEE4F00CEA6B3 /* speex_bits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_bits.h; sourceTree = "<group>"; };
+		9441FD9215AFEE4F00CEA6B3 /* speex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_buffer.h; sourceTree = "<group>"; };
+		9441FD9315AFEE4F00CEA6B3 /* speex_callbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_callbacks.h; sourceTree = "<group>"; };
+		9441FD9415AFEE4F00CEA6B3 /* speex_config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_config_types.h; sourceTree = "<group>"; };
+		9441FD9515AFEE4F00CEA6B3 /* speex_echo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_echo.h; sourceTree = "<group>"; };
+		9441FD9615AFEE4F00CEA6B3 /* speex_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
+		9441FD9715AFEE4F00CEA6B3 /* speex_jitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_jitter.h; sourceTree = "<group>"; };
+		9441FD9815AFEE4F00CEA6B3 /* speex_preprocess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_preprocess.h; sourceTree = "<group>"; };
+		9441FD9915AFEE4F00CEA6B3 /* speex_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_resampler.h; sourceTree = "<group>"; };
+		9441FD9A15AFEE4F00CEA6B3 /* speex_stereo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_stereo.h; sourceTree = "<group>"; };
+		9441FD9B15AFEE4F00CEA6B3 /* speex_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_types.h; sourceTree = "<group>"; };
+		9441FD9C15AFEE4F00CEA6B3 /* libspeex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libspeex.a; sourceTree = "<group>"; };
+		9441FD9D15AFEE4F00CEA6B3 /* libspeexdsp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libspeexdsp.a; sourceTree = "<group>"; };
+		9441FE2015B010DE00CEA6B3 /* SpeexDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeexDecoder.h; sourceTree = "<group>"; };
+		9441FE2115B010DE00CEA6B3 /* SpeexDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeexDecoder.m; sourceTree = "<group>"; };
+		9441FE2215B010DE00CEA6B3 /* SpeexEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeexEncoder.h; sourceTree = "<group>"; };
+		9441FE2315B010DE00CEA6B3 /* SpeexEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeexEncoder.m; sourceTree = "<group>"; };
+		9441FE2415B010DE00CEA6B3 /* SpeexKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeexKit.h; sourceTree = "<group>"; };
+		9441FE4215B3C53300CEA6B3 /* output.spx */ = {isa = PBXFileReference; lastKnownFileType = file; path = output.spx; sourceTree = "<group>"; };
+		9441FE4E15B3E10200CEA6B3 /* speexdec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speexdec.c; sourceTree = "<group>"; };
+		9441FE4F15B3E10200CEA6B3 /* speexenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speexenc.c; sourceTree = "<group>"; };
+		9441FE5215B3E46F00CEA6B3 /* wav_io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_io.c; sourceTree = "<group>"; };
+		9441FE5315B3E46F00CEA6B3 /* wav_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_io.h; sourceTree = "<group>"; };
+		9441FE5415B3E47000CEA6B3 /* wave_out.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wave_out.c; sourceTree = "<group>"; };
+		9441FE5515B3E47000CEA6B3 /* wave_out.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave_out.h; sourceTree = "<group>"; };
+		9441FE5A15B3E49300CEA6B3 /* skeleton.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = skeleton.c; sourceTree = "<group>"; };
+		9441FE5B15B3E49300CEA6B3 /* skeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeleton.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		940DC27415A82C4800240B6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				940DC29515A82CA800240B6D /* libSpeexKit.a in Frameworks */,
+				940DC27A15A82C4900240B6D /* UIKit.framework in Frameworks */,
+				940DC27B15A82C4900240B6D /* Foundation.framework in Frameworks */,
+				940DC27D15A82C4900240B6D /* CoreGraphics.framework in Frameworks */,
+				9441FDA215AFEE4F00CEA6B3 /* libogg.a in Frameworks */,
+				9441FDFA15AFEE4F00CEA6B3 /* libspeex.a in Frameworks */,
+				9441FDFC15AFEE4F00CEA6B3 /* libspeexdsp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943F487B15A681B5008AA02A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9441FDA115AFEE4F00CEA6B3 /* libogg.a in Frameworks */,
+				9441FDF915AFEE4F00CEA6B3 /* libspeex.a in Frameworks */,
+				9441FDFB15AFEE4F00CEA6B3 /* libspeexdsp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943F488A15A681B5008AA02A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				943F489015A681B5008AA02A /* SenTestingKit.framework in Frameworks */,
+				943F489315A681B5008AA02A /* Foundation.framework in Frameworks */,
+				943F489615A681B5008AA02A /* libSpeexKit.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		940DC27E15A82C4900240B6D /* SpeexKitDemo */ = {
+			isa = PBXGroup;
+			children = (
+				940DC28715A82C4900240B6D /* AppDelegate.h */,
+				940DC28815A82C4900240B6D /* AppDelegate.m */,
+				940DC28A15A82C4900240B6D /* ViewController.h */,
+				940DC28B15A82C4900240B6D /* ViewController.m */,
+				940DC28D15A82C4900240B6D /* ViewController.xib */,
+				940DC27F15A82C4900240B6D /* Supporting Files */,
+			);
+			path = SpeexKitDemo;
+			sourceTree = "<group>";
+		};
+		940DC27F15A82C4900240B6D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				940DC28015A82C4900240B6D /* SpeexKitDemo-Info.plist */,
+				940DC28115A82C4900240B6D /* InfoPlist.strings */,
+				940DC28415A82C4900240B6D /* main.m */,
+				940DC28615A82C4900240B6D /* SpeexKitDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		943F487315A681B4008AA02A = {
+			isa = PBXGroup;
+			children = (
+				943F488315A681B5008AA02A /* SpeexKit */,
+				943F489715A681B5008AA02A /* SpeexKitTests */,
+				940DC27E15A82C4900240B6D /* SpeexKitDemo */,
+				943F488015A681B5008AA02A /* Frameworks */,
+				943F487F15A681B5008AA02A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		943F487F15A681B5008AA02A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				943F487E15A681B5008AA02A /* libSpeexKit.a */,
+				943F488E15A681B5008AA02A /* SpeexKitTests.octest */,
+				940DC27715A82C4800240B6D /* SpeexKitDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		943F488015A681B5008AA02A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3615AFEE4F00CEA6B3 /* Linked Framework */,
+				943F488115A681B5008AA02A /* Foundation.framework */,
+				943F488F15A681B5008AA02A /* SenTestingKit.framework */,
+				940DC27915A82C4900240B6D /* UIKit.framework */,
+				940DC27C15A82C4900240B6D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		943F488315A681B5008AA02A /* SpeexKit */ = {
+			isa = PBXGroup;
+			children = (
+				9441FE1F15B010DE00CEA6B3 /* SpeexKit */,
+				943F488415A681B5008AA02A /* Supporting Files */,
+			);
+			path = SpeexKit;
+			sourceTree = "<group>";
+		};
+		943F488415A681B5008AA02A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9441FE4215B3C53300CEA6B3 /* output.spx */,
+				943F488515A681B5008AA02A /* SpeexKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		943F489715A681B5008AA02A /* SpeexKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				943F489D15A681B6008AA02A /* SpeexKitTests.h */,
+				943F489E15A681B6008AA02A /* SpeexKitTests.m */,
+				943F489815A681B6008AA02A /* Supporting Files */,
+			);
+			path = SpeexKitTests;
+			sourceTree = "<group>";
+		};
+		943F489815A681B6008AA02A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				943F489915A681B6008AA02A /* SpeexKitTests-Info.plist */,
+				943F489A15A681B6008AA02A /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9441FD3615AFEE4F00CEA6B3 /* Linked Framework */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3715AFEE4F00CEA6B3 /* libogg */,
+				9441FD8D15AFEE4F00CEA6B3 /* libspeex */,
+			);
+			name = "Linked Framework";
+			path = "SpeexKit/Linked Framework";
+			sourceTree = "<group>";
+		};
+		9441FD3715AFEE4F00CEA6B3 /* libogg */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3815AFEE4F00CEA6B3 /* include */,
+				9441FD3D15AFEE4F00CEA6B3 /* libogg.a */,
+				9441FD3E15AFEE4F00CEA6B3 /* share */,
+			);
+			path = libogg;
+			sourceTree = "<group>";
+		};
+		9441FD3815AFEE4F00CEA6B3 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3915AFEE4F00CEA6B3 /* ogg */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		9441FD3915AFEE4F00CEA6B3 /* ogg */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3A15AFEE4F00CEA6B3 /* config_types.h */,
+				9441FD3B15AFEE4F00CEA6B3 /* ogg.h */,
+				9441FD3C15AFEE4F00CEA6B3 /* os_types.h */,
+			);
+			path = ogg;
+			sourceTree = "<group>";
+		};
+		9441FD3E15AFEE4F00CEA6B3 /* share */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD3F15AFEE4F00CEA6B3 /* aclocal */,
+				9441FD4115AFEE4F00CEA6B3 /* doc */,
+			);
+			path = share;
+			sourceTree = "<group>";
+		};
+		9441FD3F15AFEE4F00CEA6B3 /* aclocal */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD4015AFEE4F00CEA6B3 /* ogg.m4 */,
+			);
+			path = aclocal;
+			sourceTree = "<group>";
+		};
+		9441FD4115AFEE4F00CEA6B3 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD4215AFEE4F00CEA6B3 /* libogg-1.3.0 */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		9441FD4215AFEE4F00CEA6B3 /* libogg-1.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD4315AFEE4F00CEA6B3 /* framing.html */,
+				9441FD4415AFEE4F00CEA6B3 /* index.html */,
+				9441FD4515AFEE4F00CEA6B3 /* ogg */,
+				9441FD8415AFEE4F00CEA6B3 /* ogg-multiplex.html */,
+				9441FD8515AFEE4F00CEA6B3 /* oggstream.html */,
+				9441FD8615AFEE4F00CEA6B3 /* rfc3533.txt */,
+				9441FD8715AFEE4F00CEA6B3 /* rfc5334.txt */,
+				9441FD8815AFEE4F00CEA6B3 /* skeleton.html */,
+				9441FD8915AFEE4F00CEA6B3 /* stream.png */,
+				9441FD8A15AFEE4F00CEA6B3 /* vorbisword2.png */,
+				9441FD8B15AFEE4F00CEA6B3 /* white-ogg.png */,
+				9441FD8C15AFEE4F00CEA6B3 /* white-xifish.png */,
+			);
+			path = "libogg-1.3.0";
+			sourceTree = "<group>";
+		};
+		9441FD4515AFEE4F00CEA6B3 /* ogg */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD4615AFEE4F00CEA6B3 /* bitpacking.html */,
+				9441FD4715AFEE4F00CEA6B3 /* datastructures.html */,
+				9441FD4815AFEE4F00CEA6B3 /* decoding.html */,
+				9441FD4915AFEE4F00CEA6B3 /* encoding.html */,
+				9441FD4A15AFEE4F00CEA6B3 /* general.html */,
+				9441FD4B15AFEE4F00CEA6B3 /* index.html */,
+				9441FD4C15AFEE4F00CEA6B3 /* ogg_packet.html */,
+				9441FD4D15AFEE4F00CEA6B3 /* ogg_packet_clear.html */,
+				9441FD4E15AFEE4F00CEA6B3 /* ogg_page.html */,
+				9441FD4F15AFEE4F00CEA6B3 /* ogg_page_bos.html */,
+				9441FD5015AFEE4F00CEA6B3 /* ogg_page_checksum_set.html */,
+				9441FD5115AFEE4F00CEA6B3 /* ogg_page_continued.html */,
+				9441FD5215AFEE4F00CEA6B3 /* ogg_page_eos.html */,
+				9441FD5315AFEE4F00CEA6B3 /* ogg_page_granulepos.html */,
+				9441FD5415AFEE4F00CEA6B3 /* ogg_page_packets.html */,
+				9441FD5515AFEE4F00CEA6B3 /* ogg_page_pageno.html */,
+				9441FD5615AFEE4F00CEA6B3 /* ogg_page_serialno.html */,
+				9441FD5715AFEE4F00CEA6B3 /* ogg_page_version.html */,
+				9441FD5815AFEE4F00CEA6B3 /* ogg_stream_clear.html */,
+				9441FD5915AFEE4F00CEA6B3 /* ogg_stream_destroy.html */,
+				9441FD5A15AFEE4F00CEA6B3 /* ogg_stream_eos.html */,
+				9441FD5B15AFEE4F00CEA6B3 /* ogg_stream_flush.html */,
+				9441FD5C15AFEE4F00CEA6B3 /* ogg_stream_init.html */,
+				9441FD5D15AFEE4F00CEA6B3 /* ogg_stream_packetin.html */,
+				9441FD5E15AFEE4F00CEA6B3 /* ogg_stream_packetout.html */,
+				9441FD5F15AFEE4F00CEA6B3 /* ogg_stream_packetpeek.html */,
+				9441FD6015AFEE4F00CEA6B3 /* ogg_stream_pagein.html */,
+				9441FD6115AFEE4F00CEA6B3 /* ogg_stream_pageout.html */,
+				9441FD6215AFEE4F00CEA6B3 /* ogg_stream_pageout_fill.html */,
+				9441FD6315AFEE4F00CEA6B3 /* ogg_stream_reset.html */,
+				9441FD6415AFEE4F00CEA6B3 /* ogg_stream_reset_serialno.html */,
+				9441FD6515AFEE4F00CEA6B3 /* ogg_stream_state.html */,
+				9441FD6615AFEE4F00CEA6B3 /* ogg_sync_buffer.html */,
+				9441FD6715AFEE4F00CEA6B3 /* ogg_sync_clear.html */,
+				9441FD6815AFEE4F00CEA6B3 /* ogg_sync_destroy.html */,
+				9441FD6915AFEE4F00CEA6B3 /* ogg_sync_init.html */,
+				9441FD6A15AFEE4F00CEA6B3 /* ogg_sync_pageout.html */,
+				9441FD6B15AFEE4F00CEA6B3 /* ogg_sync_pageseek.html */,
+				9441FD6C15AFEE4F00CEA6B3 /* ogg_sync_reset.html */,
+				9441FD6D15AFEE4F00CEA6B3 /* ogg_sync_state.html */,
+				9441FD6E15AFEE4F00CEA6B3 /* ogg_sync_wrote.html */,
+				9441FD6F15AFEE4F00CEA6B3 /* oggpack_adv.html */,
+				9441FD7015AFEE4F00CEA6B3 /* oggpack_adv1.html */,
+				9441FD7115AFEE4F00CEA6B3 /* oggpack_bits.html */,
+				9441FD7215AFEE4F00CEA6B3 /* oggpack_buffer.html */,
+				9441FD7315AFEE4F00CEA6B3 /* oggpack_bytes.html */,
+				9441FD7415AFEE4F00CEA6B3 /* oggpack_get_buffer.html */,
+				9441FD7515AFEE4F00CEA6B3 /* oggpack_look.html */,
+				9441FD7615AFEE4F00CEA6B3 /* oggpack_look1.html */,
+				9441FD7715AFEE4F00CEA6B3 /* oggpack_read.html */,
+				9441FD7815AFEE4F00CEA6B3 /* oggpack_read1.html */,
+				9441FD7915AFEE4F00CEA6B3 /* oggpack_readinit.html */,
+				9441FD7A15AFEE4F00CEA6B3 /* oggpack_reset.html */,
+				9441FD7B15AFEE4F00CEA6B3 /* oggpack_write.html */,
+				9441FD7C15AFEE4F00CEA6B3 /* oggpack_writealign.html */,
+				9441FD7D15AFEE4F00CEA6B3 /* oggpack_writeclear.html */,
+				9441FD7E15AFEE4F00CEA6B3 /* oggpack_writecopy.html */,
+				9441FD7F15AFEE4F00CEA6B3 /* oggpack_writeinit.html */,
+				9441FD8015AFEE4F00CEA6B3 /* oggpack_writetrunc.html */,
+				9441FD8115AFEE4F00CEA6B3 /* overview.html */,
+				9441FD8215AFEE4F00CEA6B3 /* reference.html */,
+				9441FD8315AFEE4F00CEA6B3 /* style.css */,
+			);
+			path = ogg;
+			sourceTree = "<group>";
+		};
+		9441FD8D15AFEE4F00CEA6B3 /* libspeex */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD8E15AFEE4F00CEA6B3 /* include */,
+				9441FD9C15AFEE4F00CEA6B3 /* libspeex.a */,
+				9441FD9D15AFEE4F00CEA6B3 /* libspeexdsp.a */,
+			);
+			path = libspeex;
+			sourceTree = "<group>";
+		};
+		9441FD8E15AFEE4F00CEA6B3 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD8F15AFEE4F00CEA6B3 /* speex */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		9441FD8F15AFEE4F00CEA6B3 /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				9441FD9015AFEE4F00CEA6B3 /* speex.h */,
+				9441FD9115AFEE4F00CEA6B3 /* speex_bits.h */,
+				9441FD9215AFEE4F00CEA6B3 /* speex_buffer.h */,
+				9441FD9315AFEE4F00CEA6B3 /* speex_callbacks.h */,
+				9441FD9415AFEE4F00CEA6B3 /* speex_config_types.h */,
+				9441FD9515AFEE4F00CEA6B3 /* speex_echo.h */,
+				9441FD9615AFEE4F00CEA6B3 /* speex_header.h */,
+				9441FD9715AFEE4F00CEA6B3 /* speex_jitter.h */,
+				9441FD9815AFEE4F00CEA6B3 /* speex_preprocess.h */,
+				9441FD9915AFEE4F00CEA6B3 /* speex_resampler.h */,
+				9441FD9A15AFEE4F00CEA6B3 /* speex_stereo.h */,
+				9441FD9B15AFEE4F00CEA6B3 /* speex_types.h */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
+		9441FE1F15B010DE00CEA6B3 /* SpeexKit */ = {
+			isa = PBXGroup;
+			children = (
+				9441FE5A15B3E49300CEA6B3 /* skeleton.c */,
+				9441FE5B15B3E49300CEA6B3 /* skeleton.h */,
+				9441FE5215B3E46F00CEA6B3 /* wav_io.c */,
+				9441FE5315B3E46F00CEA6B3 /* wav_io.h */,
+				9441FE5415B3E47000CEA6B3 /* wave_out.c */,
+				9441FE5515B3E47000CEA6B3 /* wave_out.h */,
+				9441FE4E15B3E10200CEA6B3 /* speexdec.c */,
+				9441FE4F15B3E10200CEA6B3 /* speexenc.c */,
+				9441FE2015B010DE00CEA6B3 /* SpeexDecoder.h */,
+				9441FE2115B010DE00CEA6B3 /* SpeexDecoder.m */,
+				9441FE2215B010DE00CEA6B3 /* SpeexEncoder.h */,
+				9441FE2315B010DE00CEA6B3 /* SpeexEncoder.m */,
+				9441FE2415B010DE00CEA6B3 /* SpeexKit.h */,
+			);
+			path = SpeexKit;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		943F487C15A681B5008AA02A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9441FD9E15AFEE4F00CEA6B3 /* config_types.h in Headers */,
+				9441FD9F15AFEE4F00CEA6B3 /* ogg.h in Headers */,
+				9441FDA015AFEE4F00CEA6B3 /* os_types.h in Headers */,
+				9441FDED15AFEE4F00CEA6B3 /* speex.h in Headers */,
+				9441FDEE15AFEE4F00CEA6B3 /* speex_bits.h in Headers */,
+				9441FDEF15AFEE4F00CEA6B3 /* speex_buffer.h in Headers */,
+				9441FDF015AFEE4F00CEA6B3 /* speex_callbacks.h in Headers */,
+				9441FDF115AFEE4F00CEA6B3 /* speex_config_types.h in Headers */,
+				9441FDF215AFEE4F00CEA6B3 /* speex_echo.h in Headers */,
+				9441FDF315AFEE4F00CEA6B3 /* speex_header.h in Headers */,
+				9441FDF415AFEE4F00CEA6B3 /* speex_jitter.h in Headers */,
+				9441FDF515AFEE4F00CEA6B3 /* speex_preprocess.h in Headers */,
+				9441FDF615AFEE4F00CEA6B3 /* speex_resampler.h in Headers */,
+				9441FDF715AFEE4F00CEA6B3 /* speex_stereo.h in Headers */,
+				9441FDF815AFEE4F00CEA6B3 /* speex_types.h in Headers */,
+				9441FE2615B010DE00CEA6B3 /* SpeexDecoder.h in Headers */,
+				9441FE2815B010DE00CEA6B3 /* SpeexEncoder.h in Headers */,
+				9441FE2A15B010DE00CEA6B3 /* SpeexKit.h in Headers */,
+				9441FE5715B3E47000CEA6B3 /* wav_io.h in Headers */,
+				9441FE5915B3E47000CEA6B3 /* wave_out.h in Headers */,
+				9441FE5D15B3E49300CEA6B3 /* skeleton.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		940DC27615A82C4800240B6D /* SpeexKitDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 940DC29015A82C4900240B6D /* Build configuration list for PBXNativeTarget "SpeexKitDemo" */;
+			buildPhases = (
+				940DC27315A82C4800240B6D /* Sources */,
+				940DC27415A82C4800240B6D /* Frameworks */,
+				940DC27515A82C4800240B6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				940DC29415A82C9D00240B6D /* PBXTargetDependency */,
+			);
+			name = SpeexKitDemo;
+			productName = SpeexKitDemo;
+			productReference = 940DC27715A82C4800240B6D /* SpeexKitDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		943F487D15A681B5008AA02A /* SpeexKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 943F48A215A681B6008AA02A /* Build configuration list for PBXNativeTarget "SpeexKit" */;
+			buildPhases = (
+				943F487A15A681B5008AA02A /* Sources */,
+				943F487B15A681B5008AA02A /* Frameworks */,
+				943F487C15A681B5008AA02A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpeexKit;
+			productName = SpeexKit;
+			productReference = 943F487E15A681B5008AA02A /* libSpeexKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		943F488D15A681B5008AA02A /* SpeexKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 943F48A515A681B6008AA02A /* Build configuration list for PBXNativeTarget "SpeexKitTests" */;
+			buildPhases = (
+				943F488915A681B5008AA02A /* Sources */,
+				943F488A15A681B5008AA02A /* Frameworks */,
+				943F488B15A681B5008AA02A /* Resources */,
+				943F488C15A681B5008AA02A /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				943F489515A681B5008AA02A /* PBXTargetDependency */,
+			);
+			name = SpeexKitTests;
+			productName = SpeexKitTests;
+			productReference = 943F488E15A681B5008AA02A /* SpeexKitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		943F487515A681B4008AA02A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 943F487815A681B4008AA02A /* Build configuration list for PBXProject "SpeexKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				English,
+			);
+			mainGroup = 943F487315A681B4008AA02A;
+			productRefGroup = 943F487F15A681B5008AA02A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				943F487D15A681B5008AA02A /* SpeexKit */,
+				943F488D15A681B5008AA02A /* SpeexKitTests */,
+				940DC27615A82C4800240B6D /* SpeexKitDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		940DC27515A82C4800240B6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				940DC28315A82C4900240B6D /* InfoPlist.strings in Resources */,
+				940DC28F15A82C4900240B6D /* ViewController.xib in Resources */,
+				9441FDA315AFEE4F00CEA6B3 /* ogg.m4 in Resources */,
+				9441FDA415AFEE4F00CEA6B3 /* framing.html in Resources */,
+				9441FDA515AFEE4F00CEA6B3 /* index.html in Resources */,
+				9441FDA615AFEE4F00CEA6B3 /* bitpacking.html in Resources */,
+				9441FDA715AFEE4F00CEA6B3 /* datastructures.html in Resources */,
+				9441FDA815AFEE4F00CEA6B3 /* decoding.html in Resources */,
+				9441FDA915AFEE4F00CEA6B3 /* encoding.html in Resources */,
+				9441FDAA15AFEE4F00CEA6B3 /* general.html in Resources */,
+				9441FDAB15AFEE4F00CEA6B3 /* index.html in Resources */,
+				9441FDAC15AFEE4F00CEA6B3 /* ogg_packet.html in Resources */,
+				9441FDAD15AFEE4F00CEA6B3 /* ogg_packet_clear.html in Resources */,
+				9441FDAE15AFEE4F00CEA6B3 /* ogg_page.html in Resources */,
+				9441FDAF15AFEE4F00CEA6B3 /* ogg_page_bos.html in Resources */,
+				9441FDB015AFEE4F00CEA6B3 /* ogg_page_checksum_set.html in Resources */,
+				9441FDB115AFEE4F00CEA6B3 /* ogg_page_continued.html in Resources */,
+				9441FDB215AFEE4F00CEA6B3 /* ogg_page_eos.html in Resources */,
+				9441FDB315AFEE4F00CEA6B3 /* ogg_page_granulepos.html in Resources */,
+				9441FDB415AFEE4F00CEA6B3 /* ogg_page_packets.html in Resources */,
+				9441FDB515AFEE4F00CEA6B3 /* ogg_page_pageno.html in Resources */,
+				9441FDB615AFEE4F00CEA6B3 /* ogg_page_serialno.html in Resources */,
+				9441FDB715AFEE4F00CEA6B3 /* ogg_page_version.html in Resources */,
+				9441FDB815AFEE4F00CEA6B3 /* ogg_stream_clear.html in Resources */,
+				9441FDB915AFEE4F00CEA6B3 /* ogg_stream_destroy.html in Resources */,
+				9441FDBA15AFEE4F00CEA6B3 /* ogg_stream_eos.html in Resources */,
+				9441FDBB15AFEE4F00CEA6B3 /* ogg_stream_flush.html in Resources */,
+				9441FDBC15AFEE4F00CEA6B3 /* ogg_stream_init.html in Resources */,
+				9441FDBD15AFEE4F00CEA6B3 /* ogg_stream_packetin.html in Resources */,
+				9441FDBE15AFEE4F00CEA6B3 /* ogg_stream_packetout.html in Resources */,
+				9441FDBF15AFEE4F00CEA6B3 /* ogg_stream_packetpeek.html in Resources */,
+				9441FDC015AFEE4F00CEA6B3 /* ogg_stream_pagein.html in Resources */,
+				9441FDC115AFEE4F00CEA6B3 /* ogg_stream_pageout.html in Resources */,
+				9441FDC215AFEE4F00CEA6B3 /* ogg_stream_pageout_fill.html in Resources */,
+				9441FDC315AFEE4F00CEA6B3 /* ogg_stream_reset.html in Resources */,
+				9441FDC415AFEE4F00CEA6B3 /* ogg_stream_reset_serialno.html in Resources */,
+				9441FDC515AFEE4F00CEA6B3 /* ogg_stream_state.html in Resources */,
+				9441FDC615AFEE4F00CEA6B3 /* ogg_sync_buffer.html in Resources */,
+				9441FDC715AFEE4F00CEA6B3 /* ogg_sync_clear.html in Resources */,
+				9441FDC815AFEE4F00CEA6B3 /* ogg_sync_destroy.html in Resources */,
+				9441FDC915AFEE4F00CEA6B3 /* ogg_sync_init.html in Resources */,
+				9441FDCA15AFEE4F00CEA6B3 /* ogg_sync_pageout.html in Resources */,
+				9441FDCB15AFEE4F00CEA6B3 /* ogg_sync_pageseek.html in Resources */,
+				9441FDCC15AFEE4F00CEA6B3 /* ogg_sync_reset.html in Resources */,
+				9441FDCD15AFEE4F00CEA6B3 /* ogg_sync_state.html in Resources */,
+				9441FDCE15AFEE4F00CEA6B3 /* ogg_sync_wrote.html in Resources */,
+				9441FDCF15AFEE4F00CEA6B3 /* oggpack_adv.html in Resources */,
+				9441FDD015AFEE4F00CEA6B3 /* oggpack_adv1.html in Resources */,
+				9441FDD115AFEE4F00CEA6B3 /* oggpack_bits.html in Resources */,
+				9441FDD215AFEE4F00CEA6B3 /* oggpack_buffer.html in Resources */,
+				9441FDD315AFEE4F00CEA6B3 /* oggpack_bytes.html in Resources */,
+				9441FDD415AFEE4F00CEA6B3 /* oggpack_get_buffer.html in Resources */,
+				9441FDD515AFEE4F00CEA6B3 /* oggpack_look.html in Resources */,
+				9441FDD615AFEE4F00CEA6B3 /* oggpack_look1.html in Resources */,
+				9441FDD715AFEE4F00CEA6B3 /* oggpack_read.html in Resources */,
+				9441FDD815AFEE4F00CEA6B3 /* oggpack_read1.html in Resources */,
+				9441FDD915AFEE4F00CEA6B3 /* oggpack_readinit.html in Resources */,
+				9441FDDA15AFEE4F00CEA6B3 /* oggpack_reset.html in Resources */,
+				9441FDDB15AFEE4F00CEA6B3 /* oggpack_write.html in Resources */,
+				9441FDDC15AFEE4F00CEA6B3 /* oggpack_writealign.html in Resources */,
+				9441FDDD15AFEE4F00CEA6B3 /* oggpack_writeclear.html in Resources */,
+				9441FDDE15AFEE4F00CEA6B3 /* oggpack_writecopy.html in Resources */,
+				9441FDDF15AFEE4F00CEA6B3 /* oggpack_writeinit.html in Resources */,
+				9441FDE015AFEE4F00CEA6B3 /* oggpack_writetrunc.html in Resources */,
+				9441FDE115AFEE4F00CEA6B3 /* overview.html in Resources */,
+				9441FDE215AFEE4F00CEA6B3 /* reference.html in Resources */,
+				9441FDE315AFEE4F00CEA6B3 /* style.css in Resources */,
+				9441FDE415AFEE4F00CEA6B3 /* ogg-multiplex.html in Resources */,
+				9441FDE515AFEE4F00CEA6B3 /* oggstream.html in Resources */,
+				9441FDE615AFEE4F00CEA6B3 /* rfc3533.txt in Resources */,
+				9441FDE715AFEE4F00CEA6B3 /* rfc5334.txt in Resources */,
+				9441FDE815AFEE4F00CEA6B3 /* skeleton.html in Resources */,
+				9441FDE915AFEE4F00CEA6B3 /* stream.png in Resources */,
+				9441FDEA15AFEE4F00CEA6B3 /* vorbisword2.png in Resources */,
+				9441FDEB15AFEE4F00CEA6B3 /* white-ogg.png in Resources */,
+				9441FDEC15AFEE4F00CEA6B3 /* white-xifish.png in Resources */,
+				9441FE4315B3C53300CEA6B3 /* output.spx in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943F488B15A681B5008AA02A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				943F489C15A681B6008AA02A /* InfoPlist.strings in Resources */,
+				9441FE4515B3CEFB00CEA6B3 /* output.spx in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		943F488C15A681B5008AA02A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		940DC27315A82C4800240B6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				940DC28515A82C4900240B6D /* main.m in Sources */,
+				940DC28915A82C4900240B6D /* AppDelegate.m in Sources */,
+				940DC28C15A82C4900240B6D /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943F487A15A681B5008AA02A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9441FE2715B010DE00CEA6B3 /* SpeexDecoder.m in Sources */,
+				9441FE2915B010DE00CEA6B3 /* SpeexEncoder.m in Sources */,
+				9441FE5015B3E10200CEA6B3 /* speexdec.c in Sources */,
+				9441FE5115B3E10200CEA6B3 /* speexenc.c in Sources */,
+				9441FE5615B3E47000CEA6B3 /* wav_io.c in Sources */,
+				9441FE5815B3E47000CEA6B3 /* wave_out.c in Sources */,
+				9441FE5C15B3E49300CEA6B3 /* skeleton.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		943F488915A681B5008AA02A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				943F489F15A681B6008AA02A /* SpeexKitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		940DC29415A82C9D00240B6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 943F487D15A681B5008AA02A /* SpeexKit */;
+			targetProxy = 940DC29315A82C9D00240B6D /* PBXContainerItemProxy */;
+		};
+		943F489515A681B5008AA02A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 943F487D15A681B5008AA02A /* SpeexKit */;
+			targetProxy = 943F489415A681B5008AA02A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		940DC28115A82C4900240B6D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				940DC28215A82C4900240B6D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		940DC28D15A82C4900240B6D /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				940DC28E15A82C4900240B6D /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+		943F489A15A681B6008AA02A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				943F489B15A681B6008AA02A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		940DC29115A82C4900240B6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKitDemo/SpeexKitDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					Headers/speexkit,
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"",
+				);
+				INFOPLIST_FILE = "SpeexKitDemo/SpeexKitDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		940DC29215A82C4900240B6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKitDemo/SpeexKitDemo-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					Headers/speexkit,
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"",
+				);
+				INFOPLIST_FILE = "SpeexKitDemo/SpeexKitDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		943F48A015A681B6008AA02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"/**",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		943F48A115A681B6008AA02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"/**",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		943F48A315A681B6008AA02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/SpeexKit.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKit/SpeexKit-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"",
+					"\"$(SRCROOT)/SpeexKit/\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers/SpeexKit;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		943F48A415A681B6008AA02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/SpeexKit.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKit/SpeexKit-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg/include\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex/include\"",
+					"\"$(SRCROOT)/SpeexKit/\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libogg\"",
+					"\"$(SRCROOT)/SpeexKit/Linked Framework/libspeex\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers/SpeexKit;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		943F48A615A681B6008AA02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKit/SpeexKit-Prefix.pch";
+				INFOPLIST_FILE = "SpeexKitTests/SpeexKitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		943F48A715A681B6008AA02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpeexKit/SpeexKit-Prefix.pch";
+				INFOPLIST_FILE = "SpeexKitTests/SpeexKitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		940DC29015A82C4900240B6D /* Build configuration list for PBXNativeTarget "SpeexKitDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				940DC29115A82C4900240B6D /* Debug */,
+				940DC29215A82C4900240B6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		943F487815A681B4008AA02A /* Build configuration list for PBXProject "SpeexKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				943F48A015A681B6008AA02A /* Debug */,
+				943F48A115A681B6008AA02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		943F48A215A681B6008AA02A /* Build configuration list for PBXNativeTarget "SpeexKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				943F48A315A681B6008AA02A /* Debug */,
+				943F48A415A681B6008AA02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		943F48A515A681B6008AA02A /* Build configuration list for PBXNativeTarget "SpeexKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				943F48A615A681B6008AA02A /* Debug */,
+				943F48A715A681B6008AA02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 943F487515A681B4008AA02A /* Project object */;
+}

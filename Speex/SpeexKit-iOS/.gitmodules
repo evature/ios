@@ -1,0 +1,3 @@
+[submodule "libspeex-iOS"]
+	path = libspeex-iOS
+	url = https://github.com/aelam/libspeex-iOS.git
