@@ -72,6 +72,8 @@
 		CF98AB1317C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
 		CF98AB1417C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
 		CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
+		CFF034A61806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
+		CFF034A71806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +136,7 @@
 		CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
 		CFC37EB3177CA0D20035E96F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../../Library/Eva/Eva/Frameworks/Ogg.framework; sourceTree = "<group>"; };
 		CFD71B0517590A87002E114B /* Tasks */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tasks; sourceTree = "<group>"; };
+		CFF034A51806D3890074C288 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +213,7 @@
 		CF408299174E653F00CCB667 /* Eva */ = {
 			isa = PBXGroup;
 			children = (
+				CFF034A51806D3890074C288 /* Common.h */,
 				CF4082A5174E65AA00CCB667 /* Eva.h */,
 				CF4082A6174E65AA00CCB667 /* Eva.m */,
 				CF40829A174E653F00CCB667 /* Supporting Files */,
@@ -357,6 +361,7 @@
 				CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
 				CF98AB0D17C3E6E600E171E9 /* NetworkManager.h in Headers */,
 				CF98AB1117C3E6E600E171E9 /* NSData+Additions.h in Headers */,
+				CFF034A61806D3890074C288 /* Common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +383,7 @@
 				CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
 				CF98AB0E17C3E6E600E171E9 /* NetworkManager.h in Headers */,
 				CF98AB1217C3E6E600E171E9 /* NSData+Additions.h in Headers */,
+				CFF034A71806D3890074C288 /* Common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +753,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					USE_FLAC,
+					SHOW_DEBUG_LOGS,
 				);
 				INFOPLIST_FILE = "Eva/Eva-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
@@ -874,6 +881,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					USE_FLAC,
+					SHOW_DEBUG_LOGS,
 				);
 				INFOPLIST_FILE = "Eva copy-Info.plist";
 				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";

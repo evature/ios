@@ -9,9 +9,12 @@
 #import "EvaTestAppTests.h"
 #import "SpeexEncoder.h"
 
+//       'iosdev'          : 'bc3e0b6a-a021-40b6-b38f-1f4d8e1740cb',
+//#define EVA_API_KEY @"thack-london-june-2012"
+//#define EVA_SITE_CODE @"thack"
 
-#define EVA_API_KEY @"thack-london-june-2012"
-#define EVA_SITE_CODE @"thack"
+#define EVA_API_KEY @"bc3e0b6a-a021-40b6-b38f-1f4d8e1740cb"
+#define EVA_SITE_CODE @"iosdev"
 
 #define MIN_RECORD_LEN 0.0f//0.5f //2.0f
 

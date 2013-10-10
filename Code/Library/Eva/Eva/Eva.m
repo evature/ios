@@ -10,6 +10,7 @@
 #import "WaveParser.h"
 #import "SpeexEncoder.h"
 #import <Speex/Speex.h>
+#import "Common.h"
 
 #include "OpenUDID.h"
 #include "wav_to_flac.h"
@@ -23,7 +24,7 @@
 //#include "EUHTTPResponse.h"
 
 
-#define DEBUG_MODE_FOR_EVA TRUE //FALSE
+
 #define CHECK_WITH_GOOGLE_SERVER FALSE //FALSE
 #define USE_WEB_SOCKET FALSE//TRUE
 
@@ -285,16 +286,21 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //ipAddress_ = [self getIPAddress];
         //[self getCurrenLocale];
-        
+#if DEBUG_LOGS
         NSLog(@"Dispatch #1");
+#endif
         [Recorder sharedInstance].delegate = self; ///// NEEWWWWWWW /////
        // // start a record and stop it immidiately after
         [[Recorder sharedInstance] startRecording:TRUE];
-        
+       
+#if DEBUG_LOGS
         NSLog(@"Dispatch #2");
+#endif
         ipAddress_ = [self getIPAddress];
         [self getCurrenLocale];
+#if DEBUG_LOGS
         NSLog(@"Dispatch #3");
+#endif
         
         
     });
@@ -325,7 +331,9 @@
 }
 
 - (BOOL)startRecord:(BOOL)withNewSession{
+#if DEBUG_LOGS
     NSLog(@"Start recording");
+#endif
     recordHasBeenCanceled = FALSE;
     
     minVolume = DBL_MAX; // Iftach addon
@@ -349,16 +357,22 @@
      [self recordToFile];
      
      });*/
-    
+#if DEBUG_LOGS
     NSLog(@"PPPP 1");
+#endif
 #if USE_CHUNKED_ENCODING
     [self startRecordQueue];
 #else
     [self recordToFile];
 #endif
+    
+#if DEBUG_LOGS
     NSLog(@"PPPP 2");
+#endif
     [locationManager_ startUpdatingLocation];
+#if DEBUG_LOGS
     NSLog(@"PPPP 3");
+#endif
     
     startIsPressed = TRUE;
     lowPassResultsPeak = 0; // initiate the peak.
@@ -369,9 +383,13 @@
                                                       userInfo:nil
                                                        repeats:NO];
     
+#if DEBUG_LOGS
     NSLog(@"PPPP 4");
+#endif
     levelTimer = [NSTimer scheduledTimerWithTimeInterval: LEVEL_SAMPLE_TIME target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+#if DEBUG_LOGS
     NSLog(@"PPPP 5");
+#endif
     //#endif
     silentMoments = 0;
     
@@ -381,7 +399,9 @@
 
 
 - (BOOL)stopRecord{
+#if DEBUG_LOGS
     NSLog(@"Stop recording");
+#endif
     
     [audioTimeoutTimer_ invalidate];
     audioTimeoutTimer_ = nil;
@@ -414,7 +434,9 @@
 }
 
 - (BOOL)cancelRecord{
+#if DEBUG_LOGS
     NSLog(@"Cancel recording");
+#endif
     recordHasBeenCanceled = TRUE;
     
     return [self stopRecord];
@@ -442,11 +464,15 @@
 
 #if USE_WEB_SOCKET
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket{
-    NSLog(@"webSocketDidOpen" );
+    #if DEBUG_LOGS
+        NSLog(@"webSocketDidOpen" );
+    #endif
 }
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
-    NSLog(@"webSocket:didReceiveMessage" );
+    #if DEBUG_LOGS
+        NSLog(@"webSocket:didReceiveMessage" );
+    #endif
     
 }
 #endif
@@ -467,12 +493,16 @@
 #endif
 
 -(void)dataSend:(void*)data withLength: (unsigned) len{
+#if DEBUG_LOGS
     NSLog(@"dataSend:withLength, Length = %d",len);
+#endif
     //streamOfData_ = [NSData dataWithBytes:data length:len];
     
 #if USE_WEB_SOCKET
     NSData *dataToSend = [[NSData alloc] initWithBytes:data length:len];
-    NSLog(@"[_socket readyState] = %d",[_socket readyState]);
+    #if DEBUG_LOGS
+        NSLog(@"[_socket readyState] = %d",[_socket readyState]);
+    #endif
     if ([_socket readyState] == SR_OPEN) {
         NSLog(@"Eva: dataSend with length: %d",len);
         [_socket send:dataToSend];
@@ -580,13 +610,19 @@
     //recordHasBeenCanceled = FALSE;
     
     //startSilenceDetection = FALSE;
-    
+
+#if DEBUG_LOGS
     NSLog(@"PPPP A1");
+#endif
     [self establishConnection];
     //[[MOAudioStreamer sharedInstance] startStreamer];
+#if DEBUG_LOGS
     NSLog(@"PPPP A2");
+#endif
     [streamer_ startStreamer];
+#if DEBUG_LOGS
     NSLog(@"PPPP A3");
+#endif
     
     
 }
@@ -648,18 +684,24 @@
 
 -(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)streamer
 {
+#if DEBUG_LOGS
     NSLog(@"AudioStreamerDidFinishStreaming");
+#endif
 }
 
 -(void)MOAudioStreamerDidFinishRequest:(NSURLConnection*)connectionRequest withResponse:(NSString*)response
 {
+#if DEBUG_LOGS
     NSLog(@"AudioStreamerDidFinishRequest");
+#endif
     
 }
 
 -(void)MOAudioStreamerDidFailed:(MOAudioStreamer*)streamer message:(NSString*)reason
 {
+#if DEBUG_LOGS
     NSLog(@"AudioStreamerDidFailed - %@", reason);
+#endif
 }
 
 - (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response{
@@ -680,7 +722,9 @@
 }
 
 - (void)MORecorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
+#if DEBUG_LOGS
     NSLog(@"MORecorderMicLevelCallbackAverage");
+#endif
     [self recorderMicLevelCallbackAverage:averagePower andPeak:peakPower];
 }
 
@@ -747,10 +791,14 @@
 #if DEBUG_MODE_FOR_EVA
     BOOL audioHWAvailable = session.inputIsAvailable;
     if (! audioHWAvailable) {
+#if DEBUG_LOGS
         NSLog(@"ERROR: Audio input hardware not available");
+#endif
         
     }else{
+#if DEBUG_LOGS
         NSLog(@"Audio input hardware available! ");
+#endif
     }
 #endif
     
@@ -822,8 +870,10 @@
 
 
 - (void)recorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
-    
+
+#if DEBUG_LOGS
     NSLog(@"recorderMicLevelCallbackAverage:andPeak");
+#endif
     /*  const double ALPHA = 0.05;
      double peakPowerForChannel = pow(10, (0.05 * averagePower));
      lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;
@@ -983,8 +1033,9 @@
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *) aRecorder successfully:(BOOL)flag
 {
-    
+#if DEBUG_LOGS
     NSLog (@"audioRecorderDidFinishRecording:successfully:");
+#endif
     // your actions here
     if (flag) {
         if (!recordHasBeenCanceled) {
@@ -996,7 +1047,9 @@
         }
         
     }else{
+       
         NSLog(@"There is a problem with recording");
+
     }
     
     //[self establishConnection];
@@ -1322,7 +1375,9 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     // You may have received an HTTP 200 here, or not...
+#if DEBUG_LOGS
     NSLog(@"didReceiveResponse");
+#endif
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
@@ -1452,6 +1507,7 @@
     
     if (fabs(longitude - newLocation.coordinate.longitude) > 0.05 ||
         fabs(latitude - newLocation.coordinate.latitude) > 0.05) {
+#if DEBUG_LOGS
         NSLog(@"Lat&Long: %.5f %.5f", //fabs(
               newLocation.coordinate.latitude
               //)
@@ -1459,6 +1515,7 @@
               newLocation.coordinate.longitude
               //)
               );
+#endif
         longitude = newLocation.coordinate.longitude;
         latitude = newLocation.coordinate.latitude;
     }
@@ -1479,8 +1536,10 @@
 
 -(NSString *)getCurrenLocale{
     NSLocale* currentLocale = [NSLocale currentLocale];
-    
+
+#if DEBUG_LOGS
     NSLog(@"Locale = %@", [currentLocale objectForKey:NSLocaleCountryCode]);
+#endif
     return [currentLocale objectForKey:NSLocaleCountryCode];
 }
 
@@ -1494,7 +1553,9 @@
     
     if (iPURL) {
         NSError *error = nil;
+#if DEBUG_LOGS
         NSLog(@"Getting IP Addr");
+#endif
         NSString *theIpHtml = [NSString stringWithContentsOfURL:iPURL
                                                        encoding:NSUTF8StringEncoding
                                                           error:&error];
@@ -1525,13 +1586,16 @@
                 
             }
             
-            
+#if DEBUG_LOGS
             NSLog(@"IP_ADDR: %@",externalIP);
+#endif
             return [NSString stringWithFormat:@"%@",externalIP];
         } else {
+#if DEBUG_LOGS
             NSLog(@"Oops... failed to get IpAddr:  %d, %@",
                   [error code],
                   [error localizedDescription]);
+#endif
         }
     }
     

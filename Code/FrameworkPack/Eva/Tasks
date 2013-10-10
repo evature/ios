@@ -1,9 +1,9 @@
 
 
-1. Stream 0x73b17e0 is sending an event before being opened - Need to fix this.
+1. Stream 0x73b17e0 is sending an event before being opened - Need to fix this. - Add sleep of 1 second if stream is not open and try to send. That solves this case.
 1*. Sometimes stream get stuck on iOs 5 at least (same symptoms as number 1)
 2. Don't wait to IP or GPS.
-#. Remove logs
+#. Remove logs  - DONE
 
 - [Low] Support armv7s.
 - [Low - v.2] Chunked encoding.
