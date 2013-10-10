@@ -28,6 +28,16 @@
 #define CHECK_WITH_GOOGLE_SERVER FALSE //FALSE
 #define USE_WEB_SOCKET FALSE//TRUE
 
+#define VAD_GUI_UPDATE FALSE //TRUE // If you want to get the values you have to implement the delegates on Eva.h file.
+/*
+ - (void)evaMicLevelCallbackMin: (float)minLevel;
+ - (void)evaMicLevelCallbackMax: (float)maxLevel;
+ - (void)evaMicLevelCallbackThreshold: (float)threshold;
+ - (void)evaSilentMoments: (int)moments  stopOn:(float) stopMoments;
+ - (void)evaNoisyMoments: (int)moments  stopOn:(float) stopMoments;
+ */
+
+
 #if USE_WEB_SOCKET
 #include "SRWebSocket.h"
 #else
@@ -102,6 +112,7 @@
     BOOL sendMicLevel;
     
     NSInteger silentMoments;
+    NSInteger noisyMoments;
     
     BOOL startSilenceDetection;
     
@@ -392,6 +403,7 @@
 #endif
     //#endif
     silentMoments = 0;
+    noisyMoments = 0;
     
     return TRUE;
     
@@ -930,8 +942,7 @@
 }
 
 
-- (void)levelTimerCallback:(NSTimer *)timer {
-	
+/*- (void)levelTimerCallback:(NSTimer *)timer {
     
     
 #if USE_CHUNKED_ENCODING
@@ -1000,6 +1011,108 @@
             [self stopRecord];
         }
     }
+}*/
+
+- (void)levelTimerCallback:(NSTimer *)timer {
+	
+   // double startTime =  CACurrentMediaTime();
+    
+    
+#if USE_CHUNKED_ENCODING
+    // double peakPower = [streamer_ peakPower];
+    double averagePower = [streamer_ averagePower];
+#else
+    [recorder_ updateMeters];
+    //double peakPower = [recorder_ peakPowerForChannel:0];
+    double averagePower = [recorder_ averagePowerForChannel:0];
+#endif
+    
+    //    const double ALPHA = 0.25;
+    const double MIN_NOISE_TIME = 0.08;  // must have noise for at least this much time to start considering VAD silence
+	double currentPowerForChannel = pow(10, (0.05 * averagePower));
+    
+    lowPassResults = currentPowerForChannel;
+	//lowPassResults = ALPHA * currentPowerForChannel + (1.0 - ALPHA) * lowPassResults;
+    
+    if (lowPassResults < minVolume) {
+        minVolume = lowPassResults;
+#if VAD_GUI_UPDATE
+        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackMin:)]){
+            [[self delegate] evaMicLevelCallbackMin:minVolume];
+        }
+        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackThreshold:)]){
+            [[self delegate] evaMicLevelCallbackThreshold:  0.2*(lowPassResultsPeak-minVolume) + minVolume ];
+        }
+#endif
+    }
+    
+    if (lowPassResults>lowPassResultsPeak) { // Take new peak
+        lowPassResultsPeak = lowPassResults;
+        silentMoments = 0;
+#if VAD_GUI_UPDATE
+        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackMax:)]){
+            [[self delegate] evaMicLevelCallbackMax: lowPassResultsPeak];
+        }
+        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackThreshold:)]){
+            [[self delegate] evaMicLevelCallbackThreshold:  0.2*(lowPassResultsPeak-minVolume) + minVolume ];
+        }
+        if([[self delegate] respondsToSelector:@selector(evaSilentMoments:stopOn:)]){
+            [[self delegate] evaSilentMoments: silentMoments stopOn:(STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME)];
+        }
+#endif
+    }
+    
+    if (sendMicLevel_){
+        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackAverage:andPeak:)]){
+            [[self delegate] evaMicLevelCallbackAverage:lowPassResults andPeak:lowPassResultsPeak];
+        }else{
+            NSLog(@"Eva-Critical Error: You haven't implemented evaMicLevelCallbackAverage:andPeak, It is a must with your settings. Please implement this one");
+        }
+    }
+    
+    if (!startSilenceDetection) {
+        if (lowPassResults >  MIN(10* minVolume, 0.8)
+            ){
+            noisyMoments++;
+            if (noisyMoments >= MIN_NOISE_TIME/LEVEL_SAMPLE_TIME) {
+                startSilenceDetection = TRUE;
+            }
+        }
+        else {
+            noisyMoments = 0;
+        }
+#if VAD_GUI_UPDATE
+        if([[self delegate] respondsToSelector:@selector(evaNoisyMoments:stopOn:)]){
+            [[self delegate] evaNoisyMoments: noisyMoments stopOn:(MIN_NOISE_TIME/LEVEL_SAMPLE_TIME)];
+        }
+#endif
+    }
+    
+    // not using "else" here because the flag could be just set to true in the previous 'if' block
+    if (startSilenceDetection) {
+        
+        if ((lowPassResults-minVolume) < 0.2*(lowPassResultsPeak-minVolume) ) {
+            silentMoments++;
+        }else{
+            silentMoments = 0;
+        }
+#if VAD_GUI_UPDATE
+        [[self delegate] evaSilentMoments: silentMoments stopOn:(STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME) ];
+#endif
+        
+        if (silentMoments >= STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME ) {
+#if DEBUG_MODE_FOR_EVA
+            NSLog(@"Silent: Can stop record");
+#endif
+            [self stopRecord];
+        }
+    }
+    
+    //double delta = CACurrentMediaTime() - startTime;
+    //NSLog(@"===> VAD processed in %.3f", delta);
+    //if (delta > 0.03 ) {
+    //    NSLog(@"\n\n!!!!!!!!! too slow !!!!!!!!\n\n");
+   // }
 }
 
 -(void)stopRecordingToFile{
