@@ -148,6 +148,10 @@
     [stopButton setHidden:TRUE];
 }
 
+- (void)evaRecorederIsReady{
+    [self.startButton setHidden:FALSE];
+}
+
 
 
 #pragma mark - View

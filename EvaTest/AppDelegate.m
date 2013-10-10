@@ -8,11 +8,11 @@
 
 #import "AppDelegate.h"
 
-#ifdef FLAC_VERSION
-#import <EvaFlac/Eva.h>
-#else
+//#ifdef FLAC_VERSION
+//#import <EvaFlac/Eva.h>
+//#else
 #import <Eva/Eva.h>
-#endif
+//#endif
 
 #import "MainViewController.h"
 

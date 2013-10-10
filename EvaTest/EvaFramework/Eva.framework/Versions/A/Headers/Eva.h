@@ -14,11 +14,21 @@
    
 @protocol EvaDelegate <NSObject>
 @optional
-- (void)evaDidReceiveData:(NSData *)dataFromServer;  // Called when receiving valid data from Eva.
-- (void)evaDidFailWithError:(NSError *)error;        // Called when receiving an error from Eva.
 
-- (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;  // Called when recording. averagePower and peakPower are in decibels. Must be implemented if shouldSendMicLevel is TRUE.
-- (void)evaMicStopRecording; // Called everytime the record stops, Must be implemented if shouldSendMicLevel is TRUE.
+// Required: Called when receiving valid data from Eva.
+- (void)evaDidReceiveData:(NSData *)dataFromServer;
+
+// Required: Called when receiving an error from Eva.
+- (void)evaDidFailWithError:(NSError *)error;
+
+// Optional: Called when recording. averagePower and peakPower are in decibels. Must be implemented if shouldSendMicLevel is TRUE.
+- (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;  
+
+// Optional: Called everytime the record stops, Must be implemented if shouldSendMicLevel is TRUE.
+- (void)evaMicStopRecording; 
+
+// Optional: Called when initiation process is complete after setting the API keys.
+- (void)evaRecorederIsReady;
 @end
 
 @interface Eva : NSObject{
@@ -31,8 +41,7 @@
     NSString *version; // Optional, @"v1.0" is the default version
     
     NSString *scope; 
-    
-    //SpeexEncoder *speexEncoder_temp;
+
 }
 
 @property (nonatomic, weak) id <EvaDelegate> delegate;
@@ -48,7 +57,7 @@
 
 + (Eva *)sharedInstance;
 
-// Set the API keys - Use one of those functions //
+// Set the API keys - Use one of those functions, This should be called as earlier as possible //
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code;
 
 // if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped
@@ -57,7 +66,7 @@
 // if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 8.0 sec, max value is 10.0 sec)
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel withRecordingTimeout:(float)secToTimeout;
 
-// Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session //
+// Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. Return TRUE if could start the record and FALSE if there was any error (for example when APIkeys aren't set or recorder isn't ready) //
 - (BOOL)startRecord:(BOOL)withNewSession;
 
 // Stop record, Would send the record to Eva for analyze //
