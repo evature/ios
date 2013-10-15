@@ -40,7 +40,8 @@
     
     NSString *version; // Optional, @"v1.0" is the default version
     
-    NSString *scope; 
+    NSString *scope;
+    NSString *context;
 
 }
 
@@ -53,7 +54,7 @@
 @property(nonatomic,retain) NSString *version;
 
 @property(nonatomic,retain) NSString *scope; 
-
+@property(nonatomic,retain) NSString *context;
 
 + (Eva *)sharedInstance;
 

@@ -9,6 +9,8 @@
 #ifndef Eva_Common_h
 #define Eva_Common_h
 
+
+#define EVA_FRAMEWORK_VERSION @"v1.14"
 #ifdef SHOW_DEBUG_LOGS
     #define DEBUG_LOGS TRUE
     #define DEBUG_MODE_FOR_EVA TRUE 

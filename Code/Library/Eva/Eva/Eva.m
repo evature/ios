@@ -214,6 +214,7 @@
 @synthesize language = language_;
 
 @synthesize scope = scope_;
+@synthesize context = context_;
 
 @synthesize audioTimeoutTimer = audioTimeoutTimer_;
 
@@ -266,6 +267,8 @@
 
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code{
     //  NSLog(@"Eva.framework version %@(%@)",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
+    
+    NSLog(@"Eva.framework version %@",EVA_FRAMEWORK_VERSION);
     
     evaAPIKey_ = [NSString stringWithFormat:@"%@", api_key];
     evaSiteCode_ = [NSString stringWithFormat:@"%@", site_code];
@@ -1019,11 +1022,11 @@
     
     
 #if USE_CHUNKED_ENCODING
-    // double peakPower = [streamer_ peakPower];
+    double peakPower = [streamer_ peakPower];
     double averagePower = [streamer_ averagePower];
 #else
     [recorder_ updateMeters];
-    //double peakPower = [recorder_ peakPowerForChannel:0];
+    double peakPower = [recorder_ peakPowerForChannel:0];
     double averagePower = [recorder_ averagePowerForChannel:0];
 #endif
     
@@ -1064,7 +1067,7 @@
     
     if (sendMicLevel_){
         if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackAverage:andPeak:)]){
-            [[self delegate] evaMicLevelCallbackAverage:lowPassResults andPeak:lowPassResultsPeak];
+            [[self delegate] evaMicLevelCallbackAverage:averagePower andPeak:peakPower];
         }else{
             NSLog(@"Eva-Critical Error: You haven't implemented evaMicLevelCallbackAverage:andPeak, It is a must with your settings. Please implement this one");
         }
@@ -1097,7 +1100,9 @@
             silentMoments = 0;
         }
 #if VAD_GUI_UPDATE
-        [[self delegate] evaSilentMoments: silentMoments stopOn:(STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME) ];
+        if([[self delegate] respondsToSelector:@selector(evaSilentMoments:stopOn:)]){
+            [[self delegate] evaSilentMoments: silentMoments stopOn:(STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME) ];
+        }
 #endif
         
         if (silentMoments >= STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME ) {
@@ -1334,6 +1339,9 @@
     }
     if (scope_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&scope=%@",url,scope_]];
+    }
+    if (context_ != nil) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,context_]];
     }
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Url = %@",url);
