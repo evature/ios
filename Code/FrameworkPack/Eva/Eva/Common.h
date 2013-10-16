@@ -10,7 +10,10 @@
 #define Eva_Common_h
 
 
-#define EVA_FRAMEWORK_VERSION @"v1.4.1"
+#define EVA_FRAMEWORK_VERSION @"v1.4.2"
+
+#define USE_SAFE_STRING TRUE //FALSE
+
 #ifdef SHOW_DEBUG_LOGS
     #define DEBUG_LOGS TRUE
     #define DEBUG_MODE_FOR_EVA TRUE 

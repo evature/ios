@@ -176,13 +176,14 @@
     
     // Set optional parameters //
     
-    //[Eva sharedInstance].home = @"paris";
-    //[Eva sharedInstance].version = @"v1.0";
-    //[Eva sharedInstance].uid=@"TestUID";
-    //[Eva sharedInstance].scope = @"h";
+    //[[Eva sharedInstance] setHome:@"paris"];
+    //[[Eva sharedInstance] setVersion: @"v1.0"];
+    //[[Eva sharedInstance] setUid:@"TestUID"];
+    //[[Eva sharedInstance] setScope:@"h"];
     
-    //NSMutableDictionary *optional = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
-    //[Eva sharedInstance].optional_dictionary = optionalDict;
+    //NSMutableDictionary *optionalDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
+    //[[Eva sharedInstance] setOptional_dictionary:[optionalDict mutableCopy]];
+    
     
     // View settings //
     [self loadViewParameters];

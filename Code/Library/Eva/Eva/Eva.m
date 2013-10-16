@@ -269,13 +269,15 @@ static NSString *urlEncode(id object) {
 }
 
 
-- (NSString*)urlEncodedOptionalParametersString {
+- (NSString*)urlSafeEncodedOptionalParametersString {
     NSMutableArray *parts = [NSMutableArray array];
-    for (id key in optional_dictionary_) {
-        id value = [optional_dictionary_ objectForKey: key];
-        NSString *part = [NSString stringWithFormat: @"%@=%@", urlEncode(key), urlEncode(value)];
+    NSDictionary *dict = [optional_dictionary_ mutableCopy];
+    for (id key in dict) {
+        id value = [dict objectForKey: key];
+        NSString *part = [NSString stringWithFormat: @"%@=%@", [self makeSafeString:urlEncode(key)],[self makeSafeString: urlEncode(value)]];
         [parts addObject: part];
     }
+    dict = nil;
     return [parts componentsJoinedByString: @"&"];
 }
 
@@ -1329,6 +1331,66 @@ static NSString *urlEncode(id object) {
  
  }*/
 
+
+- (NSString *)makeSafeString:(NSString *)inString{
+    
+#if USE_SAFE_STRING
+    NSString *unsafeString = [NSString stringWithFormat:@"%@",inString];//@"this &string= confuses ? the InTeRwEbZ";
+    CFStringRef safeURLString = CFURLCreateStringByAddingPercentEscapes (
+                                                                         NULL,
+                                                                         (CFStringRef)unsafeString,
+                                                                         NULL,
+                                                                         CFSTR("/%?&=-$#+~@<>|\\*,.()[]{}^!"),
+                                                                         kCFStringEncodingUTF8
+                                                                         );
+    
+    NSString* safeReturnString= [NSString stringWithFormat:@"%@",safeURLString];
+    CFRelease(safeURLString);
+    return safeReturnString;
+#else
+    return inString;
+#endif
+}
+- (NSString *)makeSafeStringVersion:(NSString *)inString{
+    
+#if USE_SAFE_STRING
+    NSString *unsafeString = [NSString stringWithFormat:@"%@",inString];//@"this &string= confuses ? the InTeRwEbZ";
+    CFStringRef safeURLString = CFURLCreateStringByAddingPercentEscapes (
+                                                                         NULL,
+                                                                         (CFStringRef)unsafeString,
+                                                                         NULL,
+                                                                         CFSTR("/%?&=-$#+~@<>|\\*,()[]{}^!"),
+                                                                         kCFStringEncodingUTF8
+                                                                         );
+    
+    NSString* safeReturnString= [NSString stringWithFormat:@"%@",safeURLString];
+    CFRelease(safeURLString);
+    return safeReturnString;
+#else
+    return inString;
+#endif
+}
+
+- (NSString *)makeSafeStringUID:(NSString *)inString{
+    
+#if USE_SAFE_STRING
+    NSString *unsafeString = [NSString stringWithFormat:@"%@",inString];//@"this &string= confuses ? the InTeRwEbZ";
+    CFStringRef safeURLString = CFURLCreateStringByAddingPercentEscapes (
+                                                                         NULL,
+                                                                         (CFStringRef)unsafeString,
+                                                                         NULL,
+                                                                         CFSTR("/%?&=$#+~@<>|\\*.,()[]{}^!"),
+                                                                         kCFStringEncodingUTF8
+                                                                         );
+    
+    NSString* safeReturnString= [NSString stringWithFormat:@"%@",safeURLString];
+    CFRelease(safeURLString);
+    return safeReturnString;
+#else
+    return inString;
+#endif
+}
+
 #pragma mark - Connection with Eva server
 
 -(void)establishConnection{
@@ -1340,9 +1402,9 @@ static NSString *urlEncode(id object) {
     NSURL *url;
     
     if (version_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,version_,evaSiteCode_,evaAPIKey_,ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
     }else{
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,evaSiteCode_,evaAPIKey_,ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
     }
     //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=%@&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",evaSiteCode_,evaAPIKey_,ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
     
@@ -1354,36 +1416,31 @@ static NSString *urlEncode(id object) {
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=thack&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&latitude=%.5f&longitude=%.5f",@"thack-london-june-2012",ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],latitude,longitude]];
     }
     
+    if (ipAddress_ != nil) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&ip_addr=%@",url,ipAddress_]];
+    }
+    
     if (bias_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&bias=%@",url,bias_]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&bias=%@",url,[self makeSafeString:bias_]]];
     }
     if (home_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&home=%@",url,home_]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&home=%@",url,[self makeSafeString:home_]]];
     }
     if (language_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&language=%@",url,language_]];
     }
     if (scope_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&scope=%@",url,scope_]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&scope=%@",url,[self makeSafeString:scope_]]];
     }
     if (context_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,context_]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,[self makeSafeString:context_]]];
     }
     
     if (optional_dictionary_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlEncodedOptionalParametersString]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlSafeEncodedOptionalParametersString]]];
     }
     
-   /* NSString *unsafeString = [NSString stringWithFormat:@"%@",url];//@"this &string= confuses ? the InTeRwEbZ";
-    CFStringRef safeURLString = CFURLCreateStringByAddingPercentEscapes (
-                                                                      NULL,
-                                                                      (CFStringRef)unsafeString,
-                                                                      NULL,
-                                                                      CFSTR("/%&=?$#+-~@<>|\*,.()[]{}^!"),
-                                                                      kCFStringEncodingUTF8
-                                                                      );
-    */
-    
+       
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Url = %@",url);
    // NSLog(@"safeUrl = %@",safeURLString);
@@ -1772,7 +1829,7 @@ static NSString *urlEncode(id object) {
 #pragma mark - MISC for url parameters
 -(NSString *)getUID{
     if (uid_!=nil) {  // User set a uid.
-        return uid_;
+        return [self makeSafeStringUID:uid_];
     }else if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
         // This is will run if it is iOS6
         return [[[UIDevice currentDevice] identifierForVendor] UUIDString];

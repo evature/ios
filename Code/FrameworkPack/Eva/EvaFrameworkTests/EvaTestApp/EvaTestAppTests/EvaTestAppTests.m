@@ -55,9 +55,11 @@
     [Eva sharedInstance].delegate = self; // Setting the delegate to this view //
     
     // Checking new optional dictionary //
-    //NSMutableDictionary *optionalDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
-    //[Eva sharedInstance].optional_dictionary = optionalDict;
+    NSMutableDictionary *optionalDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTes-t"];
     
+    [[Eva sharedInstance] setOptional_dictionary:[optionalDict mutableCopy]];
+    
+    [[Eva sharedInstance] setBias:@"test-Bias"];
     //////////////////////////////////////
     
     [[Eva sharedInstance] setAPIkey:EVA_API_KEY withSiteCode:EVA_SITE_CODE];
