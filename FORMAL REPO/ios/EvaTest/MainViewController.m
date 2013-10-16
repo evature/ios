@@ -181,6 +181,9 @@
     //[Eva sharedInstance].uid=@"TestUID";
     //[Eva sharedInstance].scope = @"h";
     
+    //NSMutableDictionary *optional = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
+    //[Eva sharedInstance].optional_dictionary = optionalDict;
+    
     // View settings //
     [self loadViewParameters];
     [continueButton setHidden:TRUE];

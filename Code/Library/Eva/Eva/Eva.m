@@ -144,6 +144,9 @@
     //ChunkTransfer *chunkTransferContainer;
     
 }
+
+
+
 //@property(nonatomic) NSInteger amount;
 
 // For audio recording (wav) recording //
@@ -215,6 +218,7 @@
 
 @synthesize scope = scope_;
 @synthesize context = context_;
+@synthesize optional_dictionary = optional_dictionary_;
 
 @synthesize audioTimeoutTimer = audioTimeoutTimer_;
 
@@ -252,6 +256,28 @@
 	return sharedInstance;
 }
 
+
+// URL optional dictionary //
+static NSString *toString(id object) {
+    return [NSString stringWithFormat: @"%@", object];
+}
+
+// helper function: get the url encoded string form of any object
+static NSString *urlEncode(id object) {
+    NSString *string = toString(object);
+    return [string stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+}
+
+
+- (NSString*)urlEncodedOptionalParametersString {
+    NSMutableArray *parts = [NSMutableArray array];
+    for (id key in optional_dictionary_) {
+        id value = [optional_dictionary_ objectForKey: key];
+        NSString *part = [NSString stringWithFormat: @"%@=%@", urlEncode(key), urlEncode(value)];
+        [parts addObject: part];
+    }
+    return [parts componentsJoinedByString: @"&"];
+}
 
 // External API functions //
 
@@ -1343,8 +1369,24 @@
     if (context_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,context_]];
     }
+    
+    if (optional_dictionary_ != nil) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlEncodedOptionalParametersString]]];
+    }
+    
+   /* NSString *unsafeString = [NSString stringWithFormat:@"%@",url];//@"this &string= confuses ? the InTeRwEbZ";
+    CFStringRef safeURLString = CFURLCreateStringByAddingPercentEscapes (
+                                                                      NULL,
+                                                                      (CFStringRef)unsafeString,
+                                                                      NULL,
+                                                                      CFSTR("/%&=?$#+-~@<>|\*,.()[]{}^!"),
+                                                                      kCFStringEncodingUTF8
+                                                                      );
+    */
+    
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Url = %@",url);
+   // NSLog(@"safeUrl = %@",safeURLString);
 #endif
     
 #if TESTFLIGHT_TESTING

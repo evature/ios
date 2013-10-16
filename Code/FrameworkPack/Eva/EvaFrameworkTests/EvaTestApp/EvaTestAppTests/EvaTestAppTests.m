@@ -53,8 +53,18 @@
     // Set-up code here.
 #if !CHECK_SPEEX_MALLOC_ERROR
     [Eva sharedInstance].delegate = self; // Setting the delegate to this view //
+    
+    // Checking new optional dictionary //
+    //NSMutableDictionary *optionalDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
+    //[Eva sharedInstance].optional_dictionary = optionalDict;
+    
+    //////////////////////////////////////
+    
     [[Eva sharedInstance] setAPIkey:EVA_API_KEY withSiteCode:EVA_SITE_CODE];
 #endif
+    
+   
+    
     _recievedDataCallbackInvoked = FALSE;
     _recievedFailCallbackInvoked = FALSE;
     errorCode = 0;
@@ -128,7 +138,7 @@
    
     }
 }
-
+/*
 -(void)testLotsOfCancelRecordSizes{
     float recordLength;
     int timesToRepeatEachTest = TIMES_TO_REPEAT_EACH_TEST;
@@ -175,7 +185,7 @@
         }
         
     }
-}
+}*/
 #endif
 
 

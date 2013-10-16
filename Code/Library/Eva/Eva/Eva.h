@@ -42,6 +42,8 @@
     
     NSString *scope;
     NSString *context;
+    
+    NSDictionary *optional_dictionary;
 
 }
 
@@ -55,6 +57,8 @@
 
 @property(nonatomic,retain) NSString *scope; 
 @property(nonatomic,retain) NSString *context;
+
+@property(nonatomic,retain) NSDictionary *optional_dictionary;
 
 + (Eva *)sharedInstance;
 
