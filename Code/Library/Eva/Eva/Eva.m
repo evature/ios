@@ -372,7 +372,16 @@ static NSString *urlEncode(id object) {
     return TRUE;
 }
 
+- (BOOL)startRecordNoSession{
+    return [self startRecord:FALSE orNoSession:TRUE];
+}
+
 - (BOOL)startRecord:(BOOL)withNewSession{
+    return [self startRecord:withNewSession orNoSession:FALSE];
+
+}
+
+- (BOOL)startRecord:(BOOL)withNewSession orNoSession:(BOOL)noSession{
 #if DEBUG_LOGS
     NSLog(@"Start recording");
 #endif
@@ -391,7 +400,9 @@ static NSString *urlEncode(id object) {
         return FALSE;
     }
     
-    if (withNewSession) {
+    if (noSession) {
+        sessionID_ = nil;
+    }else if (withNewSession) {
         sessionID_ = [NSString stringWithFormat:@"1"];
     }
     
@@ -1402,9 +1413,11 @@ static NSString *urlEncode(id object) {
     NSURL *url;
     
     if (version_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",EVA_HOST_ADDRESS,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_, //&session_id=%@
+                                    [self getUID]]];
     }else{
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",EVA_HOST_ADDRESS,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",EVA_HOST_ADDRESS,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
+                                    [self getUID]]];
     }
     //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=%@&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",evaSiteCode_,evaAPIKey_,ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
     
@@ -1416,9 +1429,13 @@ static NSString *urlEncode(id object) {
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=thack&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&latitude=%.5f&longitude=%.5f",@"thack-london-june-2012",ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],latitude,longitude]];
     }
     
+    if (sessionID_ != nil) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&session_id=%@",url,sessionID_]];
+    }
     if (ipAddress_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&ip_addr=%@",url,ipAddress_]];
     }
+    
     
     if (bias_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&bias=%@",url,[self makeSafeString:bias_]]];

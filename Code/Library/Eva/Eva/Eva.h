@@ -71,8 +71,12 @@
 // if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 8.0 sec, max value is 10.0 sec)
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel withRecordingTimeout:(float)secToTimeout;
 
+
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. Return TRUE if could start the record and FALSE if there was any error (for example when APIkeys aren't set or recorder isn't ready) //
 - (BOOL)startRecord:(BOOL)withNewSession;
+
+// Start record without sending any session to Eva. //
+- (BOOL)startRecordNoSession;
 
 // Stop record, Would send the record to Eva for analyze //
 - (BOOL)stopRecord;
