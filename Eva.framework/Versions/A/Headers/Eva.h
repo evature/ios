@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define EVA_FRAMEWORK_VERSION @"v1.4.4"
    
 @protocol EvaDelegate <NSObject>
 @optional
