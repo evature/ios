@@ -1642,15 +1642,6 @@ static NSString *urlEncode(id object) {
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
-        
-        [[self delegate] evaDidReceiveData:data];
-    }else{
-        NSLog(@"Eva-Critical Error: You haven't implemented evaDidReceiveData:, It is a must! Please implement this one");
-    }
-    
-    
-    
     
     NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 #if DEBUG_MODE_FOR_EVA
@@ -1689,16 +1680,26 @@ static NSString *urlEncode(id object) {
     // [self stopSiriEffect];
     //curViewState = kEvaWaitingForUserPress;
 #endif
+    
+
+    
     if ([json respondsToSelector:@selector(objectForKey:)]) {
 #if DEBUG_MODE_FOR_EVA
         NSLog(@"[json respondsToSelector:@selector(objectForKey:)] == TRUE");
 #endif
         sessionID_ = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
         if (sessionID_ == nil) {
-            [NSString stringWithFormat:@"1"];
+            sessionID_ = [NSString stringWithFormat:@"1"];
         }
     }
     
+    
+    if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
+        
+        [[self delegate] evaDidReceiveData:data];
+    }else{
+        NSLog(@"Eva-Critical Error: You haven't implemented evaDidReceiveData:, It is a must! Please implement this one");
+    }
     
     
 }
@@ -1707,6 +1708,8 @@ static NSString *urlEncode(id object) {
     // [connection2 release];
     connectionV = nil;
 }
+
+
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"Eva: Something went wrong...");
