@@ -1642,12 +1642,7 @@ static NSString *urlEncode(id object) {
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
-        
-        [[self delegate] evaDidReceiveData:data];
-    }else{
-        NSLog(@"Eva-Critical Error: You haven't implemented evaDidReceiveData:, It is a must! Please implement this one");
-    }
+    
     
     
     
@@ -1699,7 +1694,12 @@ static NSString *urlEncode(id object) {
         }
     }
     
-    
+    if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
+        
+        [[self delegate] evaDidReceiveData:data];
+    }else{
+        NSLog(@"Eva-Critical Error: You haven't implemented evaDidReceiveData:, It is a must! Please implement this one");
+    }
     
 }
 
