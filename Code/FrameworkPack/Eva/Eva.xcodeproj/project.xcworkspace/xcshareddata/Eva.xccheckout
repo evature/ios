@@ -5,56 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6C6FF7AA-E764-46EE-BBEF-053822BF0100</string>
+	<string>67D8E5BC-1293-4FCE-8D4C-FD2962538D58</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Eva</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>3838DFD8-2A1D-4334-9FF6-62CD8FB008B7</key>
-		<string>https://bitbucket.org/bzing/eva-framework.git</string>
+		<key>8A235C9F-BF00-43A0-8E82-4DC121DFC190</key>
+		<string>https://github.com/evature/iosdev.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Eva.xcodeproj/project.xcworkspace</string>
+	<string>Code/FrameworkPack/Eva/Eva.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>20BB2079-A53D-4FE6-AD7F-356F4CE810AB</key>
-		<string>../../EvaFrameworkTests/EvaTestApp</string>
-		<key>3838DFD8-2A1D-4334-9FF6-62CD8FB008B7</key>
-		<string>../..</string>
-		<key>8FB40D8E-292A-4F27-B2C1-D9C56BDABBA8</key>
-		<string>../../../../Library/Eva</string>
+		<key>8A235C9F-BF00-43A0-8E82-4DC121DFC190</key>
+		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/bzing/eva-framework.git</string>
+	<string>https://github.com/evature/iosdev.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3838DFD8-2A1D-4334-9FF6-62CD8FB008B7</string>
+	<string>8A235C9F-BF00-43A0-8E82-4DC121DFC190</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3838DFD8-2A1D-4334-9FF6-62CD8FB008B7</string>
+			<string>8A235C9F-BF00-43A0-8E82-4DC121DFC190</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Eva</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8FB40D8E-292A-4F27-B2C1-D9C56BDABBA8</string>
-			<key>IDESourceControlWCCName</key>
-			<string>Eva</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>20BB2079-A53D-4FE6-AD7F-356F4CE810AB</string>
-			<key>IDESourceControlWCCName</key>
-			<string>EvaTestApp</string>
+			<string>iosdev</string>
 		</dict>
 	</array>
 </dict>

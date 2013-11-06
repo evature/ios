@@ -21,7 +21,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "EvaFrameworkTests/EvaTestApp/EvaTestAppTests/EvaTestAppTests.m"
-         timestampString = "403612143.889576"
+         timestampString = "405457627.563003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "283"
@@ -34,7 +34,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "EvaFrameworkTests/EvaTestApp/EvaTestAppTests/EvaTestAppTests.m"
-         timestampString = "403612143.889576"
+         timestampString = "405457627.563003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "293"
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../../Library/Eva/Eva/Eva.m"
-         timestampString = "404309395.705211"
+         timestampString = "405460094.285745"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1435"
-         endingLineNumber = "1435"
+         startingLineNumber = "1456"
+         endingLineNumber = "1456"
          landmarkName = "-establishConnection"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../../Library/Eva/Eva/Eva.m"
-         timestampString = "404309395.705211"
+         timestampString = "405460094.285745"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1451"
-         endingLineNumber = "1451"
+         startingLineNumber = "1472"
+         endingLineNumber = "1472"
          landmarkName = "-establishConnection"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,12 +190,77 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../../Library/Eva/Eva/Eva.m"
-         timestampString = "404309484.854792"
+         timestampString = "405460094.285745"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1698"
-         endingLineNumber = "1698"
+         startingLineNumber = "1719"
+         endingLineNumber = "1719"
          landmarkName = "-connection:didReceiveData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../Library/Eva/Eva/Eva.m"
+         timestampString = "405457108.187848"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
+         landmarkName = "-stopRecord"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../Library/Eva/Eva/Eva.m"
+         timestampString = "405457143.85912"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "384"
+         endingLineNumber = "384"
+         landmarkName = "-startRecord:orNoSession:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../Library/Eva/Eva/Eva.m"
+         timestampString = "405457183.729586"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "430"
+         endingLineNumber = "430"
+         landmarkName = "-startRecord:orNoSession:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../Library/Eva/Eva/Eva.m"
+         timestampString = "405460094.285745"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1428"
+         endingLineNumber = "1428"
+         landmarkName = "-establishConnection"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../../Library/Eva/Eva/Eva.m"
+         timestampString = "405460689.877715"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1421"
+         endingLineNumber = "1421"
+         landmarkName = "-establishConnection"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

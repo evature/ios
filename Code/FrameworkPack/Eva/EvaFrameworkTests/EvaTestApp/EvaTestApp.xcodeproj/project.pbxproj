@@ -491,6 +491,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTestApp/EvaTestApp-Prefix.pch";
 				INFOPLIST_FILE = "EvaTestApp/EvaTestApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
@@ -502,6 +503,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Idan Sheetrit (4RLD2STT69)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Idan Sheetrit (4RLD2STT69)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../../../../../Library/Developer/Xcode/DerivedData/Eva-enlshiqnwkaqdahheoxqooykociq/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
@@ -513,8 +515,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTestApp/EvaTestApp-Prefix.pch";
 				INFOPLIST_FILE = "EvaTestApp/EvaTestApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B749BB83-F923-4C3E-8EC4-5B329DEF0E42";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
