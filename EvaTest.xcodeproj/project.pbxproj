@@ -449,7 +449,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-ejkgfhbkexzjjkckisuwwbopjkhc/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
@@ -477,7 +476,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/EvaTest/EvaFramework\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Eva-ejkgfhbkexzjjkckisuwwbopjkhc/Build/Products/Debug-iphoneos/Eva.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EvaTest/EvaTest-Prefix.pch";
