@@ -4,14 +4,13 @@
 //
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
-//
+//  Version 1.4.4
 //
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-#define EVA_FRAMEWORK_VERSION @"v1.4.4"
    
 @protocol EvaDelegate <NSObject>
 @optional
