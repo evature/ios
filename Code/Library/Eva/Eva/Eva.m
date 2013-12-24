@@ -67,7 +67,7 @@
 
 
 
-#define SERVER_RESPONSE_TIMEOUT 10.0f//10.0f
+#define SERVER_RESPONSE_TIMEOUT 10.0f//30.0f//10.0f
 
 #if USE_CHUNKED_ENCODING
 #define LEVEL_SAMPLE_TIME 0.03f
@@ -77,7 +77,7 @@
 
 #define STOP_RECORD_AFTER_SILENT_TIME_SEC 0.7f//1.0f
 
-#define MIC_RECORD_TIMEOUT_DEFAULT 8.0f
+#define MIC_RECORD_TIMEOUT_DEFAULT 8.0f//15.0f//8.0f
 
 #if CHECK_WITH_GOOGLE_SERVER
 #define EVA_HOST_ADDRESS @"https://www.google.com/speech-api/v1/recognize?client=chromium&lang=en-US&maxresults=2" //@"https://www.google.com/speech-api/v1/recognize"
