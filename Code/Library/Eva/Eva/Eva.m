@@ -296,7 +296,7 @@ static NSString *urlEncode(id object) {
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code{
     //  NSLog(@"Eva.framework version %@(%@)",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
-    NSLog(@"Eva.framework version %@",EVA_FRAMEWORK_VERSION);
+    NSLog(@"Eva.framework version v%@",EVA_FRAMEWORK_VERSION);
     
     evaAPIKey_ = [NSString stringWithFormat:@"%@", api_key];
     evaSiteCode_ = [NSString stringWithFormat:@"%@", site_code];
@@ -1478,7 +1478,9 @@ static NSString *urlEncode(id object) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlSafeEncodedOptionalParametersString]]];
     }
     
-       
+    // Add version number to URL (new from version 1.4.6) //
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&sdk_version=ios-%@",url,EVA_FRAMEWORK_VERSION]];
+    
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Url = %@",url);
    // NSLog(@"safeUrl = %@",safeURLString);
