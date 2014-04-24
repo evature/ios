@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		942C559A1908F42200664638 /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942C55991908F42200664638 /* Eva.framework */; };
+		942C559C1908F5DF00664638 /* voice_low.aif in Resources */ = {isa = PBXBuildFile; fileRef = 942C559B1908F5DF00664638 /* voice_low.aif */; };
+		946539B61907F64200BFDAB5 /* voice_high.aif in Resources */ = {isa = PBXBuildFile; fileRef = 946539B51907F64200BFDAB5 /* voice_high.aif */; };
 		CF0E337117C50F790023FDFA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2160D317B298C300CEC4DE /* AudioToolbox.framework */; };
 		CF3F1B6A17C532A80086AA90 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2160D317B298C300CEC4DE /* AudioToolbox.framework */; };
 		CF45C20117675948001F701D /* README_Xcode5.txt in Resources */ = {isa = PBXBuildFile; fileRef = CF45C20017675948001F701D /* README_Xcode5.txt */; };
-		CF88CE981819486D001FCE37 /* Eva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF88CE971819486D001FCE37 /* Eva.framework */; };
 		CF9592C017A15FC30022CFBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E4017401C7000303425 /* main.m */; };
 		CF9592C117A15FC30022CFBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E4417401C7100303425 /* AppDelegate.m */; };
 		CF9592C217A15FC30022CFBF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFA4E5017401C7100303425 /* MainViewController.m */; };
@@ -43,10 +45,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		942C55991908F42200664638 /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Eva.framework; sourceTree = "<group>"; };
+		942C559B1908F5DF00664638 /* voice_low.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = voice_low.aif; sourceTree = "<group>"; };
+		946539B51907F64200BFDAB5 /* voice_high.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = voice_high.aif; path = EvaTest/voice_high.aif; sourceTree = "<group>"; };
 		CF2160D317B298C300CEC4DE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CF45C19D174AB28B00C12682 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		CF45C20017675948001F701D /* README_Xcode5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README_Xcode5.txt; sourceTree = "<group>"; };
-		CF88CE971819486D001FCE37 /* Eva.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eva.framework; path = EvaTest/EvaFramework/Eva.framework; sourceTree = "<group>"; };
 		CF9592D617A15FC30022CFBF /* EvaTest flac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EvaTest flac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9592D717A15FC30022CFBF /* EvaTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "EvaTest copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/FORMAL REPO/ios/EvaTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		CFD337C017497CE6008576EC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -96,7 +100,7 @@
 				CFFA4E3717401C7000303425 /* Foundation.framework in Frameworks */,
 				CFFA4E3917401C7000303425 /* CoreGraphics.framework in Frameworks */,
 				CF3F1B6A17C532A80086AA90 /* AudioToolbox.framework in Frameworks */,
-				CF88CE981819486D001FCE37 /* Eva.framework in Frameworks */,
+				942C559A1908F42200664638 /* Eva.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +110,9 @@
 		CFFA4E2817401C7000303425 = {
 			isa = PBXGroup;
 			children = (
-				CF88CE971819486D001FCE37 /* Eva.framework */,
+				942C55991908F42200664638 /* Eva.framework */,
+				946539B51907F64200BFDAB5 /* voice_high.aif */,
+				942C559B1908F5DF00664638 /* voice_low.aif */,
 				CF2160D317B298C300CEC4DE /* AudioToolbox.framework */,
 				CF45C20017675948001F701D /* README_Xcode5.txt */,
 				CFD337C017497CE6008576EC /* CoreLocation.framework */,
@@ -256,6 +262,8 @@
 				CFFA4E4B17401C7100303425 /* Default-568h@2x.png in Resources */,
 				CFFA4E4E17401C7100303425 /* MainStoryboard.storyboard in Resources */,
 				CF45C20117675948001F701D /* README_Xcode5.txt in Resources */,
+				946539B61907F64200BFDAB5 /* voice_high.aif in Resources */,
+				942C559C1908F5DF00664638 /* voice_low.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

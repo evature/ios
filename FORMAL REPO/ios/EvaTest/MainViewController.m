@@ -194,6 +194,16 @@
     [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
     //[[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE withRecordingTimeout:20.0f];
     
+    NSURL *beepSound   = [[NSBundle mainBundle] URLForResource: @"voice_high"
+                                                 withExtension: @"aif"];
+    NSURL *beepSound2   = [[NSBundle mainBundle] URLForResource: @"voice_low"
+                                                 withExtension: @"aif"];
+    
+    [[Eva sharedInstance] setStartRecordAudio:beepSound];
+    [[Eva sharedInstance] setVADEndRecordAudio:beepSound2];
+    [[Eva sharedInstance] setRequestedEndRecordAudio:beepSound2];
+    [[Eva sharedInstance] setCanceledRecordAudio:beepSound2];
+    
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil
         || apiKeyString==[NSString stringWithFormat:@""] ||

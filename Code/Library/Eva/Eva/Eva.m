@@ -10,6 +10,7 @@
 #import "WaveParser.h"
 #import "SpeexEncoder.h"
 #import <Speex/Speex.h>
+#import <AudioToolbox/AudioServices.h>
 #import "Common.h"
 
 #include "OpenUDID.h"
@@ -143,6 +144,12 @@
     
     //ChunkTransfer *chunkTransferContainer;
     
+    // optional - audio files to play before or after recording the user - set to NULL to skip playing those sounds.
+    SystemSoundID audioFileStartRecord;
+    SystemSoundID audioFileRequestedEndRecord;
+    SystemSoundID audioFileVadEndRecord;
+    SystemSoundID audioFileCanceledRecord;
+    
 }
 
 
@@ -193,6 +200,12 @@
 
 //@property(nonatomic,retain) IBOutlet UILabel *outputLabel;
 
+@property(nonatomic) SystemSoundID audioFileStartRecord;
+@property(nonatomic) SystemSoundID audioFileRequestedEndRecord;
+@property(nonatomic) SystemSoundID audioFileVadEndRecord;
+@property(nonatomic) SystemSoundID audioFileCanceledRecord;
+
+
 @end
 
 @implementation Eva
@@ -234,6 +247,12 @@
 //@synthesize streamOfData = streamOfData_;
 
 @synthesize streamer=streamer_;
+
+
+@synthesize audioFileStartRecord = audioFileStartRecord_;
+@synthesize audioFileRequestedEndRecord = audioFileRequestedEndRecord_;
+@synthesize audioFileVadEndRecord = audioFileVadEndRecord_;
+@synthesize audioFileCanceledRecord = audioFileCanceledRecord_;
 
 #if USE_WEB_SOCKET
 @synthesize socket = _socket;
@@ -281,16 +300,119 @@ static NSString *urlEncode(id object) {
     return [parts componentsJoinedByString: @"&"];
 }
 
+
+
+static BOOL setAudio(NSString* tag, SystemSoundID* soundObj, NSURL* filePath) {
+    if (filePath == NULL) {
+        NSLog(@"set %@: to NULL", tag);
+        *soundObj = 0;
+    }
+    else {
+        if (*soundObj != 0) {
+            AudioServicesDisposeSystemSoundID(*soundObj);
+        }
+        // Create a system sound object representing the sound file.
+        OSStatus errorCode = AudioServicesCreateSystemSoundID ((__bridge CFURLRef)filePath, soundObj );
+
+        // TODO: use AVAudioPlayer instead of AudioServices ?
+        //  AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audio_url_start_record_ error:nil]
+        
+        NSLog(@"set %@: filePath: %@,  errorCode: %ld", tag, filePath, errorCode);
+        
+        if (errorCode != 0) {
+            NSLog(@"ERROR %ld: Failed to initialize %@ audio file %@", errorCode, tag, filePath);
+            *soundObj = 0;
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+
+
+- (void) startActualRecording {
+    
+    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+     [self recordToFile];
+     
+     });*/
+#if DEBUG_LOGS
+    NSLog(@"PPPP 1");
+#endif
+#if USE_CHUNKED_ENCODING
+    [self startRecordQueue];
+#else
+    [self recordToFile];
+#endif
+    
+#if DEBUG_LOGS
+    NSLog(@"PPPP 2");
+#endif
+    [locationManager_ startUpdatingLocation];
+#if DEBUG_LOGS
+    NSLog(@"PPPP 3");
+#endif
+    
+    startIsPressed = TRUE;
+    lowPassResultsPeak = 0; // initiate the peak.
+    //#if !USE_CHUNKED_ENCODING
+    audioTimeoutTimer_=[NSTimer scheduledTimerWithTimeInterval:micRecordTimeout_//8.0
+                                                        target:self
+                                                      selector:@selector(stopRecordOnTick:)
+                                                      userInfo:nil
+                                                       repeats:NO];
+    
+#if DEBUG_LOGS
+    NSLog(@"PPPP 4");
+#endif
+    levelTimer = [NSTimer scheduledTimerWithTimeInterval: LEVEL_SAMPLE_TIME target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
+#if DEBUG_LOGS
+    NSLog(@"PPPP 5");
+#endif
+    //#endif
+    silentMoments = 0;
+    noisyMoments = 0;
+    
+}
+
+void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData) {
+    [[Eva sharedInstance] startActualRecording];
+}
+
+
 // External API functions //
 
-/*- (void)initURL:(NSURL *)fileUrl{
- //wavFileUrl_ = fileUrl;
- 
- }*/
 
-//[Parse setApplicationId:@"M8yI2vyIO6NuTEOCO2e610rT5Z6ipPzREbZe5vBU"
-//              clientKey:@"lqW8v0ejSKA5wPYdzGGodd5DbxfXzTVM5CFXZpui"];
+// this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
+- (BOOL) setStartRecordAudio: (NSURL *)filePath {
+    if (audioFileStartRecord_ != 0) {
+        AudioServicesRemoveSystemSoundCompletion(audioFileStartRecord_); 
+    }
+    BOOL result = setAudio(@"StartRecord", &audioFileStartRecord_, filePath);
+    if (result) {
+        AudioServicesAddSystemSoundCompletion(audioFileStartRecord_,
+                                              NULL,
+                                              NULL,
+                                              startRecordSystemSoundCompletionProc,
+                                              NULL);
+    }
+    return result;
+}
 
+// this sound will play when the "stopRecord" is called
+- (BOOL) setRequestedEndRecordAudio: (NSURL *)filePath {
+    return setAudio(@"RequestEndRecord", &audioFileRequestedEndRecord_, filePath);
+}
+
+// this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
+- (BOOL) setVADEndRecordAudio: (NSURL *)filePath {
+    return setAudio(@"VADEndRecord", &audioFileVadEndRecord_, filePath);;
+}
+
+// this sound will play when calling "cancelRecord"
+- (BOOL) setCanceledRecordAudio: (NSURL *)filePath {
+    return setAudio(@"CanceledRecord", &audioFileCanceledRecord_, filePath);;
+}
 
 
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code{
@@ -400,59 +522,33 @@ static NSString *urlEncode(id object) {
         return FALSE; // Should be commented? (it would fail the record if not commented)
     }
     
+    
     if (noSession) {
         sessionID_ = nil;
     }else if (withNewSession) {
         sessionID_ = [NSString stringWithFormat:@"1"];
     }
+
     
-    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-     [self recordToFile];
-     
-     });*/
-#if DEBUG_LOGS
-    NSLog(@"PPPP 1");
-#endif
-#if USE_CHUNKED_ENCODING
-    [self startRecordQueue];
-#else
-    [self recordToFile];
-#endif
-    
-#if DEBUG_LOGS
-    NSLog(@"PPPP 2");
-#endif
-    [locationManager_ startUpdatingLocation];
-#if DEBUG_LOGS
-    NSLog(@"PPPP 3");
-#endif
-    
-    startIsPressed = TRUE;
-    lowPassResultsPeak = 0; // initiate the peak.
-    //#if !USE_CHUNKED_ENCODING
-    audioTimeoutTimer_=[NSTimer scheduledTimerWithTimeInterval:micRecordTimeout_//8.0
-                                                        target:self
-                                                      selector:@selector(stopRecordOnTick:)
-                                                      userInfo:nil
-                                                       repeats:NO];
-    
-#if DEBUG_LOGS
-    NSLog(@"PPPP 4");
-#endif
-    levelTimer = [NSTimer scheduledTimerWithTimeInterval: LEVEL_SAMPLE_TIME target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
-#if DEBUG_LOGS
-    NSLog(@"PPPP 5");
-#endif
-    //#endif
-    silentMoments = 0;
-    noisyMoments = 0;
-    
+    if (audioFileStartRecord_ != 0) {
+        // start "beep" sound -
+        // the audio completion callback will trigger the actual recording
+        AudioServicesPlaySystemSound (audioFileStartRecord_);
+    }
+    else {
+        // no sound - trigger the recording here
+        [self startActualRecording];
+    }
+            
     return TRUE;
     
 }
 
-
 - (BOOL)stopRecord{
+    return [self stopRecord:FALSE];
+}
+
+- (BOOL)stopRecord: (BOOL)fromVad{
 #if DEBUG_LOGS
     NSLog(@"Stop recording");
 #endif
@@ -460,6 +556,16 @@ static NSString *urlEncode(id object) {
     [audioTimeoutTimer_ invalidate];
     audioTimeoutTimer_ = nil;
     if (startIsPressed) {
+        if (fromVad) {
+            if (audioFileVadEndRecord_ != 0) {
+                AudioServicesPlaySystemSound (audioFileVadEndRecord_);
+            }
+        }
+        else {
+            if (audioFileRequestedEndRecord_ != 0) {
+                AudioServicesPlaySystemSound (audioFileRequestedEndRecord_);
+            }
+        }
 #if USE_CHUNKED_ENCODING
         // Call the stop queue function
         [self stopRecordQueue];
@@ -491,6 +597,10 @@ static NSString *urlEncode(id object) {
 #if DEBUG_LOGS
     NSLog(@"Cancel recording");
 #endif
+    if (audioFileCanceledRecord_ != 0) {
+        AudioServicesPlaySystemSound (audioFileCanceledRecord_);
+    }
+    
     recordHasBeenCanceled = TRUE;
     
     return [self stopRecord];
@@ -650,10 +760,6 @@ static NSString *urlEncode(id object) {
      
      [self initAudioQueue];
      
-     
-     
-     
-     
      [self establishConnection]; // New for checking Chunked encoding
      
      
@@ -665,6 +771,8 @@ static NSString *urlEncode(id object) {
     
     //startSilenceDetection = FALSE;
 
+    
+    
 #if DEBUG_LOGS
     NSLog(@"PPPP A1");
 #endif
@@ -677,7 +785,6 @@ static NSString *urlEncode(id object) {
 #if DEBUG_LOGS
     NSLog(@"PPPP A3");
 #endif
-    
     
 }
 
@@ -1206,7 +1313,6 @@ static NSString *urlEncode(id object) {
     }else{
        
         NSLog(@"There is a problem with recording");
-
     }
     
     //[self establishConnection];
