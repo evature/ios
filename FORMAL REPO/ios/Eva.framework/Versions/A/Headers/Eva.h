@@ -29,7 +29,14 @@
 - (void)evaMicStopRecording; 
 
 // Optional: Called when initiation process is complete after setting the API keys.
-- (void)evaRecorederIsReady;
+- (void)evaRecorderIsReady;
+
+// optional - VAD debugging
+- (void)evaMicLevelCallbackMin: (float)minLevel;
+- (void)evaMicLevelCallbackMax: (float)maxLevel;
+- (void)evaMicLevelCallbackThreshold: (float)threshold;
+- (void)evaSilentMoments: (int)moments  stopOn:(float) stopMoments;
+- (void)evaNoisyMoments: (int)moments  stopOn:(float) stopMoments;
 @end
 
 @interface Eva : NSObject{
@@ -87,10 +94,10 @@
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)
-- (BOOL) setStartRecordAudio: (NSURL *)fileUrl;          // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
-- (BOOL) setRequestedEndRecordAudio: (NSURL *)fileUrl;   // this sound will play when the "stopRecord" is called
-- (BOOL) setVADEndRecordAudio: (NSURL *)fileUrl;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
-- (BOOL) setCanceledRecordAudio: (NSURL *)fileUrl;       // this sound will play when calling "cancelRecord"
+- (BOOL) setStartRecordAudio: (NSURL *)filePath;          // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
+- (BOOL) setRequestedEndRecordAudio: (NSURL *)filePath;   // this sound will play when the "stopRecord" is called
+- (BOOL) setVADEndRecordAudio: (NSURL *)filePath;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
+- (BOOL) setCanceledRecordAudio: (NSURL *)filePath;       // this sound will play when calling "cancelRecord"
 
 
 @end

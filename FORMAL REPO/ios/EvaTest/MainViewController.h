@@ -28,6 +28,8 @@
     
     IBOutlet UIProgressView *micLevel;
 
+    IBOutlet UILabel *vadLabel;
+    IBOutlet UILabel *responseLabel;
     //////////////////
 }
 
@@ -40,6 +42,8 @@
 @property(nonatomic,retain) IBOutlet UIButton *cancelButton;
 
 @property(nonatomic,retain) IBOutlet UILabel *indicationLabel;
+@property(nonatomic,retain) IBOutlet UILabel *vadLabel;
+@property(nonatomic,retain) IBOutlet UILabel *responseLabel;
 
 @property(nonatomic,retain) IBOutlet UIProgressView *micLevel;
 //////////////////

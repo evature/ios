@@ -29,7 +29,14 @@
 - (void)evaMicStopRecording; 
 
 // Optional: Called when initiation process is complete after setting the API keys.
-- (void)evaRecorederIsReady;
+- (void)evaRecorderIsReady;
+
+// optional - VAD debugging
+- (void)evaMicLevelCallbackMin: (float)minLevel;
+- (void)evaMicLevelCallbackMax: (float)maxLevel;
+- (void)evaMicLevelCallbackThreshold: (float)threshold;
+- (void)evaSilentMoments: (int)moments  stopOn:(float) stopMoments;
+- (void)evaNoisyMoments: (int)moments  stopOn:(float) stopMoments;
 @end
 
 @interface Eva : NSObject{
