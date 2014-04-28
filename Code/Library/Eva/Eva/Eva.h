@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.4.7
+//  Version 1.4.8
 //
 
 #import <Foundation/Foundation.h>
@@ -88,10 +88,10 @@
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)
-- (BOOL) setStartRecordAudio: (NSURL *)filePath;          // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
-- (BOOL) setRequestedEndRecordAudio: (NSURL *)filePath;   // this sound will play when the "stopRecord" is called
-- (BOOL) setVADEndRecordAudio: (NSURL *)filePath;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
-- (BOOL) setCanceledRecordAudio: (NSURL *)filePath;       // this sound will play when calling "cancelRecord"
+- (BOOL) setStartRecordAudioFile: (NSURL *)filePath;          // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
+- (BOOL) setRequestedEndRecordAudioFile: (NSURL *)filePath;   // this sound will play when the "stopRecord" is called
+- (BOOL) setVADEndRecordAudioFile: (NSURL *)filePath;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
+- (BOOL) setCanceledRecordAudioFile: (NSURL *)filePath;       // this sound will play when calling "cancelRecord"
 
 
 @end

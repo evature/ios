@@ -35,6 +35,8 @@
 
 #define VAD_GUI_UPDATE FALSE // If you want to get the values you have to implement the delegates on Eva.h file.
 /*
+ // add to .h file if you set above to TRUE
+ // optional - VAD debugging
  - (void)evaMicLevelCallbackMin: (float)minLevel;
  - (void)evaMicLevelCallbackMax: (float)maxLevel;
  - (void)evaMicLevelCallbackThreshold: (float)threshold;
@@ -418,7 +420,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 
 
 // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
-- (BOOL) setStartRecordAudio: (NSURL *)filePath {
+- (BOOL) setStartRecordAudioFile: (NSURL *)filePath {
 #if SYSTEM_SOUND
     if (audioFileStartRecord_ != 0) {
         AudioServicesRemoveSystemSoundCompletion(audioFileStartRecord_);
@@ -449,7 +451,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 }
 
 // this sound will play when the "stopRecord" is called
-- (BOOL) setRequestedEndRecordAudio: (NSURL *)filePath {
+- (BOOL) setRequestedEndRecordAudioFile: (NSURL *)filePath {
 #if SYSTEM_SOUND
     return setAudio(@"RequestedEndRecord", &audioFileRequestedEndRecord_, filePath);
 #else
@@ -460,8 +462,8 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 #endif
 }
 
-// this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
-- (BOOL) setVADEndRecordAudio: (NSURL *)filePath {
+// this sound will play when the VAD (voice activity detection) recognizes the user finished speaking
+- (BOOL) setVADEndRecordAudioFile: (NSURL *)filePath {
 #if SYSTEM_SOUND
     return setAudio(@"VADEndRecord", &audioFileVadEndRecord_, filePath);
 #else
@@ -474,7 +476,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 }
 
 // this sound will play when calling "cancelRecord"
-- (BOOL) setCanceledRecordAudio: (NSURL *)filePath {
+- (BOOL) setCanceledRecordAudioFile: (NSURL *)filePath {
 #if SYSTEM_SOUND
     return setAudio(@"CanceledRecord", &audioFileCanceledRecord_, filePath);
 #else
@@ -508,24 +510,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     //isPlaying = NO;
     
     micRecordTimeout_ = MIC_RECORD_TIMEOUT_DEFAULT;
-    
-    NSLog(@"Framework with Play and Record");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *error;
-    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
-    }else{
-        // Do somthing smart for iOS 5 //
-    }
-    
-    if (error != nil) {
-        NSLog(@"Failed to setCategory for AVAudioSession!");
-    }
-    [session setActive:YES error:&error];
-    if (error != nil) {
-        NSLog(@"Failed to setActive for AVAudioSession!");
-    }
-    
     
 #if USE_CHUNKED_ENCODING
     //[self initAudioQueue]; // New for chunked encoding

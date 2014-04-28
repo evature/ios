@@ -11,7 +11,7 @@
 
 #import <MediaPlayer/MPVolumeView.h>
 
-#define VAD_DEBUG_GUI TRUE
+#define VAD_DEBUG_GUI FALSE
 
 @interface MainViewController ()
 
@@ -175,7 +175,7 @@
 - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
     NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
     #if VAD_DEBUG_GUI
-    vadAveragePower = averagePower;
+    vadAveragePower = pow(10, (0.05 * averagePower));
     #endif
     [self.micLevel setProgress:(45+averagePower)/45];
     [self.micLevel setHidden:FALSE];
@@ -276,21 +276,20 @@ float vadStopNoisyMoments;
     // View settings //
     [self loadViewParameters];
     [continueButton setHidden:TRUE];
+    
     [Eva sharedInstance].delegate = self;
     // Initialize Eva keys - It is recommended to do that on your App delegate //
-    // [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString];
-    [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
-    //[[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE withRecordingTimeout:20.0f];
+    [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; 
     
     NSURL *beepSound   = [[NSBundle mainBundle] URLForResource: @"voice_high"
                                                  withExtension: @"aif"];
     NSURL *beepSound2   = [[NSBundle mainBundle] URLForResource: @"voice_low"
                                                  withExtension: @"aif"];
     
-    [[Eva sharedInstance] setStartRecordAudio:beepSound];
-    [[Eva sharedInstance] setVADEndRecordAudio:beepSound2];
-    [[Eva sharedInstance] setRequestedEndRecordAudio:beepSound2];
-    [[Eva sharedInstance] setCanceledRecordAudio:beepSound2];
+    [[Eva sharedInstance] setStartRecordAudioFile:beepSound];
+    [[Eva sharedInstance] setVADEndRecordAudioFile:beepSound2];
+    [[Eva sharedInstance] setRequestedEndRecordAudioFile:beepSound2];
+    [[Eva sharedInstance] setCanceledRecordAudioFile:beepSound2];
     
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil
@@ -299,7 +298,6 @@ float vadStopNoisyMoments;
         [startButton setHidden:TRUE];
         [stopButton setHidden:TRUE];
     }
-    
     
     NSLog(@"Setting session to Play and Record");
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -323,12 +321,15 @@ float vadStopNoisyMoments;
     if (error != nil) {
         NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
     }
-
+    
     [session setActive:YES error:&error];
     if (error != nil) {
         NSLog(@"Failed to setActive for AVAudioSession!  %@", error);
     }
 
+#if !VAD_DEBUG_GUI
+    [vadLabel setHidden:TRUE];
+#endif
     
     [self showLabelWithText:@"View loaded"];
 }
