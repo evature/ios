@@ -9,6 +9,10 @@
 #import "MainViewController.h"
 #import "Common.h"
 
+#import <MediaPlayer/MPVolumeView.h>
+
+#define VAD_DEBUG_GUI FALSE
+
 @interface MainViewController ()
 
 @end
@@ -21,17 +25,20 @@
 @synthesize startButton, continueButton, stopButton,cancelButton;
 @synthesize indicationLabel;
 
+@synthesize vadLabel;
+@synthesize responseLabel;
+
 @synthesize apiKeyString,siteCodeString;
 
 
 @synthesize micLevel;
 
 
-
 #pragma mark - View parameters
 - (void)showLabelWithText:(NSString*)labelText {
     [indicationLabel setText:labelText];
 }
+
 
 -(void)saveViewParameters{
     [[NSUserDefaults standardUserDefaults] setValue:[apiKeyTextField text] forKey:kApiKey];
@@ -68,7 +75,7 @@
 #pragma mark - view actions
 -(IBAction)startRecordButton:(id)sender{
     [self textFieldDoneEditing:sender];
-   
+    
     [[Eva sharedInstance] startRecord:TRUE];
     [self showLabelWithText:@"Record has started"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
@@ -114,6 +121,24 @@
         [self showParameterErrorMessage];
     }
 }
+//
+//-(float) getVolumeLevel
+//{
+//    MPVolumeView *slide = [MPVolumeView new];
+//    UISlider *volumeViewSlider;
+//    
+//    for (UIView *view in [slide subviews]){
+//        if ([[[view class] description] isEqualToString:@"MPVolumeSlider"]) {
+//            volumeViewSlider = (UISlider *) view;
+//        }
+//    }
+//    
+//    float val = [volumeViewSlider value];
+//    slide = nil;
+//    
+//    return val;
+//}
+
 
 #pragma mark - Eva Delegate
 - (void)evaDidReceiveData:(NSData *)dataFromServer{
@@ -125,34 +150,98 @@
     [[NSUserDefaults standardUserDefaults] setValue:dataStr forKey:kLastJsonStringFromEva ];
     
     [self showLabelWithText:@"Recived data from Eva!"];
-    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:3.5];
+    
+    NSData *jsonData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *e;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&e];
+    
+    if (e != NULL || dict == NULL) {
+        [responseLabel setText:@"Error parsing"];
+    }
+    else {
+        [responseLabel setText:[dict objectForKey:@"input_text"]];
+    }
     
 }
 
 - (void)evaDidFailWithError:(NSError *)error{
     NSLog(@"Got error from Eva");
     //[self.micLevel setHidden:TRUE];
+    [self showLabelWithText:@"Error from Eva"];
+    [vadLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
 }
 
 - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
     NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
-    
+    #if VAD_DEBUG_GUI
+    vadAveragePower = pow(10, (0.05 * averagePower));
+    #endif
     [self.micLevel setProgress:(45+averagePower)/45];
     [self.micLevel setHidden:FALSE];
 }
 
 - (void)evaMicStopRecording{
     NSLog(@"Recording has stopped");
+    [self showLabelWithText:@"stopping"];
     [self.micLevel setHidden:TRUE];
     [cancelButton setHidden:TRUE];
     [stopButton setHidden:TRUE];
 }
 
-- (void)evaRecorederIsReady{
+- (void)evaRecorderIsReady{
+    NSLog(@"EvaRecorder is ready!");
+    [self showLabelWithText:@"Ready!"];
+//    [self showLabelWithText:[NSString stringWithFormat:@"%f", [self getVolumeLevel]]];
     [self.startButton setHidden:FALSE];
+    [self.startButton setEnabled:TRUE];
 }
 
 
+#if VAD_DEBUG_GUI
+
+
+float vadAveragePower;
+float vadMinLevel;
+float vadMaxLevel;
+float vadThreshold;
+int vadSilentMoments;
+float vadStopSilenceMoments;
+int vadNoisyMoments;
+float vadStopNoisyMoments;
+
+- (void)showVadDetails {
+    [vadLabel setText:[NSString stringWithFormat:@"Level: %.3f \n Min: %.3f,  Max: %.3f,  \n Threshold: %.3f,  \n Silent: %d  out of: %.1f \n  Noisy: %d  out of: %.1f",
+                       vadAveragePower, vadMinLevel, vadMaxLevel, vadThreshold, vadSilentMoments, vadStopSilenceMoments, vadNoisyMoments, vadStopNoisyMoments]];
+}
+
+- (void)evaMicLevelCallbackMin: (float)minLevel {
+    vadMinLevel = minLevel;
+    [self showVadDetails];
+}
+
+- (void)evaMicLevelCallbackMax: (float)maxLevel {
+    vadMaxLevel = maxLevel;
+    [self showVadDetails];
+}
+
+- (void)evaMicLevelCallbackThreshold: (float)threshold {
+    vadThreshold = threshold;
+    [self showVadDetails];
+}
+
+- (void)evaSilentMoments: (int)moments  stopOn:(float) stopMoments {
+    vadSilentMoments = moments;
+    vadStopSilenceMoments = stopMoments;
+    [self showVadDetails];
+}
+
+- (void)evaNoisyMoments: (int)moments  stopOn:(float) stopMoments {
+    vadNoisyMoments = moments;
+    vadStopNoisyMoments = stopMoments;
+    [self showVadDetails];
+}
+#endif
 
 #pragma mark - View
 
@@ -160,7 +249,6 @@
     // New Setup //
     [Eva sharedInstance].delegate = self; // Setting the delegate to this view //
     // The delegate initiation is here for it to be set-up every time this view is called //
-
 }
 
 - (void)viewDidLoad
@@ -189,10 +277,19 @@
     [self loadViewParameters];
     [continueButton setHidden:TRUE];
     
+    [Eva sharedInstance].delegate = self;
     // Initialize Eva keys - It is recommended to do that on your App delegate //
-    // [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString];
-    [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
-    //[[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE withRecordingTimeout:20.0f];
+    [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; 
+    
+    NSURL *beepSound   = [[NSBundle mainBundle] URLForResource: @"voice_high"
+                                                 withExtension: @"aif"];
+    NSURL *beepSound2   = [[NSBundle mainBundle] URLForResource: @"voice_low"
+                                                 withExtension: @"aif"];
+    
+    [[Eva sharedInstance] setStartRecordAudioFile:beepSound];
+    [[Eva sharedInstance] setVADEndRecordAudioFile:beepSound2];
+    [[Eva sharedInstance] setRequestedEndRecordAudioFile:beepSound2];
+    [[Eva sharedInstance] setCanceledRecordAudioFile:beepSound2];
     
     // Hide buttons if no API keys //
     if (apiKeyString==nil || siteCodeString==nil
@@ -202,13 +299,46 @@
         [stopButton setHidden:TRUE];
     }
     
-    
+    NSLog(@"Setting session to Play and Record");
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *error;
+    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
+
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    }else{
+        // Do somthing smart for iOS 5 //
     }
+    if (error != nil) {
+        NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
+    }
+    
+    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
+            [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+                                         error:&error];
+    }else{
+         // Do somthing smart for iOS 5 //
+    }
+    if (error != nil) {
+        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    }
+    
+    [session setActive:YES error:&error];
+    if (error != nil) {
+        NSLog(@"Failed to setActive for AVAudioSession!  %@", error);
+    }
+
+#if !VAD_DEBUG_GUI
+    [vadLabel setHidden:TRUE];
+#endif
+    
+    [self showLabelWithText:@"View loaded"];
+}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [self showLabelWithText:@"Memory warning!"];
 }
 
 #pragma mark - Flipside View
