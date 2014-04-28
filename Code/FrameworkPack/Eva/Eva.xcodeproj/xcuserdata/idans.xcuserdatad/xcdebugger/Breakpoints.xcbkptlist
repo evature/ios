@@ -156,7 +156,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "297"
          endingLineNumber = "297"
-         landmarkName = "-setAPIkey:withSiteCode:"
+         landmarkName = "+sharedInstance"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -169,8 +169,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1456"
          endingLineNumber = "1456"
-         landmarkName = "-establishConnection"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -182,8 +182,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1472"
          endingLineNumber = "1472"
-         landmarkName = "-establishConnection"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -195,8 +195,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1721"
          endingLineNumber = "1721"
-         landmarkName = "-connection:didReceiveData:"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -208,8 +208,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "462"
          endingLineNumber = "462"
-         landmarkName = "-stopRecord"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -221,8 +221,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "384"
          endingLineNumber = "384"
-         landmarkName = "-startRecord:orNoSession:"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -234,8 +234,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "430"
          endingLineNumber = "430"
-         landmarkName = "-startRecord:orNoSession:"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -247,8 +247,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1428"
          endingLineNumber = "1428"
-         landmarkName = "-establishConnection"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -260,8 +260,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1421"
          endingLineNumber = "1421"
-         landmarkName = "-establishConnection"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -273,8 +273,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1482"
          endingLineNumber = "1482"
-         landmarkName = "-establishConnection"
-         landmarkType = "5">
+         landmarkName = "setAudio()"
+         landmarkType = "7">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>

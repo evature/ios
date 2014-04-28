@@ -18,7 +18,7 @@
 
 #define MIN_RECORD_LEN 0.0f//0.5f //2.0f
 
-#define TIMES_TO_REPEAT_EACH_TEST 1
+#define TIMES_TO_REPEAT_EACH_TEST 2
 
 #define SERVER_RESPONSE_TIMEOUT_DEFAULT 10.0f//10.0f
 
@@ -114,7 +114,7 @@
 -(void)testLotsOfRecordSizes{
     float recordLength;
     int timesToRepeatEachTest = TIMES_TO_REPEAT_EACH_TEST;
-    for (int i=1; i<500//50
+    for (int i=1; i<50//50
          ; i++) {
         for (int j=0; j<timesToRepeatEachTest; j++) {
             NSLog(@"\n ---- TEST LOG : testLotsOfRecordSizes #%d - Repeat #%d ----",i,j);
@@ -140,7 +140,7 @@
    
     }
 }
-/*
+
 -(void)testLotsOfCancelRecordSizes{
     float recordLength;
     int timesToRepeatEachTest = TIMES_TO_REPEAT_EACH_TEST;
@@ -187,7 +187,7 @@
         }
         
     }
-}*/
+}
 #endif
 
 
