@@ -304,12 +304,22 @@ float vadStopNoisyMoments;
     NSLog(@"Setting session to Play and Record");
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *error;
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
+
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    }else{
+        // Do somthing smart for iOS 5 //
+    }
     if (error != nil) {
         NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
     }
-    [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+    
+    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
+            [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
                                          error:&error];
+    }else{
+         // Do somthing smart for iOS 5 //
+    }
     if (error != nil) {
         NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
     }

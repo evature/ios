@@ -512,7 +512,12 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     NSLog(@"Framework with Play and Record");
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *error;
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    }else{
+        // Do somthing smart for iOS 5 //
+    }
+    
     if (error != nil) {
         NSLog(@"Failed to setCategory for AVAudioSession!");
     }
@@ -1047,7 +1052,13 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     
     NSLog(@"Setting session to AVAudioSessionCategoryRecord");
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryRecord error:nil];
+    
+    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
+        [session setCategory:AVAudioSessionCategoryRecord error:nil];
+    }else{
+        // Do somthing smart for iOS 5 //
+    }
+    
     [session setActive:YES error:nil];
     
 #if DEBUG_MODE_FOR_EVA
