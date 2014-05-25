@@ -12,13 +12,8 @@
 
 #include "OpenUDID.h"
 
-// New for chunked encoding
 #include "FLAC/metadata.h"
 #include "FLAC/stream_encoder.h"
-//#include "SoundRecoder.h"
-//#include "Recorder.h"
-//#include "EUHTTPRequest.h"
-//#include "EUHTTPResponse.h"
 
 
 
@@ -39,33 +34,10 @@
 
 
 
-//#define EVA_API_KEY @"thack-london-june-2012"
-//#define EVA_SITE_CODE @"thack"
-
-#ifdef USE_FLAC
-#define USE_FLAC_TO_ENCODE TRUE//FALSE//TRUE
-#define USE_CHUNKED_ENCODING TRUE
-#else
-#define USE_FLAC_TO_ENCODE FALSE // Should be TRUE just for crash tests
-#define USE_CHUNKED_ENCODING FALSE // No implementation for Speex (yet)
-#endif
-
-// New for chunked encoding
-#define BUFSIZE 512
-#define Output_Buffers_To_Rewrite 3000
-
-
-#define kSamplesPerSecond 16000
-
-
 
 #define SERVER_RESPONSE_TIMEOUT 10.0f//30.0f//10.0f
 
-#if USE_CHUNKED_ENCODING
 #define LEVEL_SAMPLE_TIME 0.03f
-#else
-#define LEVEL_SAMPLE_TIME 0.03f
-#endif
 
 #define STOP_RECORD_AFTER_SILENT_TIME_SEC 0.7f//1.0f
 
@@ -74,13 +46,8 @@
 #define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"//@"https://ec2-54-235-35-62.compute-1.amazonaws.com:443"//@"https://vproxy.evaws.com:443"
 
 @interface Eva ()<AVAudioRecorderDelegate,CLLocationManagerDelegate
-,RecorderDelegate // new for isRecorderReady
+,RecorderDelegate // for isRecorderReady
 ,AVAudioPlayerDelegate
-//SoundRecoderDelegate
-
-//,EUHTTPRequestDelegate
-//,EUHTTPResponseDelegate
-//,NSStreamDelegate
 ,MOAudioStreamerDeelegate
 >{
     float latitude,longitude;
@@ -107,28 +74,9 @@
     BOOL recordHasBeenCanceled;
     
     // For chunked encoding
-    /* BOOL isPlaying;
-     AudioQueueRef outputQueue;
-     FLAC__StreamEncoder *encoder;
-     AudioQueueBufferRef buffers[Output_Buffers_To_Rewrite]; */
-    
-    //SoundRecoder *_recorder;
-    
-    //    Recorder *_recorder;
-    
-    //NSString *language;
-    
-    // NSData *streamOfData;
-    
-    //    NSInputStream *iStream;
-    //    NSOutputStream *oStream;
-    
-    //    BOOL finished;
-    
     MOAudioStreamer *streamer;
     
-    //ChunkTransfer *chunkTransferContainer;
-    
+
     AVAudioPlayer *audioFileStartRecord;
     AVAudioPlayer *audioFileRequestedEndRecord;
     AVAudioPlayer *audioFileVadEndRecord;
@@ -141,11 +89,7 @@
 //@property(nonatomic) NSInteger amount;
 
 // For audio recording (wav) recording //
-@property(retain,nonatomic) AVAudioRecorder *recorder;
-
 @property(retain,nonatomic) MOAudioStreamer *streamer;
-//@property(nonatomic) AVAudioRecorder *recorder;
-@property(retain,nonatomic) NSURL * wavFileUrl;
 
 @property(nonatomic,retain) NSMutableData * responseData;
 @property(nonatomic,retain) NSURLConnection * connection;
@@ -169,16 +113,7 @@
 @property(nonatomic) BOOL isPlaying;
 @property(nonatomic) AudioQueueRef outputQueue;
 @property(nonatomic) FLAC__StreamEncoder *encoder;
-//@property(nonatomic) AudioQueueBufferRef buffers[Output_Buffers_To_Rewrite];
 
-//@property(retain,nonatomic) NSData* streamOfData;
-
-//@property (nonatomic, strong) NSInputStream *iStream;
-//@property (nonatomic, strong) NSOutputStream *oStream;
-
-//@property(nonatomic,retain) ChunkTransfer *chunkTransferContainer;
-
-//@property(nonatomic,retain) IBOutlet UILabel *outputLabel;
 
 @property(nonatomic, retain) AVAudioPlayer *audioFileStartRecord;
 @property(nonatomic, retain) AVAudioPlayer *audioFileRequestedEndRecord;
@@ -189,9 +124,6 @@
 @end
 
 @implementation Eva
-//@synthesize amount = amount_;
-@synthesize recorder = recorder_;
-@synthesize wavFileUrl = wavFileUrl_;
 
 @synthesize responseData = responseData_;
 @synthesize connection = connection_;
@@ -308,18 +240,13 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
      [self recordToFile];
      
      });*/
-#if USE_CHUNKED_ENCODING
     [self startRecordQueue];
-#else
-    [self recordToFile];
-#endif
     
     [locationManager_ startUpdatingLocation];
 
     
     startIsPressed = TRUE;
     lowPassResultsPeak = 0; // initiate the peak.
-    //#if !USE_CHUNKED_ENCODING
     audioTimeoutTimer_=[NSTimer scheduledTimerWithTimeInterval:micRecordTimeout_//8.0
                                                         target:self
                                                       selector:@selector(stopRecordOnTick:)
@@ -331,8 +258,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     totalMomements = 0;
     
     levelTimer = [NSTimer scheduledTimerWithTimeInterval: LEVEL_SAMPLE_TIME target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
-
-    //#endif
 }
 
 
@@ -397,9 +322,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     if    (DEBUG_MODE_FOR_EVA){
         NSLog(@"It's debug mode");
-        if (USE_FLAC_TO_ENCODE) {
-            NSLog(@"Using FLAC for the encoding process - For iOS 7.0.3 test");
-        }
     }
     startIsPressed = FALSE;
     
@@ -409,11 +331,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     micRecordTimeout_ = MIC_RECORD_TIMEOUT_DEFAULT;
     
-#if USE_CHUNKED_ENCODING
-    //[self initAudioQueue]; // New for chunked encoding
-#else
-    [self initRecordFile]; // New - Less time?
-#endif
     
     [self initLocationManager]; // Init the location manager  (takes some time)
     // - unfortunately can't be in dispatch because must be with run loop
@@ -537,12 +454,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
                 [audioFileRequestedEndRecord_ play];
             }
         }
-#if USE_CHUNKED_ENCODING
         // Call the stop queue function
         [self stopRecordQueue];
-#else
-        [self stopRecordingToFile];
-#endif
         [locationManager_ stopUpdatingLocation];
         
         startIsPressed = FALSE;
@@ -820,150 +733,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 
 
-#pragma mark -
-#pragma mark Record to file handlers
-
--(void)initRecordFile{
-    
-    
-    NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docsDir = [NSString stringWithFormat:@"%@",[dirPaths objectAtIndex:0]]; // Get documents directory
-    NSURL *tmpFileUrl = [NSURL fileURLWithPath:[docsDir stringByAppendingPathComponent:@"rec.wav" //@"rec.m4a"//m4a"
-                                                ]];
-    wavFileUrl_ = tmpFileUrl;
-    
-    NSMutableDictionary *recordSettings = [[NSMutableDictionary alloc] init];
-    
-#if USE_FLAC_TO_ENCODE
-    [recordSettings setValue:[NSNumber numberWithFloat:16000.0
-                              ] forKey:AVSampleRateKey];
-#else
-    [recordSettings setValue:[NSNumber numberWithFloat:41000.0//16000.0
-                              ] forKey:AVSampleRateKey];
-#endif
-    [recordSettings setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
-    
-    //[recordSettings setValue :[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    // New settings below //
-    [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
-    [recordSettings setValue:[NSNumber numberWithInt:16//8
-                              ] forKey: AVLinearPCMBitDepthKey];
-    [recordSettings setValue:[NSNumber numberWithInt: 1] forKey: AVNumberOfChannelsKey];
-    [recordSettings setValue:[NSNumber numberWithBool:NO] forKey: AVLinearPCMIsBigEndianKey];
-    [recordSettings setValue:[NSNumber numberWithBool:NO] forKey: AVLinearPCMIsFloatKey];
-    [recordSettings setValue:[NSNumber numberWithInt: AVAudioQualityLow] forKey: AVEncoderAudioQualityKey];
-    
-    
-    NSError *error = nil;
-    //AVAudioRecorder *recorder
-    recorder_ = [[AVAudioRecorder alloc] initWithURL:wavFileUrl_//tmpFileUrl
-                                            settings:recordSettings error:&error
-                 ];
-    
-    //recordSettings = nil;
-    //[recordSettings removeAllObjects]; // NEW
-    //prepare to record
-    [recorder_ setDelegate:self];
-    
-    // [recorder_ prepareToRecord];
-    //recorder_.meteringEnabled = YES;
-    
-    [recorder_ prepareToRecord];
-    recorder_.meteringEnabled = YES;
-    
-    
-    //[recorder prepareToRecord];
-    
-    NSLog(@"Setting session to AVAudioSessionCategoryRecord");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    
-    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
-        [session setCategory:AVAudioSessionCategoryRecord error:nil];
-    }else{
-        // Do somthing smart for iOS 5 //
-    }
-    
-    [session setActive:YES error:nil];
-    
-#if DEBUG_MODE_FOR_EVA
-    BOOL audioHWAvailable = session.inputIsAvailable;
-    if (! audioHWAvailable) {
-#if DEBUG_LOGS
-        NSLog(@"ERROR: Audio input hardware not available");
-#endif
-        
-    }else{
-#if DEBUG_LOGS
-        NSLog(@"Audio input hardware available! ");
-#endif
-    }
-#endif
-    
-    
-}
-
--(void)recordToFile{
-    
-    // [self initLocationManager]; // NEW // // This makes a lot of time to capture.
-    
-    //[locationManager startUpdatingLocation];
-    
-    // [self userIsTalking];
-    
-    //askForStopRecording = FALSE;
-    
-    // NSData *soundData = [NSData dataWithContentsOfFile: [NSString stringWithFormat:@"%@/%@",documentsDirectory, @"test.spx"]];
-    
-    /*    NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-     NSString *docsDir = [NSString stringWithFormat:@"%@",[dirPaths objectAtIndex:0]]; // Get documents directory
-     NSURL *tmpFileUrl = [NSURL fileURLWithPath:[docsDir stringByAppendingPathComponent:@"rec.wav" //@"rec.m4a"//m4a"
-     ]];
-     wavFileUrl_ = tmpFileUrl;
-     
-     NSMutableDictionary *recordSettings = [[NSMutableDictionary alloc] init];
-     
-     [recordSettings setValue:[NSNumber numberWithFloat:41000.0//16000.0
-     ] forKey:AVSampleRateKey];
-     [recordSettings setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
-     
-     //[recordSettings setValue :[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-     // New settings below //
-     [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
-     [recordSettings setValue:[NSNumber numberWithInt:16//8
-     ] forKey: AVLinearPCMBitDepthKey];
-     [recordSettings setValue:[NSNumber numberWithInt: 1] forKey: AVNumberOfChannelsKey];
-     [recordSettings setValue:[NSNumber numberWithBool:NO] forKey: AVLinearPCMIsBigEndianKey];
-     [recordSettings setValue:[NSNumber numberWithBool:NO] forKey: AVLinearPCMIsFloatKey];
-     [recordSettings setValue:[NSNumber numberWithInt: AVAudioQualityLow] forKey: AVEncoderAudioQualityKey];
-     
-     
-     NSError *error = nil;
-     //AVAudioRecorder *recorder
-     recorder_ = [[AVAudioRecorder alloc] initWithURL:wavFileUrl_//tmpFileUrl
-     settings:recordSettings error:&error];
-     
-     //prepare to record
-     [recorder_ setDelegate:self];
-     
-     [recorder_ prepareToRecord];
-     recorder_.meteringEnabled = YES;
-     
-     
-     //[recorder prepareToRecord];
-     
-     AVAudioSession *session = [AVAudioSession sharedInstance];
-     [session setCategory:AVAudioSessionCategoryRecord error:nil];
-     [session setActive:YES error:nil];*/
-    
-    
-    
-    [recorder_ record];
-    
-    //levelTimer = [NSTimer scheduledTimerWithTimeInterval: LEVEL_SAMPLE_TIME target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
-    //silentMoments = 0;
-    
-}
-
 
 
 - (void)recorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
@@ -971,146 +740,17 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_LOGS
     NSLog(@"recorderMicLevelCallbackAverage:andPeak");
 #endif
-    /*  const double ALPHA = 0.05;
-     double peakPowerForChannel = pow(10, (0.05 * averagePower));
-     lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;
-     
-     #if DEBUG_MODE_FOR_EVA
-     //NSLog(@"Average input: %f Peak input: %f Low pass results: %f", [recorder_ averagePowerForChannel:0], [recorder_ peakPowerForChannel:0], lowPassResults);
-     #endif
-     
-     if (sendMicLevel_){
-     if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackAverage:andPeak:)]){
-     
-     [[self delegate] evaMicLevelCallbackAverage:averagePower andPeak:peakPower];
-     }else{
-     NSLog(@"Eva-Critical Error: You haven't implemented evaMicLevelCallbackAverage:andPeak, It is a must with your settings. Please implement this one");
-     }
-     
-     
-     }
-     
-     if (lowPassResults > 0.5//0.1
-     ){
-     startSilenceDetection = TRUE;
-     
-     }
-     if (startSilenceDetection) {
-     // New code for VAD to detect voice on noisy environment //
-     if (lowPassResults>lowPassResultsPeak) { // Take new peak
-     lowPassResultsPeak = lowPassResults;
-     silentMoments = 0;
-     }
-     #if DEBUG_MODE_FOR_EVA
-     NSLog(@"lowPassResultsPeak = %f",lowPassResultsPeak);
-     #endif
-     
-     //if (lowPassResults < 0.05){
-     if (lowPassResults < lowPassResultsPeak /2 ) { // detecting difference from peak and not from constant
-     
-     silentMoments++;
-     #if DEBUG_MODE_FOR_EVA
-     NSLog(@"Mic silent detected num: %d",silentMoments);
-     #endif
-     }else{
-     silentMoments = 0;
-     }
-     if (silentMoments >= STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME ) {
-     #if DEBUG_MODE_FOR_EVA
-     NSLog(@"Silent: Can stop record");
-     #endif
-     [self stopRecordQueue];
-     }
-     }
-     */
     
 }
 
-
-/*- (void)levelTimerCallback:(NSTimer *)timer {
-    
-    
-#if USE_CHUNKED_ENCODING
-    double peakPower = [streamer_ peakPower];
-    double averagePower = [streamer_ averagePower];
-#else
-    [recorder_ updateMeters];
-    double peakPower = [recorder_ peakPowerForChannel:0];
-    double averagePower = [recorder_ averagePowerForChannel:0];
-#endif
-    
-    
-    const double ALPHA = 0.25; //0.05;
-	double peakPowerForChannel = pow(10, (0.05 * peakPower));
-    if (peakPowerForChannel < minVolume) { // Iftach addon
-        minVolume = peakPowerForChannel;
-    }
-    
-	lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;
-    
-#if DEBUG_MODE_FOR_EVA
-    //	NSLog(@"Average input: %f Peak input: %f Low pass results: %f", averagePower, peakPower, lowPassResults);
-#endif
-    
-    if (sendMicLevel_){
-        if([[self delegate] respondsToSelector:@selector(evaMicLevelCallbackAverage:andPeak:)]){
-            
-            [[self delegate] evaMicLevelCallbackAverage:averagePower andPeak:peakPower];
-        }else{
-            NSLog(@"Eva-Critical Error: You haven't implemented evaMicLevelCallbackAverage:andPeak, It is a must with your settings. Please implement this one");
-        }
-        
-        
-    }
-    
-    if (lowPassResults > 0.5//0.1
-        ){
-        startSilenceDetection = TRUE;
-        
-    }
-    if (startSilenceDetection) {
-        // New code for VAD to detect voice on noisy environment //
-        if (lowPassResults>lowPassResultsPeak) { // Take new peak
-            lowPassResultsPeak = lowPassResults;
-            silentMoments = 0;
-        }
-        #if DEBUG_MODE_FOR_EVA
-                NSLog(@"lowPassResultsPeak = %f",lowPassResultsPeak);
-        #endif
-        
-        
-        //if (lowPassResults < lowPassResultsPeak /2 ) { // detecting difference from peak and not from constant
-        if ((lowPassResults-minVolume) < 0.2*(lowPassResultsPeak-minVolume) ) { // Iftach logic
-            
-            silentMoments++;
-#if DEBUG_MODE_FOR_EVA
-            NSLog(@"Mic silent detected num: %d",silentMoments);
-#endif
-        }else{
-            silentMoments = 0;
-        }
-        if (silentMoments >= STOP_RECORD_AFTER_SILENT_TIME_SEC/LEVEL_SAMPLE_TIME ) {
-#if DEBUG_MODE_FOR_EVA
-            NSLog(@"Silent: Can stop record");
-#endif
-            [self stopRecord];
-        }
-    }
-}*/
 
 - (void)levelTimerCallback:(NSTimer *)timer {
 	
    // double startTime =  CACurrentMediaTime();
     totalMomements++;
     
-#if USE_CHUNKED_ENCODING
     double peakPower = [streamer_ peakPower];
     double averagePower = [streamer_ averagePower];
-#else
-    [recorder_ updateMeters];
-    double peakPower = [recorder_ peakPowerForChannel:0];
-    double averagePower = [recorder_ averagePowerForChannel:0];
-#endif
     
     //    const double ALPHA = 0.25;
     const double MIN_NOISE_TIME = 0.10;  // must have noise for at least this much time to start considering VAD silence
@@ -1201,36 +841,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     //if (delta > 0.03 ) {
     //    NSLog(@"\n\n!!!!!!!!! too slow !!!!!!!!\n\n");
    // }
-}
-
--(void)stopRecordingToFile{
-    
-    
-    [recorder_ stop];
-    
-    [levelTimer invalidate];
-    levelTimer = nil;
-    
-    NSLog(@"Stopping session");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    int flags = AVAudioSessionSetActiveFlags_NotifyOthersOnDeactivation;
-    [session setActive:NO withFlags:flags error:nil];
-    
-    
-    
-    //[locationManager stopUpdatingLocation];
-    
-    //stopRecording(audioDevice);   // Stop.
-    //closeAudioDevice(audioDevice);
-    //askForStopRecording = TRUE;
-    
-    //[self userStoppedTalking];
-    
-    //[self evaIsWriting];
-    
-    //[self stopSiriEffect];
-    
-    //[self establishConnection];
 }
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *) aRecorder successfully:(BOOL)flag
@@ -1339,17 +949,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
                                     [self getUID]]]];
     }
     
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Version Url = %@",url);
-#endif
-    //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=%@&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&session_id=%@&uid=%@",evaSiteCode_,evaAPIKey_,ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],sessionID_,[self getUID]]];
     
     if (longitude==0 && latitude ==0) { // Check if location services returned a valid value
         
     }else{          // There are GPS coordinates
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&latitude=%.5f&longitude=%.5f",url,latitude,longitude]];
         
-        //url = [NSURL URLWithString:[NSString stringWithFormat:@"https://vproxy.evaws.com:443/?site_code=thack&api_key=%@&ip_addr=%@&locale=%@&time_zone=%@&latitude=%.5f&longitude=%.5f",@"thack-london-june-2012",ipAddress_,[self getCurrenLocale],[self getCurrentTimezone],latitude,longitude]];
     }
     
 #if DEBUG_MODE_FOR_EVA
@@ -1397,136 +1002,29 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
     
    
-    self.responseData = [[NSMutableData alloc] initWithLength:0] ;
-    //NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:SERVER_RESPONSE_TIMEOUT];  // New : Set timeout...
     
     [request setHTTPMethod:@"POST"];
     
-    // "Content-Type: audio/x-speex;rate=16000"
-#if USE_FLAC_TO_ENCODE
-    NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-flac;rate=%d",16000];//41000];
-#else
-    NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-speex;rate=%d",kSamplesPerSecond];
-#endif
+    NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-flac;rate=%d",16000];
     
     // set header
     [request addValue:headerBoundary forHTTPHeaderField:@"Content-Type"];
     
-#if !USE_CHUNKED_ENCODING
-    //Accept-Language: ENUS
-    [request addValue:@"ENUS" forHTTPHeaderField:@"Accept-Language"];
-    
-    // "Accept-Topic: Dictation"
-    
-    [request addValue:@"Dictation" forHTTPHeaderField:@"Accept-Topic"];
-    
-    // "Accept: text/plain"
-    [request addValue:@"text/plain" forHTTPHeaderField:@"Accept"];
-#endif
-    
-    //"Transfer-Encoding: chunked"
-    ///// Removed to test on iOS 5 //
-    
-#if USE_CHUNKED_ENCODING
     [request addValue:@"chunked" forHTTPHeaderField:@"Transfer-Encoding"];
     
-    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    // NSString *documentsDirectory = [NSString stringWithFormat:@"%@",[paths objectAtIndex:0]]; // Get documents directory
-    
-    //NSOutputStream *dataStream = [NSOutputStream outputStreamWithURL:<#(NSURL *)#> append:<#(BOOL)#>:streamOfData_];
-    /* NSInputStream *dataStream = [[NSInputStream alloc] initWithData:streamOfData_];
-     
-     
-     EUHTTPRequest* streamRequest = [[EUHTTPRequest alloc] initWithInputStream:dataStream delegate:self];
-     
-     [streamRequest run];
-     
-     
-     
-     [request setHTTPBodyStream:[streamRequest inputStream]];//dataStream];*/
-    
-    
-    
-    //_chunkTransferContainer = [ChunkTransfer alloc];
-    /*if ([[ChunkTransfer sharedInstance] initWithURL:url withRequest:request andConnection:connection_]) {
-     NSLog(@"ChunkTransfer object init success");
-     }else{
-     NSLog(@"ChunkTransfer object init unsuccess");
-     };
-     
-     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self.superclass // superclass is new
-     startImmediately:NO]; // Was yes before chunked
-     
-     // NSString *runloopmode = [[NSRunLoop currentRunLoop] currentMode];
-     // [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:runloopmode];
-     
-     
-     [self.connection start];*/
     
     streamer_ = [MOAudioStreamer new];//[[MOAudioStreamer alloc] init];
     
-    //NSString *url = [NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@",GOOGLE_API_URL,@"v1.0",@"thack",@"thack-london-june-2012"];
-    //NSLog(@"URL: %@",url);
     streamer_.webServiceURL = [NSString stringWithFormat:@"%@",url];//@"http://www.google.com/speech-api/v1/recognize";
     
-    //NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //NSString *docsDir = [NSString stringWithFormat:@"%@",[dirPaths objectAtIndex:0]];
     streamer_.recordingPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES)[0];
-    //NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];
     
     streamer_.fileToSaveName = @"rec";
     streamer_.streamerDelegate = self;
     
-    /* [MOAudioStreamer sharedInstance].webServiceURL = [NSString stringWithFormat:@"%@",url];//@"http://www.google.com/speech-api/v1/recognize";
-     
-     
-     [MOAudioStreamer sharedInstance].recordingPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES)[0];
-     //NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];
-     
-     [MOAudioStreamer sharedInstance].fileToSaveName = @"rec";
-     [MOAudioStreamer sharedInstance].streamerDelegate = self;*/
-    
-    
-    
-    
-    
-    
-    
-    
 
-#else
-    
-    NSMutableData *postBody = [NSMutableData data];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [NSString stringWithFormat:@"%@",[paths objectAtIndex:0]]; // Get documents directory
-#if USE_FLAC_TO_ENCODE
-    NSData *soundData = [NSData dataWithContentsOfFile: [NSString stringWithFormat:@"%@/%@",documentsDirectory, @"rec.flac"]];
-#else
-    NSData *soundData = [NSData dataWithContentsOfFile: [NSString stringWithFormat:@"%@/%@",documentsDirectory, @"rec.spx"]];
-#endif
-    
-    
-    [request addValue:[NSString stringWithFormat:@"%lu",(unsigned long)[soundData length]]   forHTTPHeaderField:@"content-length"]; // For ios 5 test
-    
-    [postBody appendData:soundData];
-    [postBody appendData:[@"\r\n" dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    // final boundary
-    //[postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    // add body to post
-    [request setHTTPBody:postBody];
-    
-    //#endif  // Chunked encoding
-    
-    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES]; // Was yes before chunked
-    //self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES]; // Was yes before chunked
-#endif
-    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -1553,18 +1051,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
         
         
-        
-        // NSLog(@"httpResponse MIME = %@",[[httpResponse ] lowercaseString]);
     }
-    
-    [responseData_ setLength:0];
 }
 
+
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    
-    
-    
     
     NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 #if DEBUG_MODE_FOR_EVA
@@ -1597,12 +1089,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSLog(@"SayIt=%@, ProcessedText=%@",sayIt,processedText);
     }
     
-    // [self userSay:processedText];
-    // [self evaSay:sayIt];
-    
-    // [self stopSiriEffect];
-    //curViewState = kEvaWaitingForUserPress;
 #endif
+    
     if ([json respondsToSelector:@selector(objectForKey:)]) {
 #if DEBUG_MODE_FOR_EVA
         NSLog(@"[json respondsToSelector:@selector(objectForKey:)] == TRUE");
@@ -1641,10 +1129,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Error from Eva: %@",[error description]);
 #endif
-    // [self evaSay:@"Something went wrong, Please try again"];
-    
-    // [self stopSiriEffect];
-    // curViewState = kEvaWaitingForUserPress;
 }
 
 #pragma mark - MISC user info (Location etc.)
@@ -1681,7 +1165,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 -(NSString *)getCurrentTimezone{
     NSInteger hoursFromGMT = [[NSTimeZone defaultTimeZone] secondsFromGMT]/3600;
     NSInteger minutesFromGMT = (([[NSTimeZone defaultTimeZone] secondsFromGMT]+0)%3600)/60;
-    //NSLog(@"Timezone=%d",[[NSTimeZone defaultTimeZone] secondsFromGMT]/3600);
     
     if (hoursFromGMT>=0) {
         return [NSString stringWithFormat:@"+%02d:%02d",hoursFromGMT,minutesFromGMT];

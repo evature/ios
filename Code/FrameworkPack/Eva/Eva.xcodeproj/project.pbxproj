@@ -17,10 +17,6 @@
 		CF4082A8174E65AA00CCB667 /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
 		CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
 		CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
-		CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
-		CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
-		CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
-		CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
 		CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
 		CF6778DD17A7BABE000BB095 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DC17A7BABD000BB095 /* UIKit.framework */; };
 		CF6778DF17A7BABE000BB095 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DE17A7BABE000BB095 /* Foundation.framework */; };
@@ -28,23 +24,15 @@
 		CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
 		CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
-		CF95929617A0142D0022CFBF /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = CF95929417A0142D0022CFBF /* wav_to_flac.c */; };
-		CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
 		CF95929F17A15E2F0022CFBF /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
 		CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
-		CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
-		CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
 		CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		CF9592A517A15E2F0022CFBF /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = CF95929417A0142D0022CFBF /* wav_to_flac.c */; };
 		CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
 		CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
 		CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
 		CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082A5174E65AA00CCB667 /* Eva.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
-		CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
-		CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
 		CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
-		CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
 		CF9592B417A15E2F0022CFBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF40829C174E653F00CCB667 /* InfoPlist.strings */; };
 		CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
 		CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
@@ -96,10 +84,6 @@
 		CF4082A6174E65AA00CCB667 /* Eva.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Eva.m; path = ../../../Library/Eva/Eva/Eva.m; sourceTree = "<group>"; };
 		CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomError.h"; sourceTree = "<group>"; };
 		CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomError.m"; sourceTree = "<group>"; };
-		CF4082B0174E65BD00CCB667 /* WaveInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveInfo.h; sourceTree = "<group>"; };
-		CF4082B1174E65BD00CCB667 /* WaveInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveInfo.m; sourceTree = "<group>"; };
-		CF4082B2174E65BD00CCB667 /* WaveParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveParser.h; sourceTree = "<group>"; };
-		CF4082B3174E65BD00CCB667 /* WaveParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveParser.m; sourceTree = "<group>"; };
 		CF4082CA174E68F500CCB667 /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../../Library/Eva/Eva/Frameworks/Vorbis.framework; sourceTree = "<group>"; };
 		CF6778D817A7BABD000BB095 /* EvaFrameworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFrameworkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF6778DC17A7BABD000BB095 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -108,8 +92,6 @@
 		CF761A1B1752320B00C1A52A /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		CF761A1C1752320B00C1A52A /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		CF95929117A013AF0022CFBF /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = ../../Library/Eva/Eva/Frameworks/FLAC.framework; sourceTree = "<group>"; };
-		CF95929417A0142D0022CFBF /* wav_to_flac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
-		CF95929517A0142D0022CFBF /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
 		CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFlac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Eva copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/Code/FrameworkPack/Eva/Eva copy-Info.plist"; sourceTree = "<absolute>"; };
 		CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioStreamer-Prefix.pch"; sourceTree = "<group>"; };
@@ -209,10 +191,8 @@
 			children = (
 				CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */,
 				CF407A0617B7F2DA003A4925 /* BufferSoundRecorder */,
-				CF95929317A014170022CFBF /* WavToFlac */,
 				CF761A1A175231F500C1A52A /* OpenUDID */,
 				CF4082A9174E65BD00CCB667 /* HelperCategories */,
-				CF4082AF174E65BD00CCB667 /* WaveUtilities */,
 				CF40829B174E653F00CCB667 /* Eva-Info.plist */,
 				CF40829C174E653F00CCB667 /* InfoPlist.strings */,
 				CF40829F174E653F00CCB667 /* Eva-Prefix.pch */,
@@ -228,18 +208,6 @@
 			);
 			name = HelperCategories;
 			path = ../../../Library/Eva/Eva/HelperCategories;
-			sourceTree = "<group>";
-		};
-		CF4082AF174E65BD00CCB667 /* WaveUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				CF4082B0174E65BD00CCB667 /* WaveInfo.h */,
-				CF4082B1174E65BD00CCB667 /* WaveInfo.m */,
-				CF4082B2174E65BD00CCB667 /* WaveParser.h */,
-				CF4082B3174E65BD00CCB667 /* WaveParser.m */,
-			);
-			name = WaveUtilities;
-			path = ../../../Library/Eva/Eva/WaveUtilities;
 			sourceTree = "<group>";
 		};
 		CF6778D917A7BABD000BB095 /* Frameworks */ = {
@@ -278,15 +246,6 @@
 			name = OpenUDID;
 			sourceTree = "<group>";
 		};
-		CF95929317A014170022CFBF /* WavToFlac */ = {
-			isa = PBXGroup;
-			children = (
-				CF95929517A0142D0022CFBF /* wav_to_flac.h */,
-				CF95929417A0142D0022CFBF /* wav_to_flac.c */,
-			);
-			name = WavToFlac;
-			sourceTree = "<group>";
-		};
 		CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,10 +270,7 @@
 			files = (
 				CF4082A7174E65AA00CCB667 /* Eva.h in Headers */,
 				CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */,
-				CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */,
-				CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */,
 				CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */,
-				CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */,
 				CF17473817BD02A400CE68E3 /* Recorder.h in Headers */,
 				CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
 				CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */,
@@ -331,10 +287,7 @@
 			files = (
 				CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */,
 				CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */,
-				CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */,
-				CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */,
 				CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */,
-				CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */,
 				CF17473317BD029600CE68E3 /* Recorder.h in Headers */,
 				CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
 				CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */,
@@ -587,10 +540,7 @@
 			files = (
 				CF4082A8174E65AA00CCB667 /* Eva.m in Sources */,
 				CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */,
-				CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */,
-				CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */,
 				CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */,
-				CF95929617A0142D0022CFBF /* wav_to_flac.c in Sources */,
 				CF17473717BD02A000CE68E3 /* Recorder.m in Sources */,
 				CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
 				CF98AB0F17C3E6E600E171E9 /* NetworkManager.m in Sources */,
@@ -611,10 +561,7 @@
 			files = (
 				CF95929F17A15E2F0022CFBF /* Eva.m in Sources */,
 				CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */,
-				CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */,
-				CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */,
 				CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */,
-				CF9592A517A15E2F0022CFBF /* wav_to_flac.c in Sources */,
 				CF17473417BD029600CE68E3 /* Recorder.m in Sources */,
 				CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
 				CF98AB1017C3E6E600E171E9 /* NetworkManager.m in Sources */,
