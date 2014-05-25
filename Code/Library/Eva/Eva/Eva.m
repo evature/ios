@@ -26,8 +26,6 @@
 
 
 
-#define CHECK_WITH_GOOGLE_SERVER FALSE //FALSE
-#define USE_WEB_SOCKET FALSE//TRUE
 
 #define VAD_GUI_UPDATE FALSE // If you want to get the values you have to implement the delegates on Eva.h file.
 /*
@@ -41,12 +39,8 @@
  */
 
 
-#if USE_WEB_SOCKET
-#include "SRWebSocket.h"
-#else
 //#include "ChunkTransfer.h"
 #include "MOAudioStreamer.h"
-#endif
 
 
 
@@ -82,11 +76,7 @@
 
 #define MIC_RECORD_TIMEOUT_DEFAULT 8.0f//15.0f//8.0f
 
-#if CHECK_WITH_GOOGLE_SERVER
-#define EVA_HOST_ADDRESS @"https://www.google.com/speech-api/v1/recognize?client=chromium&lang=en-US&maxresults=2" //@"https://www.google.com/speech-api/v1/recognize"
-#else
 #define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"//@"https://ec2-54-235-35-62.compute-1.amazonaws.com:443"//@"https://vproxy.evaws.com:443"
-#endif
 
 @interface Eva ()<AVAudioRecorderDelegate,CLLocationManagerDelegate
 ,RecorderDelegate // new for isRecorderReady
@@ -95,14 +85,10 @@
 #endif
 //SoundRecoderDelegate
 
-#if USE_WEB_SOCKET
-,SRWebSocketDelegate
-#else
 //,EUHTTPRequestDelegate
 //,EUHTTPResponseDelegate
 //,NSStreamDelegate
 ,MOAudioStreamerDeelegate
-#endif
 >{
     float latitude,longitude;
     
@@ -202,14 +188,10 @@
 
 //@property(retain,nonatomic) NSData* streamOfData;
 
-#if USE_WEB_SOCKET
-@property (nonatomic, strong) SRWebSocket *socket;
-#else
 //@property (nonatomic, strong) NSInputStream *iStream;
 //@property (nonatomic, strong) NSOutputStream *oStream;
 
 //@property(nonatomic,retain) ChunkTransfer *chunkTransferContainer;
-#endif
 
 //@property(nonatomic,retain) IBOutlet UILabel *outputLabel;
 
@@ -274,13 +256,9 @@
 @synthesize audioFileVadEndRecord = audioFileVadEndRecord_;
 @synthesize audioFileCanceledRecord = audioFileCanceledRecord_;
 
-#if USE_WEB_SOCKET
-@synthesize socket = _socket;
-#else
 //@synthesize iStream = _iStream;
 //@synthesize oStream = _oStream;
 //@synthesize chunkTransferContainer = _chunkTransferContainer;
-#endif
 
 
 
@@ -711,35 +689,12 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 
 #pragma mark - SRWebSocketDelegate methods
 
-#if USE_WEB_SOCKET
-- (void)webSocketDidOpen:(SRWebSocket *)webSocket{
-    #if DEBUG_LOGS
-        NSLog(@"webSocketDidOpen" );
-    #endif
-}
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
-{
-    #if DEBUG_LOGS
-        NSLog(@"webSocket:didReceiveMessage" );
-    #endif
-    
-}
-#endif
 
 
 
 
 #pragma mark AudioRecordings
 
-#if !USE_WEB_SOCKET
-/*- (void) httpRequest:(EUHTTPRequest*) request didCompleteWithError:(NSError*) error{
- NSLog(@"Eva: httpRequest:didCompleteWithError");
- }
- 
- - (void) httpResponse:(EUHTTPResponse*) response didCompleteWithError:(NSError*) error{
- NSLog(@"Eva: httpResponse:didCompleteWithError");
- }*/
-#endif
 
 -(void)dataSend:(void*)data withLength: (unsigned) len{
 #if DEBUG_LOGS
@@ -747,18 +702,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 #endif
     //streamOfData_ = [NSData dataWithBytes:data length:len];
     
-#if USE_WEB_SOCKET
-    NSData *dataToSend = [[NSData alloc] initWithBytes:data length:len];
-    #if DEBUG_LOGS
-        NSLog(@"[_socket readyState] = %d",[_socket readyState]);
-    #endif
-    if ([_socket readyState] == SR_OPEN) {
-        NSLog(@"Eva: dataSend with length: %d",len);
-        [_socket send:dataToSend];
-        
-    }
-    
-#else
     // NSUInteger bytesWritten = [self.oStream write:(const uint8_t)[(__bridge NSData *)data bytes] maxLength:[(__bridge NSData *)data length]];
     
     // NSLog(@"Written %d bytes to buffer",bytesWritten);
@@ -817,9 +760,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
      }
      */
     return ;
-    
-    
-#endif
     
     
 }
@@ -887,16 +827,12 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     
     
     
-#if USE_WEB_SOCKET
-    [_socket close];
-#else
     if (recordHasBeenCanceled) {
         [streamer_ cancelStreaming];
     }else{
         [streamer_ stopStreaming];
     }
     //[[ChunkTransfer sharedInstance] sendEndChunkAndCloseStream]; // ------- TEMP ----------- //
-#endif
     //streamer_ = nil; // NEW - 10/9/13
     
 }
@@ -1690,10 +1626,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     TFLog(@"urlToEva:%@",url);
 #endif
     
-#if CHECK_WITH_GOOGLE_SERVER
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",EVA_HOST_ADDRESS]];
-#endif
-    
+   
     self.responseData = [[NSMutableData alloc] initWithLength:0] ;
     //NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -1745,11 +1678,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
      
      [request setHTTPBodyStream:[streamRequest inputStream]];//dataStream];*/
     
-#if USE_WEB_SOCKET
-    _socket = [[SRWebSocket alloc] initWithURLRequest:request];
-    _socket.delegate = self;
-    [_socket open];
-#else // Using simple HTTP
     
     
     //_chunkTransferContainer = [ChunkTransfer alloc];
@@ -1798,9 +1726,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     
     
     
-    
-#endif
-    
+
 #else
     
     NSMutableData *postBody = [NSMutableData data];
