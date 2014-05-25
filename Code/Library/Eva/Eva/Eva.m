@@ -75,9 +75,7 @@
 
 @interface Eva ()<AVAudioRecorderDelegate,CLLocationManagerDelegate
 ,RecorderDelegate // new for isRecorderReady
-#if !SYSTEM_SOUND
 ,AVAudioPlayerDelegate
-#endif
 //SoundRecoderDelegate
 
 //,EUHTTPRequestDelegate
@@ -131,18 +129,10 @@
     
     //ChunkTransfer *chunkTransferContainer;
     
-#if SYSTEM_SOUND
-    // optional - audio files to play before or after recording the user - set to NULL to skip playing those sounds.
-    SystemSoundID audioFileStartRecord;
-    SystemSoundID audioFileRequestedEndRecord;
-    SystemSoundID audioFileVadEndRecord;
-    SystemSoundID audioFileCanceledRecord;
-#else
     AVAudioPlayer *audioFileStartRecord;
     AVAudioPlayer *audioFileRequestedEndRecord;
     AVAudioPlayer *audioFileVadEndRecord;
     AVAudioPlayer *audioFileCanceledRecord;
-#endif
     
 }
 
@@ -190,17 +180,10 @@
 
 //@property(nonatomic,retain) IBOutlet UILabel *outputLabel;
 
-#if SYSTEM_SOUND
-@property(nonatomic) SystemSoundID audioFileStartRecord;
-@property(nonatomic) SystemSoundID audioFileRequestedEndRecord;
-@property(nonatomic) SystemSoundID audioFileVadEndRecord;
-@property(nonatomic) SystemSoundID audioFileCanceledRecord;
-#else
 @property(nonatomic, retain) AVAudioPlayer *audioFileStartRecord;
 @property(nonatomic, retain) AVAudioPlayer *audioFileRequestedEndRecord;
 @property(nonatomic, retain) AVAudioPlayer *audioFileVadEndRecord;
 @property(nonatomic, retain) AVAudioPlayer *audioFileCanceledRecord;
-#endif
 
 
 @end
@@ -294,29 +277,12 @@ static NSString *urlEncode(id object) {
 }
 
 
-#if SYSTEM_SOUND
-static BOOL setAudio(NSString* tag, SystemSoundID* soundObj, NSURL* filePath) {
-#else
 static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
-#endif
     if (filePath == NULL) {
         NSLog(@"set %@: to NULL", tag);
         *soundObj = 0;
     }
     else {
-#if SYSTEM_SOUND
-        if (*soundObj != 0) {
-            AudioServicesDisposeSystemSoundID(*soundObj);
-        }
-        // Create a system sound object representing the sound file.
-        OSStatus errorCode = AudioServicesCreateSystemSoundID ((__bridge CFURLRef)filePath, soundObj );
-        NSLog(@"set %@: filePath: %@,  errorCode: %ld", tag, filePath, errorCode);
-        if (errorCode != 0) {
-            NSLog(@"ERROR %ld: Failed to initialize %@ audio file %@", errorCode, tag, filePath);
-            *soundObj = 0;
-            return FALSE;
-        }
-#else
         // Create AVAudioPlayer for the audio file
         NSError *error;
         *soundObj = [[AVAudioPlayer alloc] initWithContentsOfURL:filePath error:&error];
@@ -330,8 +296,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
             [*soundObj setVolume:1.0];
             [*soundObj prepareToPlay];
         }
-#endif
-        
     }
     return TRUE;
 }
@@ -371,18 +335,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     //#endif
 }
 
-#if SYSTEM_SOUND
-void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData) {
-    [[Eva sharedInstance] startActualRecording];
-}
-#else
-    
-    - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-        if (player == audioFileStartRecord_) {
-            [[Eva sharedInstance] startActualRecording];
-        }
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    if (player == audioFileStartRecord_) {
+       [[Eva sharedInstance] startActualRecording];
     }
-#endif
+}
 
 
 // External API functions //
@@ -390,21 +348,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 
 // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
 - (BOOL) setStartRecordAudioFile: (NSURL *)filePath {
-#if SYSTEM_SOUND
-    if (audioFileStartRecord_ != 0) {
-        AudioServicesRemoveSystemSoundCompletion(audioFileStartRecord_);
-        audioFileStartRecord_ = 0;
-    }
-    BOOL result = setAudio(@"StartRecord", &audioFileStartRecord_, filePath);
-    if (result) {
-        AudioServicesAddSystemSoundCompletion(audioFileStartRecord_,
-                                              NULL,
-                                              NULL,
-                                              startRecordSystemSoundCompletionProc,
-                                              NULL);
-    }
-#else
-    
+   
     if (audioFileStartRecord_ != 0) {
         audioFileStartRecord_.delegate = nil;
         audioFileStartRecord_ = 0;
@@ -415,46 +359,31 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     if (result) {
         audioFileStartRecord_.delegate = self;
     }
-#endif
     return result;
 }
 
 // this sound will play when the "stopRecord" is called
 - (BOOL) setRequestedEndRecordAudioFile: (NSURL *)filePath {
-#if SYSTEM_SOUND
-    return setAudio(@"RequestedEndRecord", &audioFileRequestedEndRecord_, filePath);
-#else
     AVAudioPlayer *temp;
     BOOL result = setAudio(@"RequestEndRecord", &temp, filePath);
     audioFileRequestedEndRecord_ = temp;
     return result;
-#endif
 }
 
 // this sound will play when the VAD (voice activity detection) recognizes the user finished speaking
 - (BOOL) setVADEndRecordAudioFile: (NSURL *)filePath {
-#if SYSTEM_SOUND
-    return setAudio(@"VADEndRecord", &audioFileVadEndRecord_, filePath);
-#else
-
     AVAudioPlayer *temp;
     BOOL result = setAudio(@"VADEndRecord", &temp, filePath);
     audioFileVadEndRecord_ = temp;
     return result;
-#endif
 }
 
 // this sound will play when calling "cancelRecord"
 - (BOOL) setCanceledRecordAudioFile: (NSURL *)filePath {
-#if SYSTEM_SOUND
-    return setAudio(@"CanceledRecord", &audioFileCanceledRecord_, filePath);
-#else
-
     AVAudioPlayer *temp;
     BOOL result = setAudio(@"CanceledRecord", &temp, filePath);
     audioFileCanceledRecord_ = temp;
     return result;
-#endif
 }
 
 
@@ -575,11 +504,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     if (audioFileStartRecord_ != 0) {
         // start "beep" sound -
         // the audio completion callback will trigger the actual recording
-#if SYSTEM_SOUND
-        SYSTEM_SOUND_FUNCTION(audioFileStartRecord_);
-#else
         [audioFileStartRecord_ play];
-#endif
     }
     else {
         // no sound - trigger the recording here
@@ -604,20 +529,12 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     if (startIsPressed) {
         if (fromVad) {
             if (audioFileVadEndRecord_ != 0) {
-#if SYSTEM_SOUND
-                SYSTEM_SOUND_FUNCTION(audioFileVadEndRecord_);
-#else
                 [audioFileVadEndRecord_ play];
-#endif
             }
         }
         else {
             if (audioFileRequestedEndRecord_ != 0) {
-#if SYSTEM_SOUND
-                SYSTEM_SOUND_FUNCTION(audioFileRequestedEndRecord_);
-#else
                 [audioFileRequestedEndRecord_ play];
-#endif
             }
         }
 #if USE_CHUNKED_ENCODING
@@ -652,11 +569,7 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     NSLog(@"Cancel recording");
 #endif
     if (audioFileCanceledRecord_ != 0) {
-#if SYSTEM_SOUND
-        SYSTEM_SOUND_FUNCTION(audioFileCanceledRecord_);
-#else
         [audioFileCanceledRecord_ play];
-#endif
     }
     
     recordHasBeenCanceled = TRUE;
