@@ -17,15 +17,11 @@
 		CF4082A8174E65AA00CCB667 /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
 		CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
 		CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
-		CF4082B6174E65BD00CCB667 /* SpeexEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */; };
-		CF4082B7174E65BD00CCB667 /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
 		CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
 		CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
 		CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
 		CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
-		CF4082CC174E68F600CCB667 /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082C9174E68F500CCB667 /* Speex.framework */; };
 		CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
-		CF59E5A817A8526C0002007C /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
 		CF6778DD17A7BABE000BB095 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DC17A7BABD000BB095 /* UIKit.framework */; };
 		CF6778DF17A7BABE000BB095 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6778DE17A7BABE000BB095 /* Foundation.framework */; };
 		CF67790817A7C26C000BB095 /* Eva.framework in Resources */ = {isa = PBXBuildFile; fileRef = CF408297174E653F00CCB667 /* Eva.framework */; };
@@ -36,25 +32,20 @@
 		CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
 		CF95929F17A15E2F0022CFBF /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
 		CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
-		CF9592A117A15E2F0022CFBF /* SpeexEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */; };
 		CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B1174E65BD00CCB667 /* WaveInfo.m */; };
 		CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082B3174E65BD00CCB667 /* WaveParser.m */; };
 		CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CF9592A517A15E2F0022CFBF /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = CF95929417A0142D0022CFBF /* wav_to_flac.c */; };
-		CF9592A717A15E2F0022CFBF /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082C9174E68F500CCB667 /* Speex.framework */; };
 		CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
 		CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
 		CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
 		CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082A5174E65AA00CCB667 /* Eva.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
-		CF9592AE17A15E2F0022CFBF /* SpeexEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */; };
 		CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B0174E65BD00CCB667 /* WaveInfo.h */; };
 		CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082B2174E65BD00CCB667 /* WaveParser.h */; };
 		CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
 		CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */ = {isa = PBXBuildFile; fileRef = CF95929517A0142D0022CFBF /* wav_to_flac.h */; };
 		CF9592B417A15E2F0022CFBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF40829C174E653F00CCB667 /* InfoPlist.strings */; };
-		CF98AAF817C2A8C300E171E9 /* ChunkTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */; };
-		CF98AAF917C2A8C300E171E9 /* ChunkTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */; };
 		CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
 		CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
 		CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */; };
@@ -105,13 +96,10 @@
 		CF4082A6174E65AA00CCB667 /* Eva.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Eva.m; path = ../../../Library/Eva/Eva/Eva.m; sourceTree = "<group>"; };
 		CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomError.h"; sourceTree = "<group>"; };
 		CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomError.m"; sourceTree = "<group>"; };
-		CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeexEncoder.h; sourceTree = "<group>"; };
-		CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeexEncoder.m; sourceTree = "<group>"; };
 		CF4082B0174E65BD00CCB667 /* WaveInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveInfo.h; sourceTree = "<group>"; };
 		CF4082B1174E65BD00CCB667 /* WaveInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveInfo.m; sourceTree = "<group>"; };
 		CF4082B2174E65BD00CCB667 /* WaveParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveParser.h; sourceTree = "<group>"; };
 		CF4082B3174E65BD00CCB667 /* WaveParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveParser.m; sourceTree = "<group>"; };
-		CF4082C9174E68F500CCB667 /* Speex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speex.framework; path = ../../Library/Eva/Eva/Frameworks/Speex.framework; sourceTree = "<group>"; };
 		CF4082CA174E68F500CCB667 /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = ../../Library/Eva/Eva/Frameworks/Vorbis.framework; sourceTree = "<group>"; };
 		CF6778D817A7BABD000BB095 /* EvaFrameworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFrameworkTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF6778DC17A7BABD000BB095 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -124,8 +112,6 @@
 		CF95929517A0142D0022CFBF /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
 		CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFlac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Eva copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/Code/FrameworkPack/Eva/Eva copy-Info.plist"; sourceTree = "<absolute>"; };
-		CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChunkTransfer.h; sourceTree = "<group>"; };
-		CF98AAF717C2A8C300E171E9 /* ChunkTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChunkTransfer.m; sourceTree = "<group>"; };
 		CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioStreamer-Prefix.pch"; sourceTree = "<group>"; };
 		CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
 		CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioStreamer.h; sourceTree = "<group>"; };
@@ -144,7 +130,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF4082CC174E68F600CCB667 /* Speex.framework in Frameworks */,
 				CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */,
 				CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */,
 				CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */,
@@ -165,7 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF9592A717A15E2F0022CFBF /* Speex.framework in Frameworks */,
 				CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */,
 				CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */,
 				CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */,
@@ -190,7 +174,6 @@
 				CFD71B0517590A87002E114B /* Tasks */,
 				CF95929117A013AF0022CFBF /* FLAC.framework */,
 				CFC37EB3177CA0D20035E96F /* Ogg.framework */,
-				CF4082C9174E68F500CCB667 /* Speex.framework */,
 				CF4082CA174E68F500CCB667 /* Vorbis.framework */,
 				CF408299174E653F00CCB667 /* Eva */,
 				CF6778E017A7BABE000BB095 /* EvaFrameworkTests */,
@@ -225,12 +208,10 @@
 			isa = PBXGroup;
 			children = (
 				CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */,
-				CF98AAF517C1465700E171E9 /* ChunkTransfer */,
 				CF407A0617B7F2DA003A4925 /* BufferSoundRecorder */,
 				CF95929317A014170022CFBF /* WavToFlac */,
 				CF761A1A175231F500C1A52A /* OpenUDID */,
 				CF4082A9174E65BD00CCB667 /* HelperCategories */,
-				CF4082AC174E65BD00CCB667 /* SpeexUtilities */,
 				CF4082AF174E65BD00CCB667 /* WaveUtilities */,
 				CF40829B174E653F00CCB667 /* Eva-Info.plist */,
 				CF40829C174E653F00CCB667 /* InfoPlist.strings */,
@@ -247,16 +228,6 @@
 			);
 			name = HelperCategories;
 			path = ../../../Library/Eva/Eva/HelperCategories;
-			sourceTree = "<group>";
-		};
-		CF4082AC174E65BD00CCB667 /* SpeexUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				CF4082AD174E65BD00CCB667 /* SpeexEncoder.h */,
-				CF4082AE174E65BD00CCB667 /* SpeexEncoder.m */,
-			);
-			name = SpeexUtilities;
-			path = ../../../Library/Eva/Eva/SpeexUtilities;
 			sourceTree = "<group>";
 		};
 		CF4082AF174E65BD00CCB667 /* WaveUtilities */ = {
@@ -316,15 +287,6 @@
 			name = WavToFlac;
 			sourceTree = "<group>";
 		};
-		CF98AAF517C1465700E171E9 /* ChunkTransfer */ = {
-			isa = PBXGroup;
-			children = (
-				CF98AAF617C2A8C300E171E9 /* ChunkTransfer.h */,
-				CF98AAF717C2A8C300E171E9 /* ChunkTransfer.m */,
-			);
-			name = ChunkTransfer;
-			sourceTree = "<group>";
-		};
 		CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,13 +311,11 @@
 			files = (
 				CF4082A7174E65AA00CCB667 /* Eva.h in Headers */,
 				CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */,
-				CF4082B6174E65BD00CCB667 /* SpeexEncoder.h in Headers */,
 				CF4082B8174E65BD00CCB667 /* WaveInfo.h in Headers */,
 				CF4082BA174E65BD00CCB667 /* WaveParser.h in Headers */,
 				CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */,
 				CF95929717A0142D0022CFBF /* wav_to_flac.h in Headers */,
 				CF17473817BD02A400CE68E3 /* Recorder.h in Headers */,
-				CF98AAF817C2A8C300E171E9 /* ChunkTransfer.h in Headers */,
 				CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
 				CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */,
 				CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
@@ -371,13 +331,11 @@
 			files = (
 				CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */,
 				CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */,
-				CF9592AE17A15E2F0022CFBF /* SpeexEncoder.h in Headers */,
 				CF9592AF17A15E2F0022CFBF /* WaveInfo.h in Headers */,
 				CF9592B017A15E2F0022CFBF /* WaveParser.h in Headers */,
 				CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */,
 				CF9592B217A15E2F0022CFBF /* wav_to_flac.h in Headers */,
 				CF17473317BD029600CE68E3 /* Recorder.h in Headers */,
-				CF98AAF917C2A8C300E171E9 /* ChunkTransfer.h in Headers */,
 				CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
 				CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */,
 				CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
@@ -629,7 +587,6 @@
 			files = (
 				CF4082A8174E65AA00CCB667 /* Eva.m in Sources */,
 				CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */,
-				CF4082B7174E65BD00CCB667 /* SpeexEncoder.m in Sources */,
 				CF4082B9174E65BD00CCB667 /* WaveInfo.m in Sources */,
 				CF4082BB174E65BD00CCB667 /* WaveParser.m in Sources */,
 				CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */,
@@ -645,7 +602,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF59E5A817A8526C0002007C /* SpeexEncoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +611,6 @@
 			files = (
 				CF95929F17A15E2F0022CFBF /* Eva.m in Sources */,
 				CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */,
-				CF9592A117A15E2F0022CFBF /* SpeexEncoder.m in Sources */,
 				CF9592A217A15E2F0022CFBF /* WaveInfo.m in Sources */,
 				CF9592A317A15E2F0022CFBF /* WaveParser.m in Sources */,
 				CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */,

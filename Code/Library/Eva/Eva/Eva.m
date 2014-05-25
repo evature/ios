@@ -8,8 +8,6 @@
 
 #import "Eva.h"
 #import "WaveParser.h"
-#import "SpeexEncoder.h"
-#import <Speex/Speex.h>
 #import <AudioToolbox/AudioServices.h>
 #import "Common.h"
 
@@ -1335,7 +1333,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
 #if USE_FLAC_TO_ENCODE
             [self convertFileToFLAC];
 #else
-            [self convertFileToSpeex];
 #endif
         }
         
@@ -1400,82 +1397,6 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     }
 }
 
-
-#pragma mark - Speex Handler
-
--(void)convertFileToSpeex{
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"convertFileToSpeex");
-    
-    NSLog(@"wavFileUrl_ : %@", wavFileUrl_);//waveFilePath);
-    
-    NSLog(@"[wavFileUrl_ absoluteString]=%@", [wavFileUrl_ absoluteString]);
-#endif
-    
-    NSError *encodingError;
-    SpeexEncoder *spxEncoder = [SpeexEncoder encoderWithMode:speex_wb_mode quality:6
-                                            outputSampleRate:SAMPLE_RATE_16000_HZ];
-    
-#if DEBUG_MODE_FOR_EVA
-    if (spxEncoder == NULL) {
-        NSLog(@"spxEncoder == NULL");
-    }else{
-        NSLog(@"[spxEncoder description]=%@",[spxEncoder description]);
-    }
-#endif
-    
-    NSURL *someURL = wavFileUrl_; // some file URL
-    NSString *path = [someURL path];
-    //NSDictionary *info = [[NSFileManager defaultManager] attributesOfItemAtPath:path];
-    
-    NSString* expandedPath = [path stringByExpandingTildeInPath];
-    //NSURL* audioUrl = [NSURL fileURLWithPath:expandedPath];
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"path=%@",path);
-    NSLog(@"[url absoluteString]=%@",[wavFileUrl_ absoluteString]);
-#endif
-    // DEBUG //
-    //NSData *_waveData = [NSData dataWithContentsOfFile:path];
-    //NSLog(@"[_waveData description]=%@",[_waveData description]);
-    ///////////
-    
-    NSData *spx = [spxEncoder encodeWaveFileAtPath:expandedPath//path//[wavFileUrl_ absoluteString]
-                   //waveFilePath
-                                             error:&encodingError];
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Encoding Error: %@", [encodingError description]);
-    NSLog(@"ENCODED DATA: %@", spx);
-#endif
-    
-    
-    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [NSString stringWithFormat:@"%@",[documentPath objectAtIndex:0]]; // Get documents directory
-    
-    NSString *speexOutputFile = [NSString stringWithFormat:@"%@/%@",documentsDirectory, @"rec.spx"];
-    
-    BOOL fileWriteSuccess = [spx writeToFile:speexOutputFile atomically:YES];
-    
-    // *** ENCODER TESTING ENDS HERE ***
-    
-    if (fileWriteSuccess) {
-        // Send to Eva
-        [self establishConnection];
-    }else{
-        NSLog(@"There was an error saving the file");
-    }
-}
-
-/*-(NSString *)recFlacFileString{
- NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
- NSString *docsDir = [NSString stringWithFormat:@"%@",[dirPaths objectAtIndex:0]]; // Get documents directory
- NSString *tmpFileUrl = [docsDir stringByAppendingPathComponent:@"rec.flac" //@"rec.m4a"//m4a"
- ];
- return tmpFileUrl;
- 
- 
- }*/
 
 
 - (NSString *)makeSafeString:(NSString *)inString{
