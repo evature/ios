@@ -7,12 +7,10 @@
 //
 
 #import "Eva.h"
-#import "WaveParser.h"
 #import <AudioToolbox/AudioServices.h>
 #import "Common.h"
 
 #include "OpenUDID.h"
-#include "wav_to_flac.h"
 
 // New for chunked encoding
 #include "FLAC/metadata.h"
@@ -1328,75 +1326,14 @@ void startRecordSystemSoundCompletionProc (SystemSoundID  ssID, void *clientData
     NSLog (@"audioRecorderDidFinishRecording:successfully:");
 #endif
     // your actions here
-    if (flag) {
-        if (!recordHasBeenCanceled) {
-#if USE_FLAC_TO_ENCODE
-            [self convertFileToFLAC];
-#else
-#endif
-        }
+    if (!flag) {
         
-    }else{
-       
         NSLog(@"There is a problem with recording");
     }
     
     //[self establishConnection];
     
 }
-
-#pragma mark - FLAC Handler
-
--(void)convertFileToFLAC{
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"convertFileToFLAC");
-    
-    NSLog(@"wavFileUrl_ : %@", wavFileUrl_);//waveFilePath);
-    
-    NSLog(@"[wavFileUrl_ absoluteString]=%@", [wavFileUrl_ absoluteString]);
-#endif
-    
-    NSURL *someURL = wavFileUrl_; // some file URL
-    NSString *path = [someURL path];
-    //NSDictionary *info = [[NSFileManager defaultManager] attributesOfItemAtPath:path];
-    
-    NSString* expandedPath = [path stringByExpandingTildeInPath];
-    
-    
-    NSArray *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [NSString stringWithFormat:@"%@",[documentPath objectAtIndex:0]]; // Get documents directory
-    
-    NSString *flacOutputFile = [NSString stringWithFormat:@"%@/%@",documentsDirectory, @"rec"];
-    
-    
-    
-    //NSError *encodingError;
-    
-    NSString *flacFileWithoutExtension = flacOutputFile;//path to the output file
-    NSString *waveFile = expandedPath; //path to the wave input file
-    int interval_seconds = 30;
-    char** flac_files = (char**) malloc(sizeof(char*) * 1024);
-    
-    int conversionResult = Eva_convertWavToFlac([waveFile UTF8String], [flacFileWithoutExtension UTF8String], interval_seconds, flac_files);
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Flac: conversionResult = %d",conversionResult);
-#endif
-    
-    
-    
-    
-    
-    
-    
-    if (!conversionResult) { // success //
-        // Send to Eva
-        [self establishConnection];
-    }else{
-        NSLog(@"There was an error with flac encoding");
-    }
-}
-
 
 
 - (NSString *)makeSafeString:(NSString *)inString{
