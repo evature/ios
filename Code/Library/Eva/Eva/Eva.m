@@ -28,10 +28,6 @@
 
 #define CHECK_WITH_GOOGLE_SERVER FALSE //FALSE
 #define USE_WEB_SOCKET FALSE//TRUE
-#define SYSTEM_SOUND FALSE  // False use AVPlayer, When TRUE using AudioServices (define below)
-
-//#define SYSTEM_SOUND_FUNCTION AudioServicesPlayAlertSound // Was shown in record (Iftach)
-#define SYSTEM_SOUND_FUNCTION AudioServicesPlaySystemSound
 
 #define VAD_GUI_UPDATE FALSE // If you want to get the values you have to implement the delegates on Eva.h file.
 /*

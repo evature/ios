@@ -545,24 +545,21 @@ static char *FormatError(char *str, OSStatus error)
 #if DEBUG_LOGS
         NSLog(@"EVA IS READY");
 #endif
+        isRecorderReady = TRUE;
         
         if ([_delegate respondsToSelector:@selector(recorderIsReady)]) {
 #if DEBUG_RECORDER
-    #if DEBUG_LOGS
             NSLog(@"respondsToSelector:@selector(recorderIsReady)");
-    #endif
 #endif
             [_delegate recorderIsReady];
             
         }else{
 
 #if DEBUG_RECORDER
-    #if DEBUG_LOGS
             NSLog(@"Error with respondsToSelector:@selector(recorderIsReady)");
-    #endif
 #endif
         }
-        isRecorderReady = TRUE;
+
     }
 }
 
