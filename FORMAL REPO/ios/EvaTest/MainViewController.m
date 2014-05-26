@@ -272,15 +272,15 @@ float vadStopNoisyMoments;
         NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
     }
     
-    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
-        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
-                                   error:&error];
-    }else{
-        // Do somthing smart for iOS 5 //
-    }
-    if (error != nil) {
-        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-    }
+//    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
+//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+//                                   error:&error];
+//    }else{
+//        // Do somthing smart for iOS 5 //
+//    }
+//    if (error != nil) {
+//        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+//    }
     
     [session setActive:YES error:&error];
     if (error != nil) {

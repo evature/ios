@@ -274,9 +274,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 // this sound will play when a "startRecord" method is called - the actual recording will start after the sound finishes playing
 - (BOOL) setStartRecordAudioFile: (NSURL *)filePath {
    
-    if (audioFileStartRecord_ != 0) {
+    if (audioFileStartRecord_ != nil) {
         audioFileStartRecord_.delegate = nil;
-        audioFileStartRecord_ = 0;
+        audioFileStartRecord_ = nil;
     }
     AVAudioPlayer *temp;
     BOOL result = setAudio(@"StartRecord", &temp, filePath);
@@ -418,7 +418,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     }
 
     
-    if (audioFileStartRecord_ != 0) {
+    if (audioFileStartRecord_ != nil) {
         // start "beep" sound -
         // the audio completion callback will trigger the actual recording
         [audioFileStartRecord_ play];
@@ -445,12 +445,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     audioTimeoutTimer_ = nil;
     if (startIsPressed) {
         if (fromVad) {
-            if (audioFileVadEndRecord_ != 0) {
+            if (audioFileVadEndRecord_ != nil) {
                 [audioFileVadEndRecord_ play];
             }
         }
         else {
-            if (audioFileRequestedEndRecord_ != 0) {
+            if (audioFileRequestedEndRecord_ != nil) {
                 [audioFileRequestedEndRecord_ play];
             }
         }
@@ -481,7 +481,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_LOGS
     NSLog(@"Cancel recording");
 #endif
-    if (audioFileCanceledRecord_ != 0) {
+    if (audioFileCanceledRecord_ != nil) {
         [audioFileCanceledRecord_ play];
     }
     
