@@ -195,6 +195,13 @@
 //    [self showLabelWithText:[NSString stringWithFormat:@"%f", [self getVolumeLevel]]];
     [self.startButton setHidden:FALSE];
     [self.startButton setEnabled:TRUE];
+    
+    [self setAVSession];
+
+    [[Eva sharedInstance] startRecord:TRUE];
+    [self showLabelWithText:@"Record has started on isReady"];
+    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+
 }
 
 
@@ -251,6 +258,36 @@ float vadStopNoisyMoments;
     // The delegate initiation is here for it to be set-up every time this view is called //
 }
 
+- (void)setAVSession {
+    NSLog(@"Setting session to Play and Record");
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *error;
+    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
+        
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    }else{
+        // Do somthing smart for iOS 5 //
+    }
+    if (error != nil) {
+        NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
+    }
+    
+//    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
+//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+//                                   error:&error];
+//    }else{
+//        // Do somthing smart for iOS 5 //
+//    }
+//    if (error != nil) {
+//        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+//    }
+    
+    [session setActive:YES error:&error];
+    if (error != nil) {
+        NSLog(@"Failed to setActive for AVAudioSession!  %@", error);
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -299,34 +336,6 @@ float vadStopNoisyMoments;
         [stopButton setHidden:TRUE];
     }
     
-    NSLog(@"Setting session to Play and Record");
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *error;
-    if ([session respondsToSelector:@selector(setCategory:withOptions:error:)]) { // Using iOS 6+
-
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
-    }else{
-        // Do somthing smart for iOS 5 //
-    }
-    if (error != nil) {
-        NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
-    }
-    
-    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
-            [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
-                                         error:&error];
-    }else{
-         // Do somthing smart for iOS 5 //
-    }
-    if (error != nil) {
-        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-    }
-    
-    [session setActive:YES error:&error];
-    if (error != nil) {
-        NSLog(@"Failed to setActive for AVAudioSession!  %@", error);
-    }
-
 #if !VAD_DEBUG_GUI
     [vadLabel setHidden:TRUE];
 #endif
