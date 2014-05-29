@@ -600,14 +600,11 @@ static char *FormatError(char *str, OSStatus error)
 // called from encoder
 void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data){
     
-#if DEBUG_LOGS
-    NSLog(@"bytes_written = %lld, frames_written = %d, total_frames_estimate=%d", bytes_written, frames_written,total_frames_estimate);
-#endif
     
     Recorder *userRecoreder =(__bridge Recorder*)client_data;
 
 #if DEBUG_LOGS
-    NSLog(@"userRecoreder._frameIndex = %d", userRecoreder._frameIndex);
+    NSLog(@"userRecoreder._frameIndex = %d,  bytes_written = %lld, frames_written = %d, total_frames_estimate=%d", userRecoreder._frameIndex ,bytes_written, frames_written,total_frames_estimate);
 #endif
     
     if (userRecoreder._frameIndex -1 <= frames_written && userRecoreder.shouldStopRecording) {
@@ -701,22 +698,22 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
         NSLog(@"------ frame index - %d", _frameIndex);
 #endif
         
-        if ([_delegate respondsToSelector:@selector(recordFileWasCreated)]) {
-#if DEBUG_LOGS
-            NSLog(@"respondsToSelector:@selector(recordFileWasCreated)");
-#endif
-        }else{
-#if DEBUG_LOGS
-            NSLog(@"Error with respondsToSelector:@selector(recordFileWasCreated)");
-#endif
-        }
         
-        if (!self.fileWasCreated && [_delegate respondsToSelector:@selector(recordFileWasCreated)])
-        {
+        if (!self.fileWasCreated) {
+            if ([_delegate respondsToSelector:@selector(recordFileWasCreated)]) {
+                [_delegate recordFileWasCreated];
+#if DEBUG_LOGS
+                NSLog(@"respondsToSelector:@selector(recordFileWasCreated)");
+#endif
+            }else{
+#if DEBUG_LOGS
+                NSLog(@"Error with respondsToSelector:@selector(recordFileWasCreated)");
+#endif
+            }
+            
 #if DEBUG_LOGS
             NSLog(@"------ fileWasCreated -----");
 #endif
-            [_delegate recordFileWasCreated];
             self.fileWasCreated = YES;
         }
     }

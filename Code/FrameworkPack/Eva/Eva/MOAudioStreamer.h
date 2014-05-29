@@ -15,13 +15,13 @@
 @protocol MOAudioStreamerDeelegate <NSObject>
 
 -(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)streamer;
--(void)MOAudioStreamerDidFinishRequest:(NSURLConnection*)connectionRequest withResponse:(NSString*)response;
+-(void)MOAudioStreamerDidFinishRequest:(MOAudioStreamer*)streamer theConnection:(NSURLConnection*)connectionRequest withResponse:(NSString*)response;
 -(void)MOAudioStreamerDidFailed:(MOAudioStreamer*)streamer message:(NSString*)reason;
 
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response;
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data;
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error;
-- (void)MOAudioStreamerConnectionDidFinishLoading:(NSURLConnection *)theConnection;
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)streamer theConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response;
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)streamer theConnection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data;
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)streamer theConnection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error;
+- (void)MOAudioStreamerConnectionDidFinishLoading:(MOAudioStreamer*)streamer theConnection:(NSURLConnection *)theConnection;
 
 - (void)MORecorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
 

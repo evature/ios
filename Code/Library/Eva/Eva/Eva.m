@@ -71,8 +71,6 @@
     
     float micRecordTimeout;
     
-    BOOL recordHasBeenCanceled;
-    
     // For chunked encoding
     MOAudioStreamer *streamer;
     
@@ -244,7 +242,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     [locationManager_ startUpdatingLocation];
 
-    
+#if DEBUG_LOGS
+    NSLog(@"Starting actual recording - startIsPressed set to True");
+#endif
     startIsPressed = TRUE;
     lowPassResultsPeak = 0; // initiate the peak.
     audioTimeoutTimer_=[NSTimer scheduledTimerWithTimeInterval:micRecordTimeout_//8.0
@@ -323,6 +323,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     if    (DEBUG_MODE_FOR_EVA){
         NSLog(@"It's debug mode");
     }
+#if DEBUG_LOGS
+    NSLog(@"setAPIKey startIsPressed=FALSE");
+#endif
     startIsPressed = FALSE;
     
     sendMicLevel_ = FALSE;
@@ -395,8 +398,10 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_LOGS
     NSLog(@"Start recording");
 #endif
-    recordHasBeenCanceled = FALSE;
-    
+    if (delegate_ == nil) {
+        NSLog(@"Eva: delegate is nil - please set delegate before starting a recording");
+        return FALSE;
+    }
     minVolume = DBL_MAX; // Iftach addon
     
     startSilenceDetection = FALSE;
@@ -413,7 +418,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     if (noSession) {
         sessionID_ = nil;
-    }else if (withNewSession) {
+    }else if (withNewSession || sessionID_ == nil) {
         sessionID_ = [NSString stringWithFormat:@"1"];
     }
 
@@ -433,10 +438,10 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 }
 
 - (BOOL)stopRecord{
-    return [self stopRecord:FALSE];
+    return [self stopRecord:FALSE wasCanceled:FALSE];
 }
 
-- (BOOL)stopRecord: (BOOL)fromVad{
+- (BOOL)stopRecord: (BOOL)fromVad  wasCanceled:(BOOL)wasCanceled{
 #if DEBUG_LOGS
     NSLog(@"Stop recording");
 #endif
@@ -455,9 +460,11 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
             }
         }
         // Call the stop queue function
-        [self stopRecordQueue];
+        [self stopRecordQueue: wasCanceled];
         [locationManager_ stopUpdatingLocation];
-        
+#if DEBUG_LOGS
+        NSLog(@"stopped recording - set startIsPressed to False");
+#endif
         startIsPressed = FALSE;
         if (sendMicLevel_) {
             if([[self delegate] respondsToSelector:@selector(evaMicStopRecording)]){
@@ -485,11 +492,14 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         [audioFileCanceledRecord_ play];
     }
     
-    recordHasBeenCanceled = TRUE;
     
-    return [self stopRecord];
+    BOOL result = [self stopRecord:FALSE wasCanceled:TRUE];
+
+    // note: stop record may fail if cancel is called after the request is complete (and therefore the recording is already stopped)
+    // but the response may still arrive soon - setting the streamer_ to nil will allow us to ignore the response
+    streamer_ = nil;
     
-    
+    return result;
 }
 
 -(void)stopRecordOnTick:(NSTimer *)timer {
@@ -585,56 +595,29 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
 }
 
--(void)establishConnectionOnTick:(NSTimer *)timer {
-    [self establishConnection];
-}
-
--(void)initAudioQueue{
-    /* streamOfData_ = [[NSData alloc] init]; // NEW.
-     
-     _recorder = [[Recorder alloc] init];//[[SoundRecoder alloc] init];
-     _recorder.delegate = self;*/
-}
-
 -(void)startRecordQueue{
-    /* NSString *documentDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];
-     NSString *savePath = [documentDir stringByAppendingPathComponent:@"rec.flac"];
-     //_recorder.delegate = self;
-     //[_recorder startRecording:savePath];
-     [[NSFileManager defaultManager] removeItemAtPath:savePath error:nil]; // NEw for testing recorder. Isn't necessary.
-     //[_recorder init];
-     
-     [self initAudioQueue];
-     
-     [self establishConnection]; // New for checking Chunked encoding
-     
-     
-     [_recorder startRecording];*/
+    
     lowPassResultsPeak = 0; // initiate the peak.
     silentMoments = 0;
     
-    //recordHasBeenCanceled = FALSE;
-    
-    //startSilenceDetection = FALSE;
-
     
     
 #if DEBUG_LOGS
-    NSLog(@"PPPP A1");
+    NSLog(@"Dbg:  startRecordQueue");
 #endif
     [self establishConnection];
     //[[MOAudioStreamer sharedInstance] startStreamer];
 #if DEBUG_LOGS
-    NSLog(@"PPPP A2");
+    NSLog(@"Dbg:  established connection, starting streamer");
 #endif
     [streamer_ startStreamer];
 #if DEBUG_LOGS
-    NSLog(@"PPPP A3");
+    NSLog(@"Dbg: Streamer started");
 #endif
     
 }
 
--(void)stopRecordQueue{
+-(void)stopRecordQueue: (BOOL)wasCanceled{
     [levelTimer invalidate];
     levelTimer = nil;
     
@@ -648,8 +631,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     
     
-    if (recordHasBeenCanceled) {
+    if (wasCanceled) {
         [streamer_ cancelStreaming];
+        streamer_ = nil;
     }else{
         [streamer_ stopStreaming];
     }
@@ -685,43 +669,71 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 #pragma mark MOAudioStreamer
 
--(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)streamer
+-(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)theStreamer
 {
 #if DEBUG_LOGS
-    NSLog(@"AudioStreamerDidFinishStreaming");
+    NSLog(@"Streamer: AudioStreamerDidFinishStreaming");
 #endif
 }
 
--(void)MOAudioStreamerDidFinishRequest:(NSURLConnection*)connectionRequest withResponse:(NSString*)response
+-(void)MOAudioStreamerDidFinishRequest:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection*)connectionRequest withResponse:(NSString*)response
 {
 #if DEBUG_LOGS
-    NSLog(@"AudioStreamerDidFinishRequest");
+    NSLog(@"Streamer: AudioStreamerDidFinishRequest");
 #endif
     
 }
 
--(void)MOAudioStreamerDidFailed:(MOAudioStreamer*)streamer message:(NSString*)reason
+-(void)MOAudioStreamerDidFailed:(MOAudioStreamer*)theStreamer message:(NSString*)reason
 {
 #if DEBUG_LOGS
-    NSLog(@"AudioStreamerDidFailed - %@", reason);
+    NSLog(@"Streamer: AudioStreamerDidFailed - %@", reason);
 #endif
 }
 
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response{
-    [self connection:theConnection didReceiveResponse:response];
-    
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response{
+    if (theStreamer == streamer_) {
+        [self connection:theConnection didReceiveResponse:response];
+#if DEBUG_LOGS
+        NSLog(@"Streamer: didReceiveResponse");
+    }
+    else {
+        NSLog(@"Streamer: didReceiveResponse - ignored");
+#endif
+    }
 }
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data{
-    [self connection:theConnection didReceiveData:data];
-    
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data{
+    if (theStreamer == streamer_) {
+        [self connection:theConnection didReceiveData:data];
+#if DEBUG_LOGS
+        NSLog(@"Streamer: didReceiveData");
+    }
+    else {
+        NSLog(@"Streamer: didReceiveData - ignored");
+#endif
+    }
 }
-- (void)MOAudioStreamerConnection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error{
-    [self connection:theConnection didFailWithError:error];
-    
+- (void)MOAudioStreamerConnection:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error{
+    if (theStreamer == streamer_) {
+        [self connection:theConnection didFailWithError:error];
+#if DEBUG_LOGS
+        NSLog(@"Streamer: didFailWithError");
+    }
+    else {
+        NSLog(@"Streamer: didFailWithError - ignored");
+#endif
+    }
 }
-- (void)MOAudioStreamerConnectionDidFinishLoading:(NSURLConnection *)theConnection{
-    [self connectionDidFinishLoading:theConnection];
-    
+- (void)MOAudioStreamerConnectionDidFinishLoading:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection{
+    if (theStreamer == streamer_) {
+        [self connectionDidFinishLoading:theConnection];
+#if DEBUG_LOGS
+        NSLog(@"Streamer: DidFinishLoading");
+    }
+    else {
+        NSLog(@"Streamer: DidFinishLoading - ignored");
+#endif
+    }
 }
 
 - (void)MORecorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
@@ -746,8 +758,16 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 - (void)levelTimerCallback:(NSTimer *)timer {
 	
+    if ([self delegate] == nil) {
+        NSLog(@"Eva: delegate is nil - the recording will now stop");
+        [self cancelRecord];
+        return;
+    }
+    
    // double startTime =  CACurrentMediaTime();
     totalMomements++;
+    
+    NSLog(@"totalMoments recorded: %ld", (long)totalMomements);
     
     double peakPower = [streamer_ peakPower];
     double averagePower = [streamer_ averagePower];
@@ -832,7 +852,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_MODE_FOR_EVA
             NSLog(@"Silent: Can stop record");
 #endif
-            [self stopRecord:TRUE];
+            [self stopRecord:TRUE wasCanceled:FALSE];
         }
     }
     
@@ -1058,12 +1078,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"This is my first chunk %@", aStr);
-#endif
-    
 #if TESTFLIGHT_TESTING
+    NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     TFLog(@"JSon Reply:%@",aStr);
 #endif
     
@@ -1082,7 +1098,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     //NSDictionary* locationsReply = [apiReply objectForKey:@"Locations"];
     if ([apiReply respondsToSelector:@selector(objectForKey:)]//apiReply!=NULL
         ) {
-        NSString *sayIt = [apiReply objectForKey:@"Say It"];
+        NSString *sayIt = [apiReply objectForKey:@"SayIt"];
         NSString *processedText = [apiReply objectForKey:@"ProcessedText"];
         
         //[outputLabel setText:sayIt];
@@ -1092,13 +1108,11 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
     
     if ([json respondsToSelector:@selector(objectForKey:)]) {
-#if DEBUG_MODE_FOR_EVA
-        NSLog(@"[json respondsToSelector:@selector(objectForKey:)] == TRUE");
-#endif
         sessionID_ = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
         if (sessionID_ == nil) {
             [NSString stringWithFormat:@"1"];
         }
+        NSLog(@"SessionId set to %@", sessionID_);
     }
     
     if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){

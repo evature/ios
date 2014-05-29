@@ -22,7 +22,7 @@
 #define ext @"flac"
 #define USING_SYNC 0
 
-#define DEBUG_THIS TRUE//FALSE
+#define DEBUG_THIS FALSE
 
 //#define DEBUG_LOGS TRUE
 
@@ -291,10 +291,8 @@ enum {
     //    assert(self.bodySuffixData != nil);
     
     NSString *documentsDirectory = [NSString stringWithFormat:@"%@",self.recordingPath]; //self.recordingPath
-#if DEBUG_THIS
-    #if DEBUG_LOGS
+#if DEBUG_THIS &&  DEBUG_LOGS
     NSLog(@"documentsDirectory is %@",documentsDirectory);
-#endif
 #endif
     
     fullPathToFilex = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.fileToSaveName,ext ]];
@@ -325,7 +323,7 @@ enum {
     //NSRunLoop *myRunLoop=[NSRunLoop currentRunLoop];
     
     //NSData *data=[[NSData alloc]initWithContentsOfFile:fullPathToFilex];
-#if DEBUG_LOGS
+#if DEBUG_THIS &&  DEBUG_LOGS
     NSLog(@"Initializing file stream! 1");
 #endif
     self.fileStream = [[NSInputStream alloc] initWithFileAtPath:fullPathToFilex]; // [NSInputStream inputStreamWithFileAtPath:fullPathToFilex];
@@ -471,22 +469,17 @@ enum {
     @synchronized(self){
            // NSLog(@"stream in handeleEvenis %@ ]n is there any buffers left %i",aStream.description,1333);
                 // assert(aStream == self.producerStream);
-        if (!(aStream == self.producerStream)) {
-#if DEBUG_LOGS
-            NSLog(@"***** aStream != self.producerStream *****");
-#endif
-        }
         
         switch (eventCode) {
             case NSStreamEventOpenCompleted: {
-#if DEBUG_LOGS
+#if DEBUG_THIS &&  DEBUG_LOGS
                 NSLog(@"producer stream opened");
 #endif
             } break;
             case NSStreamEventHasBytesAvailable: {
                 //assert(NO);     // should never happen for the output stream
                 if (!( NO)) {
-                    #if DEBUG_LOGS
+#if DEBUG_LOGS
                     NSLog(@"CRITICAL ERROR");
 #endif
                     return;
@@ -511,9 +504,9 @@ enum {
                 //NSError * streamError = [self.fileStream streamError];
                 //BOOL hasBytes = [self.fileStream hasBytesAvailable];
                 //NSLog(@"fileStream status: %d,  err=%@,  hasBytes=%d", status, streamError, hasBytes);
+#if DEBUG_THIS &&  DEBUG_LOGS
                 NSStreamStatus status = [self.producerStream streamStatus];
                 NSError * streamError = [self.producerStream streamError];
-                #if DEBUG_LOGS
                 NSLog(@"producer status: %d,  err=%@", status, streamError);
 #endif
 #if DEBUG_THIS
@@ -524,7 +517,7 @@ enum {
 #endif
                 
                 if (fileLengthNum == NULL) {
-                    #if DEBUG_LOGS
+#if DEBUG_LOGS
                     NSLog(@"Error: Null file size!");
 #endif
                 }
@@ -535,28 +528,6 @@ enum {
                 }
                 
                 if (self.bufferOffset == self.bufferLimit) {
-#if DEBUG_THIS
-                    #if DEBUG_LOGS
-                    NSLog(@"Starting next chunk");
-#endif
-#endif
-                    // See if we're transitioning from the prefix to the file data.
-                    // If so, allocate a file buffer.
-                    
-                    //                            if (self.bodyPrefixData != nil) {
-                    //
-                    //                                self.bodyPrefixData = nil;
-                    //                                assert(self.bufferOnHeap == NULL);
-                    //                                self.bufferOnHeap = malloc(kPostBufferSize);
-                    //                                assert(self.bufferOnHeap != NULL);
-                    //                                self.buffer = self.bufferOnHeap;
-                    //
-                    //                                self.bufferOffset = 0;
-                    //                                self.bufferLimit  = 0;
-                    //                            }
-                    
-                    // If we still have file data to send, read the next chunk.
-                    //assert(self.bufferOnHeap != NULL);
                     if (self.bufferOnHeap==NULL) {
                         #if DEBUG_LOGS
                         NSLog(@"CRITICAL ERROR");
@@ -575,7 +546,7 @@ enum {
                     //assert(bytesRead <= kPostBufferSize);
                     if (!(bytesRead <= kPostBufferSize)) {
 #if DEBUG_LOGS
-                        NSLog(@"CRITICAL ERROR");
+                        NSLog(@"CRITICAL ERROR  bytesRead > kPostBufferSize");
 #endif
                         return;
                     }
@@ -612,7 +583,7 @@ enum {
     #endif
 #endif
                             if (self.fileStream != nil) {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                                 NSLog(@"Closing file stream! 1");
 #endif
                                 [self.fileStream close];
@@ -640,16 +611,16 @@ enum {
                     
                     if (self.bufferOffset == self.bufferLimit) {
                         if (StopSignal) {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                             NSLog(@"close the producer stream got  a stop signal");
 #endif
                             orderToStop=YES;
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                             NSLog(@"----> Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
 #endif
                             
                             if (self.producerStream != nil) {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                                 NSLog(@"close the producer stream");
 #endif
                                 // We set our delegate callback to nil because we don't want to
@@ -672,7 +643,7 @@ enum {
                             }
                         }
                         else {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                             NSLog(@"----No data available - GOING TO SLEEP----");
 #endif
                             usleep(10000);
@@ -703,25 +674,22 @@ enum {
                     // if (self.buffer != nil) {
                     
                     if (aStream.streamStatus == NSStreamStatusNotOpen) { // NEW
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                         NSLog(@"Stream is not open!!!!!! Should go to sleep");
 #endif
                         
-                        NSInteger sleepRetVal = usleep(10000); //usleep(1000000); // LESS THAN 1 SEC MAKES LOTS OF ISSUES...
-#if DEBUG_LOGS
-                        NSLog(@"sleep return value = %d",sleepRetVal);
-#endif
+                        usleep(10000); //usleep(1000000); // LESS THAN 1 SEC MAKES LOTS OF ISSUES...
                         //return;
                        // bytesWritten = 0;
                     }
                     
                     bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlengt];
                     
-#if DEBUG_LOGS
+#if DEBUG_THIS  && DEBUG_LOGS
                     NSLog(@">>> Sent %d bytes to HTTP", bytesWritten);
 #endif
                     if (bytesWritten == 0) {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                         NSLog(@"Error! failed to write to HTTP");
 #endif
                     }
@@ -732,15 +700,12 @@ enum {
                     if (maxlengt<kPostBufferSize) {  // read less than maximum from file
                         
                         // if (!StopSignal && !sleptAlready) {
-#if DEBUG_LOGS
+#if DEBUG_THIS && DEBUG_LOGS
                         NSLog(@"----Sent less than maximum - GOING TO SLEEP----");
 #endif
                         //sleep(1);
                         //sleptAlready = YES;
-                        NSInteger sleepRetVal = usleep(10000); //usleep(1000000); // LESS THAN 1 SEC MAKES LOTS OF ISSUES...
-#if DEBUG_LOGS
-                        NSLog(@"sleep return value = %d",sleepRetVal);
-#endif
+                        usleep(10000); //usleep(1000000); // LESS THAN 1 SEC MAKES LOTS OF ISSUES...
                         
                         //}
                         
@@ -764,7 +729,7 @@ enum {
                         self.bufferOffset += bytesWritten;
                         self.totalSizeSent+=bytesWritten;
                     }
-#if DEBUG_LOGS
+#if DEBUG_THIS  && DEBUG_LOGS
                     NSLog(@"----> total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
 #endif
                     //                            NSLog(@"sending the next chunk buffer offset is %li max length is %li",(long)fullsize,self.bufferLimit - self.bufferOffset);
@@ -772,10 +737,8 @@ enum {
                 }
             } break;
             case NSStreamEventErrorOccurred: {
-#if DEBUG_THIS
                 #if DEBUG_LOGS
                 NSLog(@"producer stream error %@", [aStream streamError]);
-#endif
 #endif
                 [self stopSendWithStatus:@"Stream open error"];
             } break;
@@ -785,7 +748,7 @@ enum {
             default: {
                 //assert(NO);
                 if (!(NO)) {
-                    #if DEBUG_LOGS
+#if DEBUG_LOGS
                     NSLog(@"CRITICAL ERROR");
 #endif
                     return;
@@ -823,11 +786,11 @@ enum {
         
         httpResponse = (NSHTTPURLResponse *) response;
         assert( [httpResponse isKindOfClass:[NSHTTPURLResponse class]] );
-        #if DEBUG_LOGS
+#if DEBUG_LOGS
         NSLog(@"httpresponse for streamer header is %@",[httpResponse allHeaderFields]);
 #endif
         if ((httpResponse.statusCode / 100) != 2) {
-            #if DEBUG_LOGS
+#if DEBUG_LOGS
             NSLog(@"HTTP error");
 #endif
             [self stopSendWithStatus:[NSString stringWithFormat:@"HTTP error %zd", (ssize_t) httpResponse.statusCode]];
@@ -836,9 +799,10 @@ enum {
             //[self stopSendWithStatus:@"RECIVED RESPONSE WITH NO ERROR"]; // NEW - 4/9/13
         }
         
-        
+
     }//end of self.connection if
-    [self.streamerDelegate MOAudioStreamerConnection:theConnection didReceiveResponse:response]; //NEW
+    
+    [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveResponse:response]; //NEW
 }
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data
@@ -864,13 +828,14 @@ enum {
         
         [self stopSendWithStatus:@"RECIVED RESPONSE WITH NO ERROR"]; // NEW - 4/9/13
         // do nothing
-        
+
     }else{
 #if DEBUG_LOGS
         NSLog(@"self.connection audiostreamer.m is null");
 #endif
     }
-    [self.streamerDelegate MOAudioStreamerConnection:theConnection didReceiveData:data]; // NEW
+
+    [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveData:data];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error
@@ -893,7 +858,8 @@ enum {
             [self.streamerDelegate MOAudioStreamerDidFailed:self message:connectionError.localizedDescription ];
         }
     }
-    [self.streamerDelegate MOAudioStreamerConnection:theConnection didFailWithError:error]; // NEW
+
+    [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didFailWithError:error]; // NEW
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection
@@ -918,7 +884,7 @@ enum {
                 }
             }else{
                 if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFinishRequest:withResponse:)]) {
-                    [self.streamerDelegate MOAudioStreamerDidFinishRequest:theConnection withResponse:String];
+                    [self.streamerDelegate MOAudioStreamerDidFinishRequest:self theConnection:theConnection withResponse:String];
                 }else{
 #if DEBUG_LOGS
                     NSLog(@"it does not respond to selector streamdidFinishRequest");
@@ -938,8 +904,7 @@ enum {
         
         [self stopSendWithStatus:@"end connection"];
     }
-    
-    [self.streamerDelegate MOAudioStreamerConnectionDidFinishLoading:theConnection]; // NEW
+    [self.streamerDelegate MOAudioStreamerConnectionDidFinishLoading:self theConnection:theConnection]; // NEW
 }
 
 #pragma mark * Actions
@@ -1093,11 +1058,11 @@ NSString *fullPathToFilex;
 }
 -(void)setupNewRocordableFile{
 #if DEBUG_LOGS
-    NSLog(@"PPPP B1");
+    NSLog(@"Dbg: setup new file");
 #endif
     [self cleanLastRecordFile];
 #if DEBUG_LOGS
-    NSLog(@"PPPP B2");
+    NSLog(@"Dbg:  cleanedup last file");
 #endif
     NSFileManager *fileManager=[NSFileManager defaultManager];
     
@@ -1113,9 +1078,6 @@ NSString *fullPathToFilex;
     }else{ // NEw /////////
         
     }
-#if DEBUG_LOGS
-    NSLog(@"PPPP B3");
-#endif
     if (!self.fileToSaveName || [self.fileToSaveName isEqualToString:@""]) {
         self.fileToSaveName=@"temp";
     }
@@ -1123,20 +1085,13 @@ NSString *fullPathToFilex;
     soundFilePath = [NSString stringWithString: [dataPath
                                                  stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.fileToSaveName,ext ]]];
     
-    /*self.recorder = [[Recorder alloc] init];
-     assert(self.recorder!=nil); // NEW
-     self.recorder.savedPath = soundFilePath;
-     self.recorder.delegate = self;
-     
-     [self.recorder startRecording];*/
-    //assert([Recorder sharedInstance]!=nil); // NEW
     if ([Recorder sharedInstance]==nil) {
         return;
     }
     [Recorder sharedInstance].savedPath = soundFilePath;
     [Recorder sharedInstance].delegate = self;
 #if DEBUG_LOGS
-    NSLog(@"PPPP B4");
+    NSLog(@"Dbg: Saving file to %@,  starting to record", soundFilePath);
 #endif
     [[Recorder sharedInstance] startRecording];
 }
