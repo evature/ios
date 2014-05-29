@@ -767,8 +767,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
    // double startTime =  CACurrentMediaTime();
     totalMomements++;
     
-    NSLog(@"totalMoments recorded: %ld", (long)totalMomements);
-    
     double peakPower = [streamer_ peakPower];
     double averagePower = [streamer_ averagePower];
     

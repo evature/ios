@@ -423,7 +423,7 @@ static char *FormatError(char *str, OSStatus error)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                    , ^{
 #if DEBUG_LOGS
-        NSLog(@"PPPP C1");
+        NSLog(@"Dbg: setupRecordQueue");
 #endif
         _frameIndex= 0;
         //BOOL isFailed = FALSE;
@@ -431,17 +431,17 @@ static char *FormatError(char *str, OSStatus error)
         [self setUpRecordQueue];// NEED to check if return TRUE //
 
 #if DEBUG_LOGS
-        NSLog(@"PPPP C2");
+        NSLog(@"Dbg: setupRecordBuffers");
 #endif
        [self setUpRecordQueueBuffers];
           
       
 #if DEBUG_LOGS
-        NSLog(@"PPPP C3");
+        NSLog(@"Dbg: primeRecordBuffers");
 #endif
         [self primeRecordQueueBuffers] ;
 #if DEBUG_LOGS
-        NSLog(@"PPPP C4");
+        NSLog(@"Dbg: queuestart");
 #endif
         //
         //AudioQueueReset(recordQueue); // NEW
@@ -457,15 +457,12 @@ static char *FormatError(char *str, OSStatus error)
         if (errorStatus) {
 #if DEBUG_LOGS
                 NSLog(@"\n\n ERROR : Error %ld on AudioQueueStart\n", errorStatus );
+            
+            char str[150];
+            NSLog(@"Dbg %s", FormatError(str, errorStatus));
 #endif
         }
                        
-        char str[150];
-
-#if DEBUG_LOGS
-        NSLog(@"PPPP C5 %s", FormatError(str, errorStatus));
-#endif
-        
         
         
         if (autoStop) {
