@@ -80,28 +80,20 @@
     [self showLabelWithText:@"Record has started"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
     
-    
-    [continueButton setHidden:FALSE];
-    [cancelButton setHidden:FALSE];
-    [stopButton setHidden:FALSE];
-    
+    [self setRecordButtons:true];
 }
 
 -(IBAction)continueRecordButton:(id)sender{
     [[Eva sharedInstance] startRecord:FALSE];
-    [cancelButton setHidden:FALSE];
-    [stopButton setHidden:FALSE];
+    [self setRecordButtons:true];
 }
 -(IBAction)stopRecordButton:(id)sender{
     [[Eva sharedInstance] stopRecord];
-    [cancelButton setHidden:TRUE];
-    [stopButton setHidden:TRUE];
+    [self setRecordButtons:false];
 }
 -(IBAction)cancelRecordButton:(id)sender{
     [[Eva sharedInstance] cancelRecord];
-    [cancelButton setHidden:TRUE];
-    [stopButton setHidden:TRUE];
-
+    [self setRecordButtons:false];
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
@@ -113,10 +105,6 @@
         ) {
         //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
         [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
-        
-
-        [startButton setHidden:FALSE];
-        [stopButton setHidden:TRUE];
     }else{
         [self showParameterErrorMessage];
     }
@@ -139,6 +127,13 @@
 //    return val;
 //}
 
+- (void)setRecordButtons: (Boolean) isRecording{
+    [startButton setHidden: isRecording];
+    [continueButton setHidden: isRecording];
+    [cancelButton setHidden: !isRecording];
+    [stopButton setHidden: !isRecording];
+}
+
 
 #pragma mark - Eva Delegate
 - (void)evaDidReceiveData:(NSData *)dataFromServer{
@@ -149,6 +144,7 @@
     // Save it to disk (to show easily on second view) //
     [[NSUserDefaults standardUserDefaults] setValue:dataStr forKey:kLastJsonStringFromEva ];
     
+    [self setRecordButtons:false];
     [self showLabelWithText:@"Recived data from Eva!"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:3.5];
     
@@ -161,6 +157,23 @@
     }
     else {
         [responseLabel setText:[dict objectForKey:@"input_text"]];
+    }
+    
+    NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
+    if (api_reply != nil) {
+        NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
+        if (flow != nil && [flow count] > 0) {
+            NSDictionary *flowAction = [flow firstObject];
+            if ([[flowAction objectForKey:@"Type"] isEqualToString:@"Question"]) {
+                NSLog(@"Question!");
+                [[Eva sharedInstance] startRecord:FALSE];
+                [self setRecordButtons:true];
+                [self showLabelWithText:@"Record has started on Question"];
+                [responseLabel setText:[flowAction objectForKey:@"SayIt"]];
+                [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+                
+            }
+        }
     }
     
 }
@@ -184,16 +197,13 @@
 - (void)evaMicStopRecording{
     NSLog(@"Recording has stopped");
     [self showLabelWithText:@"stopping"];
-    [self.micLevel setHidden:TRUE];
-    [cancelButton setHidden:TRUE];
-    [stopButton setHidden:TRUE];
+    //[self setRecordButtons:false];
 }
 
 - (void)evaRecorderIsReady{
     NSLog(@"EvaRecorder is ready!");
     [self showLabelWithText:@"Ready!"];
 //    [self showLabelWithText:[NSString stringWithFormat:@"%f", [self getVolumeLevel]]];
-    [self.startButton setHidden:FALSE];
     [self.startButton setEnabled:TRUE];
     
     [self setAVSession];
@@ -201,6 +211,7 @@
     [[Eva sharedInstance] startRecord:TRUE];
     [self showLabelWithText:@"Record has started on isReady"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+    [self setRecordButtons:true];
 
 }
 
@@ -312,7 +323,7 @@ float vadStopNoisyMoments;
     
     // View settings //
     [self loadViewParameters];
-    [continueButton setHidden:TRUE];
+
     
     [Eva sharedInstance].delegate = self;
     // Initialize Eva keys - It is recommended to do that on your App delegate //
