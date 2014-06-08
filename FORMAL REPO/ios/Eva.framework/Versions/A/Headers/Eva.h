@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.4.10
+//  Version 1.5.1
 //
 
 #import <Foundation/Foundation.h>
@@ -30,6 +30,9 @@
 
 // Optional: Called when initiation process is complete after setting the API keys.
 - (void)evaRecorderIsReady;
+
+// Optional: Called when a new session was started.
+- (void)evaNewSessionWasStarted: (BOOL)selfInitiated;
 
 @end
 
@@ -73,6 +76,7 @@
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel withRecordingTimeout:(float)secToTimeout;
 
 
+
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. Return TRUE if could start the record and FALSE if there was any error (for example when APIkeys aren't set or recorder isn't ready) //
 - (BOOL)startRecord:(BOOL)withNewSession;
 
@@ -84,6 +88,22 @@
 
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (BOOL)cancelRecord;
+
+// query Eva by text - optional start new session
+- (BOOL)queryWithText:(NSString *)text startNewSession:(BOOL)newSession;
+
+// Get Session id - useful for debugging
+// nil = no session
+// 1 = new session
+// other = an active session of this id
+- (NSString *)getSessionId;
+
+// alternative API - session control using its own methods
+- (void)setNewSession;
+- (void)setNoSession;
+// query with Text or voice - continues active session if any
+- (BOOL)queryWithText:(NSString *)text;
+- (BOOL)startRecord;
 
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.

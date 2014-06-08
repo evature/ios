@@ -20,6 +20,8 @@
     IBOutlet UITextField *apiKeyTextField;
     IBOutlet UITextField *siteCodeTextField;
     
+    IBOutlet UITextField *inputTextField;
+    
     IBOutlet UIButton *startButton;
     IBOutlet UIButton *continueButton;
     IBOutlet UIButton *stopButton;
@@ -36,6 +38,7 @@
 // View modules //
 @property(nonatomic,retain) IBOutlet UITextField *apiKeyTextField;
 @property(nonatomic,retain) IBOutlet UITextField *siteCodeTextField;
+@property(nonatomic,retain) IBOutlet UITextField *inputTextField;
 @property(nonatomic,retain) IBOutlet UIButton *startButton;
 @property(nonatomic,retain) IBOutlet UIButton *continueButton;
 @property(nonatomic,retain) IBOutlet UIButton *stopButton;
@@ -55,6 +58,7 @@
 -(IBAction)continueRecordButton:(id)sender;
 -(IBAction)stopRecordButton:(id)sender;
 -(IBAction)cancelRecordButton:(id)sender;
+-(IBAction)sendTextQuery:(id)sender;
 
 - (IBAction)textFieldDoneEditing:(id)sender;
 

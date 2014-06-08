@@ -44,11 +44,15 @@
 #define MIC_RECORD_TIMEOUT_DEFAULT 8.0f//15.0f//8.0f
 
 #define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"//@"https://ec2-54-235-35-62.compute-1.amazonaws.com:443"//@"https://vproxy.evaws.com:443"
+#define EVA_HOST_ADDRESS_FOR_TEXT  @"http://apiuseh.evaws.com"
 
-@interface Eva ()<AVAudioRecorderDelegate,CLLocationManagerDelegate
+@interface Eva ()<
+AVAudioRecorderDelegate,
+CLLocationManagerDelegate
 ,RecorderDelegate // for isRecorderReady
 ,AVAudioPlayerDelegate
-,MOAudioStreamerDeelegate
+,MOAudioStreamerDelegate
+,NSURLConnectionDelegate
 >{
     float latitude,longitude;
     
@@ -89,8 +93,8 @@
 // For audio recording (wav) recording //
 @property(retain,nonatomic) MOAudioStreamer *streamer;
 
-@property(nonatomic,retain) NSMutableData * responseData;
-@property(nonatomic,retain) NSURLConnection * connection;
+@property(nonatomic,retain) NSMutableData * responseData; // collect the current response
+@property(nonatomic,retain) NSURLConnection * connection; // the current connection to Eva
 @property(nonatomic,retain) NSString *ipAddress;
 @property(nonatomic,retain) CLLocationManager *locationManager;
 
@@ -233,7 +237,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 
 - (void) startActualRecording {
-    
     /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
      [self recordToFile];
      
@@ -243,7 +246,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     [locationManager_ startUpdatingLocation];
 
 #if DEBUG_LOGS
-    NSLog(@"Starting actual recording - startIsPressed set to True");
+    NSLog(@"Starting actual recording");
 #endif
     startIsPressed = TRUE;
     lowPassResultsPeak = 0; // initiate the peak.
@@ -402,9 +405,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSLog(@"Eva: delegate is nil - please set delegate before starting a recording");
         return FALSE;
     }
-    minVolume = DBL_MAX; // Iftach addon
     
-    startSilenceDetection = FALSE;
     if (evaAPIKey_ == nil || evaSiteCode_ == nil) { // Keys are not set
         NSLog(@"Eva: API keys are not set");
         return FALSE;
@@ -417,23 +418,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     
     if (noSession) {
-        sessionID_ = nil;
+        [self setNoSession];
     }else if (withNewSession || sessionID_ == nil) {
-        sessionID_ = [NSString stringWithFormat:@"1"];
+        [self setNewSession];
     }
 
-    
-    if (audioFileStartRecord_ != nil) {
-        // start "beep" sound -
-        // the audio completion callback will trigger the actual recording
-        [audioFileStartRecord_ play];
-    }
-    else {
-        // no sound - trigger the recording here
-        [self startActualRecording];
-    }
-            
-    return TRUE;
+    return [self startRecord];
     
 }
 
@@ -449,14 +439,16 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     [audioTimeoutTimer_ invalidate];
     audioTimeoutTimer_ = nil;
     if (startIsPressed) {
-        if (fromVad) {
-            if (audioFileVadEndRecord_ != nil) {
-                [audioFileVadEndRecord_ play];
+        if (!wasCanceled) {
+            if (fromVad) {
+                if (audioFileVadEndRecord_ != nil) {
+                    [audioFileVadEndRecord_ play];
+                }
             }
-        }
-        else {
-            if (audioFileRequestedEndRecord_ != nil) {
-                [audioFileRequestedEndRecord_ play];
+            else {
+                if (audioFileRequestedEndRecord_ != nil) {
+                    [audioFileRequestedEndRecord_ play];
+                }
             }
         }
         // Call the stop queue function
@@ -501,6 +493,124 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     return result;
 }
+
+
+
+// query Eva by text - optional start new session
+- (BOOL)queryWithText:(NSString *)text startNewSession:(BOOL)newSession {
+    if (delegate_ == nil) {
+        NSLog(@"Eva: delegate is nil - please set delegate before starting a text search");
+        return FALSE;
+    }
+    
+    if (evaAPIKey_ == nil || evaSiteCode_ == nil) { // Keys are not set
+        NSLog(@"Eva: API keys are not set");
+        return FALSE;
+    }
+    
+    if (newSession) {
+        [self setNewSession];
+    }
+    return [self queryWithText:text];
+}
+
+// Get Session id - useful for debugging
+// nil = no session
+// 1 = new session
+// other = an active session of this id
+- (NSString *)getSessionId {
+    return sessionID_;
+}
+
+// alternative API - session control using its own methods
+- (void)setNewSession {
+#if DEBUG_LOGS
+    NSLog(@"Starting new session");
+#endif
+    sessionID_ = [NSString stringWithFormat:@"1"];
+    
+    if([[self delegate] respondsToSelector:@selector(evaNewSessionWasStarted:)]){
+        [[self delegate] evaNewSessionWasStarted:true];
+    }
+}
+
+- (void)setNoSession {
+#if DEBUG_LOGS
+    NSLog(@"Setting to no-session");
+#endif
+    sessionID_ = nil;
+}
+
+// query with Text or voice - continues active session if any
+- (BOOL)queryWithText:(NSString *)text {
+    if (delegate_ == nil) {
+        NSLog(@"Eva: delegate is nil - please set delegate before starting a text search");
+        return FALSE;
+    }
+    
+    if (evaAPIKey_ == nil || evaSiteCode_ == nil) { // Keys are not set
+        NSLog(@"Eva: API keys are not set");
+        return FALSE;
+    }
+    
+    if (streamer_ != nil) {
+        [self stopRecord:FALSE wasCanceled:TRUE];
+        streamer_ = nil;
+    }
+
+    NSURL *url = [self getUrl:EVA_HOST_ADDRESS_FOR_TEXT];
+
+    NSString *safeText = [self URLEncodeString:text];
+#if DEBUG_MODE_FOR_EVA
+    NSLog(@"SafeText = %@",safeText);
+#endif
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&input_text=%@", url, safeText]];
+    
+    
+#if DEBUG_MODE_FOR_EVA
+    NSLog(@"Url = %@",url);
+#endif
+
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    connection_ = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    return TRUE;
+}
+
+- (BOOL)startRecord {
+
+    if (delegate_ == nil) {
+        NSLog(@"Eva: delegate is nil - please set delegate before starting a recording");
+        return FALSE;
+    }
+    
+    if (evaAPIKey_ == nil || evaSiteCode_ == nil) { // Keys are not set
+        NSLog(@"Eva: API keys are not set");
+        return FALSE;
+    }
+    
+    if (![[Recorder sharedInstance] isRecorderReady]) { // New to check if record is ready
+        NSLog(@"Eva: Recorder isn't ready yet");
+        return FALSE; // Should be commented? (it would fail the record if not commented)
+    }
+
+    minVolume = DBL_MAX;
+    startSilenceDetection = FALSE;
+    
+    if (audioFileStartRecord_ != nil) {
+        // start "beep" sound -
+        // the audio completion callback will trigger the actual recording
+        [audioFileStartRecord_ play];
+    }
+    else {
+        // no sound - trigger the recording here
+        [self startActualRecording];
+    }
+    return TRUE;
+}
+
+
 
 -(void)stopRecordOnTick:(NSTimer *)timer {
     [self stopRecord];
@@ -667,6 +777,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 }
 
 
+
 #pragma mark MOAudioStreamer
 
 -(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)theStreamer
@@ -693,6 +804,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 - (void)MOAudioStreamerConnection:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response{
     if (theStreamer == streamer_) {
+        connection_ = theConnection;
         [self connection:theConnection didReceiveResponse:response];
 #if DEBUG_LOGS
         NSLog(@"Streamer: didReceiveResponse");
@@ -948,23 +1060,17 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 #pragma mark - Connection with Eva server
 
--(void)establishConnection{
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"***** getUID =,%@, *****",[self getUID]); // For test
-    NSLog(@"Current time zone=,%@, Locale=,%@,",[self getCurrentTimezone],[self getCurrenLocale]);
-#endif
+-(NSURL *)getUrl:(NSString *)host {
     
     NSURL *url;
     
-
     if (version_ != nil) {
-        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",EVA_HOST_ADDRESS,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_, //&session_id=%@
-                                    [self getUID]]]];
+        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_, //&session_id=%@
+                                                          [self getUID]]]];
         
     }else{
-        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",EVA_HOST_ADDRESS,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
-                                    [self getUID]]]];
+        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
+                                                          [self getUID]]]];
     }
     
     
@@ -972,12 +1078,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         
     }else{          // There are GPS coordinates
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&latitude=%.5f&longitude=%.5f",url,latitude,longitude]];
-        
     }
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Long&Lat Url = %@",url);
-#endif
     
     if (sessionID_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&session_id=%@",url,sessionID_]];
@@ -1010,6 +1111,20 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     // Add version number to URL (new from version 1.4.6) //
     url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&sdk_version=ios-%@",url,EVA_FRAMEWORK_VERSION]];
     
+    return url;
+    
+}
+
+-(void)establishConnection{
+    
+#if DEBUG_MODE_FOR_EVA
+    NSLog(@"***** getUID =,%@, *****",[self getUID]); // For test
+    NSLog(@"Current time zone=,%@, Locale=,%@,",[self getCurrentTimezone],[self getCurrenLocale]);
+#endif
+    
+    NSURL *url = [self getUrl: EVA_HOST_ADDRESS];
+    
+
 #if DEBUG_MODE_FOR_EVA
     NSLog(@"Url = %@",url);
    // NSLog(@"safeUrl = %@",safeURLString);
@@ -1042,7 +1157,23 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     streamer_.fileToSaveName = @"rec";
     streamer_.streamerDelegate = self;
     
+}
 
+
+
+
+
+
+
+#pragma mark NSURLConnection Delegate Methods
+// based on http://codewithchris.com/tutorial-how-to-use-ios-nsurlconnection-by-example/#asynchronous
+
+
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+    // Return nil to indicate not necessary to store a cached response for this connection
+    return nil;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -1050,6 +1181,13 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #if DEBUG_LOGS
     NSLog(@"didReceiveResponse");
 #endif
+    
+    // A response has been received, this is where we initialize the instance var you created
+    // so that we can append data to it in the didReceiveData method
+    // Furthermore, this method is called each time there is a redirect so reinitializing it
+    // also serves to clear it
+    responseData_ = [[NSMutableData alloc] init];
+
     
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
@@ -1068,13 +1206,33 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSLog(@"Response code = %d",code);
 #endif
         
-        
     }
 }
 
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    if (connection != connection_) {
+#if DEBUG_MODE_FOR_EVA
+        NSLog(@"didReceiveData for wrong connection");
+#endif
+        return;
+    }
+    
+    // Append the new data to the instance variable you declared
+    [responseData_ appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    if (connection != connection_) {
+        #if DEBUG_MODE_FOR_EVA
+        NSLog(@"Did finish loading for wrong connection");
+        #endif
+        return;
+    }
+    #if DEBUG_MODE_FOR_EVA
+    NSLog(@"Did finish loading");
+    #endif    
     
 #if TESTFLIGHT_TESTING
     NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
@@ -1085,7 +1243,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     NSError* error;
     NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:data //1
+                          JSONObjectWithData:responseData_
                           
                           options:kNilOptions
                           error:&error];
@@ -1106,30 +1264,39 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
     
     if ([json respondsToSelector:@selector(objectForKey:)]) {
-        sessionID_ = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
+        NSString *sessionId = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
+        if (sessionID_ != nil && sessionId != nil && ![sessionID_ isEqualToString:@"1"] && ![sessionID_ isEqualToString:sessionId]) {
+            // was not nil and not 1, and changed - a new session was started
+            if([[self delegate] respondsToSelector:@selector(evaNewSessionWasStarted:)]){
+                [[self delegate] evaNewSessionWasStarted:false];
+            }
+        }
+        sessionID_ = sessionId;
         if (sessionID_ == nil) {
-            [NSString stringWithFormat:@"1"];
+            sessionID_ = [NSString stringWithFormat:@"1"];
         }
         NSLog(@"SessionId set to %@", sessionID_);
     }
     
     if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
         
-        [[self delegate] evaDidReceiveData:data];
+        [[self delegate] evaDidReceiveData:responseData_];
     }else{
         NSLog(@"Eva-Critical Error: You haven't implemented evaDidReceiveData:, It is a must! Please implement this one");
     }
     
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connectionV {
-    // [connection2 release];
-    connectionV = nil;
-}
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Eva: Something went wrong...");
-    
+    if (connection != connection_) {
+        return;
+    }
+    // The request has failed for some reason!
+    // Check the error var
+   
+    NSLog(@"Error from Eva: %@",[error description]);
+
     if([[self delegate] respondsToSelector:@selector(evaDidFailWithError:)]){
         
         [[self delegate] evaDidFailWithError:error];
@@ -1137,10 +1304,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSLog(@"Eva-Critical Error: You haven't implemented evaDidFailWithError:, It is a must! Please implement this one");
     }
     
-    
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Error from Eva: %@",[error description]);
-#endif
 }
 
 #pragma mark - MISC user info (Location etc.)

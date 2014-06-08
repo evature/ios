@@ -12,7 +12,7 @@
 
 @class MOAudioStreamer;
 
-@protocol MOAudioStreamerDeelegate <NSObject>
+@protocol MOAudioStreamerDelegate <NSObject>
 
 -(void)MOAudioStreamerDidFinishStreaming:(MOAudioStreamer*)streamer;
 -(void)MOAudioStreamerDidFinishRequest:(MOAudioStreamer*)streamer theConnection:(NSURLConnection*)connectionRequest withResponse:(NSString*)response;
@@ -35,7 +35,7 @@
     NSString*soundOFilePath;
  @public   BOOL StopSignal;
      
-    NSMutableData *responseData;
+//    NSMutableData *responseData;
     dispatch_queue_t _streamDispatch;
 
     BOOL giveMeResults;
@@ -43,7 +43,7 @@
     
     BOOL orderToStop;
     @public  NSError *connectionError;
-    BOOL stopSendingStupidData;
+//    BOOL stopSendingStupidData;
 
     NSMutableURLRequest *   request;
     
@@ -54,7 +54,7 @@
 
 @property(strong,nonatomic) NSMutableURLRequest *   request;;
 @property(assign,nonatomic)NSTimeInterval expectingTimeOut;
-@property(assign)id<MOAudioStreamerDeelegate>streamerDelegate;
+@property(assign)id<MOAudioStreamerDelegate>streamerDelegate;
 @property(strong,nonatomic)NSString*recordingPath;
 @property(strong,nonatomic)NSString *webServiceURL;
 @property(strong,nonatomic)NSString *fileToSaveName;

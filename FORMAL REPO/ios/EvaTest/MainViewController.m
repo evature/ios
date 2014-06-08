@@ -12,6 +12,8 @@
 #import <MediaPlayer/MPVolumeView.h>
 
 #define VAD_DEBUG_GUI FALSE
+#define AUTO_START_RECORDING FALSE
+#define AUTO_START_RECORD_ON_QUESTION FALSE
 
 @interface MainViewController ()
 
@@ -21,6 +23,7 @@
 
 @synthesize apiKeyTextField;
 @synthesize siteCodeTextField;
+@synthesize inputTextField;
 
 @synthesize startButton, continueButton, stopButton,cancelButton;
 @synthesize indicationLabel;
@@ -96,6 +99,11 @@
     [self setRecordButtons:false];
 }
 
+-(IBAction)sendTextQuery:(id)sender{
+//  [[Eva sharedInstance] setNoSession];
+    [[Eva sharedInstance] queryWithText:[inputTextField text]];
+}
+
 -(IBAction)setAPIKeysButton:(id)sender{
     [self saveViewParameters];
     if (1&&
@@ -137,7 +145,9 @@
 
 #pragma mark - Eva Delegate
 - (void)evaDidReceiveData:(NSData *)dataFromServer{
-    NSString* dataStr = [[NSString alloc] initWithData:dataFromServer encoding:NSASCIIStringEncoding];
+    NSString* dataStr = [[NSString alloc] initWithData:dataFromServer encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Session is: %@", [[Eva sharedInstance] getSessionId]);
     
     NSLog(@"Data from Eva %@", dataStr);
     
@@ -157,24 +167,26 @@
     }
     else {
         [responseLabel setText:[dict objectForKey:@"input_text"]];
-    }
-    
-    NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
-    if (api_reply != nil) {
-        NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
-        if (flow != nil && [flow count] > 0) {
-            NSDictionary *flowAction = [flow firstObject];
-            if ([[flowAction objectForKey:@"Type"] isEqualToString:@"Question"]) {
-                NSLog(@"Question!");
-                [[Eva sharedInstance] startRecord:FALSE];
-                [self setRecordButtons:true];
-                [self showLabelWithText:@"Record has started on Question"];
-                [responseLabel setText:[flowAction objectForKey:@"SayIt"]];
-                [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
-                
+        
+        NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
+        if (api_reply != nil) {
+            NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
+            if (flow != nil && [flow count] > 0) {
+                NSDictionary *flowAction = [flow firstObject];
+                if ([[flowAction objectForKey:@"Type"] isEqualToString:@"Question"]) {
+                    NSLog(@"Question!");
+#if AUTO_START_RECORD_ON_QUESTION
+                    [[Eva sharedInstance] startRecord:FALSE];
+                    [self setRecordButtons:true];
+                    [self showLabelWithText:@"Record has started on Question"];
+                    [responseLabel setText:[flowAction objectForKey:@"SayIt"]];
+                    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+#endif
+                }
             }
         }
     }
+    
     
 }
 
@@ -208,11 +220,17 @@
     
     [self setAVSession];
 
+#if AUTO_START_RECORDING
     [[Eva sharedInstance] startRecord:TRUE];
     [self showLabelWithText:@"Record has started on isReady"];
     [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
     [self setRecordButtons:true];
+#endif
 
+}
+
+-(void)evaNewSessionWasStarted:(BOOL)selfInitiated {
+    NSLog(@"New session! %@", selfInitiated ? @"By me" : @"By server");
 }
 
 
@@ -302,6 +320,8 @@ float vadStopNoisyMoments;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
 	// Do any additional setup after loading the view, typically from a nib.
     
     
@@ -346,6 +366,8 @@ float vadStopNoisyMoments;
         [startButton setHidden:TRUE];
         [stopButton setHidden:TRUE];
     }
+    
+    [Eva sharedInstance].optional_dictionary  = @{@"demo_app" : @"1"};
     
 #if !VAD_DEBUG_GUI
     [vadLabel setHidden:TRUE];

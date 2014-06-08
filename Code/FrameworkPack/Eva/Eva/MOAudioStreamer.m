@@ -406,7 +406,7 @@ enum {
                                             "AUDIO STREAM queue",
                                             DISPATCH_QUEUE_SERIAL);
     dispatch_set_target_queue(_streamDispatch, highPriQueue);
-    stopSendingStupidData=NO;
+//    stopSendingStupidData=NO;
     
     
     dispatch_async(_streamDispatch, ^{
@@ -819,14 +819,15 @@ enum {
 #endif
     if (self.connection) {
         
-        if (!responseData) {
-            //    NSLog(@"response data is nilllll");
-            responseData=[NSMutableData new];
-        }
+//        if (!responseData) {
+//            //    NSLog(@"response data is nilllll");
+//            responseData=[NSMutableData new];
+//        }
+//        
+//        [responseData appendData:data];
         
-        [responseData appendData:data];
-        
-        [self stopSendWithStatus:@"RECIVED RESPONSE WITH NO ERROR"]; // NEW - 4/9/13
+        // removed: 8/6/14
+        //  [self stopSendWithStatus:@"RECIVED RESPONSE WITH NO ERROR"]; // NEW - 4/9/13
         // do nothing
 
     }else{
@@ -843,6 +844,7 @@ enum {
 // We shut down the connection and display the failure.  Production quality code
 // would either display or log the actual error.
 {
+    
     if (self.connection) {
         
 #pragma unused(theConnection)
@@ -868,39 +870,39 @@ enum {
 // causes the image to be displayed.
 {
     if (self.connection) {
-        stopSendingStupidData=YES;
-#pragma unused(theConnection)
-        
-        if (giveMeResults ) {
-#if DEBUG_LOGS
-            NSLog(@"lets see results");
-#endif
-            NSString *String =[[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-            //    [self.streamerDelegate MOAudioStreamerDidFinishRequest:theConnection withResponse:String];
-            if (!responseData) {
-                
-                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
-                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"connection finished loading with no response", nil) ];
-                }
-            }else{
-                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFinishRequest:withResponse:)]) {
-                    [self.streamerDelegate MOAudioStreamerDidFinishRequest:self theConnection:theConnection withResponse:String];
-                }else{
-#if DEBUG_LOGS
-                    NSLog(@"it does not respond to selector streamdidFinishRequest");
-#endif
-                }
-            }
-            giveMeResults=NO;
-            
-        }
-        responseData=nil;
-#if DEBUG_THIS
-        #if DEBUG_LOGS
-        NSLog(@"connection did data length ");
-#endif
-#endif
-        // assert(theConnection == self.connection);
+//        stopSendingStupidData=YES;
+//#pragma unused(theConnection)
+//        
+//        if (giveMeResults ) {
+//#if DEBUG_LOGS
+//            NSLog(@"lets see results");
+//#endif
+//            NSString *String =[[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+//            //    [self.streamerDelegate MOAudioStreamerDidFinishRequest:theConnection withResponse:String];
+//            if (!responseData) {
+//                
+//                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+//                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"connection finished loading with no response", nil) ];
+//                }
+//            }else{
+//                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFinishRequest:withResponse:)]) {
+//                    [self.streamerDelegate MOAudioStreamerDidFinishRequest:self theConnection:theConnection withResponse:String];
+//                }else{
+//#if DEBUG_LOGS
+//                    NSLog(@"it does not respond to selector streamdidFinishRequest");
+//#endif
+//                }
+//            }
+//            giveMeResults=NO;
+//            
+//        }
+//        responseData=nil;
+//#if DEBUG_THIS
+//        #if DEBUG_LOGS
+//        NSLog(@"connection did data length ");
+//#endif
+//#endif
+//        // assert(theConnection == self.connection);
         
         [self stopSendWithStatus:@"end connection"];
     }
@@ -913,7 +915,7 @@ enum {
 #if DEBUG_LOGS
     NSLog(@"startStreamer");
 #endif
-    giveMeResults=YES;
+//    giveMeResults=YES;
     StopSignal=NO;
     
     [self setupNewRocordableFile ];
@@ -924,7 +926,7 @@ enum {
     
     //[self performSelector:@selector(startSend) withObject:[NSNull null] ];
     
-    StopSignal=NO;
+//    StopSignal=NO;
     
 }
 -(void)stopStreaming{
