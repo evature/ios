@@ -101,7 +101,7 @@
 
 -(IBAction)sendTextQuery:(id)sender{
 //  [[Eva sharedInstance] setNoSession];
-    [[Eva sharedInstance] queryWithText:[inputTextField text]];
+    [[Eva sharedInstance] queryWithText:[inputTextField text] startNewSession:FALSE];
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
@@ -147,8 +147,6 @@
 - (void)evaDidReceiveData:(NSData *)dataFromServer{
     NSString* dataStr = [[NSString alloc] initWithData:dataFromServer encoding:NSUTF8StringEncoding];
     
-    NSLog(@"Session is: %@", [[Eva sharedInstance] getSessionId]);
-    
     NSLog(@"Data from Eva %@", dataStr);
     
     // Save it to disk (to show easily on second view) //
@@ -167,6 +165,8 @@
     }
     else {
         [responseLabel setText:[dict objectForKey:@"input_text"]];
+        
+        NSLog(@"Session is: %@", [dict objectForKey:@"session_id"]);
         
         NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
         if (api_reply != nil) {
@@ -229,9 +229,6 @@
 
 }
 
--(void)evaNewSessionWasStarted:(BOOL)selfInitiated {
-    NSLog(@"New session! %@", selfInitiated ? @"By me" : @"By server");
-}
 
 
 #if VAD_DEBUG_GUI
