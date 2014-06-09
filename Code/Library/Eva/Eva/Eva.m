@@ -508,11 +508,14 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         return FALSE;
     }
     
-    if (newSession) {
+    if (newSession || sessionID_ == nil) {
         [self setNewSession];
     }
+        
     return [self queryWithText:text];
 }
+
+/*
 
 // Get Session id - useful for debugging
 // nil = no session
@@ -521,6 +524,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 - (NSString *)getSessionId {
     return sessionID_;
 }
+*/
 
 // alternative API - session control using its own methods
 - (void)setNewSession {
@@ -528,10 +532,10 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     NSLog(@"Starting new session");
 #endif
     sessionID_ = [NSString stringWithFormat:@"1"];
-    
+    /*
     if([[self delegate] respondsToSelector:@selector(evaNewSessionWasStarted:)]){
         [[self delegate] evaNewSessionWasStarted:true];
-    }
+    }*/
 }
 
 - (void)setNoSession {
@@ -1264,14 +1268,14 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
     
     if ([json respondsToSelector:@selector(objectForKey:)]) {
-        NSString *sessionId = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
-        if (sessionID_ != nil && sessionId != nil && ![sessionID_ isEqualToString:@"1"] && ![sessionID_ isEqualToString:sessionId]) {
+        NSString *newSessionId = [NSString stringWithFormat:@"%@", [json objectForKey:@"session_id"]];
+        /*if (sessionID_ != nil && newSessionId != nil && ![sessionID_ isEqualToString:@"1"] && ![sessionID_ isEqualToString:newSessionId]) {
             // was not nil and not 1, and changed - a new session was started
             if([[self delegate] respondsToSelector:@selector(evaNewSessionWasStarted:)]){
                 [[self delegate] evaNewSessionWasStarted:false];
             }
-        }
-        sessionID_ = sessionId;
+        }*/
+        sessionID_ = newSessionId;
         if (sessionID_ == nil) {
             sessionID_ = [NSString stringWithFormat:@"1"];
         }

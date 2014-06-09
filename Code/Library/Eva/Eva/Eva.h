@@ -31,9 +31,6 @@
 // Optional: Called when initiation process is complete after setting the API keys.
 - (void)evaRecorderIsReady;
 
-// Optional: Called when a new session was started.
-- (void)evaNewSessionWasStarted: (BOOL)selfInitiated;
-
 @end
 
 @interface Eva : NSObject{
@@ -91,19 +88,6 @@
 
 // query Eva by text - optional start new session
 - (BOOL)queryWithText:(NSString *)text startNewSession:(BOOL)newSession;
-
-// Get Session id - useful for debugging
-// nil = no session
-// 1 = new session
-// other = an active session of this id
-- (NSString *)getSessionId;
-
-// alternative API - session control using its own methods
-- (void)setNewSession;
-- (void)setNoSession;
-// query with Text or voice - continues active session if any
-- (BOOL)queryWithText:(NSString *)text;
-- (BOOL)startRecord;
 
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.

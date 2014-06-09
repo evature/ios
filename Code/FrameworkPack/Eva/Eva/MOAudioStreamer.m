@@ -276,7 +276,6 @@ enum {
     sleptAlready = NO; // NEW
     
     
-    NSNumber *              fileLengthNum;
    // unsigned long long      bodyLength;
     NSInputStream *         consStream;
     NSOutputStream *        prodStream;
@@ -297,9 +296,10 @@ enum {
     
     fullPathToFilex = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.fileToSaveName,ext ]];
     
-    fileLengthNum = (NSNumber *) [[[NSFileManager defaultManager] attributesOfItemAtPath:fullPathToFilex error:NULL] objectForKey:NSFileSize];
     // assert( [fileLengthNum isKindOfClass:[NSNumber class]] );
 #if DEBUG_THIS
+    NSNumber *              fileLengthNum;
+    fileLengthNum = (NSNumber *) [[[NSFileManager defaultManager] attributesOfItemAtPath:fullPathToFilex error:NULL] objectForKey:NSFileSize];
     if (fileLengthNum == NULL) {
         #if DEBUG_LOGS
         NSLog(@"Error: Null file size!");
