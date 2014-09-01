@@ -714,20 +714,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     lowPassResultsPeak = 0; // initiate the peak.
     silentMoments = 0;
     
-    
-    
-#if DEBUG_LOGS
-    NSLog(@"Dbg:  startRecordQueue");
-#endif
+    DLog(@"Dbg:  startRecordQueue");
     [self establishConnection];
     //[[MOAudioStreamer sharedInstance] startStreamer];
-#if DEBUG_LOGS
-    NSLog(@"Dbg:  established connection, starting streamer");
-#endif
+    DLog(@"Dbg:  established connection, starting streamer");
     [streamer_ startStreamer];
-#if DEBUG_LOGS
-    NSLog(@"Dbg: Streamer started");
-#endif
+    DLog(@"Dbg: Streamer started");
     
 }
 
@@ -1111,6 +1103,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     if (optional_dictionary_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlSafeEncodedOptionalParametersString]]];
     }
+    
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&device=%@&ios_ver=%@", url, [UIDevice currentDevice].model, [[UIDevice currentDevice] systemVersion]]];
     
     // Add version number to URL (new from version 1.4.6) //
     url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&sdk_version=ios-%@",url,EVA_FRAMEWORK_VERSION]];

@@ -2,7 +2,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <FLAC/all.h>
 
-#define NUMBER_AUDIO_DATA_BUFFERS  3//3
+#define NUMBER_AUDIO_DATA_BUFFERS  3
 
 @class Recorder;
 /*
@@ -32,7 +32,7 @@
 	//id <RecorderDelegate> delegate;
 	
 	// whether we're currently recording
-	BOOL recording, shouldStopRecording,finishCleaning;
+	BOOL recording;
     
 	// whether we're currently doing the FFT pitch tracking
 	BOOL trackingPitch;
@@ -69,7 +69,7 @@
            
            ) id <RecorderDelegate> delegate;
 
-@property (assign,atomic) BOOL recording,shouldStopRecording,finishCleaning;
+@property (assign,atomic) BOOL recording;
 @property (assign) BOOL trackingPitch;
 @property (assign) AudioQueueRef recordQueue;
 @property (assign) UInt32 bufferByteSize;
@@ -86,7 +86,6 @@
 - (void)startRecording;
 - (void)startRecording:(BOOL) autoStop;
 - (void)stopRecording;
--(void)cleanRecorder;
 
 -(float)averagePower;
 -(float)peakPower;

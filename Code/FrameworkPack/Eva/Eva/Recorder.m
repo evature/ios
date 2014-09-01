@@ -1,18 +1,20 @@
 
 #import "Recorder.h"
 #import "Common.h"
+#import <stdlib.h>
 //#include "fft.h"
 
 //#define DEBUG_LOGS TRUE
 
 #define DEBUG_RECORDER FALSE
 
-#define READSIZE 1024*4//1024
+#define READSIZE 1024*4
 #define CHANNELS 1
 #define SAMPLE_RATE 16000.0
 #define RECORD_MAX_LENGTH 10 // in seconds
 
 #define SAVE_TO_FILE TRUE//FALSE
+
 
 static FLAC__int32 pcm[READSIZE/*samples*/ * CHANNELS/*channels*/];
 
@@ -27,8 +29,7 @@ static FLAC__int32 pcm[READSIZE/*samples*/ * CHANNELS/*channels*/];
 
 @implementation Recorder
 @synthesize delegate = _delegate;
-//@synthesize delegate;
-@synthesize recording,shouldStopRecording,finishCleaning;
+@synthesize recording;
 @synthesize trackingPitch;
 @synthesize recordQueue;
 @synthesize bufferByteSize;
@@ -157,18 +158,22 @@ static void recordCallback(
                            UInt32 inNumPackets,
                            const AudioStreamPacketDescription* inPacketDesc)
 {
-#if DEBUG_LOGS
-    NSLog(@"recordCallback %u", (unsigned int)inBuffer->mAudioDataByteSize);
-#endif
+    DLog(@"recordCallback bytesSize: %u,  inNumPackets: %u,  startTime: %f",
+          (unsigned int)inBuffer->mAudioDataByteSize, (unsigned int)inNumPackets, inStartTime->mSampleTime);
     
     
 	Recorder* recorder = (__bridge Recorder*) inUserData;
-	if (!recorder.recording)
+	if (!recorder.recording) {
+        DLog(@"Not recording");
 		return;
+    }
     
 	if (inNumPackets > 0)
     {
 		[recorder recordedBuffer:inBuffer->mAudioData byteSize:inBuffer->mAudioDataByteSize packetsNum:inNumPackets];
+    }
+    else {
+        DLog(@"No packets");
     }
     
     AudioQueueEnqueueBuffer(inAudioQueue, inBuffer, 0, NULL);
@@ -201,7 +206,6 @@ static void recordCallback(
 	if ((self = [super init]))
 	{
 		recording = NO;
-        finishCleaning = YES;
         
         
         // Below new for iOS 7 issue //
@@ -237,11 +241,7 @@ static void recordCallback(
                                                                     , NSUserDomainMask,YES)[0];
         //NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];
         NSString *savePath = [documentDir stringByAppendingPathComponent:@"rec.flac"];//[NSTemporaryDirectory() stringByAppendingPathComponent:@"rec.flac"];//[documentDir stringByAppendingPathComponent:@"rec.flac"];
-#if DEBUG_LOGS
-        NSLog(@"\n\nsavePath = %@\n\n",savePath);
-#endif
-        
-        
+        DLog(@"\n\nsavePath = %@\n\n",savePath);
         
         
        // [_savedPath release];
@@ -300,9 +300,7 @@ static char *FormatError(char *str, OSStatus error)
 //- (void)setUpRecordQueue
 - (void)setUpRecordQueue
 {
-#if DEBUG_LOGS
-    NSLog(@"\n+++ setUpRecordQueue");
-#endif
+    DLog(@"\n+++ setUpRecordQueue");
 	OSStatus errorStatus = AudioQueueNewInput(
                        &audioFormat,
                        recordCallback,
@@ -313,16 +311,12 @@ static char *FormatError(char *str, OSStatus error)
                        &recordQueue);
     
     if (errorStatus) {
-#if DEBUG_LOGS
         NSLog(@"\n\n ERROR : Error %ld on AudioQueueNewInput\n", errorStatus );
-#endif
     }
     
     
     if (recordQueue == nil) {
-#if DEBUG_LOGS
         NSLog(@"\n\n ----- Record Queue is nil! -----");
-#endif
        // return FALSE;
         return;
     }
@@ -335,9 +329,7 @@ static char *FormatError(char *str, OSStatus error)
 //- (void)setUpRecordQueueBuffers
 - (void)setUpRecordQueueBuffers
 {
-#if DEBUG_LOGS
-    NSLog(@"\n+++ setUpRecordQueueBuffers");
-#endif
+    DLog(@"\n+++ setUpRecordQueueBuffers");
     //assert(recordQueue != nil);
     if (recordQueue == nil) { // New instead of Assert.
         return;
@@ -350,9 +342,7 @@ static char *FormatError(char *str, OSStatus error)
                                  bufferByteSize,
                                  &recordQueueBuffers[t]);
         if (errorStatus) {
-#if DEBUG_LOGS
             NSLog(@"\n\n ERROR : Error %ld on AudioQueueAllocateBuffer\n", errorStatus );
-#endif
         }
 	}
     //return TRUE;
@@ -361,9 +351,7 @@ static char *FormatError(char *str, OSStatus error)
 //- (void)primeRecordQueueBuffers
 - (void)primeRecordQueueBuffers
 {
-#if DEBUG_LOGS
-    NSLog(@"\n+++ primeRecordQueueBuffers");
-#endif
+    DLog(@"\n+++ primeRecordQueueBuffers");
     //assert(recordQueue != nil);
     if (recordQueue == nil) { // New instead of Assert
        // return FALSE;
@@ -377,9 +365,7 @@ static char *FormatError(char *str, OSStatus error)
                                 0,
                                 NULL);
         if (errorStatus) {
-#if DEBUG_LOGS
             NSLog(@"\n\n ERROR : Error %ld on AudioQueueEnqueueBuffer\n", errorStatus );
-#endif
         }
 	}
     //return TRUE;
@@ -390,77 +376,43 @@ static char *FormatError(char *str, OSStatus error)
     [self startRecording:FALSE];
 }
 
+
 - (void)startRecording:(BOOL) autoStop
 {
     
     if (autoStop) { // New because when second initiation could be that this one won't be ready...
         isRecorderReady = FALSE;
-#if DEBUG_LOGS
-        NSLog(@"Starting to record with autoStop!");
-#endif
+        DLog(@"Starting to record with autoStop!");
     }else{
-#if DEBUG_LOGS
-        NSLog(@"Starting to record no autoStop");
-#endif
+        DLog(@"Starting to record no autoStop");
     }
     
-    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-     
-     while (!finishCleaning) {
-     // waiting
-     }*/
     recording = YES;
-    shouldStopRecording = NO;
-    //        if (recordQueue != nil) {
-    //            AudioQueueDispose(recordQueue, true);
-    //        }
-    //       [self setUpRecordQueue]; //  IFTAH
-    //       [self setUpRecordQueueBuffers]; // IFTAH
-    
-    //    if (recordQueue != nil)
-    //        AudioQueueStop(recordQueue, TRUE);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                    , ^{
-#if DEBUG_LOGS
-        NSLog(@"Dbg: setupRecordQueue");
-#endif
+        DLog(@"Dbg: setupRecordQueue");
+
         _frameIndex= 0;
         //BOOL isFailed = FALSE;
         self.fileWasCreated = NO;
         [self setUpRecordQueue];// NEED to check if return TRUE //
 
-#if DEBUG_LOGS
-        NSLog(@"Dbg: setupRecordBuffers");
-#endif
-       [self setUpRecordQueueBuffers];
+        DLog(@"Dbg: setupRecordBuffers");
+        [self setUpRecordQueueBuffers];
           
       
-#if DEBUG_LOGS
-        NSLog(@"Dbg: primeRecordBuffers");
-#endif
+        DLog(@"Dbg: primeRecordBuffers");
         [self primeRecordQueueBuffers] ;
-#if DEBUG_LOGS
-        NSLog(@"Dbg: queuestart");
-#endif
-        //
-        //AudioQueueReset(recordQueue); // NEW
-                       
-       /* UInt32 size = sizeof(audioFormat); // NEW ios7
-        OSStatus rc =  AudioQueueGetProperty(recordQueue, kAudioQueueProperty_StreamDescription, &audioFormat, &size); // NEW ios7
-         
-        if (rc) {
-                           NSLog(@"AudioQueueGetProperty(CurrentLevelMeter) returned %ld", rc);
-        }*/
+        DLog(@"Dbg: queuestart");
+        
             
         OSStatus errorStatus = AudioQueueStart(recordQueue, NULL);
         if (errorStatus) {
-#if DEBUG_LOGS
-                NSLog(@"\n\n ERROR : Error %ld on AudioQueueStart\n", errorStatus );
+                DLog(@"\n\n ERROR : Error %ld on AudioQueueStart\n", errorStatus );
             
             char str[150];
-            NSLog(@"Dbg %s", FormatError(str, errorStatus));
-#endif
+            DLog(@"Dbg %s", FormatError(str, errorStatus));
         }
                        
         
@@ -473,19 +425,6 @@ static char *FormatError(char *str, OSStatus error)
     });
     
     
-    // });
-    
-    
-    /*
-     recording = YES;
-     shouldStopRecording = NO;
-     //[self setUpRecordQueue]; // NEW
-     //[self setUpRecordQueueBuffers]; // NEW
-     [self primeRecordQueueBuffers];  // Commented for test
-     
-     
-     //AudioQueueReset(recordQueue); // NEW
-     AudioQueueStart(recordQueue, NULL);*/
     
 }
 
@@ -498,16 +437,13 @@ static char *FormatError(char *str, OSStatus error)
 {
     // Iftah
     if (_encoder!=nil) {
+        DLog(@"finishing the encoder");
         FLAC__stream_encoder_finish(_encoder);
+        FLAC__stream_encoder_delete(_encoder);
+        _encoder = NULL;
     }
-    /*if (_encoder!=nil) {
-     FLAC__stream_encoder_finish(_encoder);
-     FLAC__stream_encoder_delete(_encoder);
-     }*/
 
-#if DEBUG_LOGS
-    NSLog(@"Stoping to record");
-#endif
+    DLog(@"Stoping to record");
     if (recordQueue != nil) {
         NSString *osVersion = [[UIDevice currentDevice]  systemVersion];
         
@@ -521,78 +457,24 @@ static char *FormatError(char *str, OSStatus error)
         recordQueue = nil;
     }
 
-#if DEBUG_LOGS
-    NSLog(@"Stopped recording");
-#endif
+    DLog(@"Stopped recording");
     
-    //[self performSelector:@selector(cleanTheRecorder) withObject:[NSNull null] afterDelay:3.0];
-	//recording = NO;
-    shouldStopRecording = YES;
-    recording = NO; // Iftah;
-    //[self cleanTheRecorder]; // NEW COMMENTED 4/9/13
-    
-    /*  if([_delegate respondsToSelector:@selector(soundRecoderDidFinishRecording:)]){
-     
-     [_delegate soundRecoderDidFinishRecording:self];
-     }*/
-    
-    //AudioQueueDispose(recordQueue, true);//FALSE);  // NEW
+    recording = NO;
     
     if (autoStop) {
-#if DEBUG_LOGS
-        NSLog(@"EVA IS READY");
-#endif
+        DLog(@"EVA IS READY");
         isRecorderReady = TRUE;
         
         if ([_delegate respondsToSelector:@selector(recorderIsReady)]) {
-#if DEBUG_RECORDER
-            NSLog(@"respondsToSelector:@selector(recorderIsReady)");
-#endif
+            DLog(@"respondsToSelector:@selector(recorderIsReady)");
             [_delegate recorderIsReady];
-            
         }else{
-
-#if DEBUG_RECORDER
-            NSLog(@"Error with respondsToSelector:@selector(recorderIsReady)");
-#endif
+            DLog(@"Error with respondsToSelector:@selector(recorderIsReady)");
         }
 
     }
 }
 
--(void)cleanTheRecorder{
-    
-    /* dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-     while (recording) {
-     // waiting
-     }
-     */
-    
-    if (!recording) {
-        if (_encoder!=nil) {
-            FLAC__stream_encoder_finish(_encoder);
-            FLAC__stream_encoder_delete(_encoder);
-            _encoder = nil; // NEW - 4/9/13
-        }
-        recording = NO;
-        
-    }
-    if([_delegate respondsToSelector:@selector(soundRecoderDidFinishRecording:)]){
-        
-        [_delegate soundRecoderDidFinishRecording:self];
-    }
-    finishCleaning = TRUE;
-    self.fileWasCreated = NO;
-    
-    //  });
-    
-    
-    
-    
-    
-    
-    
-}
 
 // called from encoder
 void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_written, FLAC__uint64 samples_written, unsigned frames_written, unsigned total_frames_estimate, void *client_data){
@@ -600,16 +482,8 @@ void progress_callback(const FLAC__StreamEncoder *encoder, FLAC__uint64 bytes_wr
     
     Recorder *userRecoreder =(__bridge Recorder*)client_data;
 
-#if DEBUG_LOGS
-    NSLog(@"userRecoreder._frameIndex = %d,  bytes_written = %lld, frames_written = %d, total_frames_estimate=%d", userRecoreder._frameIndex ,bytes_written, frames_written,total_frames_estimate);
-#endif
-    
-    if (userRecoreder._frameIndex -1 <= frames_written && userRecoreder.shouldStopRecording) {
-        userRecoreder.recording = NO;
-        //[userRecoreder cleanTheRecorder];
-        //[userRecoreder stopRecording];
-    }
-    
+    DLog(@"userRecoreder._frameIndex = %d,  bytes_written = %lld, samples_written=%lld,  frames_written = %d, total_frames_estimate=%d",
+          userRecoreder._frameIndex ,bytes_written, samples_written, frames_written,total_frames_estimate);
     return ;
 }
 
@@ -627,17 +501,17 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
 
 - (void)recordedBuffer:(UInt8*)buffer byteSize:(UInt32)byteSize packetsNum:(unsigned int)inNumPackets
 {
+    NSDate *date = [NSDate date];
+
     unsigned sample_rate = SAMPLE_RATE;
-	unsigned channels = CHANNELS;//1;
+	unsigned channels = CHANNELS;
 	unsigned bps = 16;
     FLAC__bool ok = true;
-    
-    if (_frameIndex ++== 0)
+    if (_frameIndex == 0)
     {
-        
-        
+        _frameIndex++;
 		_encoder = FLAC__stream_encoder_new();
-		FLAC__stream_encoder_set_verify(_encoder,true);
+		FLAC__stream_encoder_set_verify(_encoder, false);
 		FLAC__stream_encoder_set_compression_level(_encoder, 5);
 		FLAC__stream_encoder_set_channels(_encoder, channels);
 		FLAC__stream_encoder_set_bits_per_sample(_encoder, bps);
@@ -645,11 +519,7 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
 		FLAC__stream_encoder_set_total_samples_estimate(_encoder, sample_rate * RECORD_MAX_LENGTH);
 		FLAC__StreamEncoderInitStatus init_status;
         
-        //NSString *documentDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)[0];
-        //NSString *savePath = [documentDir stringByAppendingPathComponent:@"rec.flac"];
 #if SAVE_TO_FILE
-		/////init_status = FLAC__stream_encoder_init_file(_encoder, [_savedPath UTF8String], NULL, NULL);
-        
         init_status = FLAC__stream_encoder_init_file(_encoder, [_savedPath UTF8String], progress_callback, (__bridge void *)(self));
 #else
         init_status = FLAC__stream_encoder_init_stream(_encoder,send_music,NULL,NULL,NULL,self);
@@ -657,88 +527,61 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
         
 		if (init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK )
         {
-#if DEBUG_LOGS
-			NSLog(@"FLAC: Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
-#endif
+			NSLog(@"ERROR: FLAC- Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
 			FLAC__stream_encoder_delete(_encoder);
 			_encoder = NULL;
 			return;
 		}
+        DLog(@"FLAC: Initialized encoder:%s saved to file", (SAVE_TO_FILE? "" : " NOT"));
 	}
     
+    if (_encoder==nil) {
+        DLog(@"No encoder");
+        return;
+    }
+   
     size_t left = (size_t)inNumPackets;
+    uint offset =0;
     while(ok && left)
     {
-        size_t need = (left > READSIZE ? (size_t)READSIZE : (size_t)left);
+        size_t need = left > READSIZE ? (size_t)READSIZE : (size_t)left;
         
         size_t i;
         for(i = 0; i < need * channels; i++)
         {
             /* inefficient but simple and works on big- or little-endian machines */
-            pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[2 * i + 1] << 8) | (FLAC__int16)buffer[2 * i]);
+            pcm[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[offset + 1] << 8) | (FLAC__int16)buffer[offset]);
+            offset += 2;
         }
         
         /* feed samples to encoder */
 #if DEBUG_LOGS
-        NSLog(@"need = %ld",need);
+        if (left > READSIZE)
+            NSLog(@"Feeding trimmed to = %ld",need);
 #endif
-        if (_encoder!=nil) {
-            ok = FLAC__stream_encoder_process_interleaved(_encoder, pcm, need);
-            
-        }else{
-            return;
-        }
-        
+        ok = FLAC__stream_encoder_process_interleaved(_encoder, pcm, need);
         
         left -= need;
-#if DEBUG_LOGS
-        NSLog(@"------ frame index - %d", _frameIndex);
-#endif
-        
+        DLog(@"------ frame index - %d", _frameIndex);
+        _frameIndex++;
         
         if (!self.fileWasCreated) {
             if ([_delegate respondsToSelector:@selector(recordFileWasCreated)]) {
                 [_delegate recordFileWasCreated];
-#if DEBUG_LOGS
-                NSLog(@"respondsToSelector:@selector(recordFileWasCreated)");
-#endif
+                DLog(@"respondsToSelector:@selector(recordFileWasCreated)");
             }else{
-#if DEBUG_LOGS
-                NSLog(@"Error with respondsToSelector:@selector(recordFileWasCreated)");
-#endif
+                DLog(@"Error with respondsToSelector:@selector(recordFileWasCreated)");
             }
             
-#if DEBUG_LOGS
-            NSLog(@"------ fileWasCreated -----");
-#endif
+            DLog(@"------ fileWasCreated -----");
             self.fileWasCreated = YES;
         }
     }
+    
+    double timePassed = [date timeIntervalSinceNow] * -1;
+    DLog(@"Total recordedBuffer calback: %.3f sec", timePassed);
+    
 }
 
--(void)cleanRecorder{
-    AudioQueueDispose (recordQueue, YES);
-    
-    [self cleanTheRecorder];
-    ////[super dealloc];
-    
-}
-- (void)dealloc
-{
-#if DEBUG_LOGS
-    NSLog(@"+++++ Record - Dealloc was called ++++++");
-#endif
-	//done_fft();
-	//AudioQueueDispose(recordQueue, YES);
-    
-    // below new
-    //AudioQueueReset (recordQueue);
-    //AudioQueueStop (recordQueue, YES);
-    AudioQueueDispose (recordQueue, YES);
-    
-    [self cleanTheRecorder];
-    
-	//[super dealloc];
-}
 
 @end

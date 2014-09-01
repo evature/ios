@@ -7,7 +7,6 @@
 //  dark2torch@gmail.com
 
 #import <UIKit/UIKit.h>
-#import "NSData+Additions.h"
 #import "Recorder.h"
 
 @class MOAudioStreamer;

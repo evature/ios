@@ -198,7 +198,7 @@
 }
 
 - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
-    NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
+    //NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
     #if VAD_DEBUG_GUI
     vadAveragePower = pow(10, (0.05 * averagePower));
     #endif

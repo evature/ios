@@ -34,22 +34,10 @@
 		CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
 		CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
 		CF9592B417A15E2F0022CFBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF40829C174E653F00CCB667 /* InfoPlist.strings */; };
-		CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
-		CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */; };
-		CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */; };
-		CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */; };
 		CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */; };
 		CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */; };
 		CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
 		CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
-		CF98AB0D17C3E6E600E171E9 /* NetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0117C3E6E600E171E9 /* NetworkManager.h */; };
-		CF98AB0E17C3E6E600E171E9 /* NetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0117C3E6E600E171E9 /* NetworkManager.h */; };
-		CF98AB0F17C3E6E600E171E9 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0217C3E6E600E171E9 /* NetworkManager.m */; };
-		CF98AB1017C3E6E600E171E9 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0217C3E6E600E171E9 /* NetworkManager.m */; };
-		CF98AB1117C3E6E600E171E9 /* NSData+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */; };
-		CF98AB1217C3E6E600E171E9 /* NSData+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */; };
-		CF98AB1317C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
-		CF98AB1417C3E6E600E171E9 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */; };
 		CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
 		CFF034A61806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
 		CFF034A71806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
@@ -94,14 +82,8 @@
 		CF95929117A013AF0022CFBF /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = ../../Library/Eva/Eva/Frameworks/FLAC.framework; sourceTree = "<group>"; };
 		CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFlac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Eva copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/Code/FrameworkPack/Eva/Eva copy-Info.plist"; sourceTree = "<absolute>"; };
-		CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AudioStreamer-Prefix.pch"; sourceTree = "<group>"; };
-		CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
 		CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioStreamer.h; sourceTree = "<group>"; };
 		CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAudioStreamer.m; sourceTree = "<group>"; };
-		CF98AB0117C3E6E600E171E9 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
-		CF98AB0217C3E6E600E171E9 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
-		CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Additions.h"; sourceTree = "<group>"; };
-		CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
 		CFC37EB3177CA0D20035E96F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../../Library/Eva/Eva/Frameworks/Ogg.framework; sourceTree = "<group>"; };
 		CFD71B0517590A87002E114B /* Tasks */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tasks; sourceTree = "<group>"; };
 		CFF034A51806D3890074C288 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -249,14 +231,8 @@
 		CF98AAFC17C3E6CD00E171E9 /* AudioStreamer */ = {
 			isa = PBXGroup;
 			children = (
-				CF98AAFD17C3E6E600E171E9 /* AudioStreamer-Prefix.pch */,
-				CF98AAFE17C3E6E600E171E9 /* AudioStreamer.h */,
 				CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */,
 				CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */,
-				CF98AB0117C3E6E600E171E9 /* NetworkManager.h */,
-				CF98AB0217C3E6E600E171E9 /* NetworkManager.m */,
-				CF98AB0317C3E6E600E171E9 /* NSData+Additions.h */,
-				CF98AB0417C3E6E600E171E9 /* NSData+Additions.m */,
 			);
 			name = AudioStreamer;
 			sourceTree = "<group>";
@@ -272,11 +248,7 @@
 				CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */,
 				CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */,
 				CF17473817BD02A400CE68E3 /* Recorder.h in Headers */,
-				CF98AB0517C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
-				CF98AB0717C3E6E600E171E9 /* AudioStreamer.h in Headers */,
 				CF98AB0917C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
-				CF98AB0D17C3E6E600E171E9 /* NetworkManager.h in Headers */,
-				CF98AB1117C3E6E600E171E9 /* NSData+Additions.h in Headers */,
 				CFF034A61806D3890074C288 /* Common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,11 +261,7 @@
 				CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */,
 				CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */,
 				CF17473317BD029600CE68E3 /* Recorder.h in Headers */,
-				CF98AB0617C3E6E600E171E9 /* AudioStreamer-Prefix.pch in Headers */,
-				CF98AB0817C3E6E600E171E9 /* AudioStreamer.h in Headers */,
 				CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */,
-				CF98AB0E17C3E6E600E171E9 /* NetworkManager.h in Headers */,
-				CF98AB1217C3E6E600E171E9 /* NSData+Additions.h in Headers */,
 				CFF034A71806D3890074C288 /* Common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,8 +512,6 @@
 				CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */,
 				CF17473717BD02A000CE68E3 /* Recorder.m in Sources */,
 				CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
-				CF98AB0F17C3E6E600E171E9 /* NetworkManager.m in Sources */,
-				CF98AB1317C3E6E600E171E9 /* NSData+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,8 +531,6 @@
 				CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */,
 				CF17473417BD029600CE68E3 /* Recorder.m in Sources */,
 				CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
-				CF98AB1017C3E6E600E171E9 /* NetworkManager.m in Sources */,
-				CF98AB1417C3E6E600E171E9 /* NSData+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -698,7 +698,6 @@ FLAC_API FLAC__StreamEncoder *FLAC__stream_encoder_new(void);
  * \assert
  *    \code encoder != NULL \endcode
  */
-FLAC_API void FLAC__stream_encoder_delete(FLAC__StreamEncoder *encoder);
 
 
 /***********************************************************************

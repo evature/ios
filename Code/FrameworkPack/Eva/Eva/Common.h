@@ -10,16 +10,20 @@
 #define Eva_Common_h
 
 
-#define EVA_FRAMEWORK_VERSION @"1.5.1"
+#define EVA_FRAMEWORK_VERSION @"1.5.2"
 
 #define USE_SAFE_STRING TRUE //FALSE
+#define SHOW_DEBUG_LOGS TRUE
 
 #ifdef SHOW_DEBUG_LOGS
     #define DEBUG_LOGS TRUE
     #define DEBUG_MODE_FOR_EVA TRUE 
+    #define DLog(_format_, ...) NSLog(_format_, ## __VA_ARGS__)
 #else
     #define DEBUG_LOGS FALSE
     #define DEBUG_MODE_FOR_EVA FALSE
+    #define DLog(_format_, ...)
 #endif
+
 
 #endif

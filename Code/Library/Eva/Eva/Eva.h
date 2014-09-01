@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.5.1
+//  Version 1.5.2
 //
 
 #import <Foundation/Foundation.h>
