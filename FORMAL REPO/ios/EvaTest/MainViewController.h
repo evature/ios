@@ -22,7 +22,7 @@
     
     IBOutlet UITextField *inputTextField;
     
-    IBOutlet UIButton *startButton;
+    IBOutlet UIButton *resetButton;
     IBOutlet UIButton *continueButton;
     IBOutlet UIButton *stopButton;
     
@@ -39,7 +39,7 @@
 @property(nonatomic,retain) IBOutlet UITextField *apiKeyTextField;
 @property(nonatomic,retain) IBOutlet UITextField *siteCodeTextField;
 @property(nonatomic,retain) IBOutlet UITextField *inputTextField;
-@property(nonatomic,retain) IBOutlet UIButton *startButton;
+@property(nonatomic,retain) IBOutlet UIButton *resetButton;
 @property(nonatomic,retain) IBOutlet UIButton *continueButton;
 @property(nonatomic,retain) IBOutlet UIButton *stopButton;
 @property(nonatomic,retain) IBOutlet UIButton *cancelButton;
@@ -52,9 +52,10 @@
 //////////////////
 
 @property(nonatomic,retain) NSString *apiKeyString, *siteCodeString;
+@property(atomic) BOOL isNewSession;
 
 -(IBAction)setAPIKeysButton:(id)sender;
--(IBAction)startRecordButton:(id)sender;
+-(IBAction)newSessionButton:(id)sender;
 -(IBAction)continueRecordButton:(id)sender;
 -(IBAction)stopRecordButton:(id)sender;
 -(IBAction)cancelRecordButton:(id)sender;
