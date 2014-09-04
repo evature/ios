@@ -25,7 +25,7 @@
 @synthesize siteCodeTextField;
 @synthesize inputTextField;
 
-@synthesize startButton, continueButton, stopButton,cancelButton;
+@synthesize resetButton, continueButton, stopButton,cancelButton;
 @synthesize indicationLabel;
 
 @synthesize vadLabel;
@@ -39,7 +39,13 @@
 
 #pragma mark - View parameters
 - (void)showLabelWithText:(NSString*)labelText {
-    [indicationLabel setText:labelText];
+    if (![labelText isEqualToString:@""]) {
+        [indicationLabel setText:[NSString stringWithFormat:@"Status: %@", labelText]];
+        [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
+    }
+    else {
+        [indicationLabel setText:@""];
+    }
 }
 
 
@@ -76,40 +82,45 @@
 }
 
 #pragma mark - view actions
--(IBAction)startRecordButton:(id)sender{
-    [self textFieldDoneEditing:sender];
-    
-    [[Eva sharedInstance] startRecord:TRUE];
-    [self showLabelWithText:@"Record has started"];
-    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
-    
-    [self setRecordButtons:true];
+-(IBAction)newSessionButton:(id)sender{
+    [responseLabel setText:@"Please enter travel search query, using text or voice.\n\nFor example:\n\"Fly from London to Miami on Friday\"\nor\n\"Hotel in Las Vegas tonight\""];
+    [responseLabel setNumberOfLines:0];
+    [responseLabel sizeToFit];
+    self.isNewSession = true;
+    [self showLabelWithText:@"Session reset"];
+    [resetButton setHidden: true];
 }
 
 -(IBAction)continueRecordButton:(id)sender{
-    [[Eva sharedInstance] startRecord:FALSE];
+    [self showLabelWithText:@"Started recording"];
+    [[Eva sharedInstance] startRecord:[self isNewSession]];
     [self setRecordButtons:true];
 }
 -(IBAction)stopRecordButton:(id)sender{
+    [self showLabelWithText:@"Stopped recording"];
     [[Eva sharedInstance] stopRecord];
     [self setRecordButtons:false];
 }
 -(IBAction)cancelRecordButton:(id)sender{
+    [self showLabelWithText:@"Canceled recording"];
     [[Eva sharedInstance] cancelRecord];
     [self setRecordButtons:false];
 }
 
 -(IBAction)sendTextQuery:(id)sender{
 //  [[Eva sharedInstance] setNoSession];
-    [[Eva sharedInstance] queryWithText:[inputTextField text] startNewSession:FALSE];
+    [self textFieldDoneEditing: inputTextField];
+    [[Eva sharedInstance] queryWithText:[inputTextField text] startNewSession:[self isNewSession]];
+    [inputTextField setText:@""];
+    [resetButton setHidden: FALSE];
 }
 
 -(IBAction)setAPIKeysButton:(id)sender{
     [self saveViewParameters];
     if (1&&
         apiKeyString!=nil && siteCodeString!=nil
-        && apiKeyString!=[NSString stringWithFormat:@""] &&
-        siteCodeString!=[NSString stringWithFormat:@""]
+        && ![apiKeyString isEqualToString:@""] &&
+        ![siteCodeString isEqualToString:@""]
         ) {
         //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
         [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
@@ -136,10 +147,12 @@
 //}
 
 - (void)setRecordButtons: (Boolean) isRecording{
-    [startButton setHidden: isRecording];
+    [resetButton setHidden: isRecording || [self isNewSession]];
     [continueButton setHidden: isRecording];
     [cancelButton setHidden: !isRecording];
     [stopButton setHidden: !isRecording];
+    [micLevel setHidden:!isRecording];
+    NSLog(@"Setting controls to recording: %hhu", isRecording);	
 }
 
 
@@ -154,7 +167,6 @@
     
     [self setRecordButtons:false];
     [self showLabelWithText:@"Recived data from Eva!"];
-    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:3.5];
     
     NSData *jsonData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     NSError *e;
@@ -164,15 +176,21 @@
         [responseLabel setText:@"Error parsing"];
     }
     else {
-        [responseLabel setText:[dict objectForKey:@"input_text"]];
+        NSMutableArray *responseStrings = [NSMutableArray arrayWithObjects:@"You: ", [dict objectForKey:@"input_text"], @"Eva: ", nil];
+
         
         NSLog(@"Session is: %@", [dict objectForKey:@"session_id"]);
+        self.isNewSession = false;
+        	[resetButton setHidden: false];
         
         NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
         if (api_reply != nil) {
             NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
             if (flow != nil && [flow count] > 0) {
                 NSDictionary *flowAction = [flow firstObject];
+                if ([flowAction objectForKey:@"SayIt"]) {
+                    [responseStrings addObject:[flowAction objectForKey:@"SayIt"]];
+                }
                 if ([[flowAction objectForKey:@"Type"] isEqualToString:@"Question"]) {
                     NSLog(@"Question!");
 #if AUTO_START_RECORD_ON_QUESTION
@@ -180,13 +198,15 @@
                     [self setRecordButtons:true];
                     [self showLabelWithText:@"Record has started on Question"];
                     [responseLabel setText:[flowAction objectForKey:@"SayIt"]];
-                    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
 #endif
                 }
             }
         }
+        
+        [responseLabel setText:[responseStrings componentsJoinedByString:@"\n"]];
     }
-    
+    [responseLabel setNumberOfLines:0];
+    [responseLabel sizeToFit];
     
 }
 
@@ -194,11 +214,16 @@
     NSLog(@"Got error from Eva");
     //[self.micLevel setHidden:TRUE];
     [self showLabelWithText:@"Error from Eva"];
-    [vadLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
+    //[vadLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
+    
+    [responseLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
+    [responseLabel setNumberOfLines:0];
+    [responseLabel sizeToFit];
+    [self setRecordButtons:false];
 }
 
 - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
-    NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
+    //NSLog(@"Mic Average: %f Peak: %f", averagePower,peakPower);
     #if VAD_DEBUG_GUI
     vadAveragePower = pow(10, (0.05 * averagePower));
     #endif
@@ -216,15 +241,14 @@
     NSLog(@"EvaRecorder is ready!");
     [self showLabelWithText:@"Ready!"];
 //    [self showLabelWithText:[NSString stringWithFormat:@"%f", [self getVolumeLevel]]];
-    [self.startButton setEnabled:TRUE];
-    
     [self setAVSession];
 
 #if AUTO_START_RECORDING
     [[Eva sharedInstance] startRecord:TRUE];
     [self showLabelWithText:@"Record has started on isReady"];
-    [self performSelector:@selector(showLabelWithText:) withObject:@"" afterDelay:4.5];
     [self setRecordButtons:true];
+#else 
+    [self setRecordButtons:false];
 #endif
 
 }
@@ -337,6 +361,7 @@ float vadStopNoisyMoments;
     //NSMutableDictionary *optionalDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat: @"%@",@"objTest"] forKey:@"keyTest"];
     //[[Eva sharedInstance] setOptional_dictionary:[optionalDict mutableCopy]];
     
+    self.isNewSession = true;
     
     // View settings //
     [self loadViewParameters];
@@ -360,8 +385,9 @@ float vadStopNoisyMoments;
     if (apiKeyString==nil || siteCodeString==nil
         || apiKeyString==[NSString stringWithFormat:@""] ||
         siteCodeString==[NSString stringWithFormat:@""]) {
-        [startButton setHidden:TRUE];
-        [stopButton setHidden:TRUE];
+//        [resetButton setHidden:TRUE];
+//        [stopButton setHidden:TRUE];
+        [self showLabelWithText:@"Please set your API Key and Site Code."];
     }
     
     [Eva sharedInstance].optional_dictionary  = @{@"demo_app" : @"1"};
