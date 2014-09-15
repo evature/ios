@@ -1070,6 +1070,14 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,[self makeSafeString:context_]]];
     }
     
+    
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&audio_files_used=%@%@%@%@",url,
+                                audioFileStartRecord_ == nil ? @"N": @"Y",
+                                audioFileRequestedEndRecord_ == nil ? @"N" : @"Y",
+                                audioFileVadEndRecord_ == nil ? @"N" : @"Y",
+                                audioFileCanceledRecord_ == nil ? @"N" : @"Y"
+    ]];
+    
     if (optional_dictionary_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlSafeEncodedOptionalParametersString]]];
     }
