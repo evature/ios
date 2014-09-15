@@ -54,6 +54,7 @@
     
     FLAC__StreamEncoder *_encoder;
     int  _frameIndex;
+    float _maxRecordingTime;
     
     NSString *savedPath;
     
@@ -80,11 +81,12 @@
 @property (nonatomic,copy) NSString *savedPath;
 
 @property (assign) int _frameIndex;
+@property (assign) float _maxRecordingTime;
 
 + (Recorder *)sharedInstance;
 
-- (void)startRecording;
-- (void)startRecording:(BOOL) autoStop;
+- (void)startRecording:(float)maxRecordingTime;
+- (void)startRecording:(float)maxRecordingTime  withAutoStop:(BOOL) autoStop;
 - (void)stopRecording;
 
 -(float)averagePower;

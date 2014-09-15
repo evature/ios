@@ -561,7 +561,7 @@ enum {
 }
 
 #pragma mark * Actions
-- (void)startStreamer;
+- (void)startStreamer:(float)maxRecordingTime;
 {
 #if DEBUG_LOGS
     NSLog(@"startStreamer");
@@ -569,7 +569,7 @@ enum {
 //    giveMeResults=YES;
     StopSignal=NO;
     
-    [self setupNewRecordableFile ];
+    [self setupNewRecordableFile:maxRecordingTime ];
     
     
     //[self performSelector:@selector(startSend) withObject:[NSNull null] afterDelay:0.5];//0.5];
@@ -658,7 +658,7 @@ NSString *fullPathToFilex;
 }
 
 
--(void)setupNewRecordableFile{
+-(void)setupNewRecordableFile:(float) maxRecordingTime{
     DLog(@"Dbg: setup new file");
     [self removeRecordableFile];
     DLog(@"Dbg:  cleanedup last file");
@@ -686,7 +686,7 @@ NSString *fullPathToFilex;
     [Recorder sharedInstance].savedPath = soundFilePath;
     [Recorder sharedInstance].delegate = self;
     DLog(@"Dbg: Saving file to %@,  starting to record", soundFilePath);
-    [[Recorder sharedInstance] startRecording];
+    [[Recorder sharedInstance] startRecording: maxRecordingTime];
 }
 
 

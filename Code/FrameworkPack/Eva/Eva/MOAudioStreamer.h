@@ -64,7 +64,7 @@
 //@property(assign)int lol;
 
 + (MOAudioStreamer *)sharedInstance;
- - (void)startStreamer;
+- (void)startStreamer:(float)maxRecordingTime;
 -(void)stopStreaming;
 - (void)cancelStreaming;
 

@@ -11,7 +11,6 @@
 #define READSIZE 1024*4
 #define CHANNELS 1
 #define SAMPLE_RATE 16000.0
-#define RECORD_MAX_LENGTH 10 // in seconds
 
 #define SAVE_TO_FILE TRUE//FALSE
 
@@ -39,6 +38,7 @@ static FLAC__int32 pcm[READSIZE/*samples*/ * CHANNELS/*channels*/];
 @synthesize savedPath = _savedPath;
 
 @synthesize _frameIndex;
+@synthesize _maxRecordingTime;
 @synthesize isRecorderReady=_isRecorderReady;
 
 
@@ -371,15 +371,15 @@ static char *FormatError(char *str, OSStatus error)
     //return TRUE;
 }
 
-- (void)startRecording
+- (void)startRecording:(float) maxRecordingTime
 {
-    [self startRecording:FALSE];
+    [self startRecording:maxRecordingTime withAutoStop:FALSE];
 }
 
 
-- (void)startRecording:(BOOL) autoStop
+- (void)startRecording:(float) maxRecordingTime withAutoStop:(BOOL)autoStop
 {
-    
+    self._maxRecordingTime = maxRecordingTime;
     if (autoStop) { // New because when second initiation could be that this one won't be ready...
         isRecorderReady = FALSE;
         DLog(@"Starting to record with autoStop!");
@@ -511,12 +511,12 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
     {
         _frameIndex++;
 		_encoder = FLAC__stream_encoder_new();
-		FLAC__stream_encoder_set_verify(_encoder, false);
+		FLAC__stream_encoder_set_verify(_encoder, DEBUG_MODE_FOR_EVA);
 		FLAC__stream_encoder_set_compression_level(_encoder, 5);
 		FLAC__stream_encoder_set_channels(_encoder, channels);
 		FLAC__stream_encoder_set_bits_per_sample(_encoder, bps);
 		FLAC__stream_encoder_set_sample_rate(_encoder, sample_rate);
-		FLAC__stream_encoder_set_total_samples_estimate(_encoder, sample_rate * RECORD_MAX_LENGTH);
+		FLAC__stream_encoder_set_total_samples_estimate(_encoder, sample_rate * self._maxRecordingTime);
 		FLAC__StreamEncoderInitStatus init_status;
         
 #if SAVE_TO_FILE
