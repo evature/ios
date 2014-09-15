@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.5.2
+//  Version 1.5.3
 //
 
 #import <Foundation/Foundation.h>
@@ -69,7 +69,7 @@
 // if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel;
 
-// if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 8.0 sec, max value is 10.0 sec)
+// if shouldSendMicLevel is TRUE, evaMicLevelCallbackAverage:andPeak would be called when recording and evaMicStopRecording when recording stopped. secToTimeout represent the timeout of the record (default is 15.0 sec, max value is 15.0 sec)
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code withMicLevel:(BOOL)shouldSendMicLevel withRecordingTimeout:(float)secToTimeout;
 
 

@@ -48,6 +48,19 @@
     }
 }
 
+- (void)showResponse:(NSString*)responseText {
+    [responseLabel setText:responseText];
+    [responseLabel setNumberOfLines:0];
+//    [responseLabel sizeToFit];
+
+    CGSize size = [responseLabel.text sizeWithFont:responseLabel.font
+                         constrainedToSize:CGSizeMake(responseLabel.frame.size.width, MAXFLOAT)
+                             lineBreakMode:UILineBreakModeWordWrap];
+    CGRect labelFrame = responseLabel.frame;
+    labelFrame.size.height = size.height;
+    responseLabel.frame = labelFrame;
+}
+
 
 -(void)saveViewParameters{
     [[NSUserDefaults standardUserDefaults] setValue:[apiKeyTextField text] forKey:kApiKey];
@@ -83,9 +96,7 @@
 
 #pragma mark - view actions
 -(IBAction)newSessionButton:(id)sender{
-    [responseLabel setText:@"Please enter travel search query, using text or voice.\n\nFor example:\n\"Fly from London to Miami on Friday\"\nor\n\"Hotel in Las Vegas tonight\""];
-    [responseLabel setNumberOfLines:0];
-    [responseLabel sizeToFit];
+    [self showResponse:@"Please enter travel search query, using text or voice.\n\nFor example:\n\"Fly from London to Miami on Friday\"\nor\n\"Hotel in Las Vegas tonight\""];
     self.isNewSession = true;
     [self showLabelWithText:@"Session reset"];
     [resetButton setHidden: true];
@@ -94,7 +105,7 @@
 -(IBAction)continueRecordButton:(id)sender{
     [self showLabelWithText:@"Started recording"];
     [[Eva sharedInstance] startRecord:[self isNewSession]];
-    [self setRecordButtons:true];
+    //[self setRecordButtons:true];
 }
 -(IBAction)stopRecordButton:(id)sender{
     [self showLabelWithText:@"Stopped recording"];
@@ -148,7 +159,7 @@
 
 - (void)setRecordButtons: (Boolean) isRecording{
     [resetButton setHidden: isRecording || [self isNewSession]];
-    [continueButton setHidden: isRecording];
+//    [continueButton setHidden: isRecording];
     [cancelButton setHidden: !isRecording];
     [stopButton setHidden: !isRecording];
     [micLevel setHidden:!isRecording];
@@ -173,7 +184,7 @@
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&e];
     
     if (e != NULL || dict == NULL) {
-        [responseLabel setText:@"Error parsing"];
+        [self showResponse:@"Error parsing"];
     }
     else {
         NSMutableArray *responseStrings = [NSMutableArray arrayWithObjects:@"You: ", [dict objectForKey:@"input_text"], @"Eva: ", nil];
@@ -203,10 +214,8 @@
             }
         }
         
-        [responseLabel setText:[responseStrings componentsJoinedByString:@"\n"]];
+        [self showResponse: [responseStrings componentsJoinedByString:@"\n"]];
     }
-    [responseLabel setNumberOfLines:0];
-    [responseLabel sizeToFit];
     
 }
 
@@ -216,9 +225,7 @@
     [self showLabelWithText:@"Error from Eva"];
     //[vadLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
     
-    [responseLabel setText:[NSString stringWithFormat:@"Error: %@", error]];
-    [responseLabel setNumberOfLines:0];
-    [responseLabel sizeToFit];
+    [self showResponse: [NSString stringWithFormat:@"Error: %@", error]];
     [self setRecordButtons:false];
 }
 
@@ -234,7 +241,7 @@
 - (void)evaMicStopRecording{
     NSLog(@"Recording has stopped");
     [self showLabelWithText:@"stopping"];
-    //[self setRecordButtons:false];
+    [self setRecordButtons:false];
 }
 
 - (void)evaRecorderIsReady{
