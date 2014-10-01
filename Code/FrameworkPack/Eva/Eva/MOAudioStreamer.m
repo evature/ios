@@ -20,11 +20,6 @@
 #define ext @"flac"
 #define USING_SYNC 0
 
-#define DEBUG_THIS TRUE
-
-
-//#define DEBUG_LOGS TRUE
-
 
 // A category on NSStream that provides a nice, Objective-C friendly way to create
 // bound pairs of streams.
@@ -85,7 +80,7 @@ enum {
 
 // Properties that don't need to be seen by the outside world.
 
-@property (nonatomic, assign, readonly ) BOOL               isSending;
+@property (nonatomic, assign, readonly ) BOOL               wasStopped;
 
 //@property (nonatomic, strong, readwrite) NSInputStream *    fileStream;
 @property (nonatomic, strong, readwrite) NSOutputStream *   producerStream;
@@ -96,6 +91,7 @@ enum {
 @property (nonatomic, assign, readwrite) size_t             bufferLimit;
 @property long totalSizeRead;
 @property long totalSizeSent;
+
 
 @end
 
@@ -109,7 +105,6 @@ enum {
 @synthesize bufferOffset    = _bufferOffset;
 @synthesize framesSent      = _framesSent;
 @synthesize bufferLimit     = _bufferLimit;
-@synthesize expectingTimeOut=_expectingTimeOut,userName,password;
 @synthesize request;
 #pragma mark * Status management
 
@@ -119,6 +114,8 @@ enum {
 	if (sharedInstance == nil)
 	{
 		sharedInstance = [[MOAudioStreamer alloc] init];
+        sharedInstance->orderToStop = NO;
+        sharedInstance->okToSend = NO;
 	}
 	return sharedInstance;
 }
@@ -126,29 +123,45 @@ enum {
 
 // These methods are used by the core transfer code to update the UI.
 
-- (void) sendDidStart
-{
-    DLog(@" **** sendDidStart **** ");
-}
 
 
 #pragma mark * Core transfer code
 
 // This is the code that actually does the networking.
 
-- (BOOL)isSending
+- (BOOL)wasStopped
 {
-    return (self.connection != nil);
+    return  orderToStop;
 }
 
+- (BOOL)openConsumerStream
+{
+    NSStreamStatus status = [self.consumerStream streamStatus];
+    if (status == NSStreamStatusNotOpen) {
+        DLog(@"Opening consumer stream");
+        [self.consumerStream open];
+        
+        int waitForOpen = 0;
+        NSStreamStatus status = [self.consumerStream streamStatus];
+        while (status < NSStreamStatusOpen) {
+            waitForOpen++;
+            if (waitForOpen > 250) {
+                NSLog(@"Connection failed to open");
+                [self stopSendWithStatus:@"Connection failed to open"];
+                return FALSE;
+            }
+            DLog(@"-- Waiting for consumer to open %u", status);
+            usleep(10000);
+            status = [self.consumerStream streamStatus];
+        }
+    }
+
+    status = [self.consumerStream streamStatus];
+    return status >= NSStreamStatusOpen;
+}
 
 - (void)startSend
 {
-    sleptAlready = NO;
-    
-    NSInputStream *         consStream;
-    NSOutputStream *        prodStream;
-    
     
     self.totalSizeRead=0;
     self.totalSizeSent=0;
@@ -158,7 +171,7 @@ enum {
     
     fullPathToFilex = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.fileToSaveName,ext ]];
     
-#if DEBUG_THIS
+#if DEBUG
     NSNumber *              fileLengthNum;
     fileLengthNum = (NSNumber *) [[[NSFileManager defaultManager] attributesOfItemAtPath:fullPathToFilex error:NULL] objectForKey:NSFileSize];
     if (fileLengthNum == NULL) {
@@ -183,6 +196,10 @@ enum {
     // away.  We leave the consumerStream alone; NSURLConnection will deal
     // with it.
     
+    
+    NSInputStream *         consStream;
+    NSOutputStream *        prodStream;
+
     [NSStream createBoundInputStream:&consStream outputStream:&prodStream bufferSize:32768];
     
     if (consStream == nil) {
@@ -197,34 +214,35 @@ enum {
     
     self.consumerStream = consStream;
     self.producerStream = prodStream;
-    
+
     [self.consumerStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
     
     self.producerStream.delegate = self;
     [self.producerStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [self.producerStream open];
+    
     
     [Recorder sharedInstance].delegate = self;
     
 
     NSString *urlString=[NSString stringWithFormat: @"%@",self.webServiceURL];
     
-    request = (NSMutableURLRequest*)[self postRequestWithURL:urlString data:nil/*data*/ fileName:nil];
+    
+    
+    request = (NSMutableURLRequest*)[self postRequestWithURL:urlString data:nil fileName:nil];
     [request setTimeoutInterval:1280];
     
-    /*here is an important step instead of attach data as apost data to the body you attak an inout stream
-     * which is in its turn attached to an output stream that takes its data from fileStream
-     */
+    //here is an important step instead of attach data as apost data to the body you attak an inout stream
+    //which is in its turn attached to an output stream that takes its data from fileStream
+    
     [request setHTTPBodyStream:self.consumerStream];
     
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
-    //[self.producerStream open]; // Iftah: Needed?
-    
-    /*create the thread to call the streamer */
-    
-    dispatch_queue_t highPriQueue =
-    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    //create the thread to call the streamer
+     
+    dispatch_queue_t highPriQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     
     _streamDispatch = dispatch_queue_create(
                                             "AUDIO STREAM queue",
@@ -233,21 +251,49 @@ enum {
 
     orderToStop=NO;
     dispatch_async(_streamDispatch, ^{
-        
         while (!orderToStop) {
-
-            [self produceData];
+            if (okToSend) {
+                [self produceData];
+            }
+            else {
+                usleep(10000);
+            }
         }
     });
     
+//    CFReadStreamRef readStream;
+//    CFWriteStreamRef writeStream;
+//    NSURL *website = [NSURL URLWithString:urlString];
+//    
+//    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)[website host], 80, &readStream, &writeStream);
+//    
+//    NSInputStream *inputStream = (__bridge_transfer NSInputStream *)readStream;
+//    NSOutputStream *outputStream = (__bridge_transfer NSOutputStream *)writeStream;
+//    [inputStream setDelegate:self];
+//    [outputStream setDelegate:self];
+//    [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//    [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//    [inputStream open];
+//    [outputStream open];
     
-    [self sendDidStart];
+    /* Store a reference to the input and output streams so that
+     they don't go away.... */
+//    self.producerStream = outputStream;
+//    self.consumerStream = inputStream;
+    
+    DLog(@" **** sendDidStart **** ");
 }
+
 
 - (void)stopSendWithStatus:(NSString *)statusString
 {
     DLog(@"##### cancel send with status: %@",statusString);
+    if ([Recorder sharedInstance]!=nil) {
+        [[Recorder sharedInstance] stopRecording];
+    }
     
+    StopSignal=YES;
+
     if (self.bufferOnHeap) {
         free(self.bufferOnHeap);
         self.bufferOnHeap = NULL;
@@ -279,12 +325,14 @@ enum {
     @synchronized(self){
         // Check to see if we've run off the end of our buffer.  If we have,
         // work out the next buffer of data to send.
-#if DEBUG_THIS
+
+        
+#if DEBUG_MODE_FOR_EVA
         NSStreamStatus status = [self.producerStream streamStatus];
-        NSError * streamError = [self.producerStream streamError];
+        NSError *streamError = [self.producerStream streamError];
         NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:soundFilePath error:nil];
         NSNumber *fileLengthNum = (NSNumber *) [fileAttributes objectForKey:NSFileSize];
-        DLog(@"\n\n **** produceData   Producer status: %d,  err=%@,   filesize=%@", status, streamError, fileLengthNum);
+        DLog(@"**** produceData   Producer status: %d,  err=%@,   filesize=%@", status, streamError, fileLengthNum);
 #endif
         
         if (self.bufferOnHeap == NULL) {
@@ -295,10 +343,7 @@ enum {
         // if bufferOffset equals to bufferLimit it means we transmitted everything
         // we read already - time to read some more
         if (self.bufferOffset == self.bufferLimit) {
-            if (self.bufferOnHeap==NULL) {
-                NSLog(@"CRITICAL ERROR: no buffer allocated");
-                return;
-            }
+            
             // read from file - continue where we last stopped
             NSFileHandle *fHandle;
             fHandle = [NSFileHandle fileHandleForReadingAtPath:soundFilePath];
@@ -313,10 +358,14 @@ enum {
                 return;
             }
             
+            if (self.bufferOnHeap==NULL) {
+                NSLog(@"CRITICAL ERROR: no buffer allocated");
+                return;
+            }
+            
             // copy data from NSData to heap allocated buffer (Iftah: why?)
             memcpy(self.bufferOnHeap, [data bytes], [data length]);
-            DLog(@"Read %li bytes from file", (long)bytesRead);
-
+            
     
             if (bytesRead <= 0) {
                 
@@ -335,6 +384,7 @@ enum {
                     self.bufferLimit = 0;
                     
                     orderToStop = YES;
+                    okToSend = NO;
                     DLog(@"----> Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
                     
                     if (self.producerStream != nil) {
@@ -364,27 +414,34 @@ enum {
                 return;
             }
             
+            DLog(@"Read %li bytes from file", (long)bytesRead);
+
             self.bufferOffset = 0;
             self.totalSizeRead += bytesRead;
             self.bufferLimit  = bytesRead;
         }
         else {
-            DLog(@"Continuing to transmit previous read data");
+            DLog(@"--- Continuing to transmit previous read data ---");
         }
             
         // Send the next chunk of data in our buffer.
         if (self.bufferOffset >= self.bufferLimit) {
             NSLog(@"CRITICAL ERROR: expected bufferOffset to be less than limit");
+            if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+                [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
+            }
+            
+            [self stopSendWithStatus:@"Network write error"];
             return;
         }
         
         int maxlength = self.bufferLimit - self.bufferOffset;
 
+        NSStreamStatus status1 = [self.producerStream streamStatus];
+        NSStreamStatus status2 = [self.consumerStream streamStatus];
+        DLog(@"Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
+
         NSInteger bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
-//        if (arc4random() % 5 == 0) { // attempt to recreate a buggy syndrome
-//            DLog(@"Sending twice!");
-//            bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
-//        }
         
         DLog(@">>> Sent %d bytes to HTTP, maxLen=%d", bytesWritten, maxlength);
         
@@ -397,12 +454,27 @@ enum {
             [self stopSendWithStatus:@"Network write error"];
             return;
         }
+        // sent some - so now need to wait for HasSpaceAvail event
+        okToSend = NO;
         
-        if (maxlength < kPostBufferSize) {
-            // read less than maximum from file - the reading is faster than the writing
-            DLog(@"----Sent less than maximum - GOING TO SLEEP----");
-            usleep(10000);
-        }
+//        NSStreamStatus consumerStatus = [self.consumerStream streamStatus];
+//        if (consumerStatus < NSStreamStatusOpen) {
+//            bool isOpen = [self openConsumerStream];
+//            if (!isOpen) {
+//                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+//                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
+//                }
+//                
+//                [self stopSendWithStatus:@"Failed to open connection"];
+//            }
+//        }
+        
+        
+//        if (maxlength < kPostBufferSize) {
+//            // read less than maximum from file - the reading is faster than the writing
+//            DLog(@"----Sent less than maximum - GOING TO SLEEP----");
+//            usleep(10000);
+//        }
         
         self.bufferOffset  += bytesWritten;
         self.totalSizeSent += bytesWritten;
@@ -426,7 +498,7 @@ enum {
 // status code is 2xx.  If it isn't, we fail right now.
 {
     
-    // NSLog(@"did receive response");
+    // DLog(@"did receive response");
     if (self.connection) {
         
         
@@ -437,13 +509,9 @@ enum {
         
         httpResponse = (NSHTTPURLResponse *) response;
         assert( [httpResponse isKindOfClass:[NSHTTPURLResponse class]] );
-#if DEBUG_LOGS
-        NSLog(@"httpresponse for streamer header is %@",[httpResponse allHeaderFields]);
-#endif
+        DLog(@"httpresponse for streamer header is %@",[httpResponse allHeaderFields]);
         if ((httpResponse.statusCode / 100) != 2) {
-#if DEBUG_LOGS
-            NSLog(@"HTTP error");
-#endif
+            DLog(@"HTTP error");
             [self stopSendWithStatus:[NSString stringWithFormat:@"HTTP error %zd", (ssize_t) httpResponse.statusCode]];
         }
         else {
@@ -456,6 +524,95 @@ enum {
     [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveResponse:response]; //NEW
 }
 
+- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
+{
+    if (aStream == self.producerStream) {
+        switch(eventCode) {
+            case NSStreamEventNone:
+                DLog(@"None event for producer");
+                break;
+            case NSStreamEventErrorOccurred:
+                DLog(@"Error at producer stream delegate");
+                break;
+            case NSStreamEventOpenCompleted:
+                DLog(@"Producer Open at stream delegate");
+                break;
+                
+            case NSStreamEventHasSpaceAvailable:
+                DLog(@"Producer has space available");
+                okToSend = YES;
+                break;
+                
+            case NSStreamEventHasBytesAvailable:
+                DLog(@"Has bytes available for producer stream?");
+                break;
+                
+            case NSStreamEventEndEncountered:
+            {
+                DLog(@"Producer Stream closed");
+                [self.producerStream close];
+                [self.producerStream removeFromRunLoop:[NSRunLoop currentRunLoop]
+                                               forMode:NSDefaultRunLoopMode];
+                //[self.consumerStream release];
+                self.producerStream = nil; // stream is ivar, so reinit it
+                break;
+            }
+
+        }
+    }
+    else if (aStream == self.consumerStream) {
+        
+        switch(eventCode) {
+            case NSStreamEventNone:
+                DLog(@"None event for consumer ");
+                break;
+                
+            case NSStreamEventErrorOccurred:
+                DLog(@"Error at consumer stream delegate");
+                break;
+                
+            case NSStreamEventHasSpaceAvailable:
+                DLog(@"Has space available for consumer stream?");
+                break;
+                
+            case NSStreamEventOpenCompleted:
+                DLog(@"Consumer Open at stream delegate");
+                break;
+                
+            case NSStreamEventHasBytesAvailable: {
+                uint8_t buf[1024];
+                unsigned int len = [self.consumerStream read:buf maxLength:1024];
+                DLog(@"Consumer has bytes available len = %u", len);
+                if(len) {
+                    NSData *data = [NSData dataWithBytes:buf length:len];
+                    [self.streamerDelegate MOAudioStreamerConnection:self theConnection:self.connection didReceiveData:data];
+                } else {
+                    DLog(@"no buffer!");
+                }
+                break;
+            }
+                
+            case NSStreamEventEndEncountered:
+            {
+                DLog(@"ConsumerStream closed");
+                [self.consumerStream close];
+                [self.consumerStream removeFromRunLoop:[NSRunLoop currentRunLoop]
+                                  forMode:NSDefaultRunLoopMode];
+                //[self.consumerStream release];
+                self.consumerStream = nil;
+                [self.streamerDelegate MOAudioStreamerConnectionDidFinishLoading:self theConnection:self.connection];
+                break;
+            }
+        }
+    }
+    else {
+        DLog(@"Not the right stream!");
+    }
+}
+
+
+
+
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)data
 // A delegate method called by the NSURLConnection as data arrives.  The
 // response data for a POST is only for useful for debugging purposes,
@@ -463,15 +620,11 @@ enum {
 {
 #pragma unused(theConnection)
 #pragma used(data)
-#if DEBUG_THIS
-    #if DEBUG_LOGS
-        NSLog(@"nscpnnection did receive data");
-    #endif
-#endif
+    DLog(@"nscpnnection did receive data");
     if (self.connection) {
         
 //        if (!responseData) {
-//            //    NSLog(@"response data is nilllll");
+//            //    DLog(@"response data is nilllll");
 //            responseData=[NSMutableData new];
 //        }
 //        
@@ -482,9 +635,7 @@ enum {
         // do nothing
 
     }else{
-#if DEBUG_LOGS
-        NSLog(@"self.connection audiostreamer.m is null");
-#endif
+        DLog(@"self.connection audiostreamer.m is null");
     }
 
     [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveData:data];
@@ -501,9 +652,7 @@ enum {
 #pragma unused(theConnection)
 #pragma unused(error)
         //  assert(theConnection == self.connection);
-#if DEBUG_LOGS
-        NSLog(@"connection failed with error %@",error.description);
-#endif
+        DLog(@"connection failed with error %@",error.description);
         [self stopSendWithStatus:@"Connection failed"];
         connectionError=error;
         
@@ -526,7 +675,7 @@ enum {
 //        
 //        if (giveMeResults ) {
 //#if DEBUG_LOGS
-//            NSLog(@"lets see results");
+//            DLog(@"lets see results");
 //#endif
 //            NSString *String =[[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
 //            //    [self.streamerDelegate MOAudioStreamerDidFinishRequest:theConnection withResponse:String];
@@ -540,7 +689,7 @@ enum {
 //                    [self.streamerDelegate MOAudioStreamerDidFinishRequest:self theConnection:theConnection withResponse:String];
 //                }else{
 //#if DEBUG_LOGS
-//                    NSLog(@"it does not respond to selector streamdidFinishRequest");
+//                    DLog(@"it does not respond to selector streamdidFinishRequest");
 //#endif
 //                }
 //            }
@@ -550,7 +699,7 @@ enum {
 //        responseData=nil;
 //#if DEBUG_THIS
 //        #if DEBUG_LOGS
-//        NSLog(@"connection did data length ");
+//        DLog(@"connection did data length ");
 //#endif
 //#endif
 //        // assert(theConnection == self.connection);
@@ -564,7 +713,7 @@ enum {
 - (void)startStreamer:(float)maxRecordingTime;
 {
 #if DEBUG_LOGS
-    NSLog(@"startStreamer");
+    DLog(@"startStreamer");
 #endif
 //    giveMeResults=YES;
     StopSignal=NO;
@@ -593,12 +742,6 @@ enum {
 - (void)cancelStreaming
 {
     [self stopSendWithStatus:@"Cancelled"];
-    
-    if ([Recorder sharedInstance]!=nil) {
-        [[Recorder sharedInstance] stopRecording];
-    }
-    
-    StopSignal=YES;
 }
 
 
@@ -617,6 +760,7 @@ NSString *fullPathToFilex;
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy   timeoutInterval:240];
     
     [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest addValue:@"100-continue"  forHTTPHeaderField:@"Expect"];
     //[request setAllowsCellularAccess:YES];
     
     //NSString *myboundary = @"---------------------------14737809831466499882746641449";
@@ -718,7 +862,7 @@ NSString *fullPathToFilex;
 - (void)recorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower{
 #if DEBUG_THIS
     #if DEBUG_LOGS
-        NSLog(@"AudioStreamer - recorderMicLevelCallbackAverage:andPeak");
+        DLog(@"AudioStreamer - recorderMicLevelCallbackAverage:andPeak");
     #endif
 #endif
     
@@ -729,7 +873,7 @@ NSString *fullPathToFilex;
         
     }else{
 #if DEBUG_LOGS
-        NSLog(@"Error: You haven't implemented MORecorderMicLevelCallbackAverage, It is a must. Please implement this one");
+        DLog(@"Error: You haven't implemented MORecorderMicLevelCallbackAverage, It is a must. Please implement this one");
 #endif
     }
     //- (void)MORecorderMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower

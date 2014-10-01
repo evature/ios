@@ -10,29 +10,29 @@
 	<string>Eva</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8A235C9F-BF00-43A0-8E82-4DC121DFC190</key>
+		<key>82F5FA736BE811D924193AE8BC02FD3A5952DAD4</key>
 		<string>https://github.com/evature/iosdev.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Code/FrameworkPack/Eva/Eva.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8A235C9F-BF00-43A0-8E82-4DC121DFC190</key>
+		<key>82F5FA736BE811D924193AE8BC02FD3A5952DAD4</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/evature/iosdev.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8A235C9F-BF00-43A0-8E82-4DC121DFC190</string>
+	<string>82F5FA736BE811D924193AE8BC02FD3A5952DAD4</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8A235C9F-BF00-43A0-8E82-4DC121DFC190</string>
+			<string>82F5FA736BE811D924193AE8BC02FD3A5952DAD4</string>
 			<key>IDESourceControlWCCName</key>
 			<string>iosdev</string>
 		</dict>

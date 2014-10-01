@@ -562,7 +562,7 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
         ok = FLAC__stream_encoder_process_interleaved(_encoder, pcm, need);
         
         left -= need;
-        DLog(@"------ frame index - %d", _frameIndex);
+        DLog(@"------ frame index - %d   fed %lu bytes to encoder", _frameIndex, need);
         _frameIndex++;
         
         if (!self.fileWasCreated) {
@@ -578,8 +578,8 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
         }
     }
     
-    double timePassed = [date timeIntervalSinceNow] * -1;
-    DLog(@"Total recordedBuffer calback: %.3f sec", timePassed);
+//    double timePassed = [date timeIntervalSinceNow] * -1;
+//    DLog(@"Total recordedBuffer calback: %.3f sec", timePassed);
     
 }
 

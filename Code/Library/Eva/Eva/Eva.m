@@ -84,6 +84,8 @@ CLLocationManagerDelegate
     AVAudioPlayer *audioFileVadEndRecord;
     AVAudioPlayer *audioFileCanceledRecord;
     
+    BOOL isRecorderReady;
+    
 }
 
 
@@ -95,7 +97,7 @@ CLLocationManagerDelegate
 
 @property(nonatomic,retain) NSMutableData * responseData; // collect the current response
 @property(nonatomic,retain) NSURLConnection * connection; // the current connection to Eva
-@property(nonatomic,retain) NSString *ipAddress;
+//@property(nonatomic,retain) NSString *ipAddress;
 @property(nonatomic,retain) CLLocationManager *locationManager;
 
 @property(nonatomic,retain) NSString *sessionID;
@@ -106,6 +108,7 @@ CLLocationManagerDelegate
 @property(nonatomic,retain) NSTimer *audioTimeoutTimer;
 
 @property(nonatomic) BOOL sendMicLevel;
+@property(nonatomic) BOOL isRecorderReady;
 
 @property(nonatomic) float micRecordTimeout;
 
@@ -129,7 +132,7 @@ CLLocationManagerDelegate
 
 @synthesize responseData = responseData_;
 @synthesize connection = connection_;
-@synthesize ipAddress = ipAddress_;
+//@synthesize ipAddress = ipAddress_;
 @synthesize locationManager = locationManager_;
 
 @synthesize delegate = delegate_;
@@ -151,6 +154,7 @@ CLLocationManagerDelegate
 
 @synthesize version = version_;
 @synthesize sendMicLevel = sendMicLevel_;
+@synthesize isRecorderReady = isRecorderReady_;
 
 @synthesize micRecordTimeout = micRecordTimeout_;
 
@@ -321,7 +325,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     evaAPIKey_ = [NSString stringWithFormat:@"%@", api_key];
     evaSiteCode_ = [NSString stringWithFormat:@"%@", site_code];
     
-    if    (DEBUG_MODE_FOR_EVA){
+    if (DEBUG_MODE_FOR_EVA){
         NSLog(@"It's debug mode");
     }
     DLog(@"setAPIKey startIsPressed=FALSE");
@@ -345,8 +349,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
        // // start a record and stop it immidiately after
         [[Recorder sharedInstance] startRecording:micRecordTimeout_ withAutoStop:TRUE];
        
-        DLog(@"Dispatch #2");
-        ipAddress_ = [self getIPAddress];
+//        DLog(@"Dispatch #2");
+//        ipAddress_ = [self getIPAddress];
         [self getCurrenLocale];
         DLog(@"Dispatch #3");
     });
@@ -746,10 +750,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 #pragma mark Recorder
 -(void)recorderIsReady{
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Got Signal : recorderIsReady");
-#endif
-
+    DLog(@"Got Signal : recorderIsReady");
+    self.isRecorderReady = true;
     if([[self delegate] respondsToSelector:@selector(evaRecorderIsReady)]){
         
         [[self delegate] evaRecorderIsReady];
@@ -757,6 +759,11 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSLog(@"Eva-Warning: You haven't implemented evaRecorderIsReady, It's only optional but you may want to implement this one");
     }
 }
+
+- (BOOL)isReady {
+    return self.isRecorderReady;
+}
+
 
 
 
@@ -807,7 +814,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     }
 }
 - (void)MOAudioStreamerConnectionDidFinishLoading:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection{
+    NSLog(@"finishLoading 1");
     if (theStreamer == streamer_) {
+            NSLog(@"finishLoading 2");
         [self connectionDidFinishLoading:theConnection];
         DLog(@"Streamer: DidFinishLoading");
     }
@@ -838,6 +847,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 	
     if ([self delegate] == nil) {
         NSLog(@"Eva: delegate is nil - the recording will now stop");
+        [self cancelRecord];
+        return;
+    }
+    
+    if (![Recorder sharedInstance].recording) {
+        DLog(@"Recorder stopped, stopping");
         [self cancelRecord];
         return;
     }
@@ -1049,9 +1064,9 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     if (sessionID_ != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&session_id=%@",url,sessionID_]];
     }
-    if (ipAddress_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&ip_addr=%@",url,ipAddress_]];
-    }
+//    if (ipAddress_ != nil) {
+//        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&ip_addr=%@",url,ipAddress_]];
+//    }
     
     
     if (bias_ != nil) {
@@ -1115,6 +1130,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:SERVER_RESPONSE_TIMEOUT];  // New : Set timeout...
     
     [request setHTTPMethod:@"POST"];
+    [request addValue:@"100-continue"  forHTTPHeaderField:@"Expect"];
     
     NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-flac;rate=%d",16000];
     
@@ -1189,26 +1205,24 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if (connection != connection_) {
-#if DEBUG_MODE_FOR_EVA
         NSLog(@"didReceiveData for wrong connection");
-#endif
         return;
     }
-    
+    DLog(@"Appending data of length %u", [data length]);
     // Append the new data to the instance variable you declared
+    if (responseData_ == nil) {
+        responseData_ = [[NSMutableData alloc] init];
+    }
     [responseData_ appendData:data];
+    DLog(@"Now response is of length %u", [responseData_ length]);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if (connection != connection_) {
-        #if DEBUG_MODE_FOR_EVA
         NSLog(@"Did finish loading for wrong connection");
-        #endif
         return;
     }
-    #if DEBUG_MODE_FOR_EVA
-    NSLog(@"Did finish loading");
-    #endif    
+    DLog(@"Did finish loading");
     
 #if TESTFLIGHT_TESTING
     NSString* aStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
@@ -1216,7 +1230,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 #endif
     
     // [[NSUserDefaults standardUserDefaults] setValue:aStr forKey:kLastJsonStringFromEva ];
-    
+    DLog(@"responseData length is %u", [responseData_ length]);
     NSError* error;
     NSDictionary* json = [NSJSONSerialization
                           JSONObjectWithData:responseData_
@@ -1224,7 +1238,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
                           options:kNilOptions
                           error:&error];
 #if DEBUG_MODE_FOR_EVA
-    NSLog(@"input_text=%@",[json objectForKey:@"input_text"]);
+    DLog(@"input_text=%@",[json objectForKey:@"input_text"]);
     
     NSDictionary* apiReply = [json objectForKey:@"api_reply"]; //2
     //NSDictionary* locationsReply = [apiReply objectForKey:@"Locations"];
@@ -1234,7 +1248,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         NSString *processedText = [apiReply objectForKey:@"ProcessedText"];
         
         //[outputLabel setText:sayIt];
-        NSLog(@"SayIt=%@, ProcessedText=%@",sayIt,processedText);
+        DLog(@"SayIt=%@, ProcessedText=%@",sayIt,processedText);
     }
     
 #endif
@@ -1251,7 +1265,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         if (sessionID_ == nil) {
             sessionID_ = [NSString stringWithFormat:@"1"];
         }
-        NSLog(@"SessionId set to %@", sessionID_);
+        DLog(@"SessionId set to %@", sessionID_);
     }
     
     if([[self delegate] respondsToSelector:@selector(evaDidReceiveData:)]){
@@ -1333,6 +1347,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     return [currentLocale objectForKey:NSLocaleCountryCode];
 }
 
+/*
 - (NSString *)getIPAddress
 {
     NSUInteger  an_Integer;
@@ -1394,7 +1409,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     //[pool drain];
     return @"";
-}
+}*/
 
 #pragma mark - MISC for url parameters
 -(NSString *)getUID{

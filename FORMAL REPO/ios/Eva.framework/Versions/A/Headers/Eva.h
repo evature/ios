@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.5.3
+//  Version 1.6.0
 //
 
 #import <Foundation/Foundation.h>
@@ -97,5 +97,6 @@
 - (BOOL) setVADEndRecordAudioFile: (NSURL *)filePath;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
 - (BOOL) setCanceledRecordAudioFile: (NSURL *)filePath;       // this sound will play when calling "cancelRecord"
 
+- (BOOL) isReady; // Do not call startRecord before this method returns true - you can wait for the evaRecorderIsReady delegate callback
 
 @end

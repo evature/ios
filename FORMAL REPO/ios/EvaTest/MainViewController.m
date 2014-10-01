@@ -192,10 +192,10 @@
         
         NSLog(@"Session is: %@", [dict objectForKey:@"session_id"]);
         self.isNewSession = false;
-        	[resetButton setHidden: false];
+        [resetButton setHidden: false];
         
         NSDictionary *api_reply = (NSDictionary*)[dict objectForKey:@"api_reply"];
-        if (api_reply != nil) {
+        if (api_reply != nil && api_reply != [NSNull null]) {
             NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
             if (flow != nil && [flow count] > 0) {
                 NSDictionary *flowAction = [flow firstObject];

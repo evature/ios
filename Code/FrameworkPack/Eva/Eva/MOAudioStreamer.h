@@ -41,24 +41,21 @@
     
     
     BOOL orderToStop;
+    BOOL okToSend;
     @public  NSError *connectionError;
 //    BOOL stopSendingStupidData;
 
     NSMutableURLRequest *   request;
     
-    BOOL sleptAlready;
 
 }
 
 
 @property(strong,nonatomic) NSMutableURLRequest *   request;;
-@property(assign,nonatomic)NSTimeInterval expectingTimeOut;
 @property(assign)id<MOAudioStreamerDelegate>streamerDelegate;
 @property(strong,nonatomic)NSString*recordingPath;
 @property(strong,nonatomic)NSString *webServiceURL;
 @property(strong,nonatomic)NSString *fileToSaveName;
-@property(retain,nonatomic)NSString*password;
-@property(retain,nonatomic)NSString*userName;
 @property (nonatomic, strong) Recorder *recorder;
 @property (nonatomic, strong, readwrite) NSURLConnection *  connection;
 //@property(assign)int lol;
@@ -67,6 +64,7 @@
 - (void)startStreamer:(float)maxRecordingTime;
 -(void)stopStreaming;
 - (void)cancelStreaming;
+-(BOOL)wasStopped;
 
 -(float)averagePower;
 -(float)peakPower;
