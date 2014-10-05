@@ -814,9 +814,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     }
 }
 - (void)MOAudioStreamerConnectionDidFinishLoading:(MOAudioStreamer*)theStreamer theConnection:(NSURLConnection *)theConnection{
-    NSLog(@"finishLoading 1");
     if (theStreamer == streamer_) {
-            NSLog(@"finishLoading 2");
         [self connectionDidFinishLoading:theConnection];
         DLog(@"Streamer: DidFinishLoading");
     }
@@ -1171,7 +1169,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     // You may have received an HTTP 200 here, or not...
 #if DEBUG_LOGS
-    NSLog(@"didReceiveResponse");
+    DLog(@"didReceiveResponse");
 #endif
     
     // A response has been received, this is where we initialize the instance var you created
@@ -1194,8 +1192,8 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
         // End of new code //
         
 #if DEBUG_MODE_FOR_EVA
-        NSLog(@"httpResponse = %@",[httpResponse description]);
-        NSLog(@"Response code = %d",code);
+        DLog(@"httpResponse = %@",[httpResponse description]);
+        DLog(@"Response code = %d",code);
 #endif
         
     }

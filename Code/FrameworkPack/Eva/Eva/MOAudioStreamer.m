@@ -363,7 +363,7 @@ enum {
                 return;
             }
             
-            // copy data from NSData to heap allocated buffer (Iftah: why?)
+            // copy data from NSData to heap allocated buffer
             memcpy(self.bufferOnHeap, [data bytes], [data length]);
             
     
@@ -385,7 +385,7 @@ enum {
                     
                     orderToStop = YES;
                     okToSend = NO;
-                    DLog(@"----> Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
+                    DLog(@"----> Streamer: Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
                     
                     if (self.producerStream != nil) {
                         DLog(@"closing the producer stream");
@@ -408,20 +408,20 @@ enum {
                 }
                 else {
                     // no new encoded data, and not time to stop yet - sleep a bit
-                    DLog(@"----No data available - GOING TO SLEEP----");
+                    DLog(@"----> Streamer:  No data available - GOING TO SLEEP----");
                     usleep(10000);
                 }
                 return;
             }
             
-            DLog(@"Read %li bytes from file", (long)bytesRead);
+            DLog(@"----> Streamer: Read %li bytes from file", (long)bytesRead);
 
             self.bufferOffset = 0;
             self.totalSizeRead += bytesRead;
             self.bufferLimit  = bytesRead;
         }
         else {
-            DLog(@"--- Continuing to transmit previous read data ---");
+            DLog(@"----> Streamer: Continuing to transmit previous read data ---");
         }
             
         // Send the next chunk of data in our buffer.
@@ -439,11 +439,13 @@ enum {
 
         NSStreamStatus status1 = [self.producerStream streamStatus];
         NSStreamStatus status2 = [self.consumerStream streamStatus];
-        DLog(@"Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
+        DLog(@"----> Streamer: Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
 
+        okToSend = NO;
+        
         NSInteger bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
         
-        DLog(@">>> Sent %d bytes to HTTP, maxLen=%d", bytesWritten, maxlength);
+        DLog(@"----> Streamer Sent %d bytes to HTTP, maxLen=%d", bytesWritten, maxlength);
         
         if (bytesWritten <= 0) {
             NSLog(@"Error! failed to write to HTTP");
@@ -455,7 +457,6 @@ enum {
             return;
         }
         // sent some - so now need to wait for HasSpaceAvail event
-        okToSend = NO;
         
 //        NSStreamStatus consumerStatus = [self.consumerStream streamStatus];
 //        if (consumerStatus < NSStreamStatusOpen) {
@@ -479,7 +480,7 @@ enum {
         self.bufferOffset  += bytesWritten;
         self.totalSizeSent += bytesWritten;
         self.framesSent++;
-        DLog(@"----> Frame %u,  total size read: %li    total size written %li", self.framesSent, self.totalSizeRead, self.totalSizeSent);
+        DLog(@"----> Streamer Frame %u,  total size read: %li    total size written %li", self.framesSent, self.totalSizeRead, self.totalSizeSent);
     }
     
     
@@ -491,6 +492,7 @@ enum {
 
 
 #pragma mark connection Delegate
+
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
 // A delegate method called by the NSURLConnection when the request/response

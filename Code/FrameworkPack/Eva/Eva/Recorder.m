@@ -158,13 +158,13 @@ static void recordCallback(
                            UInt32 inNumPackets,
                            const AudioStreamPacketDescription* inPacketDesc)
 {
-    DLog(@"recordCallback bytesSize: %u,  inNumPackets: %u,  startTime: %f",
-          (unsigned int)inBuffer->mAudioDataByteSize, (unsigned int)inNumPackets, inStartTime->mSampleTime);
+//    DLog(@"recordCallback bytesSize: %u,  inNumPackets: %u,  startTime: %f",
+//          (unsigned int)inBuffer->mAudioDataByteSize, (unsigned int)inNumPackets, inStartTime->mSampleTime);
     
     
 	Recorder* recorder = (__bridge Recorder*) inUserData;
 	if (!recorder.recording) {
-        DLog(@"Not recording");
+        DLog(@"Recorder: Not recording");
 		return;
     }
     
@@ -557,12 +557,12 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
         /* feed samples to encoder */
 #if DEBUG_LOGS
         if (left > READSIZE)
-            NSLog(@"Feeding trimmed to = %ld",need);
+            NSLog(@"====> Recorder  Feeding trimmed to = %ld",need);
 #endif
         ok = FLAC__stream_encoder_process_interleaved(_encoder, pcm, need);
         
         left -= need;
-        DLog(@"------ frame index - %d   fed %lu bytes to encoder", _frameIndex, need);
+        DLog(@"====> Recorder frame index - %d   fed %lu bytes to encoder", _frameIndex, need);
         _frameIndex++;
         
         if (!self.fileWasCreated) {
