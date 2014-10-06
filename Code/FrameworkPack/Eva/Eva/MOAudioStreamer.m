@@ -240,6 +240,8 @@ enum {
     
     self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     
+    [self.connection start];
+    
     //create the thread to call the streamer
      
     dispatch_queue_t highPriQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
@@ -493,6 +495,11 @@ enum {
 
 #pragma mark connection Delegate
 
+- (void)connection:willSendRequestForAuthenticationChallenge
+{
+    DLog(@"connection:willSendRequestForAuthenticationChallenge");
+}
+
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveResponse:(NSURLResponse *)response
 // A delegate method called by the NSURLConnection when the request/response
@@ -635,12 +642,12 @@ enum {
         // removed: 8/6/14
         //  [self stopSendWithStatus:@"RECIVED RESPONSE WITH NO ERROR"]; // NEW - 4/9/13
         // do nothing
+        [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveData:data];
 
     }else{
         DLog(@"self.connection audiostreamer.m is null");
     }
 
-    [self.streamerDelegate MOAudioStreamerConnection:self theConnection:theConnection didReceiveData:data];
 }
 
 - (void)connection:(NSURLConnection *)theConnection didFailWithError:(NSError *)error
@@ -705,10 +712,10 @@ enum {
 //#endif
 //#endif
 //        // assert(theConnection == self.connection);
+        [self.streamerDelegate MOAudioStreamerConnectionDidFinishLoading:self theConnection:theConnection]; // NEW
         
         [self stopSendWithStatus:@"end connection"];
     }
-    [self.streamerDelegate MOAudioStreamerConnectionDidFinishLoading:self theConnection:theConnection]; // NEW
 }
 
 #pragma mark * Actions

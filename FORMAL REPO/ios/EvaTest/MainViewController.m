@@ -163,7 +163,8 @@
     [cancelButton setHidden: !isRecording];
     [stopButton setHidden: !isRecording];
     [micLevel setHidden:!isRecording];
-    NSLog(@"Setting controls to recording: %hhu", isRecording);	
+    
+    NSLog(@"Setting controls to recording: %hhu", isRecording);
 }
 
 

@@ -320,7 +320,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code{
     //  NSLog(@"Eva.framework version %@(%@)",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
-    NSLog(@"Eva.framework version v%@",EVA_FRAMEWORK_VERSION);
+    NSLog(@"Eva.framework version v%@ %@",EVA_FRAMEWORK_VERSION, DEBUG_MODE_FOR_EVA ? @"Debug Build" : @"Release Build");
     
     evaAPIKey_ = [NSString stringWithFormat:@"%@", api_key];
     evaSiteCode_ = [NSString stringWithFormat:@"%@", site_code];
@@ -1041,65 +1041,63 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 -(NSURL *)getUrl:(NSString *)host {
     
-    NSURL *url;
+    NSString *urlStr;
     
     if (version_ != nil) {
-        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_, //&session_id=%@
-                                                          [self getUID]]]];
+        urlStr = [self URLEncodeString:[NSString stringWithFormat:@"%@/%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,[self makeSafeStringVersion:version_],evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_, //&session_id=%@
+                                                          [self getUID]]];
         
     }else{
-        url = [NSURL URLWithString:[self URLEncodeString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
-                                                          [self getUID]]]];
+        urlStr = [self URLEncodeString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
+                                                          [self getUID]]];
     }
-    
     
     if (longitude==0 && latitude ==0) { // Check if location services returned a valid value
         
     }else{          // There are GPS coordinates
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&latitude=%.5f&longitude=%.5f",url,latitude,longitude]];
+        urlStr = [NSString stringWithFormat:@"%@&latitude=%.5f&longitude=%.5f",urlStr,latitude,longitude];
     }
     
     if (sessionID_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&session_id=%@",url,sessionID_]];
+        urlStr = [NSString stringWithFormat:@"%@&session_id=%@",urlStr,sessionID_];
     }
 //    if (ipAddress_ != nil) {
-//        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&ip_addr=%@",url,ipAddress_]];
+//        urlStr = [NSString stringWithFormat:@"%@&ip_addr=%@",urlStr,ipAddress_];
 //    }
     
-    
     if (bias_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&bias=%@",url,[self makeSafeString:bias_]]];
+        urlStr = [NSString stringWithFormat:@"%@&bias=%@",urlStr,[self makeSafeString:bias_]];
     }
     if (home_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&home=%@",url,[self makeSafeString:home_]]];
+        urlStr = [NSString stringWithFormat:@"%@&home=%@",urlStr,[self makeSafeString:home_]];
     }
     if (language_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&language=%@",url,language_]];
+        urlStr = [NSString stringWithFormat:@"%@&language=%@",urlStr,language_];
     }
     if (scope_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&scope=%@",url,[self makeSafeString:scope_]]];
+        urlStr = [NSString stringWithFormat:@"%@&scope=%@",urlStr,[self makeSafeString:scope_]];
     }
     if (context_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&context=%@",url,[self makeSafeString:context_]]];
+        urlStr = [NSString stringWithFormat:@"%@&context=%@",urlStr,[self makeSafeString:context_]];
     }
     
-    
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&audio_files_used=%@%@%@%@",url,
+    urlStr = [NSString stringWithFormat:@"%@&audio_files_used=%@%@%@%@",urlStr,
                                 audioFileStartRecord_ == nil ? @"N": @"Y",
                                 audioFileRequestedEndRecord_ == nil ? @"N" : @"Y",
                                 audioFileVadEndRecord_ == nil ? @"N" : @"Y",
                                 audioFileCanceledRecord_ == nil ? @"N" : @"Y"
-    ]];
+    ];
     
     if (optional_dictionary_ != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@",url,[self urlSafeEncodedOptionalParametersString]]];
+        urlStr = [NSString stringWithFormat:@"%@&%@",urlStr,[self urlSafeEncodedOptionalParametersString]];
     }
-    
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&device=%@&ios_ver=%@", url, [UIDevice currentDevice].model, [[UIDevice currentDevice] systemVersion]]];
-    
+    urlStr= [NSString stringWithFormat:@"%@&device=%@&ios_ver=%@", urlStr, [UIDevice currentDevice].model, [[UIDevice currentDevice] systemVersion] ];
     // Add version number to URL (new from version 1.4.6) //
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&sdk_version=ios-%@",url,EVA_FRAMEWORK_VERSION]];
+    urlStr = [NSString stringWithFormat:@"%@&sdk_version=ios-%@",urlStr,EVA_FRAMEWORK_VERSION];
     
+    NSURL *url = [NSURL URLWithString:[self URLEncodeString:urlStr]];
+
+    NSLog(@"URL = %@", url);
     return url;
     
 }
