@@ -71,7 +71,7 @@
 #pragma mark * audiostreamer
 
 enum {
-    kPostBufferSize = 2048
+    kPostBufferSize = 1024*32
 };
 
 
@@ -244,20 +244,27 @@ enum {
     
     //create the thread to call the streamer
      
-    dispatch_queue_t highPriQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    //dispatch_queue_t highPriQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     
     _streamDispatch = dispatch_queue_create(
                                             "AUDIO STREAM queue",
                                             DISPATCH_QUEUE_SERIAL);
-    dispatch_set_target_queue(_streamDispatch, highPriQueue);
+    dispatch_set_target_queue(_streamDispatch, NULL);//highPriQueue);
 
     orderToStop=NO;
     dispatch_async(_streamDispatch, ^{
+        BOOL loggedOnce = false;
+
         while (!orderToStop) {
             if (okToSend) {
+                loggedOnce = false;
                 [self produceData];
             }
             else {
+                if (!loggedOnce) {
+                    DLog(@"Not ok to send - waiting for hasSpaceAvail");
+                    loggedOnce = TRUE;
+                }
                 usleep(10000);
             }
         }
@@ -321,168 +328,175 @@ enum {
 
 /****
  *  Read data from encoded file  - send it to http
+ *  write in chunks until written size is less than chunk size, or until no new data is available
  *  sleep for 10ms if no data is available
  *****/
 - (void) produceData {
     @synchronized(self){
-        // Check to see if we've run off the end of our buffer.  If we have,
-        // work out the next buffer of data to send.
-
-        
-#if DEBUG_MODE_FOR_EVA
-        NSStreamStatus status = [self.producerStream streamStatus];
-        NSError *streamError = [self.producerStream streamError];
-        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:soundFilePath error:nil];
-        NSNumber *fileLengthNum = (NSNumber *) [fileAttributes objectForKey:NSFileSize];
-        DLog(@"**** produceData   Producer status: %d,  err=%@,   filesize=%@", status, streamError, fileLengthNum);
-#endif
-        
-        if (self.bufferOnHeap == NULL) {
-            self.bufferOnHeap = malloc(kPostBufferSize);
-            self.bufferLimit = 0;
-        }
-
-        // if bufferOffset equals to bufferLimit it means we transmitted everything
-        // we read already - time to read some more
-        if (self.bufferOffset == self.bufferLimit) {
+        BOOL repeat= YES;
+        while (repeat) {
+            // Check to see if we've run off the end of our buffer.  If we have,
+            // work out the next buffer of data to send.
             
-            // read from file - continue where we last stopped
-            NSFileHandle *fHandle;
-            fHandle = [NSFileHandle fileHandleForReadingAtPath:soundFilePath];
-            [fHandle seekToFileOffset:  self.totalSizeRead];
-            
-            NSData *data = [fHandle readDataOfLength:kPostBufferSize];
-            [fHandle closeFile];
-
-            NSInteger   bytesRead = [data length];
-            if (bytesRead > kPostBufferSize) {
-                NSLog(@"CRITICAL ERROR  bytesRead > kPostBufferSize");
-                return;
+            if (self.bufferOnHeap == NULL) {
+                self.bufferOnHeap = malloc(kPostBufferSize);
+                self.bufferLimit = 0;
             }
-            
-            if (self.bufferOnHeap==NULL) {
-                NSLog(@"CRITICAL ERROR: no buffer allocated");
-                return;
-            }
-            
-            // copy data from NSData to heap allocated buffer
-            memcpy(self.bufferOnHeap, [data bytes], [data length]);
-            
-    
-            if (bytesRead <= 0) {
+
+            // if bufferOffset equals to bufferLimit it means we transmitted everything
+            // we read already - time to read some more
+            if (self.bufferOffset == self.bufferLimit) {
                 
-                if (bytesRead < 0) {
-                    NSLog(@"ERROR: Failed to read from encoded file %d", bytesRead);
-                    [self stopSendWithStatus:@"File read error"];
-                }
+                // read from file - continue where we last stopped
+                NSFileHandle *fHandle;
+                fHandle = [NSFileHandle fileHandleForReadingAtPath:soundFilePath];
+                [fHandle seekToFileOffset:  self.totalSizeRead];
+                
+                NSData *data = [fHandle readDataOfLength:kPostBufferSize];
+                [fHandle closeFile];
 
-                // read zero bytes from file - no new encoded data - check if stop signal
-                if ( StopSignal) {
-                    if (self.bufferOnHeap != NULL) {
-                        free(self.bufferOnHeap);
-                        self.bufferOnHeap = NULL;
+                NSInteger   bytesRead = [data length];
+#if DEBUG_MODE_FOR_EVA
+                    if (bytesRead > 20) {
+                        bytesRead = 20+arc4random_uniform(bytesRead-20);
                     }
-                    self.bufferOffset = 0;
-                    self.bufferLimit = 0;
+#endif
+                if (bytesRead > kPostBufferSize) {
+                    NSLog(@"CRITICAL ERROR  bytesRead > kPostBufferSize");
+                    return;
+                }
+                
+                if (self.bufferOnHeap==NULL) {
+                    NSLog(@"CRITICAL ERROR: no buffer allocated");
+                    return;
+                }
+                
+                // copy data from NSData to heap allocated buffer
+                memcpy(self.bufferOnHeap, [data bytes], bytesRead);
+                
+        
+                if (bytesRead <= 0) {
                     
-                    orderToStop = YES;
-                    okToSend = NO;
-                    DLog(@"----> Streamer: Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
+                    if (bytesRead < 0) {
+                        NSLog(@"ERROR: Failed to read from encoded file %d", bytesRead);
+                        [self stopSendWithStatus:@"File read error"];
+                    }
                     
-                    if (self.producerStream != nil) {
-                        DLog(@"closing the producer stream");
-                        // We set our delegate callback to nil because we don't want to
-                        // be called anymore for this stream.  However, we can't
-                        // remove the stream from the runloop (doing so prevents the
-                        // URL from ever completing) and nor can we nil out our
-                        // stream reference (that causes all sorts of wacky crashes).
-                        //
-                        // +++ Need bug numbers for these problems.
-                        
-                        self.producerStream.delegate = nil;
-                        // [self.producerStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-                        [self.producerStream close];
-                        if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFinishStreaming:)]) {
-                            [self.streamerDelegate MOAudioStreamerDidFinishStreaming:self];
+                    if ([[Recorder sharedInstance] recording] == NO) {
+                        StopSignal = true;
+                    }
+
+                    // read zero bytes from file - no new encoded data - check if stop signal
+                    if ( StopSignal) {
+                        if (self.bufferOnHeap != NULL) {
+                            free(self.bufferOnHeap);
+                            self.bufferOnHeap = NULL;
                         }
-                    }
+                        self.bufferOffset = 0;
+                        self.bufferLimit = 0;
+                        
+                        orderToStop = YES;
+                        okToSend = NO;
+                        DLog(@"----> Streamer: Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
+                        
+                        if (self.producerStream != nil) {
+                            DLog(@"closing the producer stream");
+                            // We set our delegate callback to nil because we don't want to
+                            // be called anymore for this stream.  However, we can't
+                            // remove the stream from the runloop (doing so prevents the
+                            // URL from ever completing) and nor can we nil out our
+                            // stream reference (that causes all sorts of wacky crashes).
+                            //
+                            // +++ Need bug numbers for these problems.
+                            
+                            self.producerStream.delegate = nil;
+                            // [self.producerStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+                            [self.producerStream close];
+                            if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFinishStreaming:)]) {
+                                [self.streamerDelegate MOAudioStreamerDidFinishStreaming:self];
+                            }
+                        }
 
+                    }
+                    else {
+                        // no new encoded data, and not time to stop yet - sleep a bit
+                        //DLog(@"----> Streamer:  No data available - GOING TO SLEEP----");
+                        usleep(10000);
+                    }
+                    return;
                 }
-                else {
-                    // no new encoded data, and not time to stop yet - sleep a bit
-                    DLog(@"----> Streamer:  No data available - GOING TO SLEEP----");
-                    usleep(10000);
+                
+                NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:soundFilePath error:nil];
+                NSNumber *fileLengthNum = (NSNumber *) [fileAttributes objectForKey:NSFileSize];
+                DLog(@"----> Streamer: Read %li bytes from file, file size is %@", (long)bytesRead, fileLengthNum);
+
+                self.bufferOffset = 0;
+                self.totalSizeRead += bytesRead;
+                self.bufferLimit  = bytesRead;
+            }
+            else {
+                DLog(@"----> Streamer: Continuing to transmit previous read data, offset at %zu,  limit at %zu  ---", self.bufferOffset, self.bufferLimit);
+            }
+                
+            // Send the next chunk of data in our buffer.
+            if (self.bufferOffset >= self.bufferLimit) {
+                NSLog(@"CRITICAL ERROR: expected bufferOffset to be less than limit");
+                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
                 }
+                
+                [self stopSendWithStatus:@"Network write error"];
                 return;
             }
             
-            DLog(@"----> Streamer: Read %li bytes from file", (long)bytesRead);
+            int maxlength = self.bufferLimit - self.bufferOffset;
 
-            self.bufferOffset = 0;
-            self.totalSizeRead += bytesRead;
-            self.bufferLimit  = bytesRead;
-        }
-        else {
-            DLog(@"----> Streamer: Continuing to transmit previous read data ---");
-        }
+            NSStreamStatus status1 = [self.producerStream streamStatus];
+            NSStreamStatus status2 = [self.consumerStream streamStatus];
+            DLog(@"----> Streamer: Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
+
+            okToSend = NO;
             
-        // Send the next chunk of data in our buffer.
-        if (self.bufferOffset >= self.bufferLimit) {
-            NSLog(@"CRITICAL ERROR: expected bufferOffset to be less than limit");
-            if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
-                [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
+            NSInteger bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
+            
+            DLog(@"----> Streamer Sent %d bytes to HTTP, maxLen=%d", bytesWritten, maxlength);
+            
+            if (bytesWritten <= 0) {
+                NSLog(@"Error! failed to write to HTTP");
+                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
+                }
+                
+                [self stopSendWithStatus:@"Network write error"];
+                return;
+            }
+            // sent some - so now need to wait for HasSpaceAvail event
+            
+    //        NSStreamStatus consumerStatus = [self.consumerStream streamStatus];
+    //        if (consumerStatus < NSStreamStatusOpen) {
+    //            bool isOpen = [self openConsumerStream];
+    //            if (!isOpen) {
+    //                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
+    //                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
+    //                }
+    //                
+    //                [self stopSendWithStatus:@"Failed to open connection"];
+    //            }
+    //        }
+            
+            
+            if (maxlength < kPostBufferSize) {
+                // read less than maximum from file - the reading is faster than the writing
+                repeat = NO;
+                DLog(@"----Streamer: Sent less than maximum ----");
+    //            usleep(10000);
             }
             
-            [self stopSendWithStatus:@"Network write error"];
-            return;
+            self.bufferOffset  += bytesWritten;
+            self.totalSizeSent += bytesWritten;
+            self.framesSent++;
+            DLog(@"----> Streamer Frame %u,  total size read: %li    total size written %li", self.framesSent, self.totalSizeRead, self.totalSizeSent);
         }
-        
-        int maxlength = self.bufferLimit - self.bufferOffset;
-
-        NSStreamStatus status1 = [self.producerStream streamStatus];
-        NSStreamStatus status2 = [self.consumerStream streamStatus];
-        DLog(@"----> Streamer: Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
-
-        okToSend = NO;
-        
-        NSInteger bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
-        
-        DLog(@"----> Streamer Sent %d bytes to HTTP, maxLen=%d", bytesWritten, maxlength);
-        
-        if (bytesWritten <= 0) {
-            NSLog(@"Error! failed to write to HTTP");
-            if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
-                [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
-            }
-            
-            [self stopSendWithStatus:@"Network write error"];
-            return;
-        }
-        // sent some - so now need to wait for HasSpaceAvail event
-        
-//        NSStreamStatus consumerStatus = [self.consumerStream streamStatus];
-//        if (consumerStatus < NSStreamStatusOpen) {
-//            bool isOpen = [self openConsumerStream];
-//            if (!isOpen) {
-//                if (self.streamerDelegate &&[self.streamerDelegate respondsToSelector:@selector(MOAudioStreamerDidFailed:message:)]) {
-//                    [self.streamerDelegate MOAudioStreamerDidFailed:self message:NSLocalizedString(@"network write error", nil)];
-//                }
-//                
-//                [self stopSendWithStatus:@"Failed to open connection"];
-//            }
-//        }
-        
-        
-//        if (maxlength < kPostBufferSize) {
-//            // read less than maximum from file - the reading is faster than the writing
-//            DLog(@"----Sent less than maximum - GOING TO SLEEP----");
-//            usleep(10000);
-//        }
-        
-        self.bufferOffset  += bytesWritten;
-        self.totalSizeSent += bytesWritten;
-        self.framesSent++;
-        DLog(@"----> Streamer Frame %u,  total size read: %li    total size written %li", self.framesSent, self.totalSizeRead, self.totalSizeSent);
     }
     
     
@@ -812,9 +826,11 @@ NSString *fullPathToFilex;
 
 
 -(void)setupNewRecordableFile:(float) maxRecordingTime{
-    DLog(@"Dbg: setup new file");
-    [self removeRecordableFile];
-    DLog(@"Dbg:  cleanedup last file");
+    if (maxRecordingTime != -1) {
+        DLog(@"Dbg: setup new file");
+        [self removeRecordableFile];
+        DLog(@"Dbg:  cleanedup last file");
+    }
     NSFileManager *fileManager=[NSFileManager defaultManager];
     
     
@@ -833,7 +849,7 @@ NSString *fullPathToFilex;
     soundFilePath = [NSString stringWithString: [dataPath
                                                  stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.fileToSaveName,ext ]]];
     
-    if ([Recorder sharedInstance]==nil) {
+    if ([Recorder sharedInstance]==nil || maxRecordingTime == -1) {
         return;
     }
     [Recorder sharedInstance].savedPath = soundFilePath;

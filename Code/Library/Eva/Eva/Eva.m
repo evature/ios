@@ -32,7 +32,7 @@
 
 #include "MOAudioStreamer.h"
 
-
+BOOL isDebug = DEBUG_MODE_FOR_EVA;
 
 
 #define LEVEL_SAMPLE_TIME 0.03f
@@ -43,7 +43,7 @@
 // SERVER_RESPONSE_TIMEOUT is an upper limit of response
 #define SERVER_RESPONSE_TIMEOUT (MIC_RECORD_TIMEOUT_DEFAULT + 10.0f)
 
-#define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"
+# define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"
 #define EVA_HOST_ADDRESS_FOR_TEXT  @"http://apiuseh.evaws.com"
 
 @interface Eva ()<
@@ -187,6 +187,10 @@ CLLocationManagerDelegate
 		sharedInstance = [[Eva alloc] init];
 	}
 	return sharedInstance;
+}
+
+- (void)setDebugMode:(BOOL)_isDebug {
+    isDebug = _isDebug;
 }
 
 
@@ -735,7 +739,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     }else{
         [streamer_ stopStreaming];
     }
-    
 }
 
 /*-(void)soundRecoderDidFinishRecording:(SoundRecoder *)recoder{
@@ -765,6 +768,13 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 }
 
 
+-(void)repeatStreamer{
+    [self establishConnection];
+    streamer_.webServiceURL = @"http://10.0.0.37:8000/ptest";
+    DLog(@"Changing URL to %@", streamer_.webServiceURL);
+    [streamer_ startStreamer:-1];     // -1 tells the streamer to not initialize the recorder and delete old file
+    [streamer_ recordFileWasCreated]; // fake call from recorder to start the streaming thread
+}
 
 
 #pragma mark MOAudioStreamer
@@ -1048,7 +1058,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
                                                           [self getUID]]];
         
     }else{
-        urlStr = [self URLEncodeString:[NSString stringWithFormat:@"%@/v1.0?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
+        urlStr = [self URLEncodeString:[NSString stringWithFormat:@"%@?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@",host,evaSiteCode_,evaAPIKey_,[self getCurrenLocale],[self getCurrentTimezone],//sessionID_,
                                                           [self getUID]]];
     }
     
@@ -1097,7 +1107,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     NSURL *url = [NSURL URLWithString:[self URLEncodeString:urlStr]];
 
-    NSLog(@"URL = %@", url);
+    DLog(@"URL = %@", url);
     return url;
     
 }
@@ -1111,11 +1121,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     NSURL *url = [self getUrl: EVA_HOST_ADDRESS];
     
-
-#if DEBUG_MODE_FOR_EVA
-    NSLog(@"Url = %@",url);
-   // NSLog(@"safeUrl = %@",safeURLString);
-#endif
     
 #if TESTFLIGHT_TESTING
     TFLog(@"urlToEva:%@",url);
@@ -1123,18 +1128,18 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
    
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:SERVER_RESPONSE_TIMEOUT];  // New : Set timeout...
-    
-    [request setHTTPMethod:@"POST"];
-    [request addValue:@"100-continue"  forHTTPHeaderField:@"Expect"];
-    
-    NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-flac;rate=%d",16000];
-    
-    // set header
-    [request addValue:headerBoundary forHTTPHeaderField:@"Content-Type"];
-    
-    [request addValue:@"chunked" forHTTPHeaderField:@"Transfer-Encoding"];
-    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:SERVER_RESPONSE_TIMEOUT];  // New : Set timeout...
+//    
+//    [request setHTTPMethod:@"POST"];
+//    [request addValue:@"100-continue"  forHTTPHeaderField:@"Expect"];
+//    
+//    NSString *headerBoundary = [NSString stringWithFormat:@"audio/x-flac;rate=%d",16000];
+//    
+//    // set header
+//    [request addValue:headerBoundary forHTTPHeaderField:@"Content-Type"];
+//    
+//    [request addValue:@"chunked" forHTTPHeaderField:@"Transfer-Encoding"];
+//    
     
     streamer_ = [MOAudioStreamer new];//[[MOAudioStreamer alloc] init];
     

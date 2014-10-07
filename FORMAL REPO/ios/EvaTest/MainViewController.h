@@ -32,6 +32,8 @@
 
     IBOutlet UILabel *vadLabel;
     IBOutlet UILabel *responseLabel;
+    
+
     //////////////////
 }
 
@@ -49,6 +51,7 @@
 @property(nonatomic,retain) IBOutlet UILabel *responseLabel;
 
 @property(nonatomic,retain) IBOutlet UIProgressView *micLevel;
+
 //////////////////
 
 @property(nonatomic,retain) NSString *apiKeyString, *siteCodeString;

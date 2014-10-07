@@ -105,7 +105,7 @@
 -(IBAction)continueRecordButton:(id)sender{
     [self showLabelWithText:@"Started recording"];
     [[Eva sharedInstance] startRecord:[self isNewSession]];
-    //[self setRecordButtons:true];
+    [self setRecordButtons:true];
 }
 -(IBAction)stopRecordButton:(id)sender{
     [self showLabelWithText:@"Stopped recording"];
@@ -159,12 +159,12 @@
 
 - (void)setRecordButtons: (Boolean) isRecording{
     [resetButton setHidden: isRecording || [self isNewSession]];
-//    [continueButton setHidden: isRecording];
+    [continueButton setHidden: isRecording];
     [cancelButton setHidden: !isRecording];
     [stopButton setHidden: !isRecording];
     [micLevel setHidden:!isRecording];
     
-    NSLog(@"Setting controls to recording: %hhu", isRecording);
+    NSLog(@"Setting controls to recording: %hhu	", isRecording);
 }
 
 
@@ -351,6 +351,7 @@ float vadStopNoisyMoments;
     [super viewDidLoad];
     
     
+    [self setRecordButtons:false];
 	// Do any additional setup after loading the view, typically from a nib.
     
     

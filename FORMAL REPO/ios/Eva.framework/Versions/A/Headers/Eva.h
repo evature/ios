@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.6.0
+//  Version 1.6.1
 //
 
 #import <Foundation/Foundation.h>
@@ -89,6 +89,10 @@
 // query Eva by text - optional start new session
 - (BOOL)queryWithText:(NSString *)text startNewSession:(BOOL)newSession;
 
+- (void)setDebugMode:(BOOL)isDebug;
+
+-(void)repeatStreamer; // for debugging stress test
+-(void)stopRecordQueue: (BOOL)wasCanceled; // for debugging
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)
