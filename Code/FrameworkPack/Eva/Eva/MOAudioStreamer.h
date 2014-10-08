@@ -41,7 +41,6 @@
     
     
     BOOL orderToStop;
-    BOOL okToSend;
     @public  NSError *connectionError;
 //    BOOL stopSendingStupidData;
 

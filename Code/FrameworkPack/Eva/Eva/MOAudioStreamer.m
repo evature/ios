@@ -115,7 +115,6 @@ enum {
 	{
 		sharedInstance = [[MOAudioStreamer alloc] init];
         sharedInstance->orderToStop = NO;
-        sharedInstance->okToSend = NO;
 	}
 	return sharedInstance;
 }
@@ -159,6 +158,8 @@ enum {
     status = [self.consumerStream streamStatus];
     return status >= NSStreamStatusOpen;
 }
+
+void (^iterateProduceData)();
 
 - (void)startSend
 {
@@ -251,24 +252,19 @@ enum {
                                             DISPATCH_QUEUE_SERIAL);
     dispatch_set_target_queue(_streamDispatch, NULL);//highPriQueue);
 
-    orderToStop=NO;
-    dispatch_async(_streamDispatch, ^{
-        BOOL loggedOnce = false;
-
-        while (!orderToStop) {
-            if (okToSend) {
-                loggedOnce = false;
-                [self produceData];
-            }
-            else {
-                if (!loggedOnce) {
-                    DLog(@"Not ok to send - waiting for hasSpaceAvail");
-                    loggedOnce = TRUE;
-                }
-                usleep(10000);
-            }
+    iterateProduceData= ^{
+        //while (!orderToStop) {
+        [self produceData];
+        if (!orderToStop) {
+            dispatch_async(_streamDispatch, iterateProduceData);
         }
-    });
+        //}
+    };
+    
+    orderToStop=NO;
+    dispatch_async(_streamDispatch, iterateProduceData);
+    
+    
     
 //    CFReadStreamRef readStream;
 //    CFWriteStreamRef writeStream;
@@ -396,7 +392,6 @@ enum {
                         self.bufferLimit = 0;
                         
                         orderToStop = YES;
-                        okToSend = NO;
                         DLog(@"----> Streamer: Closing: total size read: %li    total size written %li", self.totalSizeRead, self.totalSizeSent);
                         
                         if (self.producerStream != nil) {
@@ -454,8 +449,6 @@ enum {
             NSStreamStatus status1 = [self.producerStream streamStatus];
             NSStreamStatus status2 = [self.consumerStream streamStatus];
             DLog(@"----> Streamer: Just before writing to producer  Prod stat= %u    Cons stat= %u", status1, status2);
-
-            okToSend = NO;
             
             NSInteger bytesWritten = [self.producerStream write:&self.bufferOnHeap[self.bufferOffset] maxLength:maxlength];
             
@@ -484,12 +477,18 @@ enum {
     //            }
     //        }
             
+            if (bytesWritten < maxlength) {
+                // wrote less bytes then we wanted - the upload isn't fast enough
+                DLog(@"------ Streamer -  written %d bytes, wanted to send %d", bytesWritten, maxlength);
+                usleep(10000); 
+            }
+            
             
             if (maxlength < kPostBufferSize) {
                 // read less than maximum from file - the reading is faster than the writing
                 repeat = NO;
                 DLog(@"----Streamer: Sent less than maximum ----");
-    //            usleep(10000);
+                usleep(10000);
             }
             
             self.bufferOffset  += bytesWritten;
@@ -563,7 +562,6 @@ enum {
                 
             case NSStreamEventHasSpaceAvailable:
                 DLog(@"Producer has space available");
-                okToSend = YES;
                 break;
                 
             case NSStreamEventHasBytesAvailable:
