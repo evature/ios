@@ -433,6 +433,9 @@ static char *FormatError(char *str, OSStatus error)
     [self stopRecording:FALSE];
 }
 
+// for some reason this isn't declared in the flac.h file
+FLAC_API FLAC__bool FLAC__stream_encoder_delete(FLAC__StreamEncoder *encoder);
+
 - (void)stopRecording:(BOOL) autoStop
 {
     // Iftah
@@ -501,7 +504,7 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
 
 - (void)recordedBuffer:(UInt8*)buffer byteSize:(UInt32)byteSize packetsNum:(unsigned int)inNumPackets
 {
-    NSDate *date = [NSDate date];
+    //NSDate *date = [NSDate date];
 
     unsigned sample_rate = SAMPLE_RATE;
 	unsigned channels = CHANNELS;
