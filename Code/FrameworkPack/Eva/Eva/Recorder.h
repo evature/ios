@@ -1,6 +1,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
-#import <FLAC/all.h>
+#import "private/all.h"
 
 #define NUMBER_AUDIO_DATA_BUFFERS  3
 
