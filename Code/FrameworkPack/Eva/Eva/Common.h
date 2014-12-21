@@ -10,7 +10,7 @@
 #define Eva_Common_h
 
 
-#define EVA_FRAMEWORK_VERSION @"1.6.2"
+#define EVA_FRAMEWORK_VERSION @"1.6.3"
 
 #define USE_SAFE_STRING TRUE
 

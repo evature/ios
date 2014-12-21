@@ -87,17 +87,17 @@ NSDate *startTime = nil;
     }
     
     if (size == -1) {
-        size = [dict[@"body_size"] intValue];
+        size = [dict[@"message"] intValue];
         NSLog(@"Setting expectation size to %d", size);
     }
     else {
-        if (size != [dict[@"body_size"] intValue]) {
+        if (size != [dict[@"message"] intValue]) {
             NSLog(@"Size difference!");
             timesToRepeat = 0;
         }
     }
     
-    [dataTextView setText:[NSString stringWithFormat:@" received size %@ in %f sec  - %@",  dict[@"body_size"], executionTime, [dataTextView text]]];
+    [dataTextView setText:[NSString stringWithFormat:@" received size %@ in %f sec  - %@",  dict[@"message"], executionTime, [dataTextView text]]];
 
     [self iterateEva];
 }

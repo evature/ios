@@ -404,6 +404,7 @@ float vadStopNoisyMoments;
 #if !VAD_DEBUG_GUI
     [vadLabel setHidden:TRUE];
 #endif
+    NSLog(@"sizeof(long) = %lu", sizeof(long));
     
     [self showLabelWithText:@"View loaded"];
 }

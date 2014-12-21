@@ -770,7 +770,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 -(void)repeatStreamer{
     [self establishConnection];
-    streamer_.webServiceURL = @"http://10.0.0.37:8000/ptest";
+    streamer_.webServiceURL = @"http://192.168.0.108:8000/ptest";
     DLog(@"Changing URL to %@", streamer_.webServiceURL);
     [streamer_ startStreamer:-1];     // -1 tells the streamer to not initialize the recorder and delete old file
     [streamer_ recordFileWasCreated]; // fake call from recorder to start the streaming thread

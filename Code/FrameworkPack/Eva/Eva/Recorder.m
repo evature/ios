@@ -433,8 +433,6 @@ static char *FormatError(char *str, OSStatus error)
     [self stopRecording:FALSE];
 }
 
-// for some reason this isn't declared in the flac.h file
-FLAC_API FLAC__bool FLAC__stream_encoder_delete(FLAC__StreamEncoder *encoder);
 
 - (void)stopRecording:(BOOL) autoStop
 {

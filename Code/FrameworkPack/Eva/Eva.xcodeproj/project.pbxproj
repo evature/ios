@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		941611AB1A46DF9B00275048 /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941611AA1A46DF9B00275048 /* Ogg.framework */; };
+		94D6AA671A46DE91006A5D23 /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D6AA661A46DE91006A5D23 /* FLAC.framework */; };
 		CF17473317BD029600CE68E3 /* Recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = CF17473117BD029600CE68E3 /* Recorder.h */; };
 		CF17473417BD029600CE68E3 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF17473217BD029600CE68E3 /* Recorder.m */; };
 		CF17473717BD02A000CE68E3 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = CF17473217BD029600CE68E3 /* Recorder.m */; };
@@ -23,13 +25,10 @@
 		CF67790817A7C26C000BB095 /* Eva.framework in Resources */ = {isa = PBXBuildFile; fileRef = CF408297174E653F00CCB667 /* Eva.framework */; };
 		CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
 		CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
 		CF95929F17A15E2F0022CFBF /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082A6174E65AA00CCB667 /* Eva.m */; };
 		CF9592A017A15E2F0022CFBF /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4082AB174E65BD00CCB667 /* NSError+CustomError.m */; };
 		CF9592A417A15E2F0022CFBF /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CF761A1C1752320B00C1A52A /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4082CA174E68F500CCB667 /* Vorbis.framework */; };
-		CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
-		CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF95929117A013AF0022CFBF /* FLAC.framework */; };
 		CF9592AC17A15E2F0022CFBF /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082A5174E65AA00CCB667 /* Eva.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF9592AD17A15E2F0022CFBF /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = CF4082AA174E65BD00CCB667 /* NSError+CustomError.h */; };
 		CF9592B117A15E2F0022CFBF /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CF761A1B1752320B00C1A52A /* OpenUDID.h */; };
@@ -38,7 +37,6 @@
 		CF98AB0A17C3E6E600E171E9 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */; };
 		CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
 		CF98AB0C17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */; };
-		CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC37EB3177CA0D20035E96F /* Ogg.framework */; };
 		CFF034A61806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
 		CFF034A71806D3890074C288 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = CFF034A51806D3890074C288 /* Common.h */; };
 /* End PBXBuildFile section */
@@ -61,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		941611AA1A46DF9B00275048 /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Ogg.framework; sourceTree = "<group>"; };
+		94D6AA661A46DE91006A5D23 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FLAC.framework; sourceTree = "<group>"; };
 		CF17473117BD029600CE68E3 /* Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		CF17473217BD029600CE68E3 /* Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recorder.m; sourceTree = "<group>"; };
 		CF34FC2017AA730200EE96CD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -79,12 +79,10 @@
 		CF67796617A7E0A2000BB095 /* EvaTestApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EvaTestApp.xcodeproj; path = EvaTestApp/EvaTestApp.xcodeproj; sourceTree = "<group>"; };
 		CF761A1B1752320B00C1A52A /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		CF761A1C1752320B00C1A52A /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
-		CF95929117A013AF0022CFBF /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = ../../Library/Eva/Eva/Frameworks/FLAC.framework; sourceTree = "<group>"; };
 		CF9592BA17A15E2F0022CFBF /* EvaFlac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaFlac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9592BB17A15E2F0022CFBF /* Eva copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Eva copy-Info.plist"; path = "/Users/idans/Dropbox/VMwareDesigns_WorkingCopy/iOS_Outsource_Projects/Eva/Code/FrameworkPack/Eva/Eva copy-Info.plist"; sourceTree = "<absolute>"; };
 		CF98AAFF17C3E6E600E171E9 /* MOAudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioStreamer.h; sourceTree = "<group>"; };
 		CF98AB0017C3E6E600E171E9 /* MOAudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAudioStreamer.m; sourceTree = "<group>"; };
-		CFC37EB3177CA0D20035E96F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = ../../Library/Eva/Eva/Frameworks/Ogg.framework; sourceTree = "<group>"; };
 		CFD71B0517590A87002E114B /* Tasks */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tasks; sourceTree = "<group>"; };
 		CFF034A51806D3890074C288 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,9 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				941611AB1A46DF9B00275048 /* Ogg.framework in Frameworks */,
+				94D6AA671A46DE91006A5D23 /* FLAC.framework in Frameworks */,
 				CF4082CD174E68F600CCB667 /* Vorbis.framework in Frameworks */,
-				CFC37EB4177CA0D20035E96F /* Ogg.framework in Frameworks */,
-				CF95929217A013AF0022CFBF /* FLAC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,8 +113,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF9592A817A15E2F0022CFBF /* Vorbis.framework in Frameworks */,
-				CF9592A917A15E2F0022CFBF /* Ogg.framework in Frameworks */,
-				CF9592AA17A15E2F0022CFBF /* FLAC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,9 +131,9 @@
 		CF40828A174E653F00CCB667 = {
 			isa = PBXGroup;
 			children = (
+				94D6AA661A46DE91006A5D23 /* FLAC.framework */,
 				CFD71B0517590A87002E114B /* Tasks */,
-				CF95929117A013AF0022CFBF /* FLAC.framework */,
-				CFC37EB3177CA0D20035E96F /* Ogg.framework */,
+				941611AA1A46DF9B00275048 /* Ogg.framework */,
 				CF4082CA174E68F500CCB667 /* Vorbis.framework */,
 				CF408299174E653F00CCB667 /* Eva */,
 				CF6778E017A7BABE000BB095 /* EvaFrameworkTests */,
@@ -615,6 +611,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -652,6 +649,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Library/Eva/Eva/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
