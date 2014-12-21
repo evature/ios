@@ -43,6 +43,8 @@
 #include "private/format.h"
 #include "private/macros.h"
 
+#define VERSION "1.3.1"
+
 /* VERSION should come from configure */
 FLAC_API const char *FLAC__VERSION_STRING = VERSION;
 

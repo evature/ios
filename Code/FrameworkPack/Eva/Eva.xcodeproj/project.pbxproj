@@ -7,32 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		941113311A445E0F00081D0F /* analyze.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112921A445E0F00081D0F /* analyze.c */; };
-		941113321A445E0F00081D0F /* analyze.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112931A445E0F00081D0F /* analyze.h */; };
-		941113331A445E0F00081D0F /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112941A445E0F00081D0F /* decode.c */; };
-		941113341A445E0F00081D0F /* decode.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112951A445E0F00081D0F /* decode.h */; };
-		941113351A445E0F00081D0F /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112961A445E0F00081D0F /* encode.c */; };
-		941113361A445E0F00081D0F /* encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112971A445E0F00081D0F /* encode.h */; };
-		941113371A445E0F00081D0F /* flac.vcproj in Resources */ = {isa = PBXBuildFile; fileRef = 941112981A445E0F00081D0F /* flac.vcproj */; };
-		941113381A445E0F00081D0F /* flac.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 941112991A445E0F00081D0F /* flac.vcxproj */; };
-		941113391A445E0F00081D0F /* flac.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 9411129A1A445E0F00081D0F /* flac.vcxproj.filters */; };
-		9411133A1A445E0F00081D0F /* foreign_metadata.c in Sources */ = {isa = PBXBuildFile; fileRef = 9411129B1A445E0F00081D0F /* foreign_metadata.c */; };
-		9411133B1A445E0F00081D0F /* foreign_metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 9411129C1A445E0F00081D0F /* foreign_metadata.h */; };
-		9411133C1A445E0F00081D0F /* iffscan.c in Sources */ = {isa = PBXBuildFile; fileRef = 9411129D1A445E0F00081D0F /* iffscan.c */; };
-		9411133D1A445E0F00081D0F /* iffscan.vcproj in Resources */ = {isa = PBXBuildFile; fileRef = 9411129E1A445E0F00081D0F /* iffscan.vcproj */; };
-		9411133E1A445E0F00081D0F /* iffscan.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 9411129F1A445E0F00081D0F /* iffscan.vcxproj */; };
-		9411133F1A445E0F00081D0F /* iffscan.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 941112A01A445E0F00081D0F /* iffscan.vcxproj.filters */; };
-		941113401A445E0F00081D0F /* local_string_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112A11A445E0F00081D0F /* local_string_utils.c */; };
-		941113411A445E0F00081D0F /* local_string_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112A21A445E0F00081D0F /* local_string_utils.h */; };
-		941113421A445E0F00081D0F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112A31A445E0F00081D0F /* main.c */; };
-		941113431A445E0F00081D0F /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = 941112A41A445E0F00081D0F /* Makefile.am */; };
-		941113441A445E0F00081D0F /* Makefile.in in Resources */ = {isa = PBXBuildFile; fileRef = 941112A51A445E0F00081D0F /* Makefile.in */; };
-		941113451A445E0F00081D0F /* Makefile.lite in Resources */ = {isa = PBXBuildFile; fileRef = 941112A61A445E0F00081D0F /* Makefile.lite */; };
-		941113461A445E0F00081D0F /* Makefile.lite.iffscan in Resources */ = {isa = PBXBuildFile; fileRef = 941112A71A445E0F00081D0F /* Makefile.lite.iffscan */; };
-		941113471A445E0F00081D0F /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112A81A445E0F00081D0F /* utils.c */; };
-		941113481A445E0F00081D0F /* utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112A91A445E0F00081D0F /* utils.h */; };
-		941113491A445E0F00081D0F /* vorbiscomment.c in Sources */ = {isa = PBXBuildFile; fileRef = 941112AA1A445E0F00081D0F /* vorbiscomment.c */; };
-		9411134A1A445E0F00081D0F /* vorbiscomment.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112AB1A445E0F00081D0F /* vorbiscomment.h */; };
 		9411134B1A445E0F00081D0F /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112AE1A445E0F00081D0F /* all.h */; };
 		9411134C1A445E0F00081D0F /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112AF1A445E0F00081D0F /* assert.h */; };
 		9411134D1A445E0F00081D0F /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = 941112B01A445E0F00081D0F /* callback.h */; };
@@ -113,10 +87,6 @@
 		941113981A445E0F00081D0F /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113031A445E0F00081D0F /* md5.h */; };
 		941113991A445E0F00081D0F /* memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113041A445E0F00081D0F /* memory.h */; };
 		9411139A1A445E0F00081D0F /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113051A445E0F00081D0F /* metadata.h */; };
-		9411139B1A445E0F00081D0F /* ogg_decoder_aspect.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113061A445E0F00081D0F /* ogg_decoder_aspect.h */; };
-		9411139C1A445E0F00081D0F /* ogg_encoder_aspect.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113071A445E0F00081D0F /* ogg_encoder_aspect.h */; };
-		9411139D1A445E0F00081D0F /* ogg_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113081A445E0F00081D0F /* ogg_helper.h */; };
-		9411139E1A445E0F00081D0F /* ogg_mapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 941113091A445E0F00081D0F /* ogg_mapping.h */; };
 		9411139F1A445E0F00081D0F /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 9411130A1A445E0F00081D0F /* stream_encoder.h */; };
 		941113A01A445E0F00081D0F /* stream_encoder_framing.h in Headers */ = {isa = PBXBuildFile; fileRef = 9411130B1A445E0F00081D0F /* stream_encoder_framing.h */; };
 		941113A11A445E0F00081D0F /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = 9411130C1A445E0F00081D0F /* window.h */; };
@@ -144,10 +114,6 @@
 		941113B71A445E0F00081D0F /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113231A445E0F00081D0F /* memory.c */; };
 		941113B81A445E0F00081D0F /* metadata_iterators.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113241A445E0F00081D0F /* metadata_iterators.c */; };
 		941113B91A445E0F00081D0F /* metadata_object.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113251A445E0F00081D0F /* metadata_object.c */; };
-		941113BA1A445E0F00081D0F /* ogg_decoder_aspect.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113261A445E0F00081D0F /* ogg_decoder_aspect.c */; };
-		941113BB1A445E0F00081D0F /* ogg_encoder_aspect.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113271A445E0F00081D0F /* ogg_encoder_aspect.c */; };
-		941113BC1A445E0F00081D0F /* ogg_helper.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113281A445E0F00081D0F /* ogg_helper.c */; };
-		941113BD1A445E0F00081D0F /* ogg_mapping.c in Sources */ = {isa = PBXBuildFile; fileRef = 941113291A445E0F00081D0F /* ogg_mapping.c */; };
 		941113BE1A445E0F00081D0F /* stream_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 9411132A1A445E0F00081D0F /* stream_decoder.c */; };
 		941113BF1A445E0F00081D0F /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 9411132B1A445E0F00081D0F /* stream_encoder.c */; };
 		941113C01A445E0F00081D0F /* stream_encoder_framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 9411132C1A445E0F00081D0F /* stream_encoder_framing.c */; };
@@ -203,32 +169,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		941112921A445E0F00081D0F /* analyze.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = analyze.c; sourceTree = "<group>"; };
-		941112931A445E0F00081D0F /* analyze.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = analyze.h; sourceTree = "<group>"; };
-		941112941A445E0F00081D0F /* decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decode.c; sourceTree = "<group>"; };
-		941112951A445E0F00081D0F /* decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decode.h; sourceTree = "<group>"; };
-		941112961A445E0F00081D0F /* encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = encode.c; sourceTree = "<group>"; };
-		941112971A445E0F00081D0F /* encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encode.h; sourceTree = "<group>"; };
-		941112981A445E0F00081D0F /* flac.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = flac.vcproj; sourceTree = "<group>"; };
-		941112991A445E0F00081D0F /* flac.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = flac.vcxproj; sourceTree = "<group>"; };
-		9411129A1A445E0F00081D0F /* flac.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = flac.vcxproj.filters; sourceTree = "<group>"; };
-		9411129B1A445E0F00081D0F /* foreign_metadata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = foreign_metadata.c; sourceTree = "<group>"; };
-		9411129C1A445E0F00081D0F /* foreign_metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = foreign_metadata.h; sourceTree = "<group>"; };
-		9411129D1A445E0F00081D0F /* iffscan.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = iffscan.c; sourceTree = "<group>"; };
-		9411129E1A445E0F00081D0F /* iffscan.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iffscan.vcproj; sourceTree = "<group>"; };
-		9411129F1A445E0F00081D0F /* iffscan.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iffscan.vcxproj; sourceTree = "<group>"; };
-		941112A01A445E0F00081D0F /* iffscan.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iffscan.vcxproj.filters; sourceTree = "<group>"; };
-		941112A11A445E0F00081D0F /* local_string_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = local_string_utils.c; sourceTree = "<group>"; };
-		941112A21A445E0F00081D0F /* local_string_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = local_string_utils.h; sourceTree = "<group>"; };
-		941112A31A445E0F00081D0F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		941112A41A445E0F00081D0F /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		941112A51A445E0F00081D0F /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		941112A61A445E0F00081D0F /* Makefile.lite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.lite; sourceTree = "<group>"; };
-		941112A71A445E0F00081D0F /* Makefile.lite.iffscan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.lite.iffscan; sourceTree = "<group>"; };
-		941112A81A445E0F00081D0F /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
-		941112A91A445E0F00081D0F /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
-		941112AA1A445E0F00081D0F /* vorbiscomment.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vorbiscomment.c; sourceTree = "<group>"; };
-		941112AB1A445E0F00081D0F /* vorbiscomment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vorbiscomment.h; sourceTree = "<group>"; };
 		941112AE1A445E0F00081D0F /* all.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all.h; sourceTree = "<group>"; };
 		941112AF1A445E0F00081D0F /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		941112B01A445E0F00081D0F /* callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = callback.h; sourceTree = "<group>"; };
@@ -309,10 +249,6 @@
 		941113031A445E0F00081D0F /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		941113041A445E0F00081D0F /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
 		941113051A445E0F00081D0F /* metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metadata.h; sourceTree = "<group>"; };
-		941113061A445E0F00081D0F /* ogg_decoder_aspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_decoder_aspect.h; sourceTree = "<group>"; };
-		941113071A445E0F00081D0F /* ogg_encoder_aspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_encoder_aspect.h; sourceTree = "<group>"; };
-		941113081A445E0F00081D0F /* ogg_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_helper.h; sourceTree = "<group>"; };
-		941113091A445E0F00081D0F /* ogg_mapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_mapping.h; sourceTree = "<group>"; };
 		9411130A1A445E0F00081D0F /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 		9411130B1A445E0F00081D0F /* stream_encoder_framing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder_framing.h; sourceTree = "<group>"; };
 		9411130C1A445E0F00081D0F /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
@@ -340,10 +276,6 @@
 		941113231A445E0F00081D0F /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory.c; sourceTree = "<group>"; };
 		941113241A445E0F00081D0F /* metadata_iterators.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = metadata_iterators.c; sourceTree = "<group>"; };
 		941113251A445E0F00081D0F /* metadata_object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = metadata_object.c; sourceTree = "<group>"; };
-		941113261A445E0F00081D0F /* ogg_decoder_aspect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_decoder_aspect.c; sourceTree = "<group>"; };
-		941113271A445E0F00081D0F /* ogg_encoder_aspect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_encoder_aspect.c; sourceTree = "<group>"; };
-		941113281A445E0F00081D0F /* ogg_helper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_helper.c; sourceTree = "<group>"; };
-		941113291A445E0F00081D0F /* ogg_mapping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_mapping.c; sourceTree = "<group>"; };
 		9411132A1A445E0F00081D0F /* stream_decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_decoder.c; sourceTree = "<group>"; };
 		9411132B1A445E0F00081D0F /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
 		9411132C1A445E0F00081D0F /* stream_encoder_framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder_framing.c; sourceTree = "<group>"; };
@@ -417,32 +349,6 @@
 		941112911A445E0F00081D0F /* flac */ = {
 			isa = PBXGroup;
 			children = (
-				941112921A445E0F00081D0F /* analyze.c */,
-				941112931A445E0F00081D0F /* analyze.h */,
-				941112941A445E0F00081D0F /* decode.c */,
-				941112951A445E0F00081D0F /* decode.h */,
-				941112961A445E0F00081D0F /* encode.c */,
-				941112971A445E0F00081D0F /* encode.h */,
-				941112981A445E0F00081D0F /* flac.vcproj */,
-				941112991A445E0F00081D0F /* flac.vcxproj */,
-				9411129A1A445E0F00081D0F /* flac.vcxproj.filters */,
-				9411129B1A445E0F00081D0F /* foreign_metadata.c */,
-				9411129C1A445E0F00081D0F /* foreign_metadata.h */,
-				9411129D1A445E0F00081D0F /* iffscan.c */,
-				9411129E1A445E0F00081D0F /* iffscan.vcproj */,
-				9411129F1A445E0F00081D0F /* iffscan.vcxproj */,
-				941112A01A445E0F00081D0F /* iffscan.vcxproj.filters */,
-				941112A11A445E0F00081D0F /* local_string_utils.c */,
-				941112A21A445E0F00081D0F /* local_string_utils.h */,
-				941112A31A445E0F00081D0F /* main.c */,
-				941112A41A445E0F00081D0F /* Makefile.am */,
-				941112A51A445E0F00081D0F /* Makefile.in */,
-				941112A61A445E0F00081D0F /* Makefile.lite */,
-				941112A71A445E0F00081D0F /* Makefile.lite.iffscan */,
-				941112A81A445E0F00081D0F /* utils.c */,
-				941112A91A445E0F00081D0F /* utils.h */,
-				941112AA1A445E0F00081D0F /* vorbiscomment.c */,
-				941112AB1A445E0F00081D0F /* vorbiscomment.h */,
 			);
 			name = flac;
 			path = flac/flac;
@@ -576,10 +482,6 @@
 				941113231A445E0F00081D0F /* memory.c */,
 				941113241A445E0F00081D0F /* metadata_iterators.c */,
 				941113251A445E0F00081D0F /* metadata_object.c */,
-				941113261A445E0F00081D0F /* ogg_decoder_aspect.c */,
-				941113271A445E0F00081D0F /* ogg_encoder_aspect.c */,
-				941113281A445E0F00081D0F /* ogg_helper.c */,
-				941113291A445E0F00081D0F /* ogg_mapping.c */,
 				9411132A1A445E0F00081D0F /* stream_decoder.c */,
 				9411132B1A445E0F00081D0F /* stream_encoder.c */,
 				9411132C1A445E0F00081D0F /* stream_encoder_framing.c */,
@@ -635,10 +537,6 @@
 				941113031A445E0F00081D0F /* md5.h */,
 				941113041A445E0F00081D0F /* memory.h */,
 				941113051A445E0F00081D0F /* metadata.h */,
-				941113061A445E0F00081D0F /* ogg_decoder_aspect.h */,
-				941113071A445E0F00081D0F /* ogg_encoder_aspect.h */,
-				941113081A445E0F00081D0F /* ogg_helper.h */,
-				941113091A445E0F00081D0F /* ogg_mapping.h */,
 				9411130A1A445E0F00081D0F /* stream_encoder.h */,
 				9411130B1A445E0F00081D0F /* stream_encoder_framing.h */,
 				9411130C1A445E0F00081D0F /* window.h */,
@@ -782,24 +680,19 @@
 				941113521A445E0F00081D0F /* metadata.h in Headers */,
 				9411136F1A445E0F00081D0F /* replaygain_analysis.h in Headers */,
 				941113951A445E0F00081D0F /* macros.h in Headers */,
-				941113411A445E0F00081D0F /* local_string_utils.h in Headers */,
 				CF4082A7174E65AA00CCB667 /* Eva.h in Headers */,
 				941113591A445E0F00081D0F /* export.h in Headers */,
 				CF4082B4174E65BD00CCB667 /* NSError+CustomError.h in Headers */,
-				9411133B1A445E0F00081D0F /* foreign_metadata.h in Headers */,
-				941113361A445E0F00081D0F /* encode.h in Headers */,
 				941113921A445E0F00081D0F /* flac_float.h in Headers */,
 				9411138E1A445E0F00081D0F /* bitwriter.h in Headers */,
 				941113601A445E0F00081D0F /* compat.h in Headers */,
 				941113701A445E0F00081D0F /* replaygain_synthesis.h in Headers */,
 				941113581A445E0F00081D0F /* encoder.h in Headers */,
-				941113341A445E0F00081D0F /* decode.h in Headers */,
 				9411134B1A445E0F00081D0F /* all.h in Headers */,
 				941113981A445E0F00081D0F /* md5.h in Headers */,
 				941113A11A445E0F00081D0F /* window.h in Headers */,
 				9411139A1A445E0F00081D0F /* metadata.h in Headers */,
 				941113A51A445E0F00081D0F /* stream_decoder.h in Headers */,
-				9411139B1A445E0F00081D0F /* ogg_decoder_aspect.h in Headers */,
 				9411136A1A445E0F00081D0F /* grabbag.h in Headers */,
 				941113741A445E0F00081D0F /* file_utils_flac.h in Headers */,
 				9411135C1A445E0F00081D0F /* metadata.h in Headers */,
@@ -808,14 +701,12 @@
 				941113941A445E0F00081D0F /* lpc.h in Headers */,
 				941113641A445E0F00081D0F /* file.h in Headers */,
 				941113A61A445E0F00081D0F /* stream_encoder.h in Headers */,
-				941113481A445E0F00081D0F /* utils.h in Headers */,
 				941113901A445E0F00081D0F /* crc.h in Headers */,
 				941113621A445E0F00081D0F /* getopt.h in Headers */,
 				9411138F1A445E0F00081D0F /* cpu.h in Headers */,
 				CF761A1D1752320B00C1A52A /* OpenUDID.h in Headers */,
 				9411135F1A445E0F00081D0F /* alloc.h in Headers */,
 				941113571A445E0F00081D0F /* decoder.h in Headers */,
-				9411134A1A445E0F00081D0F /* vorbiscomment.h in Headers */,
 				941113721A445E0F00081D0F /* utf8.h in Headers */,
 				941113931A445E0F00081D0F /* format.h in Headers */,
 				9411134F1A445E0F00081D0F /* format.h in Headers */,
@@ -828,7 +719,6 @@
 				9411134D1A445E0F00081D0F /* callback.h in Headers */,
 				941113771A445E0F00081D0F /* metadata_utils.h in Headers */,
 				9411138B1A445E0F00081D0F /* all.h in Headers */,
-				9411139C1A445E0F00081D0F /* ogg_encoder_aspect.h in Headers */,
 				941113711A445E0F00081D0F /* safe_str.h in Headers */,
 				941113551A445E0F00081D0F /* stream_encoder.h in Headers */,
 				941113991A445E0F00081D0F /* memory.h in Headers */,
@@ -838,15 +728,12 @@
 				CFF034A61806D3890074C288 /* Common.h in Headers */,
 				941113911A445E0F00081D0F /* fixed.h in Headers */,
 				9411136B1A445E0F00081D0F /* macros.h in Headers */,
-				941113321A445E0F00081D0F /* analyze.h in Headers */,
-				9411139E1A445E0F00081D0F /* ogg_mapping.h in Headers */,
 				9411136E1A445E0F00081D0F /* private.h in Headers */,
 				941113681A445E0F00081D0F /* replaygain.h in Headers */,
 				9411138C1A445E0F00081D0F /* bitmath.h in Headers */,
 				941113611A445E0F00081D0F /* endswap.h in Headers */,
 				941113731A445E0F00081D0F /* win_utf8_io.h in Headers */,
 				9411139F1A445E0F00081D0F /* stream_encoder.h in Headers */,
-				9411139D1A445E0F00081D0F /* ogg_helper.h in Headers */,
 				941113671A445E0F00081D0F /* picture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -998,7 +885,6 @@
 				941113891A445E0F00081D0F /* Makefile.am in Resources */,
 				941113B41A445E0F00081D0F /* Makefile.in in Resources */,
 				941113A81A445E0F00081D0F /* libFLAC_dynamic.vcproj in Resources */,
-				941113441A445E0F00081D0F /* Makefile.in in Resources */,
 				941113A91A445E0F00081D0F /* libFLAC_dynamic.vcxproj in Resources */,
 				941113AD1A445E0F00081D0F /* libFLAC_static.vcxproj.filters in Resources */,
 				941113751A445E0F00081D0F /* Makefile.am in Resources */,
@@ -1007,24 +893,15 @@
 				941113AA1A445E0F00081D0F /* libFLAC_dynamic.vcxproj.filters in Resources */,
 				941113A41A445E0F00081D0F /* Makefile.in in Resources */,
 				9411135D1A445E0F00081D0F /* Makefile.am in Resources */,
-				941113381A445E0F00081D0F /* flac.vcxproj in Resources */,
-				941113451A445E0F00081D0F /* Makefile.lite in Resources */,
 				941113661A445E0F00081D0F /* Makefile.in in Resources */,
 				941113AC1A445E0F00081D0F /* libFLAC_static.vcxproj in Resources */,
-				9411133D1A445E0F00081D0F /* iffscan.vcproj in Resources */,
-				941113371A445E0F00081D0F /* flac.vcproj in Resources */,
-				9411133F1A445E0F00081D0F /* iffscan.vcxproj.filters in Resources */,
 				9411135E1A445E0F00081D0F /* Makefile.in in Resources */,
-				941113431A445E0F00081D0F /* Makefile.am in Resources */,
-				941113391A445E0F00081D0F /* flac.vcxproj.filters in Resources */,
 				941113501A445E0F00081D0F /* Makefile.am in Resources */,
 				941113651A445E0F00081D0F /* Makefile.am in Resources */,
 				9411136C1A445E0F00081D0F /* Makefile.am in Resources */,
 				941113761A445E0F00081D0F /* Makefile.in in Resources */,
-				941113461A445E0F00081D0F /* Makefile.lite.iffscan in Resources */,
 				941113B31A445E0F00081D0F /* Makefile.am in Resources */,
 				941113801A445E0F00081D0F /* flac.pc.in in Resources */,
-				9411133E1A445E0F00081D0F /* iffscan.vcxproj in Resources */,
 				941113B51A445E0F00081D0F /* Makefile.lite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1148,51 +1025,38 @@
 			files = (
 				941113B61A445E0F00081D0F /* md5.c in Sources */,
 				CF4082A8174E65AA00CCB667 /* Eva.m in Sources */,
-				941113401A445E0F00081D0F /* local_string_utils.c in Sources */,
 				941113851A445E0F00081D0F /* lpc_asm.nasm in Sources */,
 				941113781A445E0F00081D0F /* bitmath.c in Sources */,
 				941113B21A445E0F00081D0F /* lpc_intrin_sse41.c in Sources */,
 				CF4082B5174E65BD00CCB667 /* NSError+CustomError.m in Sources */,
 				941113B11A445E0F00081D0F /* lpc_intrin_sse2.c in Sources */,
 				941113BF1A445E0F00081D0F /* stream_encoder.c in Sources */,
-				9411133C1A445E0F00081D0F /* iffscan.c in Sources */,
-				941113311A445E0F00081D0F /* analyze.c in Sources */,
 				941113B01A445E0F00081D0F /* lpc_intrin_sse.c in Sources */,
 				941113811A445E0F00081D0F /* float.c in Sources */,
 				941113C01A445E0F00081D0F /* stream_encoder_framing.c in Sources */,
 				941113B71A445E0F00081D0F /* memory.c in Sources */,
 				9411137C1A445E0F00081D0F /* crc.c in Sources */,
 				941113C31A445E0F00081D0F /* stream_encoder_intrin_ssse3.c in Sources */,
-				941113BB1A445E0F00081D0F /* ogg_encoder_aspect.c in Sources */,
 				9411137B1A445E0F00081D0F /* cpu.c in Sources */,
 				9411137D1A445E0F00081D0F /* fixed.c in Sources */,
 				941113821A445E0F00081D0F /* format.c in Sources */,
 				941113C41A445E0F00081D0F /* window.c in Sources */,
 				941113B91A445E0F00081D0F /* metadata_object.c in Sources */,
-				941113331A445E0F00081D0F /* decode.c in Sources */,
 				941113BE1A445E0F00081D0F /* stream_decoder.c in Sources */,
 				941113C11A445E0F00081D0F /* stream_encoder_intrin_avx2.c in Sources */,
 				941113831A445E0F00081D0F /* cpu_asm.nasm in Sources */,
 				CF761A1E1752320B00C1A52A /* OpenUDID.m in Sources */,
-				941113BD1A445E0F00081D0F /* ogg_mapping.c in Sources */,
-				941113BC1A445E0F00081D0F /* ogg_helper.c in Sources */,
-				941113471A445E0F00081D0F /* utils.c in Sources */,
 				941113B81A445E0F00081D0F /* metadata_iterators.c in Sources */,
 				9411137F1A445E0F00081D0F /* fixed_intrin_ssse3.c in Sources */,
 				941113AE1A445E0F00081D0F /* lpc.c in Sources */,
 				9411137E1A445E0F00081D0F /* fixed_intrin_sse2.c in Sources */,
-				9411133A1A445E0F00081D0F /* foreign_metadata.c in Sources */,
 				941113C21A445E0F00081D0F /* stream_encoder_intrin_sse2.c in Sources */,
-				941113421A445E0F00081D0F /* main.c in Sources */,
 				CF17473717BD02A000CE68E3 /* Recorder.m in Sources */,
 				CF98AB0B17C3E6E600E171E9 /* MOAudioStreamer.m in Sources */,
-				941113491A445E0F00081D0F /* vorbiscomment.c in Sources */,
 				941113791A445E0F00081D0F /* bitreader.c in Sources */,
 				941113AF1A445E0F00081D0F /* lpc_intrin_avx2.c in Sources */,
 				941113841A445E0F00081D0F /* fixed_asm.nasm in Sources */,
 				9411137A1A445E0F00081D0F /* bitwriter.c in Sources */,
-				941113351A445E0F00081D0F /* encode.c in Sources */,
-				941113BA1A445E0F00081D0F /* ogg_decoder_aspect.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
