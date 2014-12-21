@@ -5,7 +5,7 @@
 //  Created by idan S on 5/12/13.
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
-//  Version 1.5.3
+//  Version 1.6.3
 //
 
 #import <Foundation/Foundation.h>
@@ -89,6 +89,10 @@
 // query Eva by text - optional start new session
 - (BOOL)queryWithText:(NSString *)text startNewSession:(BOOL)newSession;
 
+- (void)setDebugMode:(BOOL)isDebug;
+
+-(void)repeatStreamer; // for debugging stress test
+-(void)stopRecordQueue: (BOOL)wasCanceled; // for debugging
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)
@@ -97,5 +101,6 @@
 - (BOOL) setVADEndRecordAudioFile: (NSURL *)filePath;         // this sound will play when the VAD (voice automatic detection) recognizes the user finished speaking
 - (BOOL) setCanceledRecordAudioFile: (NSURL *)filePath;       // this sound will play when calling "cancelRecord"
 
+- (BOOL) isReady; // Do not call startRecord before this method returns true - you can wait for the evaRecorderIsReady delegate callback
 
 @end
