@@ -13,6 +13,7 @@
 
 #define kApiKey @"ApiKey"
 #define kSiteCode @"SiteCode"
-
+#define kHost @"EvaHost"
+#define kVrService @"vrService"
 
 #endif

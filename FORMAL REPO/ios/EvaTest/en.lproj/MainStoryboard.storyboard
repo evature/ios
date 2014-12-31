@@ -245,14 +245,46 @@ or
                                     <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="Zr5-pP-XFP"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="api_key:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sy0-0H-DrV">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="api_key:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sy0-0H-DrV">
                                 <rect key="frame" x="34" y="24" width="64" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="site_code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XR3-gX-E52">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="site_code:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XR3-gX-E52">
                                 <rect key="frame" x="16" y="59" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Server:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iXh-E6-enL">
+                                <rect key="frame" x="16" y="111" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Include http://" minimumFontSize="17" id="YWM-KZ-KTs">
+                                <rect key="frame" x="106" y="108" width="184" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="ChH-Cl-qyD"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="b9L-WU-eC2"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="xeW-in-SsW">
+                                <rect key="frame" x="106" y="140" width="184" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="7Fa-Ei-lCM"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="lwj-He-zBl"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="vr_service:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rRm-di-Uy2">
+                                <rect key="frame" x="16" y="144" width="82" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -263,7 +295,9 @@ or
                     <navigationItem key="navigationItem" title="Settings" id="evh-mZ-5Af"/>
                     <connections>
                         <outlet property="apiKeyTextField" destination="o2A-vo-7Os" id="as1-vB-zcm"/>
+                        <outlet property="hostTextField" destination="YWM-KZ-KTs" id="qIh-QB-tHg"/>
                         <outlet property="siteCodeTextField" destination="NgM-qL-579" id="xeb-4U-mGn"/>
+                        <outlet property="vrServiceTextField" destination="xeW-in-SsW" id="XtQ-RM-1p6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QXf-sw-9Zw" userLabel="First Responder" sceneMemberID="firstResponder"/>

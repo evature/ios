@@ -352,11 +352,11 @@ void (^iterateProduceData)();
                 [fHandle closeFile];
 
                 NSInteger   bytesRead = [data length];
-#if DEBUG_MODE_FOR_EVA
-                    if (bytesRead > 20) {
-                        bytesRead = 20+arc4random_uniform(bytesRead-20);
-                    }
-#endif
+//#if DEBUG_MODE_FOR_EVA
+//                    if (bytesRead > 20) {
+//                        bytesRead = 20+arc4random_uniform(bytesRead-20);
+//                    }
+//#endif
                 if (bytesRead > kPostBufferSize) {
                     NSLog(@"CRITICAL ERROR  bytesRead > kPostBufferSize");
                     return;

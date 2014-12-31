@@ -43,7 +43,7 @@ BOOL isDebug = DEBUG_MODE_FOR_EVA;
 // SERVER_RESPONSE_TIMEOUT is an upper limit of response
 #define SERVER_RESPONSE_TIMEOUT (MIC_RECORD_TIMEOUT_DEFAULT + 10.0f)
 
-# define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"
+#define EVA_HOST_ADDRESS @"https://vproxy.evaws.com:443"
 #define EVA_HOST_ADDRESS_FOR_TEXT  @"http://apiuseh.evaws.com"
 
 @interface Eva ()<
@@ -125,6 +125,9 @@ CLLocationManagerDelegate
 @property(nonatomic, retain) AVAudioPlayer *audioFileVadEndRecord;
 @property(nonatomic, retain) AVAudioPlayer *audioFileCanceledRecord;
 
+@property(nonatomic, retain) NSString *host;
+@property(nonatomic) int httpBuff;
+@property(nonatomic) int flacBuff;
 
 @end
 
@@ -155,6 +158,11 @@ CLLocationManagerDelegate
 @synthesize version = version_;
 @synthesize sendMicLevel = sendMicLevel_;
 @synthesize isRecorderReady = isRecorderReady_;
+
+@synthesize host = host_;
+@synthesize httpBuff = httpBuff_;
+@synthesize flacBuff = flacBuff_;
+
 
 @synthesize micRecordTimeout = micRecordTimeout_;
 
@@ -322,7 +330,6 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 - (BOOL)setAPIkey: (NSString *)api_key withSiteCode:(NSString *)site_code{
     //  NSLog(@"Eva.framework version %@(%@)",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
-    NSLog(@"Eva.framework version v%@ %@",EVA_FRAMEWORK_VERSION, DEBUG_MODE_FOR_EVA ? @"Debug Build" : @"Release Build");
     
     evaAPIKey_ = [NSString stringWithFormat:@"%@", api_key];
     evaSiteCode_ = [NSString stringWithFormat:@"%@", site_code];
@@ -340,6 +347,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     micRecordTimeout_ = MIC_RECORD_TIMEOUT_DEFAULT;
     
     if (![self isReady]) {
+        NSLog(@"Initializing Eva.framework version v%@ %@",EVA_FRAMEWORK_VERSION, DEBUG_MODE_FOR_EVA ? @"Debug Build" : @"Release Build");
         
         [self initLocationManager]; // Init the location manager  (takes some time)
         // - unfortunately can't be in dispatch because must be with run loop
@@ -740,6 +748,18 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     }
 }
 
+-(void)setHttpBufferSize:(int)buffSize {
+    self.httpBuff = buffSize;
+}
+
+-(void)setFlacBufferSize:(int)buffSize {
+    self.flacBuff = buffSize;
+}
+
+-(void)setHostAddr:(NSString*)host {
+    self.host = host;
+}
+
 /*-(void)soundRecoderDidFinishRecording:(SoundRecoder *)recoder{
  NSLog(@"soundRecoderDidFinishRecording");
  recoder.delegate = nil;
@@ -769,7 +789,7 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 
 -(void)repeatStreamer{
     [self establishConnection];
-    streamer_.webServiceURL = @"http://192.168.0.108:8000/ptest";
+    streamer_.webServiceURL = [NSString stringWithFormat:@"%@/ptest", self.host];
     DLog(@"Changing URL to %@", streamer_.webServiceURL);
     [streamer_ startStreamer:-1];     // -1 tells the streamer to not initialize the recorder and delete old file
     [streamer_ recordFileWasCreated]; // fake call from recorder to start the streaming thread
@@ -1117,13 +1137,12 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     NSLog(@"***** getUID =,%@, *****",[self getUID]); // For test
     NSLog(@"Current time zone=,%@, Locale=,%@,",[self getCurrentTimezone],[self getCurrenLocale]);
 #endif
+    if ([self.host length] == 0) {
+        self.host = EVA_HOST_ADDRESS;
+    }
+    NSURL *url = [self getUrl: self.host];
     
-    NSURL *url = [self getUrl: EVA_HOST_ADDRESS];
-    
-    
-#if TESTFLIGHT_TESTING
-    TFLog(@"urlToEva:%@",url);
-#endif
+    DLog(@"urlToEva: %@",url);
     
    
     

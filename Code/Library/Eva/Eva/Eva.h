@@ -59,7 +59,7 @@
 @property(nonatomic,retain) NSString *scope; 
 @property(nonatomic,retain) NSString *context;
 
-@property(nonatomic,retain) NSDictionary *optional_dictionary;
+@property(nonatomic,retain) NSMutableDictionary *optional_dictionary;
 
 + (Eva *)sharedInstance;
 
@@ -93,6 +93,9 @@
 
 -(void)repeatStreamer; // for debugging stress test
 -(void)stopRecordQueue: (BOOL)wasCanceled; // for debugging
+-(void)setHttpBufferSize:(int)buffSize;
+-(void)setFlacBufferSize:(int)buffSize;
+-(void)setHostAddr:(NSString*)host;
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)

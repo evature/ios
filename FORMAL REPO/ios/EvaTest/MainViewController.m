@@ -336,6 +336,17 @@ float vadStopNoisyMoments;
     
     apiKeyString = [[NSUserDefaults standardUserDefaults] stringForKey:kApiKey];
     siteCodeString = [[NSUserDefaults standardUserDefaults] stringForKey:kSiteCode];
+    [[Eva sharedInstance] setHostAddr: [[NSUserDefaults standardUserDefaults] stringForKey:kHost]];
+    
+    NSString *vrService = [[NSUserDefaults standardUserDefaults] stringForKey:kVrService];
+    if ([vrService length] != 0) {
+        if ([Eva sharedInstance].optional_dictionary == nil) {
+            [Eva sharedInstance].optional_dictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"vr_service": vrService }];
+        }
+        else {
+            [[Eva sharedInstance].optional_dictionary setObject:vrService forKey:@"vr_service"];
+        }
+    }
     
     [self setRecordButtons:false];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -384,7 +395,7 @@ float vadStopNoisyMoments;
         [self showLabelWithText:@"Please set your API Key and Site Code."];
     }
     
-    [Eva sharedInstance].optional_dictionary  = @{@"demo_app" : @"1"};
+    [Eva sharedInstance].optional_dictionary  = [NSMutableDictionary dictionaryWithDictionary: @{@"demo_app" : @"1"}];
     
 #if !VAD_DEBUG_GUI
     [vadLabel setHidden:TRUE];
@@ -422,9 +433,22 @@ float vadStopNoisyMoments;
 {
     apiKeyString = [[controller apiKeyTextField] text];
     siteCodeString = [[controller siteCodeTextField] text];
+    NSString *host = [[controller hostTextField] text];
+    NSString *vrService = [[controller vrServiceTextField] text];
     [[NSUserDefaults standardUserDefaults] setValue:apiKeyString forKey:kApiKey];
     [[NSUserDefaults standardUserDefaults] setValue:siteCodeString forKey:kSiteCode];
-
+    [[NSUserDefaults standardUserDefaults] setValue:host forKey:kHost];
+    [[NSUserDefaults standardUserDefaults] setValue:vrService forKey:kVrService];
+    [[Eva sharedInstance] setHostAddr:host];
+    
+    if ([vrService length] != 0) {
+        if ([Eva sharedInstance].optional_dictionary == nil) {
+            [Eva sharedInstance].optional_dictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"vr_service": vrService }];
+        }
+        else {
+            [[Eva sharedInstance].optional_dictionary setValue:vrService forKey:@"vr_service"];
+        }
+    }
 }
 
 @end

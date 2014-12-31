@@ -18,6 +18,8 @@
 
 @synthesize apiKeyTextField;
 @synthesize siteCodeTextField;
+@synthesize hostTextField;
+@synthesize vrServiceTextField;
 
 
 - (void)viewDidLoad {
@@ -32,7 +34,14 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode]!=nil) {
         [siteCodeTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode]];
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kHost]!=nil) {
+        [hostTextField setText:[[NSUserDefaults standardUserDefaults] stringForKey:kHost]];
+    }
 
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kVrService]!=nil) {
+        [vrServiceTextField setText:[[NSUserDefaults standardUserDefaults] stringForKey:kVrService]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

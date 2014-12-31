@@ -19,15 +19,17 @@
 // View modules //
     IBOutlet UITextField *apiKeyTextField;
     IBOutlet UITextField *siteCodeTextField;
+    IBOutlet UITextField *hostTextField;
+    IBOutlet UITextField *vrServiceTextField;
 }
 
 @property (weak, nonatomic) id <SettingsControllerDelegate> delegate;
 @property(nonatomic,retain) IBOutlet UITextField *apiKeyTextField;
 @property(nonatomic,retain) IBOutlet UITextField *siteCodeTextField;
+@property(nonatomic,retain) IBOutlet UITextField *hostTextField;
+@property(nonatomic,retain) IBOutlet UITextField *vrServiceTextField;
 
 
--(IBAction)setAPIKeysButton:(id)sender;
-
-- (IBAction)textFieldDoneEditing:(id)sender;
+-(IBAction)textFieldDoneEditing:(id)sender;
 
 @end
