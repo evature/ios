@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Evature. All rights reserved.
 //
 
-#import "FlipsideViewController.h"
+#import "SettingsViewController.h"
 
 //#ifdef FLAC_VERSION
 //#import <EvaFlac/Eva.h>
@@ -14,12 +14,9 @@
 #import <Eva/Eva.h>
 //#endif
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate,EvaDelegate>{
+@interface MainViewController : UIViewController <SettingsControllerDelegate,EvaDelegate>{
     
-    // View modules //
-    IBOutlet UITextField *apiKeyTextField;
-    IBOutlet UITextField *siteCodeTextField;
-    
+     
     IBOutlet UITextField *inputTextField;
     
     IBOutlet UIButton *resetButton;
@@ -38,8 +35,6 @@
 }
 
 // View modules //
-@property(nonatomic,retain) IBOutlet UITextField *apiKeyTextField;
-@property(nonatomic,retain) IBOutlet UITextField *siteCodeTextField;
 @property(nonatomic,retain) IBOutlet UITextField *inputTextField;
 @property(nonatomic,retain) IBOutlet UIButton *resetButton;
 @property(nonatomic,retain) IBOutlet UIButton *continueButton;
@@ -51,19 +46,14 @@
 @property(nonatomic,retain) IBOutlet UILabel *responseLabel;
 
 @property(nonatomic,retain) IBOutlet UIProgressView *micLevel;
-
-//////////////////
-
 @property(nonatomic,retain) NSString *apiKeyString, *siteCodeString;
+//////////////////
 @property(atomic) BOOL isNewSession;
 
--(IBAction)setAPIKeysButton:(id)sender;
 -(IBAction)newSessionButton:(id)sender;
 -(IBAction)continueRecordButton:(id)sender;
 -(IBAction)stopRecordButton:(id)sender;
 -(IBAction)cancelRecordButton:(id)sender;
 -(IBAction)sendTextQuery:(id)sender;
-
-- (IBAction)textFieldDoneEditing:(id)sender;
 
 @end

@@ -21,8 +21,6 @@
 
 @implementation MainViewController
 
-@synthesize apiKeyTextField;
-@synthesize siteCodeTextField;
 @synthesize inputTextField;
 
 @synthesize resetButton, continueButton, stopButton,cancelButton;
@@ -32,7 +30,6 @@
 @synthesize responseLabel;
 
 @synthesize apiKeyString,siteCodeString;
-
 
 @synthesize micLevel;
 
@@ -55,30 +52,12 @@
 
     CGSize size = [responseLabel.text sizeWithFont:responseLabel.font
                          constrainedToSize:CGSizeMake(responseLabel.frame.size.width, MAXFLOAT)
-                             lineBreakMode:UILineBreakModeWordWrap];
+                             lineBreakMode:NSLineBreakByWordWrapping];
     CGRect labelFrame = responseLabel.frame;
     labelFrame.size.height = size.height;
     responseLabel.frame = labelFrame;
 }
 
-
--(void)saveViewParameters{
-    [[NSUserDefaults standardUserDefaults] setValue:[apiKeyTextField text] forKey:kApiKey];
-    [[NSUserDefaults standardUserDefaults] setValue:[siteCodeTextField text] forKey:kSiteCode];
-    apiKeyString = [[NSUserDefaults standardUserDefaults] objectForKey:kApiKey];
-    siteCodeString = [[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode];
-}
-
--(void)loadViewParameters{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kApiKey]!=nil) {
-        [apiKeyTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kApiKey]];
-    }
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode]!=nil) {
-        [siteCodeTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode]];
-    }
-    apiKeyString = [[NSUserDefaults standardUserDefaults] objectForKey:kApiKey];
-    siteCodeString = [[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode];
-}
 
 - (void)showParameterErrorMessage {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error!"
@@ -87,11 +66,6 @@
                                             cancelButtonTitle:@"OK"
                                             otherButtonTitles:nil];
     [message show];
-}
-
-- (IBAction)textFieldDoneEditing:(id)sender{
-    [sender resignFirstResponder];
-    [self saveViewParameters];
 }
 
 #pragma mark - view actions
@@ -103,9 +77,23 @@
 }
 
 -(IBAction)continueRecordButton:(id)sender{
-    [self showLabelWithText:@"Started recording"];
-    [[Eva sharedInstance] startRecord:[self isNewSession]];
-    [self setRecordButtons:true];
+    
+    
+    if (1&&
+        apiKeyString!=nil && siteCodeString!=nil
+        && ![apiKeyString isEqualToString:@""] &&
+        ![siteCodeString isEqualToString:@""]
+        ) {
+        //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
+        [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
+        [self showLabelWithText:@"Started recording"];
+        [[Eva sharedInstance] startRecord:[self isNewSession]];
+        [self setRecordButtons:true];
+    }else{
+        [self showParameterErrorMessage];
+    }
+    
+    
 }
 -(IBAction)stopRecordButton:(id)sender{
     [self showLabelWithText:@"Stopped recording"];
@@ -126,19 +114,11 @@
     [resetButton setHidden: FALSE];
 }
 
--(IBAction)setAPIKeysButton:(id)sender{
-    [self saveViewParameters];
-    if (1&&
-        apiKeyString!=nil && siteCodeString!=nil
-        && ![apiKeyString isEqualToString:@""] &&
-        ![siteCodeString isEqualToString:@""]
-        ) {
-        //[evaModule setAPIkey:apiKeyString withSiteCode:siteCodeString];
-        [[Eva sharedInstance] setAPIkey:apiKeyString withSiteCode:siteCodeString withMicLevel:TRUE]; // This would enable - (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower;
-    }else{
-        [self showParameterErrorMessage];
-    }
+- (IBAction)textFieldDoneEditing:(id)sender{
+    [sender resignFirstResponder];
 }
+
+
 //
 //-(float) getVolumeLevel
 //{
@@ -348,8 +328,14 @@ float vadStopNoisyMoments;
 
 - (void)viewDidLoad
 {
+    
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) { // if iOS 7
+        self.edgesForExtendedLayout = UIRectEdgeNone; //layout adjustements
+    }
     [super viewDidLoad];
     
+    apiKeyString = [[NSUserDefaults standardUserDefaults] stringForKey:kApiKey];
+    siteCodeString = [[NSUserDefaults standardUserDefaults] stringForKey:kSiteCode];
     
     [self setRecordButtons:false];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -373,7 +359,6 @@ float vadStopNoisyMoments;
     self.isNewSession = true;
     
     // View settings //
-    [self loadViewParameters];
 
     
     [Eva sharedInstance].delegate = self;
@@ -416,18 +401,30 @@ float vadStopNoisyMoments;
     [self showLabelWithText:@"Memory warning!"];
 }
 
-#pragma mark - Flipside View
 
-- (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+-(void)loadViewParameters{
+    apiKeyString = [[NSUserDefaults standardUserDefaults] objectForKey:kApiKey];
+    siteCodeString = [[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode];
 }
+
+
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showAlternate"]) {
+    if ([[segue identifier] isEqualToString:@"showSettings"]) {
         [[segue destinationViewController] setDelegate:self];
     }
+}
+
+- (void)settingsDidFinish:(SettingsViewController *)controller
+{
+    apiKeyString = [[controller apiKeyTextField] text];
+    siteCodeString = [[controller siteCodeTextField] text];
+    [[NSUserDefaults standardUserDefaults] setValue:apiKeyString forKey:kApiKey];
+    [[NSUserDefaults standardUserDefaults] setValue:siteCodeString forKey:kSiteCode];
+
 }
 
 @end

@@ -31,6 +31,10 @@ int size = -1;
 
 - (void)viewDidLoad
 {
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) { // if iOS 7
+        self.edgesForExtendedLayout = UIRectEdgeNone; //layout adjustements
+    }
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
@@ -44,10 +48,6 @@ int size = -1;
 
 #pragma mark - Actions
 
-- (IBAction)done:(id)sender
-{
-    [self.delegate flipsideViewControllerDidFinish:self];
-}
 
 NSDate *startTime = nil;
 

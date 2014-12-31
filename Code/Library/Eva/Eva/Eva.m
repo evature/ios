@@ -177,8 +177,6 @@ CLLocationManagerDelegate
 //@synthesize chunkTransferContainer = _chunkTransferContainer;
 
 
-
-
 + (Eva *)sharedInstance
 {
     static Eva *sharedInstance = nil;
@@ -341,24 +339,25 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
     
     micRecordTimeout_ = MIC_RECORD_TIMEOUT_DEFAULT;
     
-    
-    [self initLocationManager]; // Init the location manager  (takes some time)
-    // - unfortunately can't be in dispatch because must be with run loop
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //ipAddress_ = [self getIPAddress];
-        //[self getCurrenLocale];
-        DLog(@"Dispatch #1");
-        [Recorder sharedInstance].delegate = self;
-       // // start a record and stop it immidiately after
-        [[Recorder sharedInstance] startRecording:micRecordTimeout_ withAutoStop:TRUE];
-       
-//        DLog(@"Dispatch #2");
-//        ipAddress_ = [self getIPAddress];
-        [self getCurrenLocale];
-        DLog(@"Dispatch #3");
-    });
-    
+    if (![self isReady]) {
+        
+        [self initLocationManager]; // Init the location manager  (takes some time)
+        // - unfortunately can't be in dispatch because must be with run loop
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //ipAddress_ = [self getIPAddress];
+            //[self getCurrenLocale];
+            DLog(@"Dispatch #1");
+            [Recorder sharedInstance].delegate = self;
+           // // start a record and stop it immidiately after
+            [[Recorder sharedInstance] startRecording:micRecordTimeout_ withAutoStop:TRUE];
+           
+    //        DLog(@"Dispatch #2");
+    //        ipAddress_ = [self getIPAddress];
+            [self getCurrenLocale];
+            DLog(@"Dispatch #3");
+        });
+    }
     
     return TRUE;
 }
