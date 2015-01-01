@@ -20,6 +20,10 @@
 @synthesize siteCodeTextField;
 @synthesize hostTextField;
 @synthesize vrServiceTextField;
+@synthesize encoderBuffTextField;
+@synthesize encoderFrameTextField;
+@synthesize recorderBuffTextField;
+@synthesize connectionBuffTextField;
 
 
 - (void)viewDidLoad {
@@ -35,12 +39,26 @@
         [siteCodeTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kSiteCode]];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kHost]!=nil) {
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kHost]!=nil) {
         [hostTextField setText:[[NSUserDefaults standardUserDefaults] stringForKey:kHost]];
     }
 
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kVrService]!=nil) {
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kVrService]!=nil) {
         [vrServiceTextField setText:[[NSUserDefaults standardUserDefaults] stringForKey:kVrService]];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kRecorderBuff]!=nil) {
+        [recorderBuffTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kRecorderBuff]];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kEncoderBuff]!=nil) {
+        [encoderBuffTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kEncoderBuff]];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kEncoderFrame]!=nil) {
+        NSString *txt = [[NSUserDefaults standardUserDefaults] objectForKey:kEncoderFrame];
+        [encoderFrameTextField setText:txt];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kConnectionBuff]!=nil) {
+        [connectionBuffTextField setText:[[NSUserDefaults standardUserDefaults] objectForKey:kConnectionBuff]];
     }
 }
 

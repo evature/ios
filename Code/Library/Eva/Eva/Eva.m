@@ -12,9 +12,6 @@
 
 #include "OpenUDID.h"
 
-#include "FLAC/metadata.h"
-#include "FLAC/stream_encoder.h"
-
 
 
 
@@ -117,7 +114,6 @@ CLLocationManagerDelegate
 
 @property(nonatomic) BOOL isPlaying;
 @property(nonatomic) AudioQueueRef outputQueue;
-@property(nonatomic) FLAC__StreamEncoder *encoder;
 
 
 @property(nonatomic, retain) AVAudioPlayer *audioFileStartRecord;
@@ -128,6 +124,8 @@ CLLocationManagerDelegate
 @property(nonatomic, retain) NSString *host;
 @property(nonatomic) int httpBuff;
 @property(nonatomic) int flacBuff;
+@property(nonatomic) int flacFrame;
+@property(nonatomic) int recorderBuff;
 
 @end
 
@@ -162,13 +160,14 @@ CLLocationManagerDelegate
 @synthesize host = host_;
 @synthesize httpBuff = httpBuff_;
 @synthesize flacBuff = flacBuff_;
+@synthesize flacFrame = flacFrame_;
+@synthesize recorderBuff = recorderBuff_;
 
 
 @synthesize micRecordTimeout = micRecordTimeout_;
 
 @synthesize isPlaying=isPlaying_;
 @synthesize outputQueue=outputQueue_;
-@synthesize encoder=encoder_;
 
 //@synthesize streamOfData = streamOfData_;
 
@@ -191,6 +190,11 @@ CLLocationManagerDelegate
 	if (sharedInstance == nil)
 	{
 		sharedInstance = [[Eva alloc] init];
+        // set defaults
+        [sharedInstance setRecorderBufferSize:0];
+        [sharedInstance setFlacBufferSize:0];
+        [sharedInstance setFlacFrameSize:0];
+        [sharedInstance setHttpBufferSize:0];
 	}
 	return sharedInstance;
 }
@@ -749,11 +753,49 @@ static BOOL setAudio(NSString* tag, AVAudioPlayer** soundObj, NSURL* filePath) {
 }
 
 -(void)setHttpBufferSize:(int)buffSize {
+    if (buffSize == 0) {
+        buffSize = 32768;
+    }
     self.httpBuff = buffSize;
+    DLog(@"Setting connection buffer size to %d", buffSize);
 }
 
 -(void)setFlacBufferSize:(int)buffSize {
+    if (buffSize == 0) {
+        buffSize = 1024*4;
+    }
     self.flacBuff = buffSize;
+    DLog(@"Setting encoder buffer size to %d", buffSize);
+}
+
+-(void)setFlacFrameSize:(int)frameSize {
+    self.flacFrame = frameSize;
+    DLog(@"Setting encoder frame size to %d", frameSize);
+}
+
+-(void)setRecorderBufferSize:(int)buffSize {
+    if (buffSize == 0) {
+        buffSize = 2048;
+    }
+    self.recorderBuff = buffSize;
+    DLog(@"Setting recorder buffer size to %d", buffSize);
+}
+
+
+-(int)getHttpBufferSize {
+    return self.httpBuff;
+}
+
+-(int)getFlacBufferSize {
+    return self.flacBuff;
+}
+
+-(int)getFlacFrameSize {
+    return self.flacFrame;
+}
+
+-(int)getRecorderBufferSize {
+    return self.recorderBuff;
 }
 
 -(void)setHostAddr:(NSString*)host {

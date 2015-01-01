@@ -15,5 +15,9 @@
 #define kSiteCode @"SiteCode"
 #define kHost @"EvaHost"
 #define kVrService @"vrService"
-
+// size of buffers/frame to tweak for performance
+#define kRecorderBuff @"recorderBuff"
+#define kEncoderBuff @"encoderBuff"
+#define kEncoderFrame @"encoderFrame"
+#define kConnectionBuff @"connectionBuff"
 #endif

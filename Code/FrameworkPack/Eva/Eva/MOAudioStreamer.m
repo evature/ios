@@ -15,6 +15,7 @@
 
 #include <CFNetwork/CFNetwork.h>
 #include "Common.h"
+#include "Eva.h"
 
 #pragma mark * Utilities
 #define ext @"flac"
@@ -201,7 +202,7 @@ void (^iterateProduceData)();
     NSInputStream *         consStream;
     NSOutputStream *        prodStream;
 
-    [NSStream createBoundInputStream:&consStream outputStream:&prodStream bufferSize:32768];
+    [NSStream createBoundInputStream:&consStream outputStream:&prodStream bufferSize:[[Eva sharedInstance] getHttpBufferSize]];
     
     if (consStream == nil) {
         NSLog(@"CRITICAL ERROR: nil consumer stream");

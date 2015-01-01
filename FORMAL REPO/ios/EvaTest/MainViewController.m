@@ -348,6 +348,20 @@ float vadStopNoisyMoments;
         }
     }
     
+    NSString *buffSize = [[NSUserDefaults standardUserDefaults] stringForKey:kRecorderBuff];
+    if ([buffSize length] != 0 && [buffSize intValue] != 0) {
+        [[Eva sharedInstance] setRecorderBufferSize: [buffSize intValue]];
+    }
+    buffSize = [[NSUserDefaults standardUserDefaults] stringForKey:kEncoderBuff];
+    if ([buffSize length] != 0 && [buffSize intValue] != 0) {
+        [[Eva sharedInstance] setFlacBufferSize: [buffSize intValue]];
+    }
+    buffSize = [[NSUserDefaults standardUserDefaults] stringForKey:kConnectionBuff];
+    if ([buffSize length] != 0 && [buffSize intValue] != 0) {
+        [[Eva sharedInstance] setHttpBufferSize: [buffSize intValue]];
+    }
+    
+    
     [self setRecordButtons:false];
 	// Do any additional setup after loading the view, typically from a nib.
     
@@ -435,10 +449,10 @@ float vadStopNoisyMoments;
     siteCodeString = [[controller siteCodeTextField] text];
     NSString *host = [[controller hostTextField] text];
     NSString *vrService = [[controller vrServiceTextField] text];
-    [[NSUserDefaults standardUserDefaults] setValue:apiKeyString forKey:kApiKey];
-    [[NSUserDefaults standardUserDefaults] setValue:siteCodeString forKey:kSiteCode];
-    [[NSUserDefaults standardUserDefaults] setValue:host forKey:kHost];
-    [[NSUserDefaults standardUserDefaults] setValue:vrService forKey:kVrService];
+    [[NSUserDefaults standardUserDefaults] setObject:apiKeyString forKey:kApiKey];
+    [[NSUserDefaults standardUserDefaults] setObject:siteCodeString forKey:kSiteCode];
+    [[NSUserDefaults standardUserDefaults] setObject:host forKey:kHost];
+    [[NSUserDefaults standardUserDefaults] setObject:vrService forKey:kVrService];
     [[Eva sharedInstance] setHostAddr:host];
     
     if ([vrService length] != 0) {
@@ -449,6 +463,22 @@ float vadStopNoisyMoments;
             [[Eva sharedInstance].optional_dictionary setValue:vrService forKey:@"vr_service"];
         }
     }
+    
+    NSString *buffSize = [[controller recorderBuffTextField] text];
+    [[NSUserDefaults standardUserDefaults] setObject:buffSize forKey:kRecorderBuff];
+    [[Eva sharedInstance] setRecorderBufferSize: [buffSize intValue]];
+
+    buffSize = [[controller encoderBuffTextField] text];
+    [[NSUserDefaults standardUserDefaults] setObject:buffSize forKey:kEncoderBuff];
+    [[Eva sharedInstance] setFlacBufferSize: [buffSize intValue]];
+
+    buffSize = [[controller connectionBuffTextField] text];
+    [[NSUserDefaults standardUserDefaults] setObject:buffSize forKey:kConnectionBuff];
+    [[Eva sharedInstance] setHttpBufferSize: [buffSize intValue]];
+    
+    buffSize = [[controller encoderFrameTextField] text];
+    [[NSUserDefaults standardUserDefaults] setObject:buffSize forKey:kEncoderFrame];
+    [[Eva sharedInstance] setFlacFrameSize: [buffSize intValue]];
 }
 
 @end

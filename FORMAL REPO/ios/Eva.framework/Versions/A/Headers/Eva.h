@@ -95,7 +95,15 @@
 -(void)stopRecordQueue: (BOOL)wasCanceled; // for debugging
 -(void)setHttpBufferSize:(int)buffSize;
 -(void)setFlacBufferSize:(int)buffSize;
+-(void)setFlacFrameSize:(int)frameSize;
+-(void)setRecorderBufferSize:(int)buffSize;
 -(void)setHostAddr:(NSString*)host;
+
+-(int)getHttpBufferSize;
+-(int)getFlacBufferSize;
+-(int)getFlacFrameSize;
+-(int)getRecorderBufferSize;
+
 
 // optional - audio files to play before or after recording voice - set to NULL to skip these sounds.
 // will return FALSE on error (file not found, wrong file format, etc...)

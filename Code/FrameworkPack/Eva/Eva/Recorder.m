@@ -3,19 +3,21 @@
 #import "Common.h"
 #import <stdlib.h>
 //#include "fft.h"
+#import "Eva.h"
 
 //#define DEBUG_LOGS TRUE
 
 #define DEBUG_RECORDER FALSE
 
-#define READSIZE 1024*4
+//#define READSIZE 1024*4
 #define CHANNELS 1
 #define SAMPLE_RATE 16000.0
 
 #define SAVE_TO_FILE TRUE//FALSE
 
-
-static FLAC__int32 pcm[READSIZE/*samples*/ * CHANNELS/*channels*/];
+static int pcmBuffSize = -1;
+static FLAC__int32 *pcm = NULL;
+//static FLAC__int32 pcm[READSIZE/*samples*/ * CHANNELS/*channels*/];
 
 @interface Recorder (Private)
 - (void)setUpAudioFormat;
@@ -279,9 +281,9 @@ static char *FormatError(char *str, OSStatus error)
     
 	audioFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
     
-	bufferNumPackets = 2048;  // must be power of 2 for FFT!
+	bufferNumPackets = [[Eva sharedInstance] getRecorderBufferSize];  // must be power of 2 for FFT!
 	bufferByteSize = [self byteSizeForNumPackets:bufferNumPackets];
-    
+    DLog(@"Setting up numPackets to %d,  buffer bytes size to %d", bufferNumPackets, bufferByteSize);
 	
 	
 	//init_fft(bufferNumPackets, audioFormat.mSampleRate);
@@ -518,6 +520,7 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
 		FLAC__stream_encoder_set_bits_per_sample(_encoder, bps);
 		FLAC__stream_encoder_set_sample_rate(_encoder, sample_rate);
 		FLAC__stream_encoder_set_total_samples_estimate(_encoder, sample_rate * self._maxRecordingTime);
+        FLAC__stream_encoder_set_blocksize(_encoder, [[Eva sharedInstance] getFlacFrameSize]);
 		FLAC__StreamEncoderInitStatus init_status;
         
 #if SAVE_TO_FILE
@@ -539,6 +542,16 @@ FLAC__StreamEncoderWriteStatus send_music(const FLAC__StreamEncoder *encoder, co
     if (_encoder==nil) {
         DLog(@"No encoder");
         return;
+    }
+    
+    int READSIZE = [[Eva sharedInstance] getFlacBufferSize];
+    if (pcmBuffSize != READSIZE * CHANNELS) {
+        if (pcm != NULL) {
+            free(pcm);
+        }
+        pcm = malloc(sizeof(FLAC__int32)*CHANNELS*READSIZE);
+        pcmBuffSize = READSIZE * CHANNELS;
+        DLog(@"Using Encoder buffer of %d bytes", pcmBuffSize );
     }
    
     size_t left = (size_t)inNumPackets;

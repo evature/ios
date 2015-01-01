@@ -263,6 +263,30 @@ or
                                 <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="vr_service:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rRm-di-Uy2">
+                                <rect key="frame" x="16" y="144" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Recording buff:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pEU-6x-jmW">
+                                <rect key="frame" x="16" y="196" width="132" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Encoding buff:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pBy-n6-zs0">
+                                <rect key="frame" x="16" y="233" width="132" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Connection buff:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2e2-FT-zIr">
+                                <rect key="frame" x="16" y="302" width="132" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Include http://" minimumFontSize="17" id="YWM-KZ-KTs">
                                 <rect key="frame" x="106" y="108" width="184" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -283,19 +307,63 @@ or
                                     <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="lwj-He-zBl"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="vr_service:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rRm-di-Uy2">
-                                <rect key="frame" x="16" y="144" width="82" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Default 4Kb" minimumFontSize="17" id="cru-5O-Lru">
+                                <rect key="frame" x="156" y="229" width="134" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="PKB-Mr-ssE"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="Xke-4B-ybz"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Default 32kb" minimumFontSize="17" id="8qG-Xc-l4R">
+                                <rect key="frame" x="156" y="298" width="134" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="Kfg-pH-FE7"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="gd5-2V-4DK"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Encoder Frame:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XWF-HO-vGE">
+                                <rect key="frame" x="16" y="268" width="132" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.1636916105" green="0.58152173910000005" blue="0.14482314090000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Default 0" minimumFontSize="17" id="GWZ-eg-A9X">
+                                <rect key="frame" x="156" y="264" width="134" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="FRW-OA-Ey2"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="cAh-zS-XjY"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="blank=Default 2Kb" minimumFontSize="17" id="jkU-9u-KLE">
+                                <rect key="frame" x="156" y="192" width="134" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEndOnExit" id="9Do-Qh-8Ph"/>
+                                    <action selector="textFieldDoneEditing:" destination="Cj7-hy-iCn" eventType="editingDidEnd" id="fEo-Zd-5rh"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="evh-mZ-5Af"/>
                     <connections>
                         <outlet property="apiKeyTextField" destination="o2A-vo-7Os" id="as1-vB-zcm"/>
+                        <outlet property="connectionBuffTextField" destination="8qG-Xc-l4R" id="bMK-Gz-zJg"/>
+                        <outlet property="encoderBuffTextField" destination="cru-5O-Lru" id="uHO-Fs-eNH"/>
+                        <outlet property="encoderFrameTextField" destination="GWZ-eg-A9X" id="O0d-9A-9vK"/>
                         <outlet property="hostTextField" destination="YWM-KZ-KTs" id="qIh-QB-tHg"/>
+                        <outlet property="recorderBuffTextField" destination="jkU-9u-KLE" id="Mlx-ce-01j"/>
                         <outlet property="siteCodeTextField" destination="NgM-qL-579" id="xeb-4U-mGn"/>
                         <outlet property="vrServiceTextField" destination="xeW-in-SsW" id="XtQ-RM-1p6"/>
                     </connections>
