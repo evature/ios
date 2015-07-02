@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'SpeexKit' target in the 'SpeexKit' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
-

@@ -1,4 +1,0 @@
-libspeex-iOS
-============
-
-libspeex-iOS

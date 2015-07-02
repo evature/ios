@@ -1,4 +1,0 @@
-SpeexKit-iOS
-============
-
-SpeexKit-iOS
