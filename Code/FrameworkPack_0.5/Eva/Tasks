@@ -1,8 +1,0 @@
-
-
-- [Low] Support armv7s.
-- [Low - v.2] Chunked encoding.
-- [Very Low] Formal demo app 
-
-
-fixed an issue with start silence detection.
