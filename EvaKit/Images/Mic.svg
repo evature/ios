@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="280">
+    <desc iVinci="yes" version="4.6" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1" name="Layer 1" opacity="1">
+        <g id="Shape1">
+            <desc shapeID="1" type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-76.5,-133.413,153,266.826)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,80,140)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M39.094,51.673 L39.094,137.32 C39.094,162.216 57.528,182.406 80.266,182.406 C103.003,182.406 121.438,162.216 121.438,137.32 L121.438,51.673 C121.438,26.778 103.003,6.58701 80.266,6.58701 C57.528,6.58701 39.094,26.778 39.094,51.673 M3.55299,129.339 L3.5,137.439 C3.55299,176.51 27.938,209.268 60.928,218.559 C61.619,218.618 62.31,218.856 62.947,219.095 C66.081,220.286 68.312,223.205 69.375,226.719 L69.375,261.68 C69.375,268.172 74.103,273.413 80,273.413 L80.053,273.413 C85.95,273.413 90.625,268.172 90.625,261.68 L90.625,226.659 C91.687,223.145 93.865,220.286 97,219.095 C97.637,218.856 98.328,218.618 99.072,218.559 C132.062,209.268 156.5,176.51 156.5,137.439 L156.5,129.339 C156.5,123.145 151.772,118.082 146.14,118.082 C140.51,118.082 135.781,123.085 135.781,129.339 L135.781,137.439 C135.781,154.413 129.672,169.661 119.525,180.799 C109.325,191.877 95.46,198.785 79.947,198.785 C64.435,198.785 50.675,191.936 40.528,180.799 C30.381,169.661 24.219,154.354 24.219,137.439 L24.219,129.339 C24.219,123.145 19.544,118.082 13.86,118.082 C8.228,118.082 3.55299,123.145 3.55299,129.339 Z" style="stroke:none;fill-rule:nonzero;fill:#000000;fill-opacity:1;"/>
+        </g>
+    </g>
+</svg>
