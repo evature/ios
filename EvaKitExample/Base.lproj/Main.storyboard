@@ -65,9 +65,9 @@
                                     <action selector="rotate:" destination="mVp-1E-xhV" eventType="touchUpInside" id="TIz-K8-Fj1"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aci-CZ-FP2">
-                                <rect key="frame" x="31" y="100" width="298" height="307"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aci-CZ-FP2" customClass="EVChatToolbarContentView">
+                                <rect key="frame" x="31" y="100" width="298" height="60"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

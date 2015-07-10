@@ -124,16 +124,25 @@
 				9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */,
 				9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */,
 			);
-			name = Layers;
+			path = Layers;
 			sourceTree = "<group>";
 		};
-		9608E8101B4D40EC00EB603D /* SVG */ = {
+		962809CC1B50333A00263567 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
 				969797A61B4BDF6700C0244D /* PocketSVG.h */,
 				969797A71B4BDF6700C0244D /* PocketSVG.m */,
+				9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */,
+				9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */,
 			);
-			name = SVG;
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		962809CD1B5033DD00263567 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		96675F281B457F1D00494BAA = {
@@ -160,8 +169,10 @@
 		96675F341B457F1D00494BAA /* EvaKit */ = {
 			isa = PBXGroup;
 			children = (
-				969797D91B4C0D2800C0244D /* Images */,
+				962809CD1B5033DD00263567 /* Core */,
 				96675F521B458EF000494BAA /* GUI */,
+				962809CC1B50333A00263567 /* ThirdParty */,
+				969797D91B4C0D2800C0244D /* Images */,
 				96675F371B457F1D00494BAA /* EvaKit.h */,
 				96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */,
 				96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */,
@@ -181,9 +192,6 @@
 		96675F521B458EF000494BAA /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */,
-				9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */,
-				9608E8101B4D40EC00EB603D /* SVG */,
 				9608E80F1B4D40E200EB603D /* Layers */,
 				96675F531B458F3900494BAA /* EVVoiceChatOpenButtonView.h */,
 				96675F541B458F3900494BAA /* EVVoiceChatOpenButtonView.m */,

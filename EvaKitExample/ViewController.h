@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EVChatToolbarContentView.h"
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UIView* layerView;
+@property (nonatomic, strong) IBOutlet EVChatToolbarContentView* layerView;
 
 - (IBAction)rotate:(id)sender;
 

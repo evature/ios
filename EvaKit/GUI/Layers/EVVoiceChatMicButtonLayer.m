@@ -13,7 +13,9 @@ NSString* const kEVRotatingAnimationKey = @"kEVRotatingAnimationKey";
 NSString* const kEVStrokeAnimationKey = @"kEVStrokeAnimationKey";
 #define BACKGROUND_PATH_SIZE 240.0f
 
-@interface EVVoiceChatMicButtonLayer ()
+@interface EVVoiceChatMicButtonLayer () {
+    BOOL _observersAdded;
+}
 
 @property (nonatomic, retain) CAShapeLayer* micLayer;
 @property (nonatomic, retain) CAShapeLayer* backgroundLayer;
@@ -46,6 +48,7 @@ NSString* const kEVStrokeAnimationKey = @"kEVStrokeAnimationKey";
         [self addObserver:self forKeyPath:@"micLineWidth" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
         [self addObserver:self forKeyPath:@"borderLineWidth" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
         [self addObserver:self forKeyPath:@"micScaleFactor" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
+        _observersAdded = YES;
         [self addSublayer:self.backgroundLayer];
         [self addSublayer:self.micLayer];
     }
@@ -53,9 +56,11 @@ NSString* const kEVStrokeAnimationKey = @"kEVStrokeAnimationKey";
 }
 
 - (void)dealloc {
-    [self removeObserver:self forKeyPath:@"micLineWidth"];
-    [self removeObserver:self forKeyPath:@"borderLineWidth"];
-    [self removeObserver:self forKeyPath:@"micScaleFactor"];
+    if (_observersAdded) {
+        [self removeObserver:self forKeyPath:@"micLineWidth"];
+        [self removeObserver:self forKeyPath:@"borderLineWidth"];
+        [self removeObserver:self forKeyPath:@"micScaleFactor"];
+    }
     self.micPath = NULL;
     self.micLineColor = NULL;
     self.micLayer = nil;

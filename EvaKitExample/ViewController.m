@@ -7,11 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "EVVoiceChatMicButtonLayer.h"
+
 
 @interface ViewController ()
 
-@property (nonatomic, retain) EVVoiceChatMicButtonLayer* layer;
 
 @end
 
@@ -19,29 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.layer = [EVVoiceChatMicButtonLayer layer];
-    self.layer.micLineWidth = 2.0f;
-    self.layer.micLineColor = [UIColor blackColor].CGColor;
-    self.layer.micFillColor = [UIColor redColor].CGColor;
-    self.layer.micScaleFactor = 0.8f;
-    self.layer.borderLineWidth = 10.0f;
-    self.layer.backgroundFillColor = [UIColor yellowColor].CGColor;
-    self.layer.borderLineColor = [UIColor blackColor].CGColor;
-    [self.layer setFrame:CGRectMake(0, 0, self.layerView.frame.size.width, self.layerView.frame.size.height)];
-    [self.layerView.layer addSublayer:self.layer];
+    [self.layerView newMinVolume:5.0f andMaxVolume:70.0f];
+    [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(updateGraph:) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)updateGraph:(NSTimer *)timer {
+    CGFloat val = (rand()%255)/4.5f+6.0f;
+    [self.layerView newAudioLevelData:[NSData dataWithBytes:&val length:sizeof(CGFloat)]];
+}
+
 - (IBAction)rotate:(id)sender {
-    static BOOL rotated = NO;
-    if (rotated) {
-        [self.layer showMicLayer];
-        [self.layer stopSpinning];
-    } else {
-        [self.layer hideMicLayer];
-        [self.layer startSpinning];
-    }
-    rotated = !rotated;
+//    static BOOL rotated = NO;
+//    if (rotated) {
+//        [self.layer showMicLayer];
+//        [self.layer stopSpinning];
+//    } else {
+//        [self.layer hideMicLayer];
+//        [self.layer startSpinning];
+//    }
+//    rotated = !rotated;
 }
 
 - (void)didReceiveMemoryWarning {

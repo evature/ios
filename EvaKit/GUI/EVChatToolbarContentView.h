@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JSQMessages.h"
+//#import "JSQMessages.h"
 
-@interface EVChatToolbarContentView : JSQMessagesToolbarContentView
+@interface EVChatToolbarContentView : UIView
+
+- (void)newAudioLevelData:(NSData*)data;
+- (void)newMinVolume:(CGFloat)minVolume andMaxVolume:(CGFloat)maxVolume;
 
 @end
