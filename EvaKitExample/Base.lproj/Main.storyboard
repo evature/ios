@@ -22,7 +22,7 @@
                                     <segue destination="55f-Eu-AZn" kind="embed" id="iop-dJ-ja0"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gl-7V-ETW" customClass="EVVoiceChatOpenButtonView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gl-7V-ETW" customClass="EVVoiceChatOpenButton">
                                 <rect key="frame" x="260" y="500" width="80" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

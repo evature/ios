@@ -14,8 +14,8 @@
 		9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */; };
 		96675F381B457F1D00494BAA /* EvaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F371B457F1D00494BAA /* EvaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96675F511B458A1A00494BAA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 96675F501B458A1A00494BAA /* Podfile */; };
-		96675F551B458F3900494BAA /* EVVoiceChatOpenButtonView.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatOpenButtonView.h */; };
-		96675F561B458F3900494BAA /* EVVoiceChatOpenButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96675F541B458F3900494BAA /* EVVoiceChatOpenButtonView.m */; };
+		96675F551B458F3900494BAA /* EVVoiceChatOpenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96675F561B458F3900494BAA /* EVVoiceChatOpenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */; };
 		9679ABC01B4E77C300F475DE /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */; };
 		9679ABC11B4E77C300F475DE /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */; };
 		9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */; };
@@ -33,7 +33,7 @@
 		969797C11B4BE13E00C0244D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969797BF1B4BE13E00C0244D /* LaunchScreen.xib */; };
 		969797D41B4BE2E000C0244D /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
 		969797DB1B4C0D2800C0244D /* Mic.svg in Resources */ = {isa = PBXBuildFile; fileRef = 969797DA1B4C0D2800C0244D /* Mic.svg */; };
-		96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */; };
+		96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */; };
 		96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */; };
 		96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */; };
@@ -48,8 +48,8 @@
 		96675F361B457F1D00494BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96675F371B457F1D00494BAA /* EvaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaKit.h; sourceTree = "<group>"; };
 		96675F501B458A1A00494BAA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		96675F531B458F3900494BAA /* EVVoiceChatOpenButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatOpenButtonView.h; sourceTree = "<group>"; };
-		96675F541B458F3900494BAA /* EVVoiceChatOpenButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatOpenButtonView.m; sourceTree = "<group>"; };
+		96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatOpenButton.h; sourceTree = "<group>"; };
+		96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatOpenButton.m; sourceTree = "<group>"; };
 		9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVChatToolbarContentView.h; sourceTree = "<group>"; };
@@ -193,8 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				9608E80F1B4D40E200EB603D /* Layers */,
-				96675F531B458F3900494BAA /* EVVoiceChatOpenButtonView.h */,
-				96675F541B458F3900494BAA /* EVVoiceChatOpenButtonView.m */,
+				96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */,
+				96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */,
 				96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */,
 				96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */,
 				9679ABCA1B4E8BC500F475DE /* EVVoiceChatViewController.xib */,
@@ -247,7 +247,7 @@
 			files = (
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
-				96675F551B458F3900494BAA /* EVVoiceChatOpenButtonView.h in Headers */,
+				96675F551B458F3900494BAA /* EVVoiceChatOpenButton.h in Headers */,
 				9679ABC11B4E77C300F475DE /* TPCircularBuffer.h in Headers */,
 				9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */,
 				9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */,
@@ -400,7 +400,7 @@
 				96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */,
 				9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */,
 				9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */,
-				96675F561B458F3900494BAA /* EVVoiceChatOpenButtonView.m in Sources */,
+				96675F561B458F3900494BAA /* EVVoiceChatOpenButton.m in Sources */,
 				96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */,
 				9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  EVVoiceChatOpenButtonView.h
+//  EVVoiceChatOpenButton.h
 //  EvaKit
 //
 //  Created by Yegor Popovych on 7/2/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 IB_DESIGNABLE
-@interface EVVoiceChatOpenButtonView : UIButton
+@interface EVVoiceChatOpenButton : UIButton
 
 @property (nonatomic, retain) IBInspectable UIColor *micLineColor;
 @property (nonatomic, assign) IBInspectable CGFloat micLineWidth;

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 //! Project version number for EvaKit.
 FOUNDATION_EXPORT double EvaKitVersionNumber;
 
 //! Project version string for EvaKit.
 FOUNDATION_EXPORT const unsigned char EvaKitVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <EvaKit/PublicHeader.h>
-
-
+#import "EVApplication.h"
+#import "EVVoiceChatOpenButton.h"
