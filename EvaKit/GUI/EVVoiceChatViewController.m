@@ -34,6 +34,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 @property (nonatomic, strong) NSMutableArray* messages;
 @property (nonatomic, strong) NSDictionary* viewSettings;
+@property (nonatomic, assign) BOOL isNewSession;
 
 - (UIImage*)imageOfBackgroundView;
 
@@ -76,6 +77,8 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     if (self != nil) {
         self.senderId = kSenderIdMe;
         self.senderDisplayName = kSenderDisplayNameMe;
+        self.startRecordingOnShow = NO;
+        self.isNewSession = YES;
         self.messages = [NSMutableArray array];
         [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Test hello message"]];
         
@@ -128,9 +131,11 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
     NSLog(@"Mic pressed!");
-    [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:5.0f andMaxVolume:70.0f];
+//    [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:10.0f];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
+    [self.evApplication startRecordingWithNewSession:self.isNewSession];
+    self.isNewSession = NO;
 }
 
 - (void)recordTimerFired:(NSTimer *)timer {
@@ -235,6 +240,13 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.startRecordingOnShow) {
+        [self messagesInputToolbar:((EVChatToolbarView*)self.inputToolbar) didPressCenterBarButton:nil];
+    }
+}
+
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return nil;
@@ -254,6 +266,48 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     }
     
     self.viewSettings = newSettings;
+}
+
+#pragma mark == EVApplication delegate ===
+- (void)evApplication:(EVApplication*)application didObtainResponseFromServer:(NSDictionary*)response {
+    NSLog(@"Response: %@", response);
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
+    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:[response objectForKey:@"input_text"]]];
+    [self finishSendingMessageAnimated:YES];
+    
+    NSDictionary *api_reply = (NSDictionary*)[response objectForKey:@"api_reply"];
+    if (api_reply != nil) {
+        NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
+        if (flow != nil && [flow count] > 0) {
+            NSDictionary *flowAction = [flow firstObject];
+            if ([flowAction objectForKey:@"SayIt"]) {
+                [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:[flowAction objectForKey:@"SayIt"]]];
+                [self finishReceivingMessageAnimated:YES];
+            }
+        }
+    }
+    
+}
+- (void)evApplication:(EVApplication*)application didObtainErrorFromServer:(NSError*)error {
+    NSLog(@"Error: %@", error);
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
+}
+
+- (void)evApplicationRecordIsStoped:(EVApplication *)application {
+    NSLog(@"Record stoped!");
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView startWaitAnimation];
+}
+
+- (void)evApplicationRecorderIsReady:(EVApplication*)application {
+    NSLog(@"IsReady");
+}
+
+- (void)evApplication:(EVApplication*)application recordingVolumePeak:(float)peak andAverage:(float)average {
+    CGFloat val = average;
+    NSLog(@"Peak: %f, average: %f", peak, average);
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:average-peak andMaxVolume:peak];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView newAudioLevelData:[NSData dataWithBytes:&val length:sizeof(CGFloat)]];
 }
 
 @end

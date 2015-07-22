@@ -11,9 +11,13 @@
 #import "EVApplication.h"
 #import "EVVoiceChatMicButtonLayer.h"
 
+#define BUTTON_DEFAULT_SIZE 60.0f
+
+const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
+
 @interface EVVoiceChatButton ()
 
-@property (nonatomic, strong) NSMutableDictionary* toolbarProperties;
+@property (nonatomic, strong) NSMutableDictionary* chatProperties;
 
 - (UIImage *)generateImage;
 - (UIImage *)generateHighlightMask;
@@ -54,8 +58,9 @@
     self.borderLineColor = [UIColor whiteColor];
     self.backgroundFillColor = [UIColor colorWithRed:208.0f/255.0f green:67.0f/255.0f blue:62.0f/255.0f alpha:0.9f];
     self.micScaleFactor = 0.75f;
+    self.autoHide = YES;
     self.highlightColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    self.toolbarProperties = [NSMutableDictionary dictionary];
+    self.chatProperties = [NSMutableDictionary dictionary];
 }
 
 - (UIImage*)generateImage {
@@ -92,11 +97,17 @@
 }
 
 - (instancetype)init {
+#if !TARGET_INTERFACE_BUILDER
+    //We in real app. Init with default frame
+    return [self initWithFrame:CGRectMake(0, 0, BUTTON_DEFAULT_SIZE, BUTTON_DEFAULT_SIZE)];
+#else
+    //We in IB. Simple init and provide default data
     self = [super init];
     if (self != nil) {
         [self setupDefaultData];
     }
     return self;
+#endif
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -111,6 +122,7 @@
     self = [super initWithFrame:frame];
     if (self != nil) {
         [self setupDefaultData];
+        [self awakeFromNib];
     }
     return self;
 }
@@ -125,8 +137,13 @@
 }
 
 - (IBAction)clicked:(id)button {
-    if ([[self actionsForTarget:nil forControlEvent:UIControlEventTouchUpInside] count] == 0) {
-        [[EVApplication sharedApplication] showChatViewController:self withViewSettings:self.toolbarProperties];
+    if ([[self allTargets] count] == 1) {
+        if (self.autoHide) {
+            [self.chatProperties setObject:[NSValue valueWithNonretainedObject:self] forKey:kEVVoiceChatButtonSettigsKey];
+        } else {
+            [self.chatProperties removeObjectForKey:kEVVoiceChatButtonSettigsKey];
+        }
+        [[EVApplication sharedApplication] showChatViewController:((self.connectedController != nil) ? self.connectedController : self) withViewSettings:self.chatProperties];
     }
 }
 
@@ -154,7 +171,7 @@
 - (id)valueForUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
         key = [self controllerPropertyNameFromSelfName:key];
-        return [self.toolbarProperties objectForKey:key];
+        return [self.chatProperties objectForKey:key];
     }
     return [super valueForUndefinedKey:key];
 }
@@ -162,10 +179,82 @@
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
         key = [self controllerPropertyNameFromSelfName:key];
-        [self.toolbarProperties setValue:value forKey:key];
+        [self.chatProperties setValue:value forKey:key];
     } else {
         [super setValue:value forKey:key];
     }
+}
+
+@end
+
+@implementation EVVoiceChatButton (EVButtonPosition)
+
+- (void)ev_pinToEdge:(NSLayoutAttribute)attribute withOffset:(CGFloat)offset {
+    [self.superview addConstraint:[NSLayoutConstraint constraintWithItem:self.superview
+                                                               attribute:attribute
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self
+                                                               attribute:attribute
+                                                              multiplier:1.0f
+                                                                constant:offset]];
+}
+
+- (void)ev_addSizeConstraints {
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                       attribute:NSLayoutAttributeHeight
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:nil
+                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                      multiplier:1.0
+                                                        constant:self.frame.size.height]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                       attribute:NSLayoutAttributeWidth
+                                                       relatedBy:NSLayoutRelationEqual
+                                                          toItem:nil
+                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                      multiplier:1.0
+                                                        constant:self.frame.size.width]];
+}
+
+- (void)ev_removeAllConstraints {
+    UIView *superview = self.superview;
+    while (superview != nil) {
+        for (NSLayoutConstraint *c in superview.constraints) {
+            if (c.firstItem == self || c.secondItem == self) {
+                [superview removeConstraint:c];
+            }
+        }
+        superview = superview.superview;
+    }
+    
+    [self removeConstraints:self.constraints];
+}
+
+- (void)ev_pinToBottomCenteredWithOffset:(CGFloat)bottomOffset {
+    [self ev_removeAllConstraints];
+    [self ev_addSizeConstraints];
+    [self ev_pinToEdge:NSLayoutAttributeBottom withOffset:bottomOffset];
+    [self ev_pinToEdge:NSLayoutAttributeCenterX withOffset:0.0f];
+    
+}
+- (void)ev_pinToTopCenteredWithOffset:(CGFloat)topOffset {
+    [self ev_removeAllConstraints];
+    [self ev_addSizeConstraints];
+    [self ev_pinToEdge:NSLayoutAttributeTop withOffset:topOffset];
+    [self ev_pinToEdge:NSLayoutAttributeCenterX withOffset:0.0f];
+}
+- (void)ev_pinToBottomLeftCornerWithLeftOffset:(CGFloat)leftOffset andBottomOffset:(CGFloat)bottomOffset {
+    [self ev_removeAllConstraints];
+    [self ev_addSizeConstraints];
+    [self ev_pinToEdge:NSLayoutAttributeBottom withOffset:bottomOffset];
+    [self ev_pinToEdge:NSLayoutAttributeLeft withOffset:leftOffset];
+    
+}
+- (void)ev_pinToBottomRightCornerWithRightOffset:(CGFloat)rightOffset andBottomOffset:(CGFloat)bottomOffset {
+    [self ev_removeAllConstraints];
+    [self ev_addSizeConstraints];
+    [self ev_pinToEdge:NSLayoutAttributeBottom withOffset:bottomOffset];
+    [self ev_pinToEdge:NSLayoutAttributeRight withOffset:rightOffset];
 }
 
 @end

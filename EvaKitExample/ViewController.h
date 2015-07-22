@@ -11,9 +11,5 @@
 
 @interface ViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet id layerView;
-
-- (IBAction)rotate:(id)sender;
-
 @end
 
