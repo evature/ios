@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XE1-IH-C7e">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,70 +18,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5HF-M1-ovT">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5HF-M1-ovT">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
                                     <segue destination="55f-Eu-AZn" kind="embed" id="iop-dJ-ja0"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gl-7V-ETW" customClass="EVVoiceChatOpenButton">
-                                <rect key="frame" x="260" y="500" width="80" height="80"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tfp-0W-eHp" customClass="EVVoiceChatButton">
+                                <rect key="frame" x="253" y="477" width="95" height="95"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="Rsb-Qx-KUL"/>
-                                    <constraint firstAttribute="width" constant="80" id="hv0-CY-aBe"/>
+                                    <constraint firstAttribute="width" constant="95" id="N6D-GJ-IAD"/>
+                                    <constraint firstAttribute="height" constant="95" id="hnB-2C-94G"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="micLineColor">
+                                    <userDefinedRuntimeAttribute type="color" keyPath="chatToolbarCenterButtonMicLineColor">
                                         <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="micLineWidth">
-                                        <real key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="micScaleFactor">
-                                        <real key="value" value="0.69999999999999996"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="micFillColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderLineWidth">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderLineColor">
-                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightColor">
-                                        <color key="value" white="0.66666666666666663" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="chatToolbarCenterButtonMicLineWidth">
+                                        <real key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oA6-rA-HLp">
-                                <rect key="frame" x="329" y="153" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="rotate:" destination="mVp-1E-xhV" eventType="touchUpInside" id="TIz-K8-Fj1"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aci-CZ-FP2" customClass="EVChatToolbarContentView">
-                                <rect key="frame" x="31" y="100" width="298" height="60"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sOV-7J-G4H" firstAttribute="top" secondItem="0Gl-7V-ETW" secondAttribute="bottom" constant="20" id="Sd8-94-t5H"/>
-                            <constraint firstAttribute="centerX" secondItem="0Gl-7V-ETW" secondAttribute="centerX" id="ici-dv-GUE"/>
+                            <constraint firstItem="5HF-M1-ovT" firstAttribute="centerX" secondItem="Tfp-0W-eHp" secondAttribute="centerX" id="9dJ-pI-a81"/>
+                            <constraint firstItem="sOV-7J-G4H" firstAttribute="top" secondItem="5HF-M1-ovT" secondAttribute="bottom" id="F4C-gu-pDC"/>
+                            <constraint firstItem="5HF-M1-ovT" firstAttribute="top" secondItem="cVy-Sk-hRU" secondAttribute="bottom" constant="-64" id="MdK-0l-Bqc"/>
+                            <constraint firstItem="5HF-M1-ovT" firstAttribute="leading" secondItem="G7W-M4-OSs" secondAttribute="leadingMargin" constant="-16" id="aUx-JW-Qh3"/>
+                            <constraint firstItem="sOV-7J-G4H" firstAttribute="top" secondItem="Tfp-0W-eHp" secondAttribute="bottom" constant="28" id="mFP-KR-SP9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5HF-M1-ovT" secondAttribute="trailing" constant="-16" id="qeV-Jb-oje"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YK9-Ga-QW3"/>
-                    <connections>
-                        <outlet property="layerView" destination="aci-CZ-FP2" id="6Al-Zg-svg"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAu-Vk-4aB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

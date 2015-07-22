@@ -12,10 +12,14 @@
 
 @property (nonatomic, assign, readwrite) Class chatViewControllerClass;
 
+
+// Dictionary with Chat View settings path rewrites. For more simple configuration and Chat Button.
+@property (nonatomic, strong, readonly) NSMutableDictionary* chatViewControllerPathRewrites;
+
 + (instancetype)sharedApplication;
 
 
 // Sender can be View Controller or View
-- (void)showChatViewController:(id)sender;
+- (void)showChatViewController:(id)sender withViewSettings:(NSDictionary*)viewSettings;
 
 @end

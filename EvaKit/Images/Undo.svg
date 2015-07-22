@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128">
+    <desc iVinci="yes" version="4.6" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1" name="Layer 1" opacity="1">
+        <g id="Shape1">
+            <desc shapeID="1" type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-64.0043,-59.0025,128.009,118.005)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,64.0043,63.9975)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M12,25.12 C14.74,25.4 24.58,17.2 28,15.31 C39.08,9.19 50.22,5.3 63,5.01 C95.11,4.29 127.6,29.45 128,63 C128.21,80.99 124.64,92.65 113.33,107 C108.78,112.78 102.36,119.29 96,123 C97.4,117.35 101.32,113.04 104.14,108 C109.06,99.2 112.88,90.22 113,80 C113,80 113,76 113,76 C112.73,53.94 91.03,37.02 70,37 C54.46,36.98 47.84,41.19 37,52 C41.81,55.44 46.45,59.6 49,65 C49,65 0,65 0,65 C0,65 0,16 0,16 C2.83,18.03 9.46,24.87 12,25.12 Z" style="stroke:#000000;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:butt;fill-rule:nonzero;fill:#000000;fill-opacity:1;"/>
+        </g>
+    </g>
+</svg>

@@ -10,6 +10,12 @@
 #import <UIKit/UIKit.h>
 #import "EVVoiceChatViewController.h"
 
+@interface EVApplication ()
+
+@property (nonatomic, strong, readwrite) NSMutableDictionary* chatViewControllerPathRewrites;
+
+@end
+
 @implementation EVApplication
 
 - (id)traverseResponderChainForUIViewControllerForView:(UIView*)view {
@@ -36,22 +42,26 @@
     self = [super init];
     if (self != nil) {
         self.chatViewControllerClass = [EVVoiceChatViewController class];
+        self.chatViewControllerPathRewrites = [NSMutableDictionary dictionary];
+        [self.chatViewControllerPathRewrites setObject:@"inputToolbar.contentView." forKey:@"toolbar."];
     }
     return self;
 }
 
 
-- (void)showChatViewController:(id)sender {
+- (void)showChatViewController:(id)sender withViewSettings:(NSDictionary*)viewSettings {
     UIViewController *ctrl = nil;
     if ([sender isKindOfClass:[UIViewController class]]) {
         ctrl = sender;
     } else if ([sender isKindOfClass:[UIView class]]) {
         ctrl = [self traverseResponderChainForUIViewControllerForView:sender];
     }
-    [ctrl presentViewController:[[[self.chatViewControllerClass alloc] init] autorelease] animated:YES completion:^{
+    EVVoiceChatViewController* viewCtrl = [[[self.chatViewControllerClass alloc] init] autorelease];
+    viewCtrl.openButton = sender;
+    [viewCtrl updateViewFromSettings:viewSettings];
+    [ctrl presentViewController:viewCtrl animated:YES completion:^{
         NSLog(@"Finished");
     }];
-    NSLog(@"Need show view controller");
 }
 
 @end

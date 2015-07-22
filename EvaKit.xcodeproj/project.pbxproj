@@ -12,10 +12,19 @@
 		9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */; };
 		9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */; };
 		9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */; };
+		960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 960C05D91B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h */; };
+		960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 960C05DA1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m */; };
+		9653D41A1B5C164E00FC37AF /* EVSpringAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9653D4181B5C164E00FC37AF /* EVSpringAnimation.h */; };
+		9653D41B1B5C164E00FC37AF /* EVSpringAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653D4191B5C164E00FC37AF /* EVSpringAnimation.m */; };
+		9653D4231B5C6F7800FC37AF /* DownArrow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 9653D4221B5C6F7800FC37AF /* DownArrow.svg */; };
+		9653D4261B5C6F9E00FC37AF /* EVDownButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 9653D4241B5C6F9E00FC37AF /* EVDownButtonItem.h */; };
+		9653D4271B5C6F9E00FC37AF /* EVDownButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */; };
+		9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 9659512B1B55BE3200B15AA2 /* UIImageEffects.h */; };
+		9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9659512C1B55BE3200B15AA2 /* UIImageEffects.m */; };
 		96675F381B457F1D00494BAA /* EvaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F371B457F1D00494BAA /* EvaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96675F511B458A1A00494BAA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 96675F501B458A1A00494BAA /* Podfile */; };
-		96675F551B458F3900494BAA /* EVVoiceChatOpenButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		96675F561B458F3900494BAA /* EVVoiceChatOpenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */; };
+		96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96675F541B458F3900494BAA /* EVVoiceChatButton.m */; };
 		9679ABC01B4E77C300F475DE /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */; };
 		9679ABC11B4E77C300F475DE /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */; };
 		9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */; };
@@ -33,10 +42,20 @@
 		969797C11B4BE13E00C0244D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969797BF1B4BE13E00C0244D /* LaunchScreen.xib */; };
 		969797D41B4BE2E000C0244D /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
 		969797DB1B4C0D2800C0244D /* Mic.svg in Resources */ = {isa = PBXBuildFile; fileRef = 969797DA1B4C0D2800C0244D /* Mic.svg */; };
+		969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */; };
+		969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */; };
 		96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */; };
 		96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */; };
 		96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */; };
+		96D9C8571B546D5C00276ADA /* Trash.svg in Resources */ = {isa = PBXBuildFile; fileRef = 96D9C8561B546D5C00276ADA /* Trash.svg */; };
+		96D9C8591B54702300276ADA /* Undo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 96D9C8581B54702300276ADA /* Undo.svg */; };
+		96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */; };
+		96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E014871B514FBE00E8ADE4 /* EVButtonLayer.m */; };
+		96E0148C1B51533900E8ADE4 /* EVSVGLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E0148A1B51533900E8ADE4 /* EVSVGLayer.h */; };
+		96E0148D1B51533900E8ADE4 /* EVSVGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E0148B1B51533900E8ADE4 /* EVSVGLayer.m */; };
+		96E014901B5154E800E8ADE4 /* EVResizableShapeLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E0148E1B5154E800E8ADE4 /* EVResizableShapeLayer.h */; };
+		96E014911B5154E800E8ADE4 /* EVResizableShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E0148F1B5154E800E8ADE4 /* EVResizableShapeLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,12 +63,21 @@
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceLevelMicButtonLayer.m; sourceTree = "<group>"; };
+		960C05D91B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSVGButtonWithCircleBackgroundLayer.h; sourceTree = "<group>"; };
+		960C05DA1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVSVGButtonWithCircleBackgroundLayer.m; sourceTree = "<group>"; };
+		9653D4181B5C164E00FC37AF /* EVSpringAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSpringAnimation.h; sourceTree = "<group>"; };
+		9653D4191B5C164E00FC37AF /* EVSpringAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVSpringAnimation.m; sourceTree = "<group>"; };
+		9653D4221B5C6F7800FC37AF /* DownArrow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DownArrow.svg; sourceTree = "<group>"; };
+		9653D4241B5C6F9E00FC37AF /* EVDownButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDownButtonItem.h; sourceTree = "<group>"; };
+		9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDownButtonItem.m; sourceTree = "<group>"; };
+		9659512B1B55BE3200B15AA2 /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageEffects.h; sourceTree = "<group>"; };
+		9659512C1B55BE3200B15AA2 /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageEffects.m; sourceTree = "<group>"; };
 		96675F321B457F1D00494BAA /* EvaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EvaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96675F361B457F1D00494BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96675F371B457F1D00494BAA /* EvaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaKit.h; sourceTree = "<group>"; };
 		96675F501B458A1A00494BAA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatOpenButton.h; sourceTree = "<group>"; };
-		96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatOpenButton.m; sourceTree = "<group>"; };
+		96675F531B458F3900494BAA /* EVVoiceChatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatButton.h; sourceTree = "<group>"; };
+		96675F541B458F3900494BAA /* EVVoiceChatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatButton.m; sourceTree = "<group>"; };
 		9679ABBE1B4E77C300F475DE /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVChatToolbarContentView.h; sourceTree = "<group>"; };
@@ -70,10 +98,20 @@
 		969797BD1B4BE13E00C0244D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		969797C01B4BE13E00C0244D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		969797DA1B4C0D2800C0244D /* Mic.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Mic.svg; sourceTree = "<group>"; };
+		969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVApplication.h; sourceTree = "<group>"; };
 		96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVApplication.m; sourceTree = "<group>"; };
 		96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatViewController.h; sourceTree = "<group>"; };
 		96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatViewController.m; sourceTree = "<group>"; };
+		96D9C8561B546D5C00276ADA /* Trash.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Trash.svg; sourceTree = "<group>"; };
+		96D9C8581B54702300276ADA /* Undo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Undo.svg; sourceTree = "<group>"; };
+		96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVButtonLayer.h; sourceTree = "<group>"; };
+		96E014871B514FBE00E8ADE4 /* EVButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVButtonLayer.m; sourceTree = "<group>"; };
+		96E0148A1B51533900E8ADE4 /* EVSVGLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSVGLayer.h; sourceTree = "<group>"; };
+		96E0148B1B51533900E8ADE4 /* EVSVGLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVSVGLayer.m; sourceTree = "<group>"; };
+		96E0148E1B5154E800E8ADE4 /* EVResizableShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVResizableShapeLayer.h; sourceTree = "<group>"; };
+		96E0148F1B5154E800E8ADE4 /* EVResizableShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVResizableShapeLayer.m; sourceTree = "<group>"; };
 		DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKit/Pods-EvaKit.debug.xcconfig"; sourceTree = "<group>"; };
 		E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKit/Pods-EvaKit.release.xcconfig"; sourceTree = "<group>"; };
 		ED9DF85380B2B1D0BB0D3674 /* Pods_EvaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EvaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +161,14 @@
 				9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */,
 				9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */,
 				9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */,
+				96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */,
+				96E014871B514FBE00E8ADE4 /* EVButtonLayer.m */,
+				96E0148A1B51533900E8ADE4 /* EVSVGLayer.h */,
+				96E0148B1B51533900E8ADE4 /* EVSVGLayer.m */,
+				96E0148E1B5154E800E8ADE4 /* EVResizableShapeLayer.h */,
+				96E0148F1B5154E800E8ADE4 /* EVResizableShapeLayer.m */,
+				960C05D91B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h */,
+				960C05DA1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -130,6 +176,8 @@
 		962809CC1B50333A00263567 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				9659512B1B55BE3200B15AA2 /* UIImageEffects.h */,
+				9659512C1B55BE3200B15AA2 /* UIImageEffects.m */,
 				969797A61B4BDF6700C0244D /* PocketSVG.h */,
 				969797A71B4BDF6700C0244D /* PocketSVG.m */,
 				9679ABBF1B4E77C300F475DE /* TPCircularBuffer.h */,
@@ -192,16 +240,14 @@
 		96675F521B458EF000494BAA /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				969B710C1B5CFA1200588413 /* Toolbar */,
+				969B710B1B5CF9A700588413 /* Buttons */,
 				9608E80F1B4D40E200EB603D /* Layers */,
-				96675F531B458F3900494BAA /* EVVoiceChatOpenButton.h */,
-				96675F541B458F3900494BAA /* EVVoiceChatOpenButton.m */,
 				96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */,
 				96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */,
 				9679ABCA1B4E8BC500F475DE /* EVVoiceChatViewController.xib */,
-				9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */,
-				9679ABC31B4E82B600F475DE /* EVChatToolbarContentView.m */,
-				9679ABC61B4E891300F475DE /* EVChatToolbarView.h */,
-				9679ABC71B4E891300F475DE /* EVChatToolbarView.m */,
+				969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */,
+				969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -233,9 +279,36 @@
 		969797D91B4C0D2800C0244D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9653D4221B5C6F7800FC37AF /* DownArrow.svg */,
+				96D9C8581B54702300276ADA /* Undo.svg */,
+				96D9C8561B546D5C00276ADA /* Trash.svg */,
 				969797DA1B4C0D2800C0244D /* Mic.svg */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		969B710B1B5CF9A700588413 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				96675F531B458F3900494BAA /* EVVoiceChatButton.h */,
+				96675F541B458F3900494BAA /* EVVoiceChatButton.m */,
+				9653D4241B5C6F9E00FC37AF /* EVDownButtonItem.h */,
+				9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		969B710C1B5CFA1200588413 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				9653D4181B5C164E00FC37AF /* EVSpringAnimation.h */,
+				9653D4191B5C164E00FC37AF /* EVSpringAnimation.m */,
+				9679ABC21B4E82B600F475DE /* EVChatToolbarContentView.h */,
+				9679ABC31B4E82B600F475DE /* EVChatToolbarContentView.m */,
+				9679ABC61B4E891300F475DE /* EVChatToolbarView.h */,
+				9679ABC71B4E891300F475DE /* EVChatToolbarView.m */,
+			);
+			path = Toolbar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,16 +318,24 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
-				96675F551B458F3900494BAA /* EVVoiceChatOpenButton.h in Headers */,
+				96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */,
 				9679ABC11B4E77C300F475DE /* TPCircularBuffer.h in Headers */,
+				9653D4261B5C6F9E00FC37AF /* EVDownButtonItem.h in Headers */,
 				9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */,
 				9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */,
 				969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */,
+				9653D41A1B5C164E00FC37AF /* EVSpringAnimation.h in Headers */,
 				9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */,
 				96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */,
 				96675F381B457F1D00494BAA /* EvaKit.h in Headers */,
+				96E0148C1B51533900E8ADE4 /* EVSVGLayer.h in Headers */,
+				96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */,
+				960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */,
+				9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */,
+				96E014901B5154E800E8ADE4 /* EVResizableShapeLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +421,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				969797DB1B4C0D2800C0244D /* Mic.svg in Resources */,
+				96D9C8571B546D5C00276ADA /* Trash.svg in Resources */,
 				96675F511B458A1A00494BAA /* Podfile in Resources */,
+				96D9C8591B54702300276ADA /* Undo.svg in Resources */,
+				9653D4231B5C6F7800FC37AF /* DownArrow.svg in Resources */,
 				9679ABCB1B4E8BC500F475DE /* EVVoiceChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,13 +480,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				9679ABC01B4E77C300F475DE /* TPCircularBuffer.c in Sources */,
+				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,
+				969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */,
 				969797A91B4BDF6700C0244D /* PocketSVG.m in Sources */,
+				96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */,
 				96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */,
+				96E014911B5154E800E8ADE4 /* EVResizableShapeLayer.m in Sources */,
 				9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */,
 				9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */,
-				96675F561B458F3900494BAA /* EVVoiceChatOpenButton.m in Sources */,
+				96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */,
 				96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */,
+				9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */,
+				9653D4271B5C6F9E00FC37AF /* EVDownButtonItem.m in Sources */,
 				9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */,
+				9653D41B1B5C164E00FC37AF /* EVSpringAnimation.m in Sources */,
+				96E0148D1B51533900E8ADE4 /* EVSVGLayer.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,6 +623,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -540,6 +633,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -547,6 +641,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -569,7 +664,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -581,7 +676,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

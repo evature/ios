@@ -6,34 +6,23 @@
 //  Copyright (c) 2015 Evature. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
+#import "EVSVGButtonWithCircleBackgroundLayer.h"
 
-@interface EVVoiceChatMicButtonLayer : CALayer {
-    CGPathRef _micPath;
-    CGColorRef _micLineColor;
-    CGColorRef _micFillColor;
-    CGColorRef _borderLineColor;
-    CGColorRef _backgroundFillColor;
-}
+@interface EVVoiceChatMicButtonLayer : EVSVGButtonWithCircleBackgroundLayer
 
-// All CG*Ref properties retains values. So release object after initializing.
-@property (nonatomic, assign) CGColorRef micLineColor;
-@property (nonatomic, assign) CGFloat micLineWidth;
-@property (nonatomic, assign) CGColorRef micFillColor;
-@property (nonatomic, assign) CGFloat micScaleFactor;
+@property (nonatomic, assign) CGColorRef highlightColor;
+@property (nonatomic, assign) CGFloat spinningBorderWidth;
 
-@property (nonatomic, assign) CGColorRef borderLineColor;
-@property (nonatomic, assign) CGFloat borderLineWidth;
-@property (nonatomic, assign) CGColorRef backgroundFillColor;
-
-@property (nonatomic, assign) CGPathRef micPath;
-
-- (void)setMicPathFromSVGFileWithPath:(NSString*)svgFilePath;
-
-- (void)hideMicLayer;
-- (void)showMicLayer;
+- (void)hideMic;
+- (void)showMic;
 
 - (void)startSpinning;
 - (void)stopSpinning;
+
+- (void)audioSessionStarted;
+- (void)audioSessionStoped;
+
+- (void)newAudioLevelData:(NSData*)data;
+- (void)newMinVolume:(CGFloat)minVolume andMaxVolume:(CGFloat)maxVolume;
 
 @end
