@@ -57,6 +57,17 @@
     self.micButtonLayer.borderLineColor = _centerButtonBorderColor.CGColor;
     self.micButtonLayer.highlightColor = _centerButtonHighlightColor.CGColor;
     self.micButtonLayer.spinningBorderWidth = _centerButtonSpinningBorderWidth;
+    
+    self.micButtonLayer.imageLayer.shadowColor = _centerButtonMicShadowColor.CGColor;
+    self.micButtonLayer.imageLayer.shadowOffset = _centerButtonMicShadowOffset;
+    self.micButtonLayer.imageLayer.shadowOpacity = _centerButtonMicShadowOpacity;
+    self.micButtonLayer.imageLayer.shadowRadius = _centerButtonMicShadowRadius;
+    
+    self.micButtonLayer.backgroundLayer.shadowColor = _centerButtonBackgroundShadowColor.CGColor;
+    self.micButtonLayer.backgroundLayer.shadowOffset = _centerButtonBackgroundShadowOffset;
+    self.micButtonLayer.backgroundLayer.shadowOpacity = _centerButtonBackgroundShadowOpacity;
+    self.micButtonLayer.backgroundLayer.shadowRadius = _centerButtonBackgroundShadowRadius;
+    
     [self.layer addSublayer:self.micButtonLayer];
     
     
@@ -74,6 +85,16 @@
     
     ((EVResizableShapeLayer*)self.leftButtonLayer.backgroundLayer).lineWidth = ((EVResizableShapeLayer*)self.rightButtonLayer.backgroundLayer).lineWidth = _leftRightButtonsBorderWidth;
     ((EVResizableShapeLayer*)self.leftButtonLayer.backgroundLayer).strokeColor = ((EVResizableShapeLayer*)self.rightButtonLayer.backgroundLayer).strokeColor = _leftRightButtonsBorderColor.CGColor;
+    
+    self.leftButtonLayer.imageLayer.shadowColor = self.rightButtonLayer.imageLayer.shadowColor = _leftRightButtonsImageShadowColor.CGColor;
+    self.leftButtonLayer.imageLayer.shadowOffset = self.rightButtonLayer.imageLayer.shadowOffset = _leftRightButtonsImageShadowOffset;
+    self.leftButtonLayer.imageLayer.shadowOpacity = self.rightButtonLayer.imageLayer.shadowOpacity = _leftRightButtonsImageShadowOpacity;
+    self.leftButtonLayer.imageLayer.shadowRadius = self.rightButtonLayer.imageLayer.shadowRadius = _leftRightButtonsImageShadowRadius;
+    
+    self.leftButtonLayer.backgroundLayer.shadowColor = self.rightButtonLayer.backgroundLayer.shadowColor = _leftRightButtonsBackgroundShadowColor.CGColor;
+    self.leftButtonLayer.backgroundLayer.shadowOffset = self.rightButtonLayer.backgroundLayer.shadowOffset = _leftRightButtonsBackgroundShadowOffset;
+    self.leftButtonLayer.backgroundLayer.shadowOpacity = self.rightButtonLayer.backgroundLayer.shadowOpacity = _leftRightButtonsBackgroundShadowOpacity;
+    self.leftButtonLayer.backgroundLayer.shadowRadius = self.rightButtonLayer.backgroundLayer.shadowRadius = _leftRightButtonsBackgroundShadowRadius;
     
     [self.leftButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Undo" ofType:@"svg"]];
     [self.rightButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Trash" ofType:@"svg"]];
@@ -145,6 +166,12 @@
         _centerButtonBorderWidth = 2.0f;
         _centerButtonSpinningBorderWidth = 3.0f;
         
+        _centerButtonMicShadowColor = [[UIColor blackColor] retain];
+        _centerButtonBackgroundShadowColor = [_centerButtonMicShadowColor retain];
+        _centerButtonMicShadowOffset = _centerButtonBackgroundShadowOffset = CGSizeMake(0, -3.0f);
+        _centerButtonBackgroundShadowOpacity = _centerButtonMicShadowOpacity = 0.0f;
+        _centerButtonMicShadowRadius = _centerButtonBackgroundShadowRadius = 3.0f;
+        
         _centerButtonMicLineColor = [[UIColor whiteColor] retain];
         
         _centerButtonMicLineWidth = 0.0f;
@@ -160,6 +187,14 @@
         _leftRightButtonsMaxBackgroundScale = 1.0f;
         _leftRightButtonsImageColor = [_centerButtonMicColor retain];
         _leftRightButtonsBorderColor = [_centerButtonBorderColor retain];
+        _leftRightButtonsBackgroundShadowColor = [_centerButtonBackgroundShadowColor retain];
+        _leftRightButtonsImageShadowColor = [_centerButtonMicShadowColor retain];
+        _leftRightButtonsImageShadowOffset = _centerButtonMicShadowOffset;
+        _leftRightButtonsBackgroundShadowOffset = _centerButtonBackgroundShadowOffset;
+        _leftRightButtonsBackgroundShadowOpacity = _centerButtonBackgroundShadowOpacity;
+        _leftRightButtonsBackgroundShadowRadius = _centerButtonBackgroundShadowRadius;
+        _leftRightButtonsImageShadowOpacity = _centerButtonMicShadowOpacity;
+        _leftRightButtonsImageShadowRadius = _centerButtonMicShadowRadius;
         
         _leftRightButtonsOffset = BUTTON_MARGIN * [UIScreen mainScreen].scale;
         
@@ -185,6 +220,10 @@
     self.centerButtonHighlightColor = nil;
     self.centerButtonMicColor = nil;
     self.centerButtonMicLineColor = nil;
+    self.leftRightButtonsBackgroundShadowColor = nil;
+    self.leftRightButtonsImageShadowColor = nil;
+    self.centerButtonBackgroundShadowColor = nil;
+    self.centerButtonMicShadowColor = nil;
     self.changedProperties = nil;
     [super dealloc];
 }
@@ -450,6 +489,140 @@
     _leftRightButtonsOffset = leftRightButtonsOffset;
     [self.changedProperties addObject:@"leftRightButtonsOffset"];
     [self setupButtonPositions];
+}
+
+- (void)setCenterButtonMicShadowColor:(UIColor*)centerButtonMicShadowColor {
+    [_centerButtonMicShadowColor release];
+    _centerButtonMicShadowColor = [centerButtonMicShadowColor retain];
+    [self.changedProperties addObject:@"centerButtonMicShadowColor"];
+    self.micButtonLayer.imageLayer.shadowColor = centerButtonMicShadowColor.CGColor;
+    if (![self.changedProperties containsObject:@"leftRightButtonsImageShadowColor"]) {
+        [_leftRightButtonsImageShadowColor release];
+        _leftRightButtonsImageShadowColor = [centerButtonMicShadowColor retain];
+        self.leftButtonLayer.imageLayer.shadowColor = self.rightButtonLayer.imageLayer.shadowColor = _leftRightButtonsImageShadowColor.CGColor;
+    }
+}
+
+- (void)setCenterButtonMicShadowOffset:(CGSize)centerButtonMicShadowOffset {
+    _centerButtonMicShadowOffset = centerButtonMicShadowOffset;
+    [self.changedProperties addObject:@"centerButtonMicShadowOffset"];
+    self.micButtonLayer.imageLayer.shadowOffset = centerButtonMicShadowOffset;
+    if (![self.changedProperties containsObject:@"leftRightButtonsImageShadowOffset"]) {
+        _leftRightButtonsImageShadowOffset = centerButtonMicShadowOffset;
+        self.leftButtonLayer.imageLayer.shadowOffset = self.rightButtonLayer.imageLayer.shadowOffset = centerButtonMicShadowOffset;
+    }
+}
+
+- (void)setCenterButtonMicShadowRadius:(CGFloat)centerButtonMicShadowRadius {
+    _centerButtonMicShadowRadius = centerButtonMicShadowRadius;
+    [self.changedProperties addObject:@"centerButtonMicShadowRadius"];
+    self.micButtonLayer.imageLayer.shadowRadius = centerButtonMicShadowRadius;
+    if (![self.changedProperties containsObject:@"leftRightButtonsImageShadowRadius"]) {
+        _leftRightButtonsImageShadowRadius = centerButtonMicShadowRadius;
+        self.leftButtonLayer.imageLayer.shadowRadius = self.rightButtonLayer.imageLayer.shadowRadius = centerButtonMicShadowRadius;
+    }
+}
+
+- (void)setCenterButtonMicShadowOpacity:(CGFloat)centerButtonMicShadowOpacity {
+    _centerButtonMicShadowOpacity = centerButtonMicShadowOpacity;
+    [self.changedProperties addObject:@"centerButtonMicShadowOpacity"];
+    self.micButtonLayer.imageLayer.shadowOpacity = centerButtonMicShadowOpacity;
+    if (![self.changedProperties containsObject:@"leftRightButtonsImageShadowOpacity"]) {
+        _leftRightButtonsImageShadowOpacity = centerButtonMicShadowOpacity;
+        self.leftButtonLayer.imageLayer.shadowOpacity = self.rightButtonLayer.imageLayer.shadowOpacity = centerButtonMicShadowOpacity;
+    }
+}
+
+- (void)setCenterButtonBackgroundShadowColor:(UIColor*)centerButtonBackgroundShadowColor {
+    [_centerButtonBackgroundShadowColor release];
+    _centerButtonBackgroundShadowColor = [centerButtonBackgroundShadowColor retain];
+    [self.changedProperties addObject:@"centerButtonBackgroundShadowColor"];
+    self.micButtonLayer.backgroundLayer.shadowColor = centerButtonBackgroundShadowColor.CGColor;
+    if (![self.changedProperties containsObject:@"leftRightButtonsBackgroundShadowColor"]) {
+        [_leftRightButtonsBackgroundShadowColor release];
+        _leftRightButtonsBackgroundShadowColor = [centerButtonBackgroundShadowColor retain];
+        self.leftButtonLayer.backgroundLayer.shadowColor = self.rightButtonLayer.backgroundLayer.shadowColor = _leftRightButtonsBackgroundShadowColor.CGColor;
+    }
+}
+
+- (void)setCenterButtonBackgroundShadowOffset:(CGSize)centerButtonBackgroundShadowOffset {
+    _centerButtonBackgroundShadowOffset = centerButtonBackgroundShadowOffset;
+    [self.changedProperties addObject:@"centerButtonBackgroundShadowOffset"];
+    self.micButtonLayer.backgroundLayer.shadowOffset = centerButtonBackgroundShadowOffset;
+    if (![self.changedProperties containsObject:@"leftRightButtonsBackgroundShadowOffset"]) {
+        _leftRightButtonsBackgroundShadowOffset = centerButtonBackgroundShadowOffset;
+        self.leftButtonLayer.backgroundLayer.shadowOffset = self.rightButtonLayer.backgroundLayer.shadowOffset = centerButtonBackgroundShadowOffset;
+    }
+}
+
+- (void)setCenterButtonBackgroundShadowRadius:(CGFloat)centerButtonBackgroundShadowRadius {
+    _centerButtonBackgroundShadowRadius = centerButtonBackgroundShadowRadius;
+    [self.changedProperties addObject:@"centerButtonBackgroundShadowRadius"];
+    self.micButtonLayer.backgroundLayer.shadowRadius = centerButtonBackgroundShadowRadius;
+    if (![self.changedProperties containsObject:@"leftRightButtonsBackgroundShadowRadius"]) {
+        _leftRightButtonsBackgroundShadowRadius = centerButtonBackgroundShadowRadius;
+        self.leftButtonLayer.backgroundLayer.shadowRadius = self.rightButtonLayer.backgroundLayer.shadowRadius = centerButtonBackgroundShadowRadius;
+    }
+}
+
+- (void)setCenterButtonBackgroundShadowOpacity:(CGFloat)centerButtonBackgroundShadowOpacity {
+    _centerButtonBackgroundShadowOpacity = centerButtonBackgroundShadowOpacity;
+    [self.changedProperties addObject:@"centerButtonBackgroundShadowOpacity"];
+    self.micButtonLayer.backgroundLayer.shadowOpacity = centerButtonBackgroundShadowOpacity;
+    if (![self.changedProperties containsObject:@"leftRightButtonsBackgroundShadowOpacity"]) {
+        _leftRightButtonsBackgroundShadowOpacity = centerButtonBackgroundShadowOpacity;
+        self.leftButtonLayer.backgroundLayer.shadowOpacity = self.rightButtonLayer.backgroundLayer.shadowOpacity = centerButtonBackgroundShadowOpacity;
+    }
+}
+
+- (void)setLeftRightButtonsImageShadowColor:(UIColor*)leftRightButtonsImageShadowColor {
+    [_leftRightButtonsImageShadowColor release];
+    _leftRightButtonsImageShadowColor = [leftRightButtonsImageShadowColor retain];
+    [self.changedProperties addObject:@"leftRightButtonsImageShadowColor"];
+    self.leftButtonLayer.imageLayer.shadowColor = self.rightButtonLayer.imageLayer.shadowColor = leftRightButtonsImageShadowColor.CGColor;
+}
+
+- (void)setLeftRightButtonsImageShadowOffset:(CGSize)leftRightButtonsImageShadowOffset {
+    _leftRightButtonsImageShadowOffset = leftRightButtonsImageShadowOffset;
+    [self.changedProperties addObject:@"leftRightButtonsImageShadowOffset"];
+    self.leftButtonLayer.imageLayer.shadowOffset = self.rightButtonLayer.imageLayer.shadowOffset = leftRightButtonsImageShadowOffset;
+}
+
+- (void)setLeftRightButtonsImageShadowRadius:(CGFloat)leftRightButtonsImageShadowRadius {
+    _leftRightButtonsImageShadowRadius = leftRightButtonsImageShadowRadius;
+    [self.changedProperties addObject:@"leftRightButtonsImageShadowRadius"];
+    self.leftButtonLayer.imageLayer.shadowRadius = self.rightButtonLayer.imageLayer.shadowRadius = leftRightButtonsImageShadowRadius;
+}
+
+- (void)setLeftRightButtonsImageShadowOpacity:(float)leftRightButtonsImageShadowOpacity {
+    _leftRightButtonsImageShadowOpacity = leftRightButtonsImageShadowOpacity;
+    [self.changedProperties addObject:@"leftRightButtonsImageShadowOpacity"];
+    self.leftButtonLayer.imageLayer.shadowOpacity = self.rightButtonLayer.imageLayer.shadowOpacity = leftRightButtonsImageShadowOpacity;
+}
+
+- (void)setLeftRightButtonsBackgroundShadowColor:(UIColor*)leftRightButtonsBackgroundShadowColor {
+    [_leftRightButtonsBackgroundShadowColor release];
+    _leftRightButtonsBackgroundShadowColor = [leftRightButtonsBackgroundShadowColor retain];
+    [self.changedProperties addObject:@"leftRightButtonsBackgroundShadowColor"];
+    self.leftButtonLayer.backgroundLayer.shadowColor = self.rightButtonLayer.backgroundLayer.shadowColor = leftRightButtonsBackgroundShadowColor.CGColor;
+}
+
+- (void)setLeftRightButtonsBackgroundShadowOffset:(CGSize)leftRightButtonsBackgroundShadowOffset {
+    _leftRightButtonsBackgroundShadowOffset = leftRightButtonsBackgroundShadowOffset;
+    [self.changedProperties addObject:@"leftRightButtonsBackgroundShadowOffset"];
+    self.leftButtonLayer.backgroundLayer.shadowOffset = self.rightButtonLayer.backgroundLayer.shadowOffset = leftRightButtonsBackgroundShadowOffset;
+}
+
+- (void)setLeftRightButtonsBackgroundShadowRadius:(CGFloat)leftRightButtonsBackgroundShadowRadius {
+    _leftRightButtonsBackgroundShadowRadius = leftRightButtonsBackgroundShadowRadius;
+    [self.changedProperties addObject:@"leftRightButtonsBackgroundShadowRadius"];
+    self.leftButtonLayer.backgroundLayer.shadowRadius = self.rightButtonLayer.backgroundLayer.shadowRadius = leftRightButtonsBackgroundShadowRadius;
+}
+
+- (void)setLeftRightButtonsBackgroundShadowOpacity:(float)leftRightButtonsBackgroundShadowOpacity {
+    _leftRightButtonsBackgroundShadowOpacity = leftRightButtonsBackgroundShadowOpacity;
+    [self.changedProperties addObject:@"leftRightButtonsBackgroundShadowOpacity"];
+    self.leftButtonLayer.backgroundLayer.shadowOpacity = self.rightButtonLayer.backgroundLayer.shadowOpacity = leftRightButtonsBackgroundShadowOpacity;
 }
 
 @end

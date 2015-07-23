@@ -56,7 +56,8 @@
     CGFloat width = self.bounds.size.width;
     CGFloat width_2 = width/2.0f;
     
-    CGFloat delta = MAX(50.0f, _maxVolume - _minVolume);
+    CGFloat delta = MAX(0.5f, _maxVolume - _minVolume);
+    //CGFloat delta = _maxVolume - _minVolume;
     CGFloat xStep = width;
     if (dataLength != 0) {
         xStep /= (3.0f*dataLength);
@@ -118,6 +119,9 @@
 - (void)setBounds:(CGRect)bounds {
     [super setBounds:bounds];
     [self redrawPath];
+    CGPathRef backgroundPath = CGPathCreateWithEllipseInRect(bounds, NULL);
+    self.shadowPath = backgroundPath;
+    CFRelease(backgroundPath);
 }
 
 - (void)audioSessionStarted {
@@ -125,7 +129,6 @@
     static CGFloat array[BUFFER_ELEMENT_COUNT] = {0.0f};
     _curPosOddEven = 0;
     [self newAudioLevelData:[NSData dataWithBytes:array length:sizeof(array)]];
-    //[self redrawPath];
 }
 
 - (void)audioSessionStoped {
@@ -148,9 +151,10 @@
 - (void)newMinVolume:(CGFloat)minVolume andMaxVolume:(CGFloat)maxVolume {
     _minVolume = minVolume;
     _maxVolume = maxVolume;
-    if (!self.hidden) {
-        [self redrawPath];
-    }
+//    if (!self.hidden) {
+//        [self redrawPath];
+//    }
 }
+
 
 @end

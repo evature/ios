@@ -9,6 +9,7 @@
 #import "EVApplication.h"
 #import "EVVoiceChatViewController.h"
 #import "Eva.h"
+#import "EVViewControllerVisibilityObserver.h"
 
 @interface EVApplication () <EvaDelegate>
 
@@ -78,6 +79,9 @@
     EVVoiceChatButton* button = [[[EVVoiceChatButton alloc] init] autorelease];
     button.translatesAutoresizingMaskIntoConstraints = NO;
     button.connectedController = viewController;
+    EVViewControllerVisibilityObserver *visObserver = [[EVViewControllerVisibilityObserver alloc] initWithController:viewController andDelegate:button];
+    button.controllerObserverDelegate = visObserver;
+    [visObserver release];
     [view addSubview:button];
     [button ev_pinToBottomCenteredWithOffset:self.defaultButtonBottomOffset];
     [view setNeedsUpdateConstraints];

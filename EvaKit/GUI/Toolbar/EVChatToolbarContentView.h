@@ -34,6 +34,15 @@
 @property (nonatomic, assign) CGFloat centerButtonBorderWidth UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat centerButtonSpinningBorderWidth UI_APPEARANCE_SELECTOR;
 
+@property (nonatomic, strong) UIColor *centerButtonMicShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize centerButtonMicShadowOffset UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat centerButtonMicShadowRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) float centerButtonMicShadowOpacity UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *centerButtonBackgroundShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize centerButtonBackgroundShadowOffset UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat centerButtonBackgroundShadowRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) float centerButtonBackgroundShadowOpacity UI_APPEARANCE_SELECTOR;
+
 
 @property (nonatomic, strong) UIColor *leftRightButtonsBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *leftRightButtonsImageColor UI_APPEARANCE_SELECTOR;
@@ -44,6 +53,15 @@
 @property (nonatomic, assign) CGFloat leftRightButtonsActiveBackgroundScale UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat leftRightButtonsMaxImageScale UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat leftRightButtonsMaxBackgroundScale UI_APPEARANCE_SELECTOR;
+
+@property (nonatomic, strong) UIColor *leftRightButtonsImageShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize leftRightButtonsImageShadowOffset UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat leftRightButtonsImageShadowRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) float leftRightButtonsImageShadowOpacity UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *leftRightButtonsBackgroundShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize leftRightButtonsBackgroundShadowOffset UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat leftRightButtonsBackgroundShadowRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) float leftRightButtonsBackgroundShadowOpacity UI_APPEARANCE_SELECTOR;
 
 
 @property (nonatomic, assign) CGFloat leftRightButtonsOffset UI_APPEARANCE_SELECTOR;

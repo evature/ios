@@ -220,7 +220,7 @@ static NSString *urlEncode(id object) {
         NSString *part = [NSString stringWithFormat: @"%@=%@", [self makeSafeString:urlEncode(key)],[self makeSafeString: urlEncode(value)]];
         [parts addObject: part];
     }
-    dict = nil;
+    [dict release];
     return [parts componentsJoinedByString: @"&"];
 }
 

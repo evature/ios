@@ -33,6 +33,9 @@
 		9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9679ABC61B4E891300F475DE /* EVChatToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9679ABC71B4E891300F475DE /* EVChatToolbarView.m */; };
 		9679ABCB1B4E8BC500F475DE /* EVVoiceChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9679ABCA1B4E8BC500F475DE /* EVVoiceChatViewController.xib */; };
+		968934CC1B61587500885DAA /* EVViewControllerVisibilityObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 968934CA1B61587500885DAA /* EVViewControllerVisibilityObserver.h */; };
+		968934CD1B61587500885DAA /* EVViewControllerVisibilityObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 968934CB1B61587500885DAA /* EVViewControllerVisibilityObserver.m */; };
+		968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */ = {isa = PBXBuildFile; fileRef = 969797A61B4BDF6700C0244D /* PocketSVG.h */; };
 		969797A91B4BDF6700C0244D /* PocketSVG.m in Sources */ = {isa = PBXBuildFile; fileRef = 969797A71B4BDF6700C0244D /* PocketSVG.m */; };
 		969797B31B4BE13E00C0244D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 969797B21B4BE13E00C0244D /* main.m */; };
@@ -105,6 +108,9 @@
 		9679ABC61B4E891300F475DE /* EVChatToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVChatToolbarView.h; sourceTree = "<group>"; };
 		9679ABC71B4E891300F475DE /* EVChatToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVChatToolbarView.m; sourceTree = "<group>"; };
 		9679ABCA1B4E8BC500F475DE /* EVVoiceChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EVVoiceChatViewController.xib; sourceTree = "<group>"; };
+		968934CA1B61587500885DAA /* EVViewControllerVisibilityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVViewControllerVisibilityObserver.h; sourceTree = "<group>"; };
+		968934CB1B61587500885DAA /* EVViewControllerVisibilityObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVViewControllerVisibilityObserver.m; sourceTree = "<group>"; };
+		968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVViewControllerVisibilityObserverDelegate.h; sourceTree = "<group>"; };
 		969797A61B4BDF6700C0244D /* PocketSVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PocketSVG.h; sourceTree = "<group>"; };
 		969797A71B4BDF6700C0244D /* PocketSVG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PocketSVG.m; sourceTree = "<group>"; };
 		969797AE1B4BE13E00C0244D /* EvaKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -307,6 +313,9 @@
 				9679ABCA1B4E8BC500F475DE /* EVVoiceChatViewController.xib */,
 				969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */,
 				969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */,
+				968934CA1B61587500885DAA /* EVViewControllerVisibilityObserver.h */,
+				968934CB1B61587500885DAA /* EVViewControllerVisibilityObserver.m */,
+				968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -384,11 +393,13 @@
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
 				9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */,
 				9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */,
+				968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */,
 				96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */,
 				96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */,
 				96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */,
 				9679ABC11B4E77C300F475DE /* TPCircularBuffer.h in Headers */,
 				9653D4261B5C6F9E00FC37AF /* EVDownButtonItem.h in Headers */,
+				968934CC1B61587500885DAA /* EVViewControllerVisibilityObserver.h in Headers */,
 				96B46C911B5FFF4000507A04 /* NSError+CustomError.h in Headers */,
 				9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */,
 				969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */,
@@ -554,6 +565,7 @@
 				969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */,
 				969797A91B4BDF6700C0244D /* PocketSVG.m in Sources */,
 				96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */,
+				968934CD1B61587500885DAA /* EVViewControllerVisibilityObserver.m in Sources */,
 				96B46C961B5FFF4000507A04 /* Recorder.m in Sources */,
 				96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */,
 				96E014911B5154E800E8ADE4 /* EVResizableShapeLayer.m in Sources */,

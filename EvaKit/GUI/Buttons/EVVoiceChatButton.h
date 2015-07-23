@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EVViewControllerVisibilityObserverDelegate.h"
 
 extern NSString* kEVVoiceChatButtonSettigsKey;
 
 IB_DESIGNABLE
-@interface EVVoiceChatButton : UIButton
+@interface EVVoiceChatButton : UIButton <EVViewControllerVisibilityObserverDelegate>
 
 //Connect controller for which Chat window will show. EVApplication will search for if it not connected.
 @property (nonatomic, assign) IBOutlet UIViewController* connectedController;
@@ -28,8 +29,18 @@ IB_DESIGNABLE
 
 @property (nonatomic, strong) IBInspectable UIColor *highlightColor;
 
-@property (nonatomic, assign) IBInspectable BOOL autoHide;
+@property (nonatomic, strong) IBInspectable UIColor *micShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize micShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat micShadowRadius;
+@property (nonatomic, assign) IBInspectable float micShadowOpacity;
 
+
+@property (nonatomic, strong) IBInspectable UIColor *backgroundShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize backgroundShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat backgroundShadowRadius;
+@property (nonatomic, assign) IBInspectable float backgroundShadowOpacity;
+
+@property (nonatomic, assign) IBInspectable BOOL autoHide;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerStartRecordingOnShow;
 
 // Chat View properties
@@ -43,6 +54,15 @@ IB_DESIGNABLE
 @property (nonatomic, assign) IBInspectable CGFloat chatToolbarCenterButtonBorderWidth;
 @property (nonatomic, assign) IBInspectable CGFloat chatToolbarCenterButtonSpinningBorderWidth;
 
+@property (nonatomic, strong) IBInspectable UIColor *chatToolbarCenterButtonMicShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize chatToolbarCenterButtonMicShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat chatToolbarCenterButtonMicShadowRadius;
+@property (nonatomic, assign) IBInspectable float chatToolbarCenterButtonMicShadowOpacity;
+@property (nonatomic, strong) IBInspectable UIColor *chatToolbarCenterButtonBackgroundShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize chatToolbarCenterButtonBackgroundShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat chatToolbarCenterButtonBackgroundShadowRadius;
+@property (nonatomic, assign) IBInspectable float chatToolbarCenterButtonBackgroundShadowOpacity;
+
 @property (nonatomic, strong) IBInspectable UIColor *chatToolbarLeftRightButtonsBackgroundColor;
 @property (nonatomic, strong) IBInspectable UIColor *chatToolbarLeftRightButtonsImageColor;
 @property (nonatomic, strong) IBInspectable UIColor *chatToolbarLeftRightButtonsBorderColor;
@@ -53,7 +73,18 @@ IB_DESIGNABLE
 @property (nonatomic, assign) IBInspectable CGFloat chatToolbarLeftRightButtonsMaxImageScale;
 @property (nonatomic, assign) IBInspectable CGFloat chatToolbarLeftRightButtonsMaxBackgroundScale;
 
+@property (nonatomic, strong) IBInspectable UIColor *chatToolbarLeftRightButtonsImageShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize chatToolbarLeftRightButtonsImageShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat chatToolbarLeftRightButtonsImageShadowRadius;
+@property (nonatomic, assign) IBInspectable float chatToolbarLeftRightButtonsImageShadowOpacity;
+@property (nonatomic, strong) IBInspectable UIColor *chatToolbarLeftRightButtonsBackgroundShadowColor;
+@property (nonatomic, assign) IBInspectable CGSize chatToolbarLeftRightButtonsBackgroundShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat chatToolbarLeftRightButtonsBackgroundShadowRadius;
+@property (nonatomic, assign) IBInspectable float chatToolbarLeftRightButtonsBackgroundShadowOpacity;
+
 @property (nonatomic, assign) IBInspectable CGFloat chatToolbarLeftRightButtonsOffset;
+
+@property (nonatomic, strong, readwrite) id controllerObserverDelegate;
 
 @end
 

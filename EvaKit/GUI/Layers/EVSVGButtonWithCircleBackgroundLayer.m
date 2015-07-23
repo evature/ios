@@ -35,7 +35,7 @@
         ((EVResizableShapeLayer*)self.backgroundLayer).pathScale = self.backgroundScaleFactor;
         [self.backgroundLayer setFrame:self.bounds];
         CGPathRef backgroundPath = CGPathCreateWithEllipseInRect(CGRectMake(0.0f, 0.0f, BACKGROUND_PATH_SIZE, BACKGROUND_PATH_SIZE), NULL);
-        ((EVSVGLayer*)self.backgroundLayer).path = backgroundPath;
+        ((EVResizableShapeLayer*)self.backgroundLayer).path = backgroundPath;
         CFRelease(backgroundPath);
         
         self.imageLayer = [EVSVGLayer layer];

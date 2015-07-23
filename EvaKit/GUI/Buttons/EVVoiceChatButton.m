@@ -61,6 +61,10 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
     self.autoHide = YES;
     self.highlightColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
     self.chatProperties = [NSMutableDictionary dictionary];
+    self.micShadowColor = self.backgroundShadowColor = [UIColor blackColor];
+    self.micShadowOffset = self.backgroundShadowOffset = CGSizeMake(0.0, -3.0);
+    self.micShadowRadius = self.backgroundShadowRadius = 3.0f;
+    self.micShadowOpacity = self.backgroundShadowOpacity = 0.0f;
 }
 
 - (UIImage*)generateImage {
@@ -72,6 +76,14 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
     layer.borderLineWidth = self.borderLineWidth;
     layer.backgroundFillColor = self.backgroundFillColor.CGColor;
     layer.borderLineColor = self.borderLineColor.CGColor;
+    layer.imageLayer.shadowColor = self.micShadowColor.CGColor;
+    layer.imageLayer.shadowOffset = self.micShadowOffset;
+    layer.imageLayer.shadowOpacity = self.micShadowOpacity;
+    layer.imageLayer.shadowRadius = self.micShadowRadius;
+    layer.backgroundLayer.shadowColor = self.backgroundShadowColor.CGColor;
+    layer.backgroundLayer.shadowOffset = self.backgroundShadowOffset;
+    layer.backgroundLayer.shadowOpacity = self.backgroundShadowOpacity;
+    layer.backgroundLayer.shadowRadius = self.backgroundShadowRadius;
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
     [layer setFrame:self.bounds];
     [layer layoutSublayers];
@@ -183,6 +195,18 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
     } else {
         [super setValue:value forKey:key];
     }
+}
+
+- (void)controllerWillShow:(UIViewController*)controller {
+    self.hidden = NO;
+}
+
+- (void)controllerDidHide:(UIViewController*)controller {
+    self.hidden = YES;
+}
+
+- (void)controllerWillRemove:(UIViewController*)controller {
+    [self removeFromSuperview];
 }
 
 @end

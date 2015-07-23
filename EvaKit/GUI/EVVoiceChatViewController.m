@@ -19,6 +19,8 @@
 #define UI_BAR_HEIGHT_PORTRAIT 40
 #define UI_BAR_HEIGHT_LANDSCAPE 32
 
+#define COMBINE_VOICE_LEVELS_COUNT 2
+
 id emptyInitMethod(id lookupObject, SEL selector) {
     [lookupObject init];
     [lookupObject release];
@@ -30,7 +32,12 @@ NSString* const kSenderDisplayNameMe = @"Me";
 NSString* const kSenderIdEva = @"eva";
 NSString* const kSenderDisplayNameEva = @"Eva";
 
-@interface EVVoiceChatViewController ()
+@interface EVVoiceChatViewController () {
+    double minVolume;
+    double maxVolume;
+    double currentCombinedVolume;
+    unsigned int currentCombinedVolumeCount;
+}
 
 @property (nonatomic, strong) NSMutableArray* messages;
 @property (nonatomic, strong) NSDictionary* viewSettings;
@@ -132,7 +139,11 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
     NSLog(@"Mic pressed!");
 //    [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:10.0f];
+    minVolume = DBL_MAX;
+    maxVolume = DBL_MIN;
+    currentCombinedVolume = 0.0;
+    currentCombinedVolumeCount = 0;
+    //[(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:0.001f];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
     [self.evApplication startRecordingWithNewSession:self.isNewSession];
     self.isNewSession = NO;
@@ -304,10 +315,21 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 - (void)evApplication:(EVApplication*)application recordingVolumePeak:(float)peak andAverage:(float)average {
-    CGFloat val = average;
-    NSLog(@"Peak: %f, average: %f", peak, average);
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:average-peak andMaxVolume:peak];
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView newAudioLevelData:[NSData dataWithBytes:&val length:sizeof(CGFloat)]];
+    
+    double current = pow(10, (0.05 * average));
+    currentCombinedVolume += current;
+    
+    if (++currentCombinedVolumeCount >= COMBINE_VOICE_LEVELS_COUNT) {
+        CGFloat val = currentCombinedVolume / currentCombinedVolumeCount;
+        currentCombinedVolumeCount = 0;
+        currentCombinedVolume = 0.0;
+        [(EVChatToolbarContentView *)self.inputToolbar.contentView newAudioLevelData:[NSData dataWithBytes:&val length:sizeof(CGFloat)]];
+    }
+    
+    maxVolume = (current > maxVolume) ? current : maxVolume;
+    minVolume = (current < minVolume) ? current : minVolume;
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:minVolume andMaxVolume:maxVolume];
+    
 }
 
 @end

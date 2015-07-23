@@ -25,6 +25,8 @@
     if (self != nil) {
         _pathScale = 1.0f;
         _originalPath = NULL;
+        //self.shouldRasterize = YES;
+        self.masksToBounds = NO;
     }
     return self;
 }
@@ -103,6 +105,7 @@
     if (_originalPath != NULL && !CGRectIsEmpty(self.bounds)) {
         CGPathRef scaledPath = [self scaledPath];
         [super setPath:scaledPath];
+        self.shadowPath = scaledPath;
         CFRelease(scaledPath);
     } else {
         [super setPath:path];
