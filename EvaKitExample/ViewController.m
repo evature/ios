@@ -15,7 +15,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     EVVoiceChatButton* button = [[EVApplication sharedApplication] addButtonInController:self];
-    [button ev_pinToBottomCenteredWithOffset:30.0f];
+    [button ev_pinToBottomCenteredWithOffset:90.0f];
 }
 
 - (void)didReceiveMemoryWarning {

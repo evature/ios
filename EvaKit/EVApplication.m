@@ -54,7 +54,7 @@
         self.chatViewControllerPathRewrites = [NSMutableDictionary dictionary];
         [self.chatViewControllerPathRewrites setObject:@"inputToolbar.contentView." forKey:@"toolbar."];
         [self.chatViewControllerPathRewrites setObject:@"" forKey:@"controller."];
-        self.defaultButtonBottomOffset = 30.0f;
+        self.defaultButtonBottomOffset = 60.0f;
         self.eva = [[Eva alloc] init];
         [self.eva setRecorderBufferSize:0];
         [self.eva setFlacBufferSize:0];
