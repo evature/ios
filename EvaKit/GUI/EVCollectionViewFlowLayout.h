@@ -10,4 +10,7 @@
 
 @interface EVCollectionViewFlowLayout : JSQMessagesCollectionViewFlowLayout
 
+- (void)removedOneElement;
+- (void)removedAllElements;
+
 @end

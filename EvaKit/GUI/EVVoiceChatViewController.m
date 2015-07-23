@@ -13,6 +13,8 @@
 #import <objc/runtime.h>
 #import "EVApplication.h"
 
+static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadDataKey";
+
 #define RGBA_COLOR(_red, _green, _blue, _alpha) [UIColor colorWithRed:_red/255.0f green:_green/255.0f blue:_blue/255.0f alpha:_alpha/255.0f]
 #define RGBA_HEX_COLOR(_red, _green, _blue, _alpha) RGBA_COLOR(0x##_red, 0x##_green, 0x##_blue, 0x##_alpha)
 
@@ -21,10 +23,28 @@
 
 #define COMBINE_VOICE_LEVELS_COUNT 2
 
-id emptyInitMethod(id lookupObject, SEL selector) {
+typedef void (*R_IMP)(void*, SEL);
+R_IMP oldReloadData;
+
+id emptyInitMethod(id lookupObject, SEL selector, id pr1, id p2, id p3, id p4) {
     [lookupObject init];
     [lookupObject release];
     return nil;
+}
+
+void reloadData(id collectionView, SEL selector) {
+    if (![objc_getAssociatedObject(collectionView, kEVCollectionViewReloadDataKey) boolValue]) {
+        objc_setAssociatedObject(collectionView, kEVCollectionViewReloadDataKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [collectionView performBatchUpdates:^{
+            [collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        } completion:^(BOOL finished){
+            if (finished) {
+                objc_setAssociatedObject(collectionView, kEVCollectionViewReloadDataKey, @NO, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            }
+        }];
+    } else {
+        oldReloadData(collectionView, selector);
+    }
 }
 
 NSString* const kSenderIdMe = @"me";
@@ -63,6 +83,12 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     // This is workaround for creating of keyboard controller (which can't work without text view in toolbar). Replacing init with empty init
     SEL allocSel = @selector(initWithTextView:contextView:panGestureRecognizer:delegate:);
     class_replaceMethod([JSQMessagesKeyboardController class], allocSel, (IMP)emptyInitMethod, "@@:@@@@");
+    
+    SEL reloadDataSel = @selector(reloadData);
+    oldReloadData = (R_IMP)class_replaceMethod([JSQMessagesCollectionView class], reloadDataSel, (IMP)reloadData, "v@:");
+    if (oldReloadData == NULL) {
+        oldReloadData = (R_IMP)class_getMethodImplementation([UICollectionView class], reloadDataSel);
+    }
 }
 
 
@@ -94,7 +120,6 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         self.outgoingBubbleImage = [bubbleFactory outgoingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(FF, FF, FF, FF)];
         self.incomingBubbleImage = [bubbleFactory incomingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(03, A9, F4, FF)];
         [bubbleFactory release];
-        
     }
     return self;
 }
@@ -111,6 +136,10 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         [self setValue:[self.viewSettings objectForKey:path] forKeyPath:path];
     }
     //self.collectionView.collectionViewLayout.springinessEnabled = YES;
+}
+
+- (BOOL)isMyMessageInRow:(NSInteger)row {
+    return [((JSQMessage*)[self.messages objectAtIndex:row]).senderId isEqualToString:self.senderId];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -138,12 +167,12 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
     NSLog(@"Mic pressed!");
-//    [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
     minVolume = DBL_MAX;
     maxVolume = DBL_MIN;
     currentCombinedVolume = 0.0;
     currentCombinedVolumeCount = 0;
-    //[(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:0.001f];
+    //[(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:100.0f];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
     [self.evApplication startRecordingWithNewSession:self.isNewSession];
     self.isNewSession = NO;
@@ -194,13 +223,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    JSQMessage *message = [self.messages objectAtIndex:indexPath.item];
-    
-    if ([message.senderId isEqualToString:self.senderId]) {
-        return self.outgoingBubbleImage;
-    }
-    
-    return self.incomingBubbleImage;
+    return [self isMyMessageInRow:indexPath.item] ? self.outgoingBubbleImage : self.incomingBubbleImage;
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

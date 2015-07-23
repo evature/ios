@@ -7,31 +7,44 @@
 //
 
 #import "EVCollectionViewFlowLayout.h"
+#import "EVVoiceChatViewController.h"
+
+@interface EVCollectionViewFlowLayout () {
+    NSInteger lastAddedElement;
+}
+
+@end
 
 @implementation EVCollectionViewFlowLayout
 
-- (void)prepareLayout {
-    [super prepareLayout];
-}
-
-- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems {
-    NSLog(@"prepareForCollectionViewUpdates: %@", updateItems);
-    [super prepareForCollectionViewUpdates:updateItems];
+- (instancetype)init {
+    self = [super init];
+    if (self != nil) {
+        lastAddedElement = -1;
+    }
+    return self;
 }
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
     UICollectionViewLayoutAttributes *attrs = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-    attrs.transform3D = CATransform3DMakeTranslation(-self.collectionView.bounds.size.width, 0, 0);
+    if (lastAddedElement < itemIndexPath.row) {
+        lastAddedElement = itemIndexPath.row;
+        EVVoiceChatViewController* controller = (EVVoiceChatViewController*)self.collectionView.dataSource;
+        if ([controller isMyMessageInRow:itemIndexPath.row]) {
+            attrs.transform3D = CATransform3DMakeTranslation(self.collectionView.bounds.size.width, 0, 0);
+        } else {
+             attrs.transform3D = CATransform3DMakeTranslation(-self.collectionView.bounds.size.width, 0, 0);
+        }
+        
+    }
     return attrs;
 }
 
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingSupplementaryElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)elementIndexPath {
-    return [super initialLayoutAttributesForAppearingSupplementaryElementOfKind:elementKind atIndexPath:elementIndexPath];
+- (void)removedOneElement {
+    lastAddedElement--;
 }
-
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingDecorationElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)decorationIndexPath {
-    return [super initialLayoutAttributesForAppearingDecorationElementOfKind:elementKind atIndexPath:decorationIndexPath];
+- (void)removedAllElements {
+    lastAddedElement = -1;
 }
-
 
 @end

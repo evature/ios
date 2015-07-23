@@ -30,4 +30,6 @@
 
 - (void)updateViewFromSettings:(NSDictionary*)settings;
 
+- (BOOL)isMyMessageInRow:(NSInteger)row;
+
 @end
