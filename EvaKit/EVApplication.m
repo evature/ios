@@ -10,13 +10,24 @@
 #import "EVVoiceChatViewController.h"
 #import "Eva.h"
 #import "EVViewControllerVisibilityObserver.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface EVApplication () <EvaDelegate>
+#import "EVAudioRecorder.h"
+#import "EVAudioConvertionOperation.h"
+#import "EVAudioDataStreamer.h"
+
+@interface EVApplication () <EvaDelegate, EVAudioRecorderDelegate, EVAudioDataStreamerDelegate>
 
 @property (nonatomic, strong, readwrite) NSMutableDictionary* chatViewControllerPathRewrites;
 @property (nonatomic, strong, readwrite) Eva* eva;
 
+@property (nonatomic, strong, readwrite) EVAudioRecorder* soundRecorder;
+@property (nonatomic, strong, readwrite) EVAudioConvertionOperation* flacConverter;
+@property (nonatomic, strong, readwrite) EVAudioDataStreamer* dataStreamer;
+
+
 - (void)setAVSession;
+- (void)setupRecorderChain;
 
 @end
 
@@ -46,6 +57,61 @@
     return sharedInstance;
 }
 
+
+- (void)setupRecorderChain {
+    self.soundRecorder = [EVAudioRecorder new];
+    self.soundRecorder.isDebugMode = YES;
+    self.soundRecorder.delegate = self;
+    
+    self.soundRecorder.audioFormat = kAudioFormatLinearPCM;
+    self.soundRecorder.audioFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
+    self.soundRecorder.audioSampleRate = 16000.0;
+    self.soundRecorder.audioNumberOfChannels = 1;
+    self.soundRecorder.audioBitsPerSample = 16;
+    
+    self.soundRecorder.levelSampleTime = 0.03; // how often check silence moments
+    self.soundRecorder.minNoiseTime = 0.10;  // must have noise for at least this much time to start considering silence
+    self.soundRecorder.preRecordingTime = 0.12; // will start listening to noise/silence only after this time
+    self.soundRecorder.silentStopRecordTime = 0.7; // time of silence for record stop
+
+    
+    self.flacConverter = [EVAudioConvertionOperation new];
+    self.flacConverter.sampleRate = 16000;
+    self.flacConverter.bitsPerSample = 16;
+    self.flacConverter.numberOfChannels = 1;
+    self.flacConverter.isDebugMode = YES;
+    
+    self.dataStreamer = [[[EVAudioDataStreamer alloc] initWithOperationChainLength:10] autorelease];
+    self.dataStreamer.sampleRate = 16000;
+    self.dataStreamer.isDebugMode = YES;
+    self.dataStreamer.delegate = self;
+    
+    self.soundRecorder.dataProviderDelegate = self.flacConverter;
+    self.flacConverter.dataProviderDelegate = self.dataStreamer;
+}
+
+- (void)audioDataStreamerFailed:(EVAudioDataStreamer*)streamer withError:(NSError*)error {
+    [error retain];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [error autorelease];
+        if ([error code] == EVAudioRecorderCancelledErrorCode) {
+            if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
+                [self.delegate evApplicationRecordingIsCancelled:self];
+            }
+        } else {
+            [self.delegate evApplication:self didObtainError:error];
+        }
+        NSLog(@"Streamer failed with error: %@", error);
+    });
+}
+- (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response {
+    [response retain];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [response autorelease];
+        [self.delegate evApplication:self didObtainResponse:response];
+    });
+}
+
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
@@ -56,12 +122,16 @@
         [self.chatViewControllerPathRewrites setObject:@"" forKey:@"controller."];
         self.defaultButtonBottomOffset = 60.0f;
         self.eva = [[Eva alloc] init];
-        [self.eva setRecorderBufferSize:0];
-        [self.eva setFlacBufferSize:0];
-        [self.eva setFlacFrameSize:0];
-        [self.eva setHttpBufferSize:0];
-        [self.eva setDelegate:self];
+//        [self.eva setRecorderBufferSize:0];
+//        [self.eva setFlacBufferSize:0];
+//        [self.eva setFlacFrameSize:0];
+//        [self.eva setHttpBufferSize:0];
+//        [self.eva setDelegate:self];
         self.sendVolumeLevelUpdates = YES;
+        
+        [self setupRecorderChain];
+        
+        [self setAVSession];
     }
     return self;
 }
@@ -123,21 +193,25 @@
 
 - (void)setAPIKey:(NSString*)apiKey andSiteCode:(NSString*)siteCode {
     [self.eva setAPIkey:apiKey withSiteCode:siteCode withMicLevel:self.sendVolumeLevelUpdates];
+    self.dataStreamer.webServiceURL = [self.eva getUrl:@"https://vproxy.evaws.com:443"];
 }
 
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession {
-    [self.eva startRecord:withNewSession];
+    //[self.eva startRecord:withNewSession];
+    [self.soundRecorder startRecording:10.0f withAutoStop:YES];
 }
 
 // Stop record, Would send the record to Eva for analyze //
 - (void)stopRecording {
-    [self.eva stopRecord];
+    [self.soundRecorder stopRecording];
+    //[self.eva stopRecord];
 }
 
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (void)cancelRecording {
-    [self.eva cancelRecord];
+    [self.soundRecorder cancelRecording];
+    //[self.eva cancelRecord];
 }
 
 - (BOOL)sendVolumeLevelUpdates {
@@ -154,42 +228,54 @@
     NSError *error = nil;
     
         
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
     if (error != nil) {
         NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
     }
-    
-    //    if ([session respondsToSelector:@selector(overrideOutputAudioPort:error:)]){
-    //        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
-    //                                   error:&error];
-    //    }else{
-    //        // Do somthing smart for iOS 5 //
-    //    }
-    //    if (error != nil) {
-    //        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-    //    }
-    
-    [session setActive:YES error:&error];
+    [session setMode:AVAudioSessionModeVoiceChat error:&error];
     if (error != nil) {
-        NSLog(@"Failed to setActive for AVAudioSession!  %@", error);
+        NSLog(@"Failed to setMode for AVAudioSession! %@", error);
     }
 }
 
 #pragma mark === Eva Delegate Methods ===
+
+- (void)recorder:(EVAudioRecorder*)recorder peakVolumeLevel:(float)peakLevel andAverageVolumeLevel:(float)averageLevel {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(evApplication:recordingVolumePeak:andAverage:)]) {
+            [self.delegate evApplication:self recordingVolumePeak:peakLevel andAverage:averageLevel];
+        }
+    });
+}
+
+- (void)recorderStartedRecording:(EVAudioRecorder*)recorder {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsStarted:)]) {
+        [self.delegate evApplicationRecordingIsStarted:self];
+        }
+    });
+}
+- (void)recorderFinishedRecording:(EVAudioRecorder *)recorder {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsStoped:)]) {
+            [self.delegate evApplicationRecordingIsStoped:self];
+        }
+    });
+}
 
 // Required: Called when receiving valid data from Eva.
 - (void)evaDidReceiveData:(NSData *)dataFromServer {
     NSError *e = nil;
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dataFromServer options:0 error:&e];
     if (self.delegate != nil) {
-        [self.delegate evApplication:self didObtainResponseFromServer:dict];
+        [self.delegate evApplication:self didObtainResponse:dict];
     }
 }
 
 // Required: Called when receiving an error from Eva.
 - (void)evaDidFailWithError:(NSError *)error {
     if (self.delegate != nil) {
-        [self.delegate evApplication:self didObtainErrorFromServer:error];
+        [self.delegate evApplication:self didObtainError:error];
     }
 }
 
@@ -200,19 +286,19 @@
     }
 }
 
-// Optional: Called everytime the record stops, Must be implemented if shouldSendMicLevel is TRUE.
-- (void)evaMicStopRecording {
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecordIsStoped:)]) {
-        [self.delegate evApplicationRecordIsStoped:self];
-    }
-}
-
-// Optional: Called when initiation process is complete after setting the API keys.
-- (void)evaRecorderIsReady {
-    [self setAVSession];
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecorderIsReady:)]) {
-        [self.delegate evApplicationRecorderIsReady:self];
-    }
-}
+//// Optional: Called everytime the record stops, Must be implemented if shouldSendMicLevel is TRUE.
+//- (void)evaMicStopRecording {
+//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecordIsStoped:)]) {
+//        [self.delegate evApplicationRecordIsStoped:self];
+//    }
+//}
+//
+//// Optional: Called when initiation process is complete after setting the API keys.
+//- (void)evaRecorderIsReady {
+//    [self setAVSession];
+//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecorderIsReady:)]) {
+//        [self.delegate evApplicationRecorderIsReady:self];
+//    }
+//}
 
 @end

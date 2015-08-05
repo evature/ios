@@ -120,4 +120,6 @@
 
 - (BOOL) isReady; // Do not call startRecord before this method returns true - you can wait for the evaRecorderIsReady delegate callback
 
+-(NSURL *)getUrl:(NSString *)host;
+
 @end

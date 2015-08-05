@@ -523,7 +523,7 @@
     }
 }
 
-- (void)setCenterButtonMicShadowOpacity:(CGFloat)centerButtonMicShadowOpacity {
+- (void)setCenterButtonMicShadowOpacity:(float)centerButtonMicShadowOpacity {
     _centerButtonMicShadowOpacity = centerButtonMicShadowOpacity;
     [self.changedProperties addObject:@"centerButtonMicShadowOpacity"];
     self.micButtonLayer.imageLayer.shadowOpacity = centerButtonMicShadowOpacity;
@@ -565,7 +565,7 @@
     }
 }
 
-- (void)setCenterButtonBackgroundShadowOpacity:(CGFloat)centerButtonBackgroundShadowOpacity {
+- (void)setCenterButtonBackgroundShadowOpacity:(float)centerButtonBackgroundShadowOpacity {
     _centerButtonBackgroundShadowOpacity = centerButtonBackgroundShadowOpacity;
     [self.changedProperties addObject:@"centerButtonBackgroundShadowOpacity"];
     self.micButtonLayer.backgroundLayer.shadowOpacity = centerButtonBackgroundShadowOpacity;

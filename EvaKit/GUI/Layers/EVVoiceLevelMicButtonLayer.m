@@ -7,18 +7,15 @@
 //
 
 #import "EVVoiceLevelMicButtonLayer.h"
-#import "TPCircularBuffer.h"
 
 #define BUFFER_ELEMENT_COUNT 16
-#define BUFFER_SIZE BUFFER_ELEMENT_COUNT*sizeof(CGFloat)
-#define EPSILON 1.0e-5
 
 
 @interface EVVoiceLevelMicButtonLayer () {
-    TPCircularBuffer _dataBuffer;
     CGFloat _minVolume;
     CGFloat _maxVolume;
-    unsigned char _curPosOddEven;
+    uint8_t _curPosOddEven;
+    CGFloat volumeBuffer[BUFFER_ELEMENT_COUNT];
 }
 
 - (void)redrawPath;
@@ -30,7 +27,6 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        TPCircularBufferInit(&_dataBuffer, BUFFER_SIZE);
         self.fillColor = nil;
         self.lineCap = kCALineCapRound;
         self.extendLine = YES;
@@ -42,21 +38,20 @@
 }
 
 - (void)dealloc {
-    TPCircularBufferCleanup(&_dataBuffer);
+    self.path = NULL;
+    self.fillColor = nil;
     [super dealloc];
 }
 
 - (void)redrawPath {
     // Load data from circular buffer
-    int32_t dataLength;
-    CGFloat* volumes = TPCircularBufferTail(&_dataBuffer, &dataLength);
-    dataLength = dataLength / sizeof(CGFloat);
+    int32_t dataLength = (int32_t)(sizeof(volumeBuffer) / sizeof(CGFloat));
     
     int height_2 = self.bounds.size.height / 2;
     CGFloat width = self.bounds.size.width;
     CGFloat width_2 = width/2.0f;
     
-    CGFloat delta = MAX(0.5f, _maxVolume - _minVolume);
+    CGFloat delta = MAX(0.35f, _maxVolume - _minVolume);
     //CGFloat delta = _maxVolume - _minVolume;
     CGFloat xStep = width;
     if (dataLength != 0) {
@@ -88,26 +83,24 @@
     } else {
         CGPathMoveToPoint(path, &translate, curX, 0);
     }
-    if (dataLength > 4) {
-        CGFloat Rsqr = height_2 * height_2;
-        for (int i = 0; i < dataLength; i++) {
-            CGFloat volume = fabs(volumes[i]);
-            if (volume > 0.0f) {
-                volume -= _minVolume;
-            }
-            CGFloat normLevel = volume / delta;
-            CGFloat y = ((_curPosOddEven+i) % 2 == 0 ? -1 : 1) * normLevel;
-            if (_isFishEyeEnabled) {
-                CGFloat centerX = curX+centerStep;
-                CGFloat x = fabs(centerX - width_2);
-                y *= sqrt(Rsqr - x*x);
-            }
-            else {
-                y *= height_2;
-            }
-            CGPathAddCurveToPoint(path, &translate, curX+xStep, y, curX+xStep2, y, curX+xStep3, 0);
-            curX += xStep3;
+    
+    CGFloat Rsqr = height_2 * height_2;
+    for (int i = 0; i < dataLength; i++) {
+        CGFloat volume = fabs(volumeBuffer[i]);
+        if (volume > 0.0f) {
+            volume -= _minVolume;
         }
+        CGFloat normLevel = volume / delta;
+        CGFloat y = ((_curPosOddEven+i) % 2 == 0 ? -1 : 1) * normLevel;
+        if (_isFishEyeEnabled) {
+            CGFloat centerX = curX+centerStep;
+            CGFloat x = fabs(centerX - width_2);
+            y *= sqrt(Rsqr - x*x);
+        } else {
+            y *= height_2;
+        }
+        CGPathAddCurveToPoint(path, &translate, curX+xStep, y, curX+xStep2, y, curX+xStep3, 0);
+        curX += xStep3;
     }
     if (_extendLine) {
         CGPathAddLineToPoint(path, &translate, width, 0);
@@ -126,24 +119,29 @@
 
 - (void)audioSessionStarted {
     self.hidden = NO;
-    static CGFloat array[BUFFER_ELEMENT_COUNT] = {0.0f};
     _curPosOddEven = 0;
-    [self newAudioLevelData:[NSData dataWithBytes:array length:sizeof(array)]];
+    memset(volumeBuffer, 0, sizeof(volumeBuffer));
+    [self redrawPath];
 }
 
 - (void)audioSessionStoped {
     self.hidden = YES;
-    TPCircularBufferClear(&_dataBuffer);
+    memset(volumeBuffer, 0, sizeof(volumeBuffer));
     [self redrawPath];
 }
 
 - (void)newAudioLevelData:(NSData*)data {
     if (!self.hidden) {
-        if (_dataBuffer.fillCount >= BUFFER_SIZE) {
-            TPCircularBufferConsume(&_dataBuffer, (int32_t)([data length]));
-            _curPosOddEven = (_curPosOddEven + [data length] / sizeof(CGFloat))%2;
+        uint32_t bufferSize = (uint32_t)sizeof(volumeBuffer);
+        NSUInteger dataLength = [data length];
+        uint8_t* volumeBytes = (uint8_t*)volumeBuffer;
+        if (dataLength >= bufferSize) {
+            memcpy(volumeBytes, [data bytes], bufferSize);
+        } else {
+            memmove(volumeBytes, volumeBytes+dataLength, bufferSize-dataLength);
+            memcpy(volumeBytes+(bufferSize-dataLength), [data bytes], dataLength);
         }
-        TPCircularBufferProduceBytes(&_dataBuffer, [data bytes], (int32_t)[data length]);
+        _curPosOddEven = (_curPosOddEven + [data length] / sizeof(CGFloat))%2;;
         [self redrawPath];
     }
 }
@@ -151,9 +149,6 @@
 - (void)newMinVolume:(CGFloat)minVolume andMaxVolume:(CGFloat)maxVolume {
     _minVolume = minVolume;
     _maxVolume = maxVolume;
-//    if (!self.hidden) {
-//        [self redrawPath];
-//    }
 }
 
 

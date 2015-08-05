@@ -303,7 +303,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 #pragma mark == EVApplication delegate ===
-- (void)evApplication:(EVApplication*)application didObtainResponseFromServer:(NSDictionary*)response {
+- (void)evApplication:(EVApplication*)application didObtainResponse:(NSDictionary*)response {
     NSLog(@"Response: %@", response);
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:[response objectForKey:@"input_text"]]];
@@ -315,26 +315,24 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         if (flow != nil && [flow count] > 0) {
             NSDictionary *flowAction = [flow firstObject];
             if ([flowAction objectForKey:@"SayIt"]) {
-                [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:[flowAction objectForKey:@"SayIt"]]];
-                [self finishReceivingMessageAnimated:YES];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:[flowAction objectForKey:@"SayIt"]]];
+                    [self finishReceivingMessageAnimated:YES];
+                });
             }
         }
     }
     
 }
-- (void)evApplication:(EVApplication*)application didObtainErrorFromServer:(NSError*)error {
+- (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
     NSLog(@"Error: %@", error);
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
 }
 
-- (void)evApplicationRecordIsStoped:(EVApplication *)application {
+- (void)evApplicationRecordingIsStoped:(EVApplication *)application {
     NSLog(@"Record stoped!");
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView startWaitAnimation];
-}
-
-- (void)evApplicationRecorderIsReady:(EVApplication*)application {
-    NSLog(@"IsReady");
 }
 
 - (void)evApplication:(EVApplication*)application recordingVolumePeak:(float)peak andAverage:(float)average {
