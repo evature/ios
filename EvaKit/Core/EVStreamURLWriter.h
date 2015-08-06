@@ -18,7 +18,6 @@
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
                    delegate:(id<EVStreamURLWriterDelegate>)delegate
-                    inQueue:(dispatch_queue_t)queue
                   debugMode:(BOOL)isDebug;
 
 @property (nonatomic, assign, readwrite) id<EVStreamURLWriterDelegate> delegate;

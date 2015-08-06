@@ -15,11 +15,22 @@
 #import "EVAudioRecorder.h"
 #import "EVAudioConvertionOperation.h"
 #import "EVAudioDataStreamer.h"
+#import "EVLocationManager.h"
+#import "NSTimeZone+EVA.h"
 
-@interface EVApplication () <EvaDelegate, EVAudioRecorderDelegate, EVAudioDataStreamerDelegate>
+
+#define EV_HOST_ADDRESS @"https://vproxy.evaws.com:443"
+#define EV_API_VERSION @"v1.0"
+
+
+@interface EVApplication () <EVAudioRecorderDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate>
+
+@property (nonatomic, strong, readwrite) NSString* APIKey;
+@property (nonatomic, strong, readwrite) NSString* siteCode;
+@property (nonatomic, strong, readwrite) NSString* apiVersion;
 
 @property (nonatomic, strong, readwrite) NSMutableDictionary* chatViewControllerPathRewrites;
-@property (nonatomic, strong, readwrite) Eva* eva;
+@property (nonatomic, strong, readwrite) EVLocationManager *locationManager;
 
 @property (nonatomic, strong, readwrite) EVAudioRecorder* soundRecorder;
 @property (nonatomic, strong, readwrite) EVAudioConvertionOperation* flacConverter;
@@ -28,14 +39,11 @@
 
 - (void)setAVSession;
 - (void)setupRecorderChain;
+- (void)updateURL;
 
 @end
 
 @implementation EVApplication
-
-@dynamic APIKey;
-@dynamic siteCode;
-@dynamic sendVolumeLevelUpdates;
 
 - (id)traverseResponderChainForUIViewControllerForView:(UIView*)view {
     id nextResponder = [view nextResponder];
@@ -90,28 +98,6 @@
     self.flacConverter.dataProviderDelegate = self.dataStreamer;
 }
 
-- (void)audioDataStreamerFailed:(EVAudioDataStreamer*)streamer withError:(NSError*)error {
-    [error retain];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [error autorelease];
-        if ([error code] == EVAudioRecorderCancelledErrorCode) {
-            if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
-                [self.delegate evApplicationRecordingIsCancelled:self];
-            }
-        } else {
-            [self.delegate evApplication:self didObtainError:error];
-        }
-        NSLog(@"Streamer failed with error: %@", error);
-    });
-}
-- (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response {
-    [response retain];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [response autorelease];
-        [self.delegate evApplication:self didObtainResponse:response];
-    });
-}
-
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
@@ -121,12 +107,14 @@
         [self.chatViewControllerPathRewrites setObject:@"inputToolbar.contentView." forKey:@"toolbar."];
         [self.chatViewControllerPathRewrites setObject:@"" forKey:@"controller."];
         self.defaultButtonBottomOffset = 60.0f;
-        self.eva = [[Eva alloc] init];
-//        [self.eva setRecorderBufferSize:0];
-//        [self.eva setFlacBufferSize:0];
-//        [self.eva setFlacFrameSize:0];
-//        [self.eva setHttpBufferSize:0];
-//        [self.eva setDelegate:self];
+        
+        self.locationManager = [EVLocationManager new];
+        self.locationManager.delegate = self;
+        
+        self.currentSessionID = EV_NEW_SESSION_ID;
+        self.serverHost = EV_HOST_ADDRESS;
+        self.apiVersion = EV_API_VERSION;
+        
         self.sendVolumeLevelUpdates = YES;
         
         [self setupRecorderChain];
@@ -178,49 +166,109 @@
     }
    
     [viewCtrl updateViewFromSettings:viewSettings];
-    [ctrl presentViewController:viewCtrl animated:YES completion:^{}];
+    [ctrl presentViewController:viewCtrl animated:YES completion:^{
+        [self.locationManager startLocationService];
+    }];
+}
+
+- (void)hideChatViewController:(id)sender {
+    UIViewController *ctrl = nil;
+    if ([sender isKindOfClass:[UIViewController class]]) {
+        ctrl = sender;
+    } else if ([sender isKindOfClass:[UIView class]]) {
+        ctrl = [self traverseResponderChainForUIViewControllerForView:sender];
+    }
+    [ctrl dismissViewControllerAnimated:YES completion:^{
+        [self.locationManager stopLocationService];
+    }];
 }
 
 #pragma mark === Eva Methods ===
 
-- (NSString*)APIKey {
-    return self.eva.evaAPIKey;
-}
-
-- (NSString*)siteCode {
-    return self.eva.evaSiteCode;
+- (void)updateURL {
+    
+    NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@", self.serverHost];
+    if (self.apiVersion != nil) {
+        [urlStr appendFormat:@"/%@", self.apiVersion];
+    }
+    [urlStr appendFormat:@"?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@", self.siteCode, self.APIKey, [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode], [[NSTimeZone localTimeZone] stringOffsetFromGMT], [[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+    
+    if (self.deviceLatitude != 0.0 && self.deviceLongtitude != 0.0) { // Check if location services returned a valid value
+        [urlStr appendFormat:@"&latitude=%.5f&longitude=%.5f", self.deviceLatitude, self.deviceLongtitude];
+    }
+    if (self.currentSessionID != nil) {
+        [urlStr appendFormat:@"&session_id=%@", self.currentSessionID];
+    }
+    //    if (ipAddress_ != nil) {
+    //        urlStr = [NSString stringWithFormat:@"%@&ip_addr=%@",urlStr,ipAddress_];
+    //    }
+    
+//    if (bias_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&bias=%@",urlStr,[self makeSafeString:bias_]];
+//    }
+//    if (home_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&home=%@",urlStr,[self makeSafeString:home_]];
+//    }
+//    if (language_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&language=%@",urlStr,language_];
+//    }
+//    if (scope_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&scope=%@",urlStr,[self makeSafeString:scope_]];
+//    }
+//    if (context_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&context=%@",urlStr,[self makeSafeString:context_]];
+//    }
+//    
+//    urlStr = [NSString stringWithFormat:@"%@&audio_files_used=%@%@%@%@",urlStr,
+//              audioFileStartRecord_ == nil ? @"N": @"Y",
+//              audioFileRequestedEndRecord_ == nil ? @"N" : @"Y",
+//              audioFileVadEndRecord_ == nil ? @"N" : @"Y",
+//              audioFileCanceledRecord_ == nil ? @"N" : @"Y"
+//              ];
+//    
+//    if (optional_dictionary_ != nil) {
+//        urlStr = [NSString stringWithFormat:@"%@&%@",urlStr,[self urlSafeEncodedOptionalParametersString]];
+//    }
+    [urlStr appendFormat:@"&device=%@&ios_ver=%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]];
+    [urlStr appendFormat:@"&sdk_version=ios-%@", EV_KIT_VERSION];
+    
+    // Escape URL
+    [urlStr replaceOccurrencesOfString:@" " withString:@"+" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [urlStr length])];
+    
+    self.dataStreamer.webServiceURL = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (void)setAPIKey:(NSString*)apiKey andSiteCode:(NSString*)siteCode {
-    [self.eva setAPIkey:apiKey withSiteCode:siteCode withMicLevel:self.sendVolumeLevelUpdates];
-    self.dataStreamer.webServiceURL = [self.eva getUrl:@"https://vproxy.evaws.com:443"];
+    self.APIKey = apiKey;
+    self.siteCode = siteCode;
+    [self updateURL];
+}
+
+- (void)setCurrentSessionID:(NSString *)currentSessionID {
+    [_currentSessionID release];
+    _currentSessionID = (currentSessionID == nil) ? EV_NEW_SESSION_ID : currentSessionID;
+    [_currentSessionID retain];
+    [self updateURL];
 }
 
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession {
-    //[self.eva startRecord:withNewSession];
-    [self.soundRecorder startRecording:10.0f withAutoStop:YES];
+    if (withNewSession) {
+        self.currentSessionID = EV_NEW_SESSION_ID;
+    }
+    [self.soundRecorder startRecording:EV_DEFAULT_MAX_RECORDING_TIME withAutoStop:YES];
 }
 
 // Stop record, Would send the record to Eva for analyze //
 - (void)stopRecording {
     [self.soundRecorder stopRecording];
-    //[self.eva stopRecord];
 }
 
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (void)cancelRecording {
     [self.soundRecorder cancelRecording];
-    //[self.eva cancelRecord];
 }
 
-- (BOOL)sendVolumeLevelUpdates {
-    return self.eva.sendMicLevel;
-}
-
-- (void)setSendVolumeLevelUpdates:(BOOL)sendVolumeLevelUpdates {
-    self.eva.sendMicLevel = sendVolumeLevelUpdates;
-}
 
 - (void)setAVSession {
     NSLog(@"Setting session to Play and Record");
@@ -238,11 +286,48 @@
     }
 }
 
-#pragma mark === Eva Delegate Methods ===
+#pragma mark === Managers Delegates Methods ===
+
+- (void)audioDataStreamerFailed:(EVAudioDataStreamer*)streamer withError:(NSError*)error {
+    [error retain];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [error autorelease];
+        if ([error code] == EVAudioRecorderCancelledErrorCode) {
+            if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
+                [self.delegate evApplicationRecordingIsCancelled:self];
+            }
+        } else {
+            [self.delegate evApplication:self didObtainError:error];
+        }
+        NSLog(@"Streamer failed with error: %@", error);
+    });
+}
+
+- (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response {
+    [response retain];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [response autorelease];
+        if ([response objectForKey:@"session_id"] != nil) {
+            self.currentSessionID = [response objectForKey:@"session_id"];
+        }
+        [self.delegate evApplication:self didObtainResponse:response];
+    });
+}
+
+- (void)locationManager:(EVLocationManager*)manager didObtainNewLongtitude:(double)lng andLatitude:(double)lat {
+    self.deviceLatitude = lat;
+    self.deviceLongtitude = lng;
+    [self updateURL];
+}
+
+- (void)locationManager:(EVLocationManager*)manager didObtainError:(NSError*)error {
+    NSLog(@"Location error: %@", error);
+}
+
 
 - (void)recorder:(EVAudioRecorder*)recorder peakVolumeLevel:(float)peakLevel andAverageVolumeLevel:(float)averageLevel {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self.delegate respondsToSelector:@selector(evApplication:recordingVolumePeak:andAverage:)]) {
+        if (self.sendVolumeLevelUpdates && [self.delegate respondsToSelector:@selector(evApplication:recordingVolumePeak:andAverage:)]) {
             [self.delegate evApplication:self recordingVolumePeak:peakLevel andAverage:averageLevel];
         }
     });
@@ -262,43 +347,5 @@
         }
     });
 }
-
-// Required: Called when receiving valid data from Eva.
-- (void)evaDidReceiveData:(NSData *)dataFromServer {
-    NSError *e = nil;
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dataFromServer options:0 error:&e];
-    if (self.delegate != nil) {
-        [self.delegate evApplication:self didObtainResponse:dict];
-    }
-}
-
-// Required: Called when receiving an error from Eva.
-- (void)evaDidFailWithError:(NSError *)error {
-    if (self.delegate != nil) {
-        [self.delegate evApplication:self didObtainError:error];
-    }
-}
-
-// Optional: Called when recording. averagePower and peakPower are in decibels. Must be implemented if shouldSendMicLevel is TRUE.
-- (void)evaMicLevelCallbackAverage: (float)averagePower andPeak: (float)peakPower {
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplication:recordingVolumePeak:andAverage:)]) {
-        [self.delegate evApplication:self recordingVolumePeak:peakPower andAverage:averagePower];
-    }
-}
-
-//// Optional: Called everytime the record stops, Must be implemented if shouldSendMicLevel is TRUE.
-//- (void)evaMicStopRecording {
-//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecordIsStoped:)]) {
-//        [self.delegate evApplicationRecordIsStoped:self];
-//    }
-//}
-//
-//// Optional: Called when initiation process is complete after setting the API keys.
-//- (void)evaRecorderIsReady {
-//    [self setAVSession];
-//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(evApplicationRecorderIsReady:)]) {
-//        [self.delegate evApplicationRecorderIsReady:self];
-//    }
-//}
 
 @end

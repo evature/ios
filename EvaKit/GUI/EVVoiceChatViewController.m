@@ -257,9 +257,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (IBAction)hideChatView:(id)sender {
     self.openButton.hidden = NO;
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self.evApplication hideChatViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

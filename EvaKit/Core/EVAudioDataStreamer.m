@@ -42,6 +42,10 @@
 
 - (void)providerStarted:(id<EVDataProvider>)provider {
     [self.responseData setLength:0];
+    if (self.isDebugMode) {
+        NSLog(@"Starting request to URL: %@", self.webServiceURL);
+    }
+    
     EVStreamURLWriter* streamWriter = [[EVStreamURLWriter alloc] initWithURL:self.webServiceURL
                                                                      headers:@{
                                                                                @"Expect": @"100-continue",
@@ -50,7 +54,6 @@
                                                                                }
                                                                   bufferSize:self.httpBufferSize
                                                                     delegate:self
-                                                                     inQueue:dispatch_get_main_queue()
                                                                    debugMode:self.isDebugMode];
     self.dataProviderDelegate = streamWriter;
     if (streamWriter == nil) {

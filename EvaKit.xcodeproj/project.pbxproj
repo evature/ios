@@ -40,6 +40,10 @@
 		968934CC1B61587500885DAA /* EVViewControllerVisibilityObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 968934CA1B61587500885DAA /* EVViewControllerVisibilityObserver.h */; };
 		968934CD1B61587500885DAA /* EVViewControllerVisibilityObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 968934CB1B61587500885DAA /* EVViewControllerVisibilityObserver.m */; };
 		968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9696BCF81B7375C8000E2104 /* EVLocationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9696BCF61B7375C8000E2104 /* EVLocationManager.h */; };
+		9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9696BCF71B7375C8000E2104 /* EVLocationManager.m */; };
+		9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */ = {isa = PBXBuildFile; fileRef = 9696BCFA1B73C172000E2104 /* NSTimeZone+EVA.h */; };
+		9696BCFD1B73C172000E2104 /* NSTimeZone+EVA.m in Sources */ = {isa = PBXBuildFile; fileRef = 9696BCFB1B73C172000E2104 /* NSTimeZone+EVA.m */; };
 		969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */ = {isa = PBXBuildFile; fileRef = 969797A61B4BDF6700C0244D /* PocketSVG.h */; };
 		969797A91B4BDF6700C0244D /* PocketSVG.m in Sources */ = {isa = PBXBuildFile; fileRef = 969797A71B4BDF6700C0244D /* PocketSVG.m */; };
 		969797B31B4BE13E00C0244D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 969797B21B4BE13E00C0244D /* main.m */; };
@@ -127,6 +131,10 @@
 		968934CA1B61587500885DAA /* EVViewControllerVisibilityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVViewControllerVisibilityObserver.h; sourceTree = "<group>"; };
 		968934CB1B61587500885DAA /* EVViewControllerVisibilityObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVViewControllerVisibilityObserver.m; sourceTree = "<group>"; };
 		968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVViewControllerVisibilityObserverDelegate.h; sourceTree = "<group>"; };
+		9696BCF61B7375C8000E2104 /* EVLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVLocationManager.h; sourceTree = "<group>"; };
+		9696BCF71B7375C8000E2104 /* EVLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVLocationManager.m; sourceTree = "<group>"; };
+		9696BCFA1B73C172000E2104 /* NSTimeZone+EVA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+EVA.h"; sourceTree = "<group>"; };
+		9696BCFB1B73C172000E2104 /* NSTimeZone+EVA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+EVA.m"; sourceTree = "<group>"; };
 		969797A61B4BDF6700C0244D /* PocketSVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PocketSVG.h; sourceTree = "<group>"; };
 		969797A71B4BDF6700C0244D /* PocketSVG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PocketSVG.m; sourceTree = "<group>"; };
 		969797AE1B4BE13E00C0244D /* EvaKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvaKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -295,6 +303,10 @@
 				9634D3441B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m */,
 				9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */,
 				9615BED21B727E5000F31F38 /* EVAudioDataStreamer.m */,
+				9696BCF61B7375C8000E2104 /* EVLocationManager.h */,
+				9696BCF71B7375C8000E2104 /* EVLocationManager.m */,
+				9696BCFA1B73C172000E2104 /* NSTimeZone+EVA.h */,
+				9696BCFB1B73C172000E2104 /* NSTimeZone+EVA.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -450,6 +462,7 @@
 				9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */,
 				968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */,
 				96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */,
+				9696BCF81B7375C8000E2104 /* EVLocationManager.h in Headers */,
 				96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */,
 				96DEEA8A1B6A872700B000D2 /* EVAudioChainOperation.h in Headers */,
 				96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */,
@@ -470,6 +483,7 @@
 				96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */,
 				96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */,
 				960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */,
+				9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */,
 				96A7FA1C1B6B6861009D6561 /* EVAudioConvertionOperation.h in Headers */,
 				96B46C8F1B5FFF4000507A04 /* MOAudioStreamer.h in Headers */,
 				9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */,
@@ -621,6 +635,7 @@
 				96B46C8E1B5FFF4000507A04 /* Eva.m in Sources */,
 				9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */,
 				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,
+				9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */,
 				96B46C941B5FFF4000507A04 /* OpenUDID.m in Sources */,
 				9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */,
 				969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */,
@@ -642,6 +657,7 @@
 				9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */,
 				9653D41B1B5C164E00FC37AF /* EVSpringAnimation.m in Sources */,
 				96A7FA1D1B6B6861009D6561 /* EVAudioConvertionOperation.m in Sources */,
+				9696BCFD1B73C172000E2104 /* NSTimeZone+EVA.m in Sources */,
 				96E0148D1B51533900E8ADE4 /* EVSVGLayer.m in Sources */,
 				96DEEA8B1B6A872700B000D2 /* EVAudioChainOperation.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,

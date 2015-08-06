@@ -58,7 +58,6 @@
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
                    delegate:(id<EVStreamURLWriterDelegate>)delegate
-                    inQueue:(dispatch_queue_t)queue
                   debugMode:(BOOL)isDebug; {
     self = [super init];
     if (self != nil) {
@@ -91,7 +90,7 @@
         self.dataStream = prodStream;
         [request setHTTPBodyStream:consStream];
         
-        dispatch_sync(queue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
         });
     }
