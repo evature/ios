@@ -16,12 +16,13 @@
 #define EV_LOG_INFO(__fmt, ...) [[EVLogger logger] logInfoString:EV_LOG_BUILD_LOG_STRING(__fmt, ##__VA_ARGS__)]
 #define EV_LOG_DEBUG(__fmt, ...) [[EVLogger logger] logDebugString:EV_LOG_BUILD_LOG_STRING(__fmt, ##__VA_ARGS__)]
 
-typedef void(^EVLoggerLogHandler)(NSString* message);
+
 typedef NS_ENUM(char, EVLoggerLogLevel) {
     EVLoggerLogLevelError = 0,
     EVLoggerLogLevelInfo,
     EVLoggerLogLevelDebug
 };
+typedef void(^EVLoggerLogHandler)(EVLoggerLogLevel level, NSString* message);
 
 @interface EVLogger : NSObject
 

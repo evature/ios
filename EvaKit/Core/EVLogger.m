@@ -14,8 +14,18 @@
     self = [super init];
     if (self != nil) {
         self.logLevel = EVLoggerLogLevelError;
-        self.logHandler = ^(NSString* message) {
-            NSLog(@"%@", message);
+        self.logHandler = ^(EVLoggerLogLevel level, NSString* message) {
+            switch (level) {
+                case EVLoggerLogLevelDebug:
+                    NSLog(@"DEBUG: %@", message);
+                    break;
+                case EVLoggerLogLevelError:
+                    NSLog(@"ERROR: %@", message);
+                    break;
+                default:
+                    NSLog(@"INFO: %@", message);
+                    break;
+            }
         };
         self.errorLogHandler = NULL;
         self.debugLogHandler = NULL;
@@ -39,29 +49,29 @@
 
 - (void)logDebugString:(NSString*)debugString {
     if (self.debugLogHandler != NULL) {
-        self.debugLogHandler(debugString);
+        self.debugLogHandler(EVLoggerLogLevelDebug, debugString);
     } else {
         if (self.logLevel >= EVLoggerLogLevelDebug) {
-            self.logHandler([NSString stringWithFormat:@"DEBUG: %@", debugString]);
+            self.logHandler(EVLoggerLogLevelDebug, debugString);
         }
     }
 }
 - (void)logInfoString:(NSString*)infoString {
     if (self.infoLogHandler != NULL) {
-        self.infoLogHandler(infoString);
+        self.infoLogHandler(EVLoggerLogLevelInfo, infoString);
     } else {
         if (self.logLevel >= EVLoggerLogLevelInfo) {
-            self.logHandler([NSString stringWithFormat:@"INFO: %@", infoString]);
+            self.logHandler(EVLoggerLogLevelInfo, infoString);
         }
     }
 }
 
 - (void)logErrorString:(NSString*)errorString {
     if (self.errorLogHandler != NULL) {
-        self.errorLogHandler(errorString);
+        self.errorLogHandler(EVLoggerLogLevelError, errorString);
     } else {
         if (self.logLevel >= EVLoggerLogLevelError) {
-            self.logHandler([NSString stringWithFormat:@"ERROR: %@", errorString]);
+            self.logHandler(EVLoggerLogLevelError, errorString);
         }
     }
 }
