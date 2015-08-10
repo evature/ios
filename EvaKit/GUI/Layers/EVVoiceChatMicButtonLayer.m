@@ -57,8 +57,8 @@ NSString* const kEVStrokeAnimationKey = @"kEVStrokeAnimationKey";
 
 - (void)setBounds:(CGRect)bounds {
     [super setBounds:bounds];
-    [self.voiceGraphLayer setBounds:CGRectMake(bounds.origin.x+1.5f, bounds.origin.y, bounds.size.width-3.0f, bounds.size.height)];
-    self.voiceGraphLayer.position = CGPointMake(CGRectGetMidX(self.bounds)+1.5f, CGRectGetMidY(self.bounds));
+    [self.voiceGraphLayer setBounds:CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width-3.0f, bounds.size.height)];
+    self.voiceGraphLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
 
 - (void)setBorderLineWidth:(CGFloat)borderLineWidth {

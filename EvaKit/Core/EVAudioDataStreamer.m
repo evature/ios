@@ -64,7 +64,9 @@
 }
 
 - (void)provider:(id<EVDataProvider>)provider gotAnError:(NSError *)error {
-    EV_LOG_DEBUG(@"Parent data provider got an error: %@", error);
+    if (provider != self) {
+        EV_LOG_ERROR(@"Provider %@ got an error: %@", provider, error);
+    }
     [super provider:provider gotAnError:error];
     [self.delegate audioDataStreamerFailed:self withError:error];
 }
@@ -89,6 +91,7 @@
     dispatch_async(self.operationQueue, ^{
         [error autorelease];
         [self provider:self gotAnError:error];
+        [self stopDataProvider];
         [self.dataProviderDelegate release];
         self.dataProviderDelegate = nil;
     });
@@ -101,6 +104,7 @@
         NSError* error = nil;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
         if (error != nil) {
+            EV_LOG_ERROR("Can't read json: %@", error);
             [self provider:self gotAnError:error];
         } else {
             [self.delegate audioDataStreamerFinished:self withResponse:json];

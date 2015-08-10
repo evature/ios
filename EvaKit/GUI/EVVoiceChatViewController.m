@@ -171,7 +171,6 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         maxVolume = DBL_MIN;
         currentCombinedVolume = 0.0;
         currentCombinedVolumeCount = 0;
-        [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
         [self.evApplication startRecordingWithNewSession:self.isNewSession];
         self.isNewSession = NO;
     }
@@ -180,6 +179,9 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Trash pressed!");
+    self.isNewSession = YES;
+    [self.messages removeAllObjects];
+    [self.collectionView reloadData];
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -301,13 +303,17 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     
 }
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
-    EV_LOG_ERROR(@"Error: %@", error);
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
+    EV_LOG_ERROR(@"%@", error);
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
+    if ([error.domain isEqualToString:NSURLErrorDomain]) {
+        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Connection error."]];
+        [self finishReceivingMessageAnimated:YES];
+    }
 }
 
 - (void)evApplicationIsReady:(EVApplication *)application {
+    isRecording = NO;
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
 }
 
@@ -320,6 +326,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (void)evApplicationRecordingIsStarted:(EVApplication *)application {
     isRecording = YES;
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     });

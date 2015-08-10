@@ -15,8 +15,16 @@
 #define BUTTON_MARGIN 8.0f
 #define BUTTON_TOP_BOTTOM_MARGIN 8.0f
 
+typedef NS_ENUM(uint8_t, EVMicButtonState) {
+    EVMicButtonStateShowingMic = 0,
+    EVMicButtonStateHidingMic,
+    EVMicButtonStateShowingVoice,
+    EVMicButtonStateHidingVoice
+};
+
 @interface EVChatToolbarContentView () {
     BOOL _buttonIsDragging;
+    EVMicButtonState _micButtonState;
 }
 
 @property (nonatomic, strong, readwrite) EVVoiceChatMicButtonLayer *micButtonLayer;
@@ -197,6 +205,7 @@
         _leftRightButtonsImageShadowRadius = _centerButtonMicShadowRadius;
         
         _leftRightButtonsOffset = BUTTON_MARGIN * [UIScreen mainScreen].scale;
+        _micButtonState = EVMicButtonStateShowingMic;
         
         [self awakeFromNib];
     }
@@ -312,9 +321,13 @@
 - (void)audioSessionStarted {
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
-        [self.micButtonLayer audioSessionStarted];
+        if (_micButtonState == EVMicButtonStateHidingMic) {
+            [self.micButtonLayer audioSessionStarted];
+            _micButtonState = EVMicButtonStateShowingVoice;
+        }
     }];
     [self.micButtonLayer hideMic];
+    _micButtonState = EVMicButtonStateHidingMic;
     [CATransaction commit];
     
 }
@@ -322,9 +335,13 @@
 - (void)audioSessionStoped {
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
-        [self.micButtonLayer showMic];
+        if (_micButtonState == EVMicButtonStateHidingVoice) {
+            [self.micButtonLayer showMic];
+            _micButtonState = EVMicButtonStateShowingMic;
+        }
     }];
     [self.micButtonLayer audioSessionStoped];
+    _micButtonState = EVMicButtonStateHidingVoice;
     [CATransaction commit];
 }
 

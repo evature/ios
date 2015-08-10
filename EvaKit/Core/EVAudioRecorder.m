@@ -111,8 +111,8 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
         [self.dataProviderDelegate provider:self gotAnError:error];
     }
-    [self.dataProviderDelegate providerFinished:self];
     self.isRecording = NO;
+    [self.dataProviderDelegate providerFinished:self];
 }
 
 - (void)stopRecording {
@@ -171,7 +171,9 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 }
 
 - (void)stopDataProvider {
-    [self stopRecording];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self stopRecordingNoDelegate];
+    });
 }
 
 #pragma mark ==== Audio Stopper Delegate

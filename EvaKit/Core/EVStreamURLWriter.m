@@ -46,7 +46,10 @@
 @end
 
 
-@interface EVStreamURLWriter () <NSURLConnectionDataDelegate>
+@interface EVStreamURLWriter () <NSURLConnectionDataDelegate> {
+    BOOL _streamOpened;
+    BOOL _connectionError;
+}
 
 @property (nonatomic, strong) NSURLConnection* connection;
 @property (nonatomic, strong) NSOutputStream* dataStream;
@@ -83,7 +86,10 @@
             return nil;
         }
         
+        _streamOpened = NO;
         self.dataStream = prodStream;
+        _connectionError = NO;
+        
         [request setHTTPBodyStream:consStream];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -101,34 +107,48 @@
 }
 
 - (void)provider:(id<EVDataProvider>)provider hasNewData:(NSData*)data {
+    if (!_streamOpened && !_connectionError) {
+        [_dataStream open];
+        _streamOpened = YES;
+    }
     size_t writed = 0;
     size_t length = [data length];
     const uint8_t* bytes = [data bytes];
-    while (writed < length) {
+    while (!_connectionError && writed < length) {
         //Wait for space in stream
-        while(!_dataStream.hasSpaceAvailable) usleep(100);
+        while(!_connectionError && !_dataStream.hasSpaceAvailable) usleep(100);
         //Write so many how we can. Save how many we writed
-        writed += [_dataStream write:(bytes+writed) maxLength:(length-writed)];
+        if (!_connectionError) {
+            writed += [_dataStream write:(bytes+writed) maxLength:(length-writed)];
+        }
     }
 }
 
 - (void)provider:(id<EVDataProvider>)provider gotAnError:(NSError*)error {
     [self.connection cancel];
-    [_dataStream close];
+    if (_streamOpened) {
+        [_dataStream close];
+        _streamOpened = NO;
+    }
     self.dataStream = nil;
     self.connection = nil;
 }
 
 - (void)providerStarted:(id<EVDataProvider>)provider {
-    [_dataStream open];
+    // Do nothing.
 }
+
 - (void)providerFinished:(id<EVDataProvider>)provider {
-    [_dataStream close];
+    if (_streamOpened) {
+        _streamOpened = NO;
+        [_dataStream close];
+    }
 }
 
 
 #pragma mark === NSURLCconnectionDelegate methods ===
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    _connectionError = YES;
     self.connection = nil;
     [self.delegate streamWriter:self gotAnError:error];
 }
@@ -138,6 +158,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    self.connection = nil;
     [self.delegate streamWriterFinished:self];
 }
 

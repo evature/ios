@@ -313,17 +313,17 @@
     [error retain];
     dispatch_async(dispatch_get_main_queue(), ^{
         [error autorelease];
+        EV_LOG_ERROR(@"Streamer failed with error: %@", error);
         if ([error code] == EVAudioRecorderCancelledErrorCode) {
             if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
                 [self.delegate evApplicationRecordingIsCancelled:self];
             }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                self.isReady = YES;
-            });
         } else {
             [self.delegate evApplication:self didObtainError:error];
         }
-        EV_LOG_ERROR(@"Streamer failed with error: %@", error);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.isReady = YES;
+        });
     });
 }
 

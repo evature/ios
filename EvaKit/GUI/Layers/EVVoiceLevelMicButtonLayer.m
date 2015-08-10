@@ -118,16 +118,16 @@
 }
 
 - (void)audioSessionStarted {
-    self.hidden = NO;
     _curPosOddEven = 0;
     memset(volumeBuffer, 0, sizeof(volumeBuffer));
     [self redrawPath];
+    self.hidden = NO;
 }
 
 - (void)audioSessionStoped {
     self.hidden = YES;
     memset(volumeBuffer, 0, sizeof(volumeBuffer));
-    [self redrawPath];
+    //[self redrawPath];
 }
 
 - (void)newAudioLevelData:(NSData*)data {
