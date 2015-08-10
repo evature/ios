@@ -29,6 +29,8 @@
 @property (nonatomic, strong, readwrite) NSString* siteCode;
 @property (nonatomic, strong, readwrite) NSString* apiVersion;
 
+@property (nonatomic, assign, readwrite) BOOL isReady;
+
 @property (nonatomic, strong, readwrite) NSMutableDictionary* chatViewControllerPathRewrites;
 @property (nonatomic, strong, readwrite) EVLocationManager *locationManager;
 
@@ -68,7 +70,6 @@
 
 - (void)setupRecorderChain {
     self.soundRecorder = [EVAudioRecorder new];
-    self.soundRecorder.isDebugMode = YES;
     self.soundRecorder.delegate = self;
     
     self.soundRecorder.audioFormat = kAudioFormatLinearPCM;
@@ -87,11 +88,9 @@
     self.flacConverter.sampleRate = 16000;
     self.flacConverter.bitsPerSample = 16;
     self.flacConverter.numberOfChannels = 1;
-    self.flacConverter.isDebugMode = YES;
     
     self.dataStreamer = [[[EVAudioDataStreamer alloc] initWithOperationChainLength:10] autorelease];
     self.dataStreamer.sampleRate = 16000;
-    self.dataStreamer.isDebugMode = YES;
     self.dataStreamer.delegate = self;
     
     self.soundRecorder.dataProviderDelegate = self.flacConverter;
@@ -116,6 +115,7 @@
         self.apiVersion = EV_API_VERSION;
         
         self.sendVolumeLevelUpdates = YES;
+        self.isReady = NO;
         
         [self setupRecorderChain];
         
@@ -172,6 +172,9 @@
 }
 
 - (void)hideChatViewController:(id)sender {
+    if (self.soundRecorder.isRecording) {
+        [self cancelRecording];
+    }
     UIViewController *ctrl = nil;
     if ([sender isKindOfClass:[UIViewController class]]) {
         ctrl = sender;
@@ -193,7 +196,7 @@
     }
     [urlStr appendFormat:@"?site_code=%@&api_key=%@&locale=%@&time_zone=%@&uid=%@", self.siteCode, self.APIKey, [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode], [[NSTimeZone localTimeZone] stringOffsetFromGMT], [[[UIDevice currentDevice] identifierForVendor] UUIDString]];
     
-    if (self.deviceLatitude != 0.0 && self.deviceLongtitude != 0.0) { // Check if location services returned a valid value
+    if (self.deviceLatitude != 0.0 || self.deviceLongtitude != 0.0) { // Check if location services returned a valid value
         [urlStr appendFormat:@"&latitude=%.5f&longitude=%.5f", self.deviceLatitude, self.deviceLongtitude];
     }
     if (self.currentSessionID != nil) {
@@ -241,6 +244,11 @@
 - (void)setAPIKey:(NSString*)apiKey andSiteCode:(NSString*)siteCode {
     self.APIKey = apiKey;
     self.siteCode = siteCode;
+    if (apiKey != nil && siteCode != nil) {
+        self.isReady = YES;
+    } else {
+        self.isReady = NO;
+    }
     [self updateURL];
 }
 
@@ -251,11 +259,24 @@
     [self updateURL];
 }
 
+- (void)setIsReady:(BOOL)isReady {
+    BOOL old = _isReady;
+    _isReady = isReady;
+    if (isReady && !old) {  //Check that value changed from NO to YES and send event.
+        [self.delegate evApplicationIsReady:self];
+    }
+}
+
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession {
+    if (!self.isReady) {
+        EV_LOG_ERROR(@"EVApplication is not ready!");
+        return;
+    }
     if (withNewSession) {
         self.currentSessionID = EV_NEW_SESSION_ID;
     }
+    self.isReady = NO;
     [self.soundRecorder startRecording:EV_DEFAULT_MAX_RECORDING_TIME withAutoStop:YES];
 }
 
@@ -271,18 +292,18 @@
 
 
 - (void)setAVSession {
-    NSLog(@"Setting session to Play and Record");
+    EV_LOG_DEBUG(@"Setting session to Play and Record");
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *error = nil;
     
         
     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
     if (error != nil) {
-        NSLog(@"Failed to setCategory for AVAudioSession! %@", error);
+        EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
     }
     [session setMode:AVAudioSessionModeVoiceChat error:&error];
     if (error != nil) {
-        NSLog(@"Failed to setMode for AVAudioSession! %@", error);
+        EV_LOG_ERROR(@"Failed to setMode for AVAudioSession! %@", error);
     }
 }
 
@@ -296,10 +317,13 @@
             if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
                 [self.delegate evApplicationRecordingIsCancelled:self];
             }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                self.isReady = YES;
+            });
         } else {
             [self.delegate evApplication:self didObtainError:error];
         }
-        NSLog(@"Streamer failed with error: %@", error);
+        EV_LOG_ERROR(@"Streamer failed with error: %@", error);
     });
 }
 
@@ -311,6 +335,9 @@
             self.currentSessionID = [response objectForKey:@"session_id"];
         }
         [self.delegate evApplication:self didObtainResponse:response];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.isReady = YES;
+        });
     });
 }
 
@@ -321,7 +348,7 @@
 }
 
 - (void)locationManager:(EVLocationManager*)manager didObtainError:(NSError*)error {
-    NSLog(@"Location error: %@", error);
+    EV_LOG_ERROR(@"Location error: %@", error);
 }
 
 

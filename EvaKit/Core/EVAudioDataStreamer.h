@@ -18,6 +18,7 @@
 @property (nonatomic, assign, readwrite) unsigned int sampleRate;
 @property (nonatomic, assign, readwrite) NSUInteger httpBufferSize;
 @property (nonatomic, strong, readwrite) NSURL* webServiceURL;
+@property (nonatomic, assign, readwrite) NSTimeInterval connectionTimeout;
 @property (nonatomic, assign, readwrite) id<EVAudioDataStreamerDelegate> delegate;
 
 @end

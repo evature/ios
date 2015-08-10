@@ -15,6 +15,7 @@ FOUNDATION_EXPORT double EvaKitVersionNumber;
 //! Project version string for EvaKit.
 FOUNDATION_EXPORT const unsigned char EvaKitVersionString[];
 
+#import "EVLogger.h"
 #import "EVApplicationDelegate.h"
 #import "EVApplication.h"
 #import "EVViewControllerVisibilityObserverDelegate.h"

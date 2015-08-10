@@ -32,10 +32,6 @@
     [self.delegate locationManager:self didObtainNewLongtitude:newLocation.coordinate.longitude andLatitude:newLocation.coordinate.latitude];
 }
 
-//- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-//    NSLog(@"Status changed");
-//}
-
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
     [self.delegate locationManager:self didObtainError:error];

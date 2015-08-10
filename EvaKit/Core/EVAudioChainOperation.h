@@ -14,8 +14,6 @@
 
 @property (nonatomic, assign, readonly) dispatch_queue_t operationQueue;
 
-@property (nonatomic, assign) BOOL isDebugMode;
-
 - (instancetype)initWithOperationChainLength:(NSUInteger)length;
 
 // Overload this method and implement operation logic

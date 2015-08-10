@@ -10,6 +10,7 @@
 #import <dispatch/dispatch.h>
 #import <AVFoundation/AVFoundation.h>
 #import "NSError+EVA.h"
+#import "EVLogger.h"
 
 
 @interface EVAudioRecorder () {
@@ -89,9 +90,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         NSError* error = nil;
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         if (error != nil) {
-            if (self.isDebugMode) {
-                NSLog(@"Failed to setActive:YES for AVAudioSession! %@", error);
-            }
+            EV_LOG_ERROR(@"Failed to setActive:YES for AVAudioSession! %@", error);
             [self.dataProviderDelegate provider:self gotAnError:error];
         }
         if ([self startAudioQueue:[self audioFormatDescription]]) {
@@ -109,9 +108,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     [self stopAudioQueue];
     [[AVAudioSession sharedInstance] setActive:NO error:&error];
     if (error != nil) {
-        if (self.isDebugMode) {
-            NSLog(@"Failed to setActive:NO for AVAudioSession! %@", error);
-        }
+        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
         [self.dataProviderDelegate provider:self gotAnError:error];
     }
     [self.dataProviderDelegate providerFinished:self];
@@ -131,9 +128,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 - (BOOL)startAudioQueue:(AudioStreamBasicDescription)format {
     OSStatus result = AudioQueueNewInput(&format, AudioInputCallback, self, CFRunLoopGetMain(), NULL, 0, &_audioQueue);
     if (result != 0) {
-        if (self.isDebugMode) {
-            NSLog(@"\nERROR: Error %d on AudioQueueNewInput", (int)result);
-        }
+        EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueNewInput", (int)result);
         [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueNewInput"]];
         return NO;
     }
@@ -143,9 +138,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     
     result = AudioQueueAllocateBuffer(_audioQueue, self.audioBufferSize, &_audioBuffer);
     if (result != 0) {
-        if (self.isDebugMode) {
-            NSLog(@"\nERROR: Error %d on AudioQueueAllocateBuffer", (int)result);
-        }
+        EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueAllocateBuffer", (int)result);
         [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueAllocateBuffer"]];
         [self stopAudioQueue];
         return NO;
@@ -154,17 +147,13 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     if (result != 0) {
         AudioQueueFreeBuffer(_audioQueue, _audioBuffer);
         [self stopAudioQueue];
-        if (self.isDebugMode) {
-            NSLog(@"\nERROR: Error %d on AudioQueueEnqueueBuffer", (int)result);
-        }
+        EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueEnqueueBuffer", (int)result);
         [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueEnqueueBuffer"]];
         return NO;
     }
     result = AudioQueueStart(_audioQueue, NULL);
     if (result != 0) {
-        if (self.isDebugMode) {
-            NSLog(@"\nERROR: Error %d on AudioQueueStart", (int)result);
-        }
+        EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueStart", (int)result);
         [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueStart"]];
         [self stopAudioQueue];
         return NO;

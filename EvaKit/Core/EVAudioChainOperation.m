@@ -7,6 +7,7 @@
 //
 
 #import "EVAudioChainOperation.h"
+#import "EVLogger.h"
 
 @interface EVAudioChainOperation () {
     dispatch_queue_t _queue;
@@ -94,9 +95,7 @@
 
 - (void)checkAndWaitForSpaceInQueue {
     if (dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_NOW) != 0) {
-        if (self.isDebugMode) {
-            NSLog(@"Queue is full in operation: %@, change length or speedup task", self);
-        }
+        EV_LOG_INFO(@"Queue is full in operation: %@, change length or speedup task", self);
         dispatch_semaphore_wait(_queueSemaphore, DISPATCH_TIME_FOREVER);
     }
 }
@@ -133,6 +132,7 @@
 
 // Overload this method and implement operation logic
 - (NSData*)processData:(NSData*)data error:(NSError**)error {
+    EV_LOG_ERROR(@"Reload - (NSData*)processData:(NSData*)data error:(NSError**)error method");
     NSAssert(false, @"Reload - (NSData*)processData:(NSData*)data error:(NSError**)error method");
     return nil;
 }

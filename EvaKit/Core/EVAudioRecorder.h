@@ -43,8 +43,6 @@
 
 @property (nonatomic, assign) id<EVAudioRecorderDelegate> delegate;
 
-@property (nonatomic, assign) BOOL isDebugMode;
-
 
 - (void)startRecording:(NSTimeInterval)maxRecordingTime;
 - (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop;

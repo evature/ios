@@ -7,6 +7,7 @@
 //
 
 #import "EVStreamURLWriter.h"
+#import "EVLogger.h"
 
 @interface NSStream (BoundPairAdditions)
 + (void)createBoundInputStream:(NSInputStream **)inputStreamPtr outputStream:(NSOutputStream **)outputStreamPtr bufferSize:(NSUInteger)bufferSize;
@@ -20,7 +21,7 @@
     CFWriteStreamRef    writeStream;
     
     if ((inputStreamPtr == NULL) || (outputStreamPtr == NULL)) {
-        NSLog(@"CRITICAL ERROR:  binding streams are null");
+        EV_LOG_ERROR(@"Binding streams are null");
         return;
     }
     
@@ -57,13 +58,12 @@
 - (instancetype)initWithURL:(NSURL*)anURL
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
-                   delegate:(id<EVStreamURLWriterDelegate>)delegate
-                  debugMode:(BOOL)isDebug; {
+          connectionTimeout:(NSTimeInterval)timeout
+                   delegate:(id<EVStreamURLWriterDelegate>)delegate {
     self = [super init];
     if (self != nil) {
-        self.isDebugMode = isDebug;
         self.delegate = delegate;
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:anURL];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:anURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
         [request setHTTPMethod:@"POST"];
         
         for (NSString* header in headers) {
@@ -74,16 +74,12 @@
         NSOutputStream* prodStream;
         [NSStream createBoundInputStream:&consStream outputStream:&prodStream bufferSize:bufferSize];
         if (consStream == nil) {
-            if (isDebug) {
-                NSLog(@"CRITICAL ERROR: Stream Writer nil consumer stream");
-            }
+            EV_LOG_ERROR(@"Stream Writer nil consumer stream");
             return nil;
         }
         
         if (prodStream == nil) {
-            if (isDebug) {
-                 NSLog(@"CRITICAL ERROR: Stream Writer nil producer stream");
-            }
+            EV_LOG_ERROR(@"Stream Writer nil producer stream");
             return nil;
         }
         

@@ -17,12 +17,10 @@
 - (instancetype)initWithURL:(NSURL*)anURL
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
-                   delegate:(id<EVStreamURLWriterDelegate>)delegate
-                  debugMode:(BOOL)isDebug;
+          connectionTimeout:(NSTimeInterval)timeout
+                   delegate:(id<EVStreamURLWriterDelegate>)delegate;
 
 @property (nonatomic, assign, readwrite) id<EVStreamURLWriterDelegate> delegate;
-
-@property (nonatomic, assign, readwrite) BOOL isDebugMode;
 
 @end
 

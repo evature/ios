@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "EVApplicationDelegate.h"
+#import "EVLogger.h"
 #import "EVVoiceChatButton.h"
 
 
@@ -22,8 +23,6 @@
 
 @property (nonatomic, strong, readonly) NSString* apiVersion;
 
-
-
 @property (nonatomic, assign, readwrite) double deviceLongtitude;
 @property (nonatomic, assign, readwrite) double deviceLatitude;
 
@@ -31,6 +30,7 @@
 
 @property (nonatomic, assign, readwrite) BOOL sendVolumeLevelUpdates;
 
+@property (nonatomic, assign, readonly) BOOL isReady;
 
 @property (nonatomic, strong, readonly) NSString* APIKey;
 @property (nonatomic, strong, readonly) NSString* siteCode;

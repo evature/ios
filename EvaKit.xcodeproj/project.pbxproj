@@ -77,6 +77,8 @@
 		96B46C9C1B6029FF00507A04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9B1B6029FF00507A04 /* AVFoundation.framework */; };
 		96B46C9E1B602A0500507A04 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9D1B602A0500507A04 /* AudioToolbox.framework */; };
 		96B46CA01B602A2900507A04 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9F1B602A2900507A04 /* CoreLocation.framework */; };
+		96C1EAFB1B78D34800C6FEA4 /* EVLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 96C1EAF91B78D34800C6FEA4 /* EVLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96C1EAFC1B78D34800C6FEA4 /* EVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C1EAFA1B78D34800C6FEA4 /* EVLogger.m */; };
 		96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */; };
 		96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -171,6 +173,8 @@
 		96B46C9B1B6029FF00507A04 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		96B46C9D1B602A0500507A04 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96B46C9F1B602A2900507A04 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		96C1EAF91B78D34800C6FEA4 /* EVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVLogger.h; sourceTree = "<group>"; };
+		96C1EAFA1B78D34800C6FEA4 /* EVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVLogger.m; sourceTree = "<group>"; };
 		96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVApplication.h; sourceTree = "<group>"; };
 		96CDF67F1B4C6DEA001FC7B5 /* EVApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVApplication.m; sourceTree = "<group>"; };
 		96CDF6821B4C76E7001FC7B5 /* EVVoiceChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatViewController.h; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				9696BCF71B7375C8000E2104 /* EVLocationManager.m */,
 				9696BCFA1B73C172000E2104 /* NSTimeZone+EVA.h */,
 				9696BCFB1B73C172000E2104 /* NSTimeZone+EVA.m */,
+				96C1EAF91B78D34800C6FEA4 /* EVLogger.h */,
+				96C1EAFA1B78D34800C6FEA4 /* EVLogger.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
+				96C1EAFB1B78D34800C6FEA4 /* EVLogger.h in Headers */,
 				9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */,
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
@@ -632,6 +639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C1EAFC1B78D34800C6FEA4 /* EVLogger.m in Sources */,
 				96B46C8E1B5FFF4000507A04 /* Eva.m in Sources */,
 				9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */,
 				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,

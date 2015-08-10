@@ -8,7 +8,7 @@
 
 #import "EVAudioDataStreamer.h"
 #import "EVStreamURLWriter.h"
-
+#import "EVLogger.h"
 
 
 @interface EVAudioDataStreamer () <EVStreamURLWriterDelegate>
@@ -24,6 +24,7 @@
     if (self != nil) {
         self.responseData = [NSMutableData data];
         self.httpBufferSize = 0;
+        self.connectionTimeout = 10.0f;
     }
     return self;
 }
@@ -42,10 +43,9 @@
 
 - (void)providerStarted:(id<EVDataProvider>)provider {
     [self.responseData setLength:0];
-    if (self.isDebugMode) {
-        NSLog(@"Starting request to URL: %@", self.webServiceURL);
-    }
     
+    EV_LOG_DEBUG(@"Starting request to URL: %@", self.webServiceURL);
+   
     EVStreamURLWriter* streamWriter = [[EVStreamURLWriter alloc] initWithURL:self.webServiceURL
                                                                      headers:@{
                                                                                @"Expect": @"100-continue",
@@ -53,8 +53,8 @@
                                                                                @"Content-Type": [NSString stringWithFormat:@"audio/x-flac;rate=%u", self.sampleRate]
                                                                                }
                                                                   bufferSize:self.httpBufferSize
-                                                                    delegate:self
-                                                                   debugMode:self.isDebugMode];
+                                                           connectionTimeout:self.connectionTimeout
+                                                                    delegate:self];
     self.dataProviderDelegate = streamWriter;
     if (streamWriter == nil) {
         [self provider:self gotAnError:[NSError errorWithCode:EVAudioDataStreamerCreateErrorCode andDescription:@"Can't create stream writer"]];
@@ -64,6 +64,7 @@
 }
 
 - (void)provider:(id<EVDataProvider>)provider gotAnError:(NSError *)error {
+    EV_LOG_DEBUG(@"Parent data provider got an error: %@", error);
     [super provider:provider gotAnError:error];
     [self.delegate audioDataStreamerFailed:self withError:error];
 }
@@ -74,6 +75,7 @@
 
 
 - (void)streamWriter:(EVStreamURLWriter*)writer gotResponseData:(NSData*)data {
+    EV_LOG_DEBUG("StreamWtiter got some response");
     [data retain];
     dispatch_async(self.operationQueue, ^{
         [self.responseData appendData:data];
@@ -82,6 +84,7 @@
 }
 
 - (void)streamWriter:(EVStreamURLWriter *)writer gotAnError:(NSError*)error {
+    EV_LOG_DEBUG(@"StreamWriter got an error: %@", error);
     [error retain];
     dispatch_async(self.operationQueue, ^{
         [error autorelease];

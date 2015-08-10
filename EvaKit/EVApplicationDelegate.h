@@ -12,6 +12,7 @@
 
 @protocol EVApplicationDelegate <NSObject>
 
+- (void)evApplicationIsReady:(EVApplication*)application;
 - (void)evApplication:(EVApplication*)application didObtainResponse:(NSDictionary*)response;
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error;
 

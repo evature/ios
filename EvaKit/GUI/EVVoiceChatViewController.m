@@ -57,6 +57,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     double maxVolume;
     double currentCombinedVolume;
     unsigned int currentCombinedVolumeCount;
+    BOOL isRecording;
 }
 
 @property (nonatomic, strong) NSMutableArray* messages;
@@ -64,10 +65,6 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 @property (nonatomic, assign) BOOL isNewSession;
 
 - (UIImage*)imageOfBackgroundView;
-
-- (void)recordTimerFired:(NSTimer*)timer;
-- (void)myMessageSend;
-- (void)getResponseMessage;
 
 @end
 
@@ -112,8 +109,9 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         self.senderDisplayName = kSenderDisplayNameMe;
         self.startRecordingOnShow = NO;
         self.isNewSession = YES;
+        isRecording = NO;
         self.messages = [NSMutableArray array];
-        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Test hello message"]];
+        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Hello!"]];
         
         JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
         
@@ -162,48 +160,26 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender {
-    NSLog(@"Undo pressed!");
+    EV_LOG_DEBUG(@"Undo pressed!");
 }
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
-    NSLog(@"Mic pressed!");
-    //[NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(recordTimerFired:) userInfo:[NSMutableDictionary dictionaryWithDictionary:@{@"count": @0}] repeats:YES];
-    minVolume = DBL_MAX;
-    maxVolume = DBL_MIN;
-    currentCombinedVolume = 0.0;
-    currentCombinedVolumeCount = 0;
-    //[(EVChatToolbarContentView *)self.inputToolbar.contentView newMinVolume:0.0001f andMaxVolume:100.0f];
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
-    [self.evApplication startRecordingWithNewSession:self.isNewSession];
-    self.isNewSession = NO;
-}
-
-- (void)recordTimerFired:(NSTimer *)timer {
-    [timer.userInfo setObject:@([[timer.userInfo objectForKey:@"count"] integerValue]+1) forKey:@"count"];
-    CGFloat val = (rand()%255)/4.5f+6.0f;
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView newAudioLevelData:[NSData dataWithBytes:&val length:sizeof(CGFloat)]];
-    if ([[timer.userInfo objectForKey:@"count"] integerValue] >= 40) {
-        [timer invalidate];
-        [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
-        [(EVChatToolbarContentView *)self.inputToolbar.contentView startWaitAnimation];
-        [self performSelector:@selector(myMessageSend) withObject:nil afterDelay:4.0f];
+    if (isRecording) {
+        [self.evApplication stopRecording];
+    } else {
+        minVolume = DBL_MAX;
+        maxVolume = DBL_MIN;
+        currentCombinedVolume = 0.0;
+        currentCombinedVolumeCount = 0;
+        [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
+        [self.evApplication startRecordingWithNewSession:self.isNewSession];
+        self.isNewSession = NO;
     }
-}
-
-- (void)myMessageSend {
-    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:@"Test my message"]];
-    [self finishSendingMessageAnimated:YES];
-    [self performSelector:@selector(getResponseMessage) withObject:nil afterDelay:2.0f];
-}
-
-- (void)getResponseMessage {
-    [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
-    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Test response message"]];
-    [self finishReceivingMessageAnimated:YES];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:NO];
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
-    NSLog(@"Trash pressed!");
+    EV_LOG_DEBUG(@"Trash pressed!");
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,7 +228,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Tapped message: %@", [[self.messages objectAtIndex:indexPath.item] text]);
+    EV_LOG_DEBUG(@"Tapped message: %@", [[self.messages objectAtIndex:indexPath.item] text]);
 }
 
 - (IBAction)hideChatView:(id)sender {
@@ -302,15 +278,17 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 #pragma mark == EVApplication delegate ===
 - (void)evApplication:(EVApplication*)application didObtainResponse:(NSDictionary*)response {
-    NSLog(@"Response: %@", response);
+    EV_LOG_DEBUG(@"Response: %@", response);
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
-    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:[response objectForKey:@"input_text"]]];
-    [self finishSendingMessageAnimated:YES];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     
     NSDictionary *api_reply = (NSDictionary*)[response objectForKey:@"api_reply"];
-    if (api_reply != nil) {
+    if (api_reply != nil && [api_reply isKindOfClass:[NSDictionary class]]) {
+        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:[response objectForKey:@"input_text"]]];
+        [self finishSendingMessageAnimated:YES];
+        
         NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
-        if (flow != nil && [flow count] > 0) {
+        if (flow != nil && [flow isKindOfClass:[NSArray class]] && [flow count] > 0) {
             NSDictionary *flowAction = [flow firstObject];
             if ([flowAction objectForKey:@"SayIt"]) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -323,12 +301,34 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     
 }
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
-    NSLog(@"Error: %@", error);
+    EV_LOG_ERROR(@"Error: %@", error);
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
 }
 
+- (void)evApplicationIsReady:(EVApplication *)application {
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
+}
+
+- (void)evApplicationRecordingIsCancelled:(EVApplication *)application {
+    isRecording = NO;
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
+}
+
+- (void)evApplicationRecordingIsStarted:(EVApplication *)application {
+    isRecording = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
+    });
+}
+
 - (void)evApplicationRecordingIsStoped:(EVApplication *)application {
-    NSLog(@"Record stoped!");
+    EV_LOG_DEBUG(@"Record stoped!");
+    isRecording = NO;
+    [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:NO];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView startWaitAnimation];
 }

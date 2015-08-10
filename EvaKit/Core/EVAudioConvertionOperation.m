@@ -9,6 +9,7 @@
 #import "EVAudioConvertionOperation.h"
 #import <FLAC/stream_encoder.h>
 #import "NSError+EVA.h"
+#import "EVLogger.h"
 
 @interface EVAudioConvertionOperation () {
     FLAC__StreamEncoder *_encoder;
@@ -64,7 +65,7 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         _encoder = FLAC__stream_encoder_new();
         self.currentEncodedData = [NSMutableData new];
         
-        FLAC__stream_encoder_set_verify(_encoder, self.isDebugMode);
+        FLAC__stream_encoder_set_verify(_encoder, ([EVLogger logger].logLevel == EVLoggerLogLevelDebug));
         FLAC__stream_encoder_set_compression_level(_encoder, 5);
         FLAC__stream_encoder_set_channels(_encoder, self.numberOfChannels);
         FLAC__stream_encoder_set_bits_per_sample(_encoder, self.bitsPerSample);
@@ -74,9 +75,7 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         FLAC__StreamEncoderInitStatus init_status = FLAC__stream_encoder_init_stream(_encoder, part_encoded, NULL,NULL,NULL, (void*)self);
         
         if (init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
-            if (self.isDebugMode) {
-                NSLog(@"ERROR: FLAC Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
-            }
+            EV_LOG_ERROR(@"ERROR: FLAC Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
             [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:init_status andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderInitStatusString[init_status]]]];
             self.currentEncodedData = nil;
             [self stopDataProvider];
@@ -124,9 +123,7 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         ok = FLAC__stream_encoder_process_interleaved(_encoder, _flacBuffer, samples);
         if (!ok) {
             FLAC__StreamEncoderState state = FLAC__stream_encoder_get_state(_encoder);
-            if (self.isDebugMode) {
-                NSLog(@"ERROR: Flac error on encoding: %s", FLAC__StreamEncoderStateString[state]);
-            }
+            EV_LOG_ERROR(@"ERROR: Flac error on encoding: %s", FLAC__StreamEncoderStateString[state]);
             *error = [NSError errorWithCode:state andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderStateString[state]]];
             self.currentEncodedData = nil;
             return nil;
