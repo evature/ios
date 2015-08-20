@@ -23,4 +23,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)evSearchGotResponse:(EVResponse*)response {
+    NSLog(@"Some response from eva chat");
+}
+
 @end

@@ -110,6 +110,8 @@
     if (!_streamOpened && !_connectionError) {
         [_dataStream open];
         _streamOpened = YES;
+        //Wait for opening
+        usleep(200);
     }
     size_t writed = 0;
     size_t length = [data length];

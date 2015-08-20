@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "EVViewControllerVisibilityObserverDelegate.h"
 
-extern NSString* kEVVoiceChatButtonSettigsKey;
-
 IB_DESIGNABLE
 @interface EVVoiceChatButton : UIButton <EVViewControllerVisibilityObserverDelegate>
 

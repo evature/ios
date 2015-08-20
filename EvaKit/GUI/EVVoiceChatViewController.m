@@ -63,8 +63,10 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 @property (nonatomic, strong) NSMutableArray* messages;
 @property (nonatomic, strong) NSDictionary* viewSettings;
 @property (nonatomic, assign) BOOL isNewSession;
+@property (nonatomic, strong) EVSearchContext* oldContext;
 
 - (UIImage*)imageOfBackgroundView;
+- (void)setHelloMessage;
 
 @end
 
@@ -111,28 +113,55 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         self.isNewSession = YES;
         isRecording = NO;
         self.messages = [NSMutableArray array];
-        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Hello!"]];
+        
         
         JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
         
         self.outgoingBubbleImage = [bubbleFactory outgoingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(FF, FF, FF, FF)];
         self.incomingBubbleImage = [bubbleFactory incomingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(03, A9, F4, FF)];
         [bubbleFactory release];
+        
     }
     return self;
+}
+
+- (void)setHelloMessage {
+    EVSearchContext* context = self.evApplication.context;
+    NSString* message = nil;
+    switch (context.type) {
+        case EVSearchContextTypeFlight:
+            message = @"What flight can I find for you?";
+            break;
+        case EVSearchContextTypeCruise:
+            message = @"What cruise can I find for you?";
+            break;
+        case EVSearchContextTypeCar:
+            message = @"What car can I find for you?";
+            break;
+        case EVSearchContextTypeHotel:
+            message = @"What hotel can I find for you?";
+            break;
+        default:
+            message = @"Hello, how may I help you?";
+            break;
+    }
+    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:message]];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.collectionView.collectionViewLayout = [[[EVCollectionViewFlowLayout alloc] init] autorelease];
-    //self.view.backgroundColor = [UIColor blackColor];
+    
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     for (NSString* path in self.viewSettings) {
         [self setValue:[self.viewSettings objectForKey:path] forKeyPath:path];
     }
+    self.oldContext = self.evApplication.context;
+    self.evApplication.context = [EVSearchContext contextForDelegate:self.delegate];
+    [self setHelloMessage];
     //self.collectionView.collectionViewLayout.springinessEnabled = YES;
 }
 
@@ -161,6 +190,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Undo pressed!");
+    [self.evApplication editLastQueryWithText:nil];
 }
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
@@ -181,7 +211,9 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     EV_LOG_DEBUG(@"Trash pressed!");
     self.isNewSession = YES;
     [self.messages removeAllObjects];
+    [self setHelloMessage];
     [self.collectionView reloadData];
+    //[self.evApplication queryText:@"" withNewSession:self.isNewSession];
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -234,12 +266,11 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 - (IBAction)hideChatView:(id)sender {
-    self.openButton.hidden = NO;
+    self.evApplication.context = self.oldContext;
     [self.evApplication hideChatViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.openButton.hidden = YES;
     UIImageView* backView = [[UIImageView alloc] initWithFrame:self.view.frame];
     backView.image = [self imageOfBackgroundView];
     [backView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -279,28 +310,28 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 #pragma mark == EVApplication delegate ===
-- (void)evApplication:(EVApplication*)application didObtainResponse:(NSDictionary*)response {
-    EV_LOG_DEBUG(@"Response: %@", response);
+- (void)evApplication:(EVApplication*)application didObtainResponse:(EVResponse*)response {
+    
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     
-    NSDictionary *api_reply = (NSDictionary*)[response objectForKey:@"api_reply"];
-    if (api_reply != nil && [api_reply isKindOfClass:[NSDictionary class]]) {
-        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:[response objectForKey:@"input_text"]]];
-        [self finishSendingMessageAnimated:YES];
-        
-        NSArray *flow = (NSArray*)[api_reply objectForKey:@"Flow"];
-        if (flow != nil && [flow isKindOfClass:[NSArray class]] && [flow count] > 0) {
-            NSDictionary *flowAction = [flow firstObject];
-            if ([flowAction objectForKey:@"SayIt"]) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:[flowAction objectForKey:@"SayIt"]]];
-                    [self finishReceivingMessageAnimated:YES];
-                });
-            }
-        }
-    }
     
+    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:response.processedText]];
+    [self finishSendingMessageAnimated:YES];
+        
+    
+    if ([response.flow.flowElements count] > 0) {
+        [response retain];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [response autorelease];
+            EVFlowElement* element = [response.flow.flowElements objectAtIndex:0];
+            [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:element.sayIt]];
+            [self finishReceivingMessageAnimated:YES];
+            if ([self.delegate respondsToSelector:@selector(evSearchGotResponse:)]) {
+                [self.delegate evSearchGotResponse:response];
+            }
+        });
+    }
 }
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
     EV_LOG_ERROR(@"%@", error);
@@ -309,6 +340,9 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
         [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Connection error."]];
         [self finishReceivingMessageAnimated:YES];
+    }
+    if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {
+        [self.delegate evSearchGotAnError:error];
     }
 }
 

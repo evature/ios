@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVResponse.h"
 
 @class EVApplication;
 
 @protocol EVApplicationDelegate <NSObject>
 
 - (void)evApplicationIsReady:(EVApplication*)application;
-- (void)evApplication:(EVApplication*)application didObtainResponse:(NSDictionary*)response;
+- (void)evApplication:(EVApplication*)application didObtainResponse:(EVResponse*)response;
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error;
 
 @optional

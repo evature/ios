@@ -29,7 +29,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation* newLocation = [locations lastObject];
-    [self.delegate locationManager:self didObtainNewLongtitude:newLocation.coordinate.longitude andLatitude:newLocation.coordinate.latitude];
+    [self.delegate locationManager:self didObtainNewLongitude:newLocation.coordinate.longitude andLatitude:newLocation.coordinate.latitude];
 }
 
 - (void)locationManager:(CLLocationManager *)manager

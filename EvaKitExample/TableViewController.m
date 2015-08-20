@@ -15,6 +15,14 @@
 
 @implementation TableViewController
 
+- (void)evSearchGotResponse:(EVResponse *)response {
+    NSLog(@"Got some Eva response: %@", response);
+}
+- (EVSearchContextType)searchContext {
+    NSLog(@"Returns only flight context");
+    return EVSearchContextTypeFlight;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

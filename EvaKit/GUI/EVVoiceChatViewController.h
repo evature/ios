@@ -10,6 +10,7 @@
 #import "EVChatToolbarView.h"
 #import "EVVoiceChatButton.h"
 #import "EVApplicationDelegate.h"
+#import "EVSearchDelegate.h"
 
 @interface EVVoiceChatViewController : JSQMessagesViewController <EVChatToolbarViewDelegate, EVApplicationDelegate>
 
@@ -23,8 +24,9 @@
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImage;
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImage;
 
-@property (nonatomic, assign) EVVoiceChatButton* openButton;
+//@property (nonatomic, assign) EVVoiceChatButton* openButton;
 @property (nonatomic, assign) EVApplication* evApplication;
+@property (nonatomic, assign) id<EVSearchDelegate> delegate;
 
 - (IBAction)hideChatView:(id)sender;
 

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EvaKit/EvaKit.h>
 //#import "EVChatToolbarContentView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <EVSearchDelegate>
 
 @end
 

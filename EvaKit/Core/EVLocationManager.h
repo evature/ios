@@ -22,7 +22,7 @@
 
 @protocol EVLocationManagerDelegate <NSObject>
 
-- (void)locationManager:(EVLocationManager*)manager didObtainNewLongtitude:(double)lng andLatitude:(double)lat;
+- (void)locationManager:(EVLocationManager*)manager didObtainNewLongitude:(double)lng andLatitude:(double)lat;
 - (void)locationManager:(EVLocationManager*)manager didObtainError:(NSError*)error;
 
 @end

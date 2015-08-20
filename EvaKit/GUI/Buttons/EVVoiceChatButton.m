@@ -10,10 +10,10 @@
 #import "PocketSVG.h"
 #import "EVApplication.h"
 #import "EVVoiceChatMicButtonLayer.h"
+#import "EVViewControllerVisibilityObserver.h"
 
 #define BUTTON_DEFAULT_SIZE 60.0f
 
-const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
 
 @interface EVVoiceChatButton ()
 
@@ -143,6 +143,18 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
     [super dealloc];
 }
 
+- (void)setConnectedController:(UIViewController *)connectedController {
+    self.controllerObserverDelegate = nil;
+    if (connectedController != nil) {
+    #if !TARGET_INTERFACE_BUILDER
+        EVViewControllerVisibilityObserver *visObserver = [[EVViewControllerVisibilityObserver alloc] initWithController:connectedController andDelegate:self];
+        self.controllerObserverDelegate = visObserver;
+        [visObserver release];
+    #endif
+    }
+    _connectedController = connectedController;
+}
+
 - (void)prepareForInterfaceBuilder {
     self.backgroundColor = [UIColor clearColor];
     [self setBackgroundImage:[self generateImage] forState:UIControlStateNormal];
@@ -150,12 +162,7 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
 
 - (IBAction)clicked:(id)button {
     if ([[self allTargets] count] == 1) {
-        if (self.autoHide) {
-            [self.chatProperties setObject:[NSValue valueWithNonretainedObject:self] forKey:kEVVoiceChatButtonSettigsKey];
-        } else {
-            [self.chatProperties removeObjectForKey:kEVVoiceChatButtonSettigsKey];
-        }
-        [[EVApplication sharedApplication] showChatViewController:((self.connectedController != nil) ? self.connectedController : self) withViewSettings:self.chatProperties];
+        [[EVApplication sharedApplication] showChatViewController:self withViewSettings:self.chatProperties];
     }
 }
 
@@ -202,7 +209,9 @@ const NSString* kEVVoiceChatButtonSettigsKey = @"kEVVoiceChatButtonSettigsKey";
 }
 
 - (void)controllerDidHide:(UIViewController*)controller {
-    self.hidden = YES;
+    if (self.autoHide) {
+        self.hidden = YES;
+    }
 }
 
 - (void)controllerWillRemove:(UIViewController*)controller {

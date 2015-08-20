@@ -10,20 +10,30 @@
 #import "EVApplicationDelegate.h"
 #import "EVLogger.h"
 #import "EVVoiceChatButton.h"
+#import "EVSearchScope.h"
+#import "EVSearchContext.h"
+#import "EVApplicationSound.h"
 
 
 #define EV_NEW_SESSION_ID @"1"
 #define EV_DEFAULT_MAX_RECORDING_TIME 15.0f
 #define EV_KIT_VERSION @"1.6.4"
 
+typedef NS_ENUM(char, EVApplicationStateSound) {
+    EVApplicationStateSoundRecordingStarted = 0,
+    EVApplicationStateSoundRecordingStoped,
+    EVApplicationStateSoundRequestFinished,
+    EVApplicationStateSoundCancelled
+};
+
 @interface EVApplication : NSObject
 
-//Delegate. Automatically updates to current controller by -showChatViewController... Set manually if not using this method
+//Delegate. Automatically updates to current Chat View controller by -showChatViewController... Set manually if not using this method
 @property (nonatomic, assign, readwrite) id<EVApplicationDelegate> delegate;
 
 @property (nonatomic, strong, readonly) NSString* apiVersion;
 
-@property (nonatomic, assign, readwrite) double deviceLongtitude;
+@property (nonatomic, assign, readwrite) double deviceLongitude;
 @property (nonatomic, assign, readwrite) double deviceLatitude;
 
 @property (nonatomic, strong, readwrite) NSString* currentSessionID;
@@ -35,7 +45,14 @@
 @property (nonatomic, strong, readonly) NSString* APIKey;
 @property (nonatomic, strong, readonly) NSString* siteCode;
 @property (nonatomic, strong, readwrite) NSString* serverHost;
+@property (nonatomic, strong, readwrite) NSString* textServerHost;
 
+@property (nonatomic, assign, readwrite) BOOL highlightText;
+@property (nonatomic, assign, readwrite) BOOL useLocationServices;
+@property (nonatomic, strong, readwrite) EVSearchScope* scope;
+@property (nonatomic, strong, readwrite) EVSearchContext* context;
+
+@property (nonatomic, strong, readonly) NSDictionary* applicationSounds;
 
 //View Classes. Can be changed.
 @property (nonatomic, assign, readwrite) Class chatViewControllerClass;
@@ -45,8 +62,6 @@
 @property (nonatomic, assign) CGFloat defaultButtonBottomOffset;
 // Dictionary with Chat View settings path rewrites. For more simple configuration and Chat Button.
 @property (nonatomic, strong, readonly) NSMutableDictionary* chatViewControllerPathRewrites;
-
-
 
 
 + (instancetype)sharedApplication;
@@ -63,12 +78,20 @@
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (void)cancelRecording;
 
+- (void)queryText:(NSString*)text withNewSession:(BOOL)withNewSession;
+- (void)editLastQueryWithText:(NSString*)text;
+
 // Add button to controller methods
 - (EVVoiceChatButton*)addButtonInController:(UIViewController*)viewController;
 - (EVVoiceChatButton*)addButtonInView:(UIView*)view inController:(UIViewController *)viewController;
 
 // Sender can be View Controller or View
-- (void)showChatViewController:(id)sender withViewSettings:(NSDictionary*)viewSettings;
-- (void)hideChatViewController:(id)sender;
+- (void)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings;
+- (void)hideChatViewController:(UIResponder*)sender;
+
+// Sounds
+- (EVApplicationSound*)soundForState:(EVApplicationStateSound)state;
+- (void)setSound:(EVApplicationSound*)sound forApplicationState:(EVApplicationStateSound)state;
+
 
 @end

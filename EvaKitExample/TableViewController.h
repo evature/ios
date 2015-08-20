@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EvaKit/EvaKit.h>
 
-@interface TableViewController : UITableViewController
+@interface TableViewController : UITableViewController <EVSearchDelegate>
 
 @end
