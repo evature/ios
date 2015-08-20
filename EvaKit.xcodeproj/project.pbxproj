@@ -117,17 +117,6 @@
 		96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */; };
 		96A7FA211B6B6F44009D6561 /* NSError+EVA.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */; };
 		96B46C801B5FFF1F00507A04 /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C7F1B5FFF1F00507A04 /* FLAC.framework */; };
-		96B46C8C1B5FFF4000507A04 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C811B5FFF4000507A04 /* Common.h */; };
-		96B46C8D1B5FFF4000507A04 /* Eva.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C821B5FFF4000507A04 /* Eva.h */; };
-		96B46C8E1B5FFF4000507A04 /* Eva.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B46C831B5FFF4000507A04 /* Eva.m */; };
-		96B46C8F1B5FFF4000507A04 /* MOAudioStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C841B5FFF4000507A04 /* MOAudioStreamer.h */; };
-		96B46C901B5FFF4000507A04 /* MOAudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B46C851B5FFF4000507A04 /* MOAudioStreamer.m */; };
-		96B46C911B5FFF4000507A04 /* NSError+CustomError.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C861B5FFF4000507A04 /* NSError+CustomError.h */; };
-		96B46C921B5FFF4000507A04 /* NSError+CustomError.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B46C871B5FFF4000507A04 /* NSError+CustomError.m */; };
-		96B46C931B5FFF4000507A04 /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C881B5FFF4000507A04 /* OpenUDID.h */; };
-		96B46C941B5FFF4000507A04 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B46C891B5FFF4000507A04 /* OpenUDID.m */; };
-		96B46C951B5FFF4000507A04 /* Recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C8A1B5FFF4000507A04 /* Recorder.h */; };
-		96B46C961B5FFF4000507A04 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B46C8B1B5FFF4000507A04 /* Recorder.m */; };
 		96B46C981B60012800507A04 /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C971B60012800507A04 /* Ogg.framework */; };
 		96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C991B6009A500507A04 /* EVApplicationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96B46C9C1B6029FF00507A04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9B1B6029FF00507A04 /* AVFoundation.framework */; };
@@ -270,17 +259,6 @@
 		96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+EVA.h"; sourceTree = "<group>"; };
 		96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+EVA.m"; sourceTree = "<group>"; };
 		96B46C7F1B5FFF1F00507A04 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = EvaKit/Frameworks/FLAC.framework; sourceTree = "<group>"; };
-		96B46C811B5FFF4000507A04 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		96B46C821B5FFF4000507A04 /* Eva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Eva.h; sourceTree = "<group>"; };
-		96B46C831B5FFF4000507A04 /* Eva.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Eva.m; sourceTree = "<group>"; };
-		96B46C841B5FFF4000507A04 /* MOAudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioStreamer.h; sourceTree = "<group>"; };
-		96B46C851B5FFF4000507A04 /* MOAudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAudioStreamer.m; sourceTree = "<group>"; };
-		96B46C861B5FFF4000507A04 /* NSError+CustomError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+CustomError.h"; sourceTree = "<group>"; };
-		96B46C871B5FFF4000507A04 /* NSError+CustomError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+CustomError.m"; sourceTree = "<group>"; };
-		96B46C881B5FFF4000507A04 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
-		96B46C891B5FFF4000507A04 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
-		96B46C8A1B5FFF4000507A04 /* Recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
-		96B46C8B1B5FFF4000507A04 /* Recorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recorder.m; sourceTree = "<group>"; };
 		96B46C971B60012800507A04 /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = EvaKit/Frameworks/Ogg.framework; sourceTree = "<group>"; };
 		96B46C991B6009A500507A04 /* EVApplicationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVApplicationDelegate.h; sourceTree = "<group>"; };
 		96B46C9B1B6029FF00507A04 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -376,24 +354,6 @@
 			path = Layers;
 			sourceTree = "<group>";
 		};
-		9615BED51B72C1F000F31F38 /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-				96B46C811B5FFF4000507A04 /* Common.h */,
-				96B46C821B5FFF4000507A04 /* Eva.h */,
-				96B46C831B5FFF4000507A04 /* Eva.m */,
-				96B46C841B5FFF4000507A04 /* MOAudioStreamer.h */,
-				96B46C851B5FFF4000507A04 /* MOAudioStreamer.m */,
-				96B46C861B5FFF4000507A04 /* NSError+CustomError.h */,
-				96B46C871B5FFF4000507A04 /* NSError+CustomError.m */,
-				96B46C881B5FFF4000507A04 /* OpenUDID.h */,
-				96B46C891B5FFF4000507A04 /* OpenUDID.m */,
-				96B46C8A1B5FFF4000507A04 /* Recorder.h */,
-				96B46C8B1B5FFF4000507A04 /* Recorder.m */,
-			);
-			name = OLD;
-			sourceTree = "<group>";
-		};
 		962809CC1B50333A00263567 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,7 +370,6 @@
 			children = (
 				96804C441B86163E00FA9998 /* SearchModels */,
 				9679482F1B84911400198130 /* Models */,
-				9615BED51B72C1F000F31F38 /* OLD */,
 				96DEEA841B6A823D00B000D2 /* IO */,
 				96DEEA801B6A511000B000D2 /* EVAudioRecorder.h */,
 				96DEEA811B6A511000B000D2 /* EVAudioRecorder.m */,
@@ -698,14 +657,10 @@
 				9653D4261B5C6F9E00FC37AF /* EVDownButtonItem.h in Headers */,
 				968934CC1B61587500885DAA /* EVViewControllerVisibilityObserver.h in Headers */,
 				9615BED31B727E5000F31F38 /* EVAudioDataStreamer.h in Headers */,
-				96B46C911B5FFF4000507A04 /* NSError+CustomError.h in Headers */,
 				9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */,
 				969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */,
-				96B46C931B5FFF4000507A04 /* OpenUDID.h in Headers */,
 				9634D3451B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h in Headers */,
-				96B46C8C1B5FFF4000507A04 /* Common.h in Headers */,
 				9653D41A1B5C164E00FC37AF /* EVSpringAnimation.h in Headers */,
-				96B46C8D1B5FFF4000507A04 /* Eva.h in Headers */,
 				96675F381B457F1D00494BAA /* EvaKit.h in Headers */,
 				96E0148C1B51533900E8ADE4 /* EVSVGLayer.h in Headers */,
 				96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */,
@@ -713,9 +668,7 @@
 				960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */,
 				9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */,
 				96A7FA1C1B6B6861009D6561 /* EVAudioConvertionOperation.h in Headers */,
-				96B46C8F1B5FFF4000507A04 /* MOAudioStreamer.h in Headers */,
 				9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */,
-				96B46C951B5FFF4000507A04 /* Recorder.h in Headers */,
 				96E014901B5154E800E8ADE4 /* EVResizableShapeLayer.h in Headers */,
 				96804C421B8605C800FA9998 /* EVAPIRequest.h in Headers */,
 			);
@@ -864,7 +817,6 @@
 			files = (
 				96C1EAFC1B78D34800C6FEA4 /* EVLogger.m in Sources */,
 				9679484B1B84A6F000198130 /* EVHotelAttributes.m in Sources */,
-				96B46C8E1B5FFF4000507A04 /* Eva.m in Sources */,
 				967948431B84A14200198130 /* EVLocation.m in Sources */,
 				9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */,
 				96804C3F1B85EFF300FA9998 /* EVQuestionFlowElement.m in Sources */,
@@ -872,7 +824,6 @@
 				9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */,
 				96454A861B84F44600C26FFD /* EVTravelers.m in Sources */,
 				9679484F1B84BC7A00198130 /* EVFlightAttributes.m in Sources */,
-				96B46C941B5FFF4000507A04 /* OpenUDID.m in Sources */,
 				96804C501B861F5700FA9998 /* EVSearchContextBase.m in Sources */,
 				9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */,
 				9679483F1B84981C00198130 /* EVRequestAttributes.m in Sources */,
@@ -884,7 +835,6 @@
 				96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */,
 				96454A7E1B84D4D200C26FFD /* EVServiceAttributes.m in Sources */,
 				968934CD1B61587500885DAA /* EVViewControllerVisibilityObserver.m in Sources */,
-				96B46C961B5FFF4000507A04 /* Recorder.m in Sources */,
 				96454A8A1B84FBF600C26FFD /* EVMoney.m in Sources */,
 				967948471B84A3C000198130 /* EVTime.m in Sources */,
 				96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */,
@@ -897,7 +847,6 @@
 				9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */,
 				9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */,
 				96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */,
-				96B46C921B5FFF4000507A04 /* NSError+CustomError.m in Sources */,
 				96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */,
 				96454A7A1B84D37A00C26FFD /* EVSabre.m in Sources */,
 				9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */,
@@ -920,7 +869,6 @@
 				967948331B84917B00198130 /* EVResponse.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,
 				96DEEA831B6A511000B000D2 /* EVAudioRecorder.m in Sources */,
-				96B46C901B5FFF4000507A04 /* MOAudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

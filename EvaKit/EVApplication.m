@@ -8,7 +8,6 @@
 
 #import "EVApplication.h"
 #import "EVVoiceChatViewController.h"
-#import "Eva.h"
 #import <AVFoundation/AVFoundation.h>
 #import "EVAPIRequest.h"
 #import "EVSearchDelegate.h"
