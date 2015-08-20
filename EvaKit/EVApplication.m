@@ -43,6 +43,7 @@
 @property (nonatomic, strong, readwrite) EVAPIRequest* currentApiRequest;
 
 @property (nonatomic, strong, readwrite) NSDictionary* applicationSounds;
+@property (nonatomic, strong, readwrite) NSDictionary* extraParameters;
 
 
 - (void)setAVSession;
@@ -155,6 +156,10 @@
         self.isReady = NO;
         self.useLocationServices = YES;
         self.highlightText = YES;
+        self.language = @"en";
+        
+        self.extraParameters = [NSMutableDictionary dictionary];
+        
         self.applicationSounds = [NSMutableDictionary dictionaryWithCapacity:4];
         
         EVApplicationSound* high = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"voice_high" ofType:@"aif"]];
@@ -266,15 +271,9 @@
         [urlStr appendFormat:@"&session_id=%@", self.currentSessionID];
     }
     
-    //    if (bias_ != nil) {
-    //        urlStr = [NSString stringWithFormat:@"%@&bias=%@",urlStr,[self makeSafeString:bias_]];
-    //    }
-    //    if (home_ != nil) {
-    //        urlStr = [NSString stringWithFormat:@"%@&home=%@",urlStr,[self makeSafeString:home_]];
-    //    }
-    //    if (language_ != nil) {
-    //        urlStr = [NSString stringWithFormat:@"%@&language=%@",urlStr,language_];
-    //    }
+    if (self.language != nil) {
+        [urlStr appendFormat:@"&language=%@",self.language];
+    }
     if (self.scope != nil) {
         [urlStr appendFormat:@"&scope=%@", [self.scope requestParameterValue]];
     }
@@ -286,10 +285,12 @@
                          [self soundForState:EVApplicationStateSoundRequestFinished] == nil ? @"N" : @"Y",
                          [self soundForState:EVApplicationStateSoundRecordingStoped] == nil ? @"N" : @"Y",
                          [self soundForState:EVApplicationStateSoundCancelled] == nil ? @"N" : @"Y"];
-    //
-    //    if (optional_dictionary_ != nil) {
-    //        urlStr = [NSString stringWithFormat:@"%@&%@",urlStr,[self urlSafeEncodedOptionalParametersString]];
-    //    }
+    
+    for (NSString* param in [self.extraParameters allKeys]) {
+        id val = [self.extraParameters objectForKey:param];
+        [urlStr appendFormat:@"&%@=%@", param, val];
+    }
+    
     if (self.highlightText) {
         [urlStr appendFormat:@"&add_text=1"];
     }
@@ -343,6 +344,15 @@
     _isReady = isReady;
     if (isReady && !old) {  //Check that value changed from NO to YES and send event.
         [self.delegate evApplicationIsReady:self];
+    }
+}
+
+- (void)setExtraServerParameter:(NSString*)parameter withValue:(id)value {
+    NSMutableDictionary* dict = (NSMutableDictionary*)self.extraParameters;
+    if (value == nil) {
+        [dict removeObjectForKey:parameter];
+    } else {
+        [dict setObject:value forKey:parameter];
     }
 }
 

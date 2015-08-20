@@ -51,6 +51,8 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 @property (nonatomic, assign, readwrite) BOOL useLocationServices;
 @property (nonatomic, strong, readwrite) EVSearchScope* scope;
 @property (nonatomic, strong, readwrite) EVSearchContext* context;
+@property (nonatomic, strong, readwrite) NSString* language;
+@property (nonatomic, strong, readonly) NSDictionary* extraParameters;
 
 @property (nonatomic, strong, readonly) NSDictionary* applicationSounds;
 
@@ -93,5 +95,7 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 - (EVApplicationSound*)soundForState:(EVApplicationStateSound)state;
 - (void)setSound:(EVApplicationSound*)sound forApplicationState:(EVApplicationStateSound)state;
 
+// Parameters
+- (void)setExtraServerParameter:(NSString*)parameter withValue:(id)value;
 
 @end
