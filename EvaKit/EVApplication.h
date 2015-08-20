@@ -47,6 +47,8 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 @property (nonatomic, strong, readwrite) NSString* serverHost;
 @property (nonatomic, strong, readwrite) NSString* textServerHost;
 
+@property (nonatomic, assign, readwrite) NSTimeInterval maxRecordingTime;
+@property (nonatomic, assign, readwrite) NSTimeInterval connectionTimeout;
 @property (nonatomic, assign, readwrite) BOOL highlightText;
 @property (nonatomic, assign, readwrite) BOOL useLocationServices;
 @property (nonatomic, strong, readwrite) EVSearchScope* scope;

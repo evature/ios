@@ -157,6 +157,8 @@
         self.useLocationServices = YES;
         self.highlightText = YES;
         self.language = @"en";
+        self.maxRecordingTime = EV_DEFAULT_MAX_RECORDING_TIME;
+        self.connectionTimeout = 10.0f;
         
         self.extraParameters = [NSMutableDictionary dictionary];
         
@@ -339,6 +341,11 @@
     [self updateURL];
 }
 
+- (void)setConnectionTimeout:(NSTimeInterval)connectionTimeout {
+    _connectionTimeout = connectionTimeout;
+    self.dataStreamer.connectionTimeout = connectionTimeout;
+}
+
 - (void)setIsReady:(BOOL)isReady {
     BOOL old = _isReady;
     _isReady = isReady;
@@ -379,7 +386,7 @@
         self.currentSessionID = EV_NEW_SESSION_ID;
     }
     self.isReady = NO;
-    [self.soundRecorder startRecording:EV_DEFAULT_MAX_RECORDING_TIME withAutoStop:YES];
+    [self.soundRecorder startRecording:self.maxRecordingTime withAutoStop:YES];
 }
 
 // Stop record, Would send the record to Eva for analyze //
@@ -397,7 +404,7 @@
 - (void)apiQuery:(NSURL*)url {
     self.isReady = NO;
     EV_LOG_DEBUG(@"API Query: %@", url);
-    self.currentApiRequest = [[EVAPIRequest alloc] initWithURL:url timeout:self.dataStreamer.connectionTimeout andDelegate:self];
+    self.currentApiRequest = [[EVAPIRequest alloc] initWithURL:url timeout:self.connectionTimeout andDelegate:self];
     [self.currentApiRequest release];
     [self.currentApiRequest start];
 }
