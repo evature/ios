@@ -23,7 +23,6 @@
 #define EV_HOST_ADDRESS_FOR_TEXT  EV_HOST_ADDRESS
 #define EV_API_VERSION @"v1.0"
 
-
 @interface EVApplication () <EVAudioRecorderDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate, EVAPIRequestDelegate>
 
 @property (nonatomic, strong, readwrite) NSString* APIKey;
@@ -43,7 +42,6 @@
 
 @property (nonatomic, strong, readwrite) NSDictionary* applicationSounds;
 @property (nonatomic, strong, readwrite) NSDictionary* extraParameters;
-
 
 - (void)setAVSession;
 - (void)setupRecorderChain;
@@ -101,7 +99,6 @@
     });
     return sharedInstance;
 }
-
 
 - (void)setupRecorderChain {
     self.soundRecorder = [EVAudioRecorder new];
@@ -198,6 +195,9 @@
     return button;
 }
 
+- (void)showChatViewController:(UIResponder*)sender {
+    [self showChatViewController:sender withViewSettings:@{}];
+}
 
 - (void)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings {
     UIViewController *ctrl = nil;
@@ -255,8 +255,6 @@
         }
     }];
 }
-
-#pragma mark === Eva Methods ===
 
 - (NSString*)getURLStringWithServer:(NSString*)server {
     NSMutableString *urlStr = [NSMutableString stringWithFormat:@"%@", server];
@@ -496,6 +494,7 @@
     [self audioDataStreamerFinished:nil withResponse:response];
     self.currentApiRequest = nil;
 }
+
 - (void)apiRequest:(EVAPIRequest *)request gotAnError:(NSError*)error {
     [self audioDataStreamerFailed:nil withError:error];
     self.currentApiRequest = nil;
@@ -528,6 +527,7 @@
         }
     });
 }
+
 - (void)recorderFinishedRecording:(EVAudioRecorder *)recorder {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self soundForState:EVApplicationStateSoundRecordingStoped] play];
