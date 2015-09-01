@@ -12,6 +12,7 @@
 
 static NSDictionary* seatClassKeys = nil;
 static NSDictionary* seatTypeKeys = nil;
+static NSDictionary *foodKeys = nil;
 
 + (void)load {
     seatClassKeys = [@{@"First": @(EVFlightAttributesSeatClassFirst),
@@ -22,6 +23,42 @@ static NSDictionary* seatTypeKeys = nil;
     seatTypeKeys = [@{@"Window": @(EVFlightAttributesSeatTypeWindow),
                       @"Aisle": @(EVFlightAttributesSeatTypeAisle)
                       } retain];
+    foodKeys = [@{@"Unknown": @(EVFlightAttributesFoodTypeUnknown),
+                  @"Kosher": @(EVFlightAttributesFoodTypeKosher),
+                  @"GlattKosher": @(EVFlightAttributesFoodTypeGlattKosher),
+                  @"Muslim": @(EVFlightAttributesFoodTypeMuslim),
+                  @"Hindu": @(EVFlightAttributesFoodTypeHindu),
+                  @"Vegetarian": @(EVFlightAttributesFoodTypeVegetarian),
+                  @"Vegan": @(EVFlightAttributesFoodTypeVegan),
+                  @"IndianVegetarian": @(EVFlightAttributesFoodTypeIndianVegetarian),
+                  @"RawVegetarian": @(EVFlightAttributesFoodTypeRawVegetarian),
+                  @"OrientalVegetarian": @(EVFlightAttributesFoodTypeOrientalVegetarian),
+                  @"LactoOvoVegetarian": @(EVFlightAttributesFoodTypeLactoOvoVegetarian),
+                  @"LactoVegetarian": @(EVFlightAttributesFoodTypeLactoVegetarian),
+                  @"OvoVegetarian": @(EVFlightAttributesFoodTypeOvoVegetarian),
+                  @"JainVegetarian": @(EVFlightAttributesFoodTypeJainVegetarian),
+                  @"Bland": @(EVFlightAttributesFoodTypeBland),
+                  @"Diabetic": @(EVFlightAttributesFoodTypeDiabetic),
+                  @"FruitPlatter": @(EVFlightAttributesFoodTypeFruitPlatter),
+                  @"GlutenFree": @(EVFlightAttributesFoodTypeGlutenFree),
+                  @"LowSodium": @(EVFlightAttributesFoodTypeLowSodium),
+                  @"LowCalorie": @(EVFlightAttributesFoodTypeLowCalorie),
+                  @"LowFat": @(EVFlightAttributesFoodTypeLowFat),
+                  @"LowFibre": @(EVFlightAttributesFoodTypeLowFibre),
+                  @"NonCarbohydrate": @(EVFlightAttributesFoodTypeNonCarbohydrate),
+                  @"NonLactose": @(EVFlightAttributesFoodTypeNonLactose),
+                  @"SoftFluid": @(EVFlightAttributesFoodTypeSoftFluid),
+                  @"SemiFluid": @(EVFlightAttributesFoodTypeSemiFluid),
+                  @"UlcerDiet": @(EVFlightAttributesFoodTypeUlcerDiet),
+                  @"NutFree": @(EVFlightAttributesFoodTypeNutFree),
+                  @"LowPurine": @(EVFlightAttributesFoodTypeLowPurine),
+                  @"LowProtein": @(EVFlightAttributesFoodTypeLowProtein),
+                  @"HighFibre": @(EVFlightAttributesFoodTypeHighFibre),
+                  @"Baby": @(EVFlightAttributesFoodTypeBaby),
+                  @"PostWeaning": @(EVFlightAttributesFoodTypePostWeaning),
+                  @"Child": @(EVFlightAttributesFoodTypeChild),
+                  @"Seafood": @(EVFlightAttributesFoodTypeSeafood),
+                  @"Japanese": @(EVFlightAttributesFoodTypeJapanese)} retain];
 }
 
 - (instancetype)initWithResponse:(NSDictionary *)response {
@@ -37,7 +74,16 @@ static NSDictionary* seatTypeKeys = nil;
             [airlines addObject:[airline objectForKey:@"IATA"]];
         }
         self.airlines = [NSArray arrayWithArray:airlines];
-        self.food = [response objectForKey:@"Food"];
+        if ([response objectForKey:@"Food"] != nil) {
+            NSNumber* val = [foodKeys objectForKey:[[[response objectForKey:@"Food"] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""]];
+            if (val != nil) {
+                self.food = [val shortValue];
+            } else {
+                self.food = EVFlightAttributesFoodTypeUnknown;
+            }
+        } else {
+            self.food = EVFlightAttributesFoodTypeUnknown;
+        }
         
         if ([response objectForKey:@"Seat"] != nil) {
             NSNumber* val = [seatTypeKeys objectForKey:[response objectForKey:@"Seat"]];

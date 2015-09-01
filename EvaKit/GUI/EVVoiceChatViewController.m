@@ -12,6 +12,7 @@
 #import "EVCollectionViewFlowLayout.h"
 #import <objc/runtime.h>
 #import "EVApplication.h"
+#import "EVChatMessage.h"
 
 static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadDataKey";
 
@@ -46,11 +47,6 @@ void reloadData(id collectionView, SEL selector) {
         oldReloadData(collectionView, selector);
     }
 }
-
-NSString* const kSenderIdMe = @"me";
-NSString* const kSenderDisplayNameMe = @"Me";
-NSString* const kSenderIdEva = @"eva";
-NSString* const kSenderDisplayNameEva = @"Eva";
 
 @interface EVVoiceChatViewController () {
     double minVolume;
@@ -107,8 +103,8 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        self.senderId = kSenderIdMe;
-        self.senderDisplayName = kSenderDisplayNameMe;
+        self.senderId = [EVChatMessage clientID];
+        self.senderDisplayName = [EVChatMessage clientDisplayName];
         self.startRecordingOnShow = NO;
         self.isNewSession = YES;
         isRecording = NO;
@@ -145,7 +141,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
             message = @"Hello, how may I help you?";
             break;
     }
-    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:message]];
+    [self.messages addObject:[EVChatMessage serverMessageWithText:message]];
 }
 
 - (void)viewDidLoad {
@@ -166,7 +162,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 }
 
 - (BOOL)isMyMessageInRow:(NSInteger)row {
-    return [((JSQMessage*)[self.messages objectAtIndex:row]).senderId isEqualToString:self.senderId];
+    return ![((EVChatMessage*)[self.messages objectAtIndex:row]) isServerMessage];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -316,7 +312,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     
     
-    [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdMe displayName:kSenderDisplayNameMe text:response.processedText]];
+    [self.messages addObject:[EVChatMessage clientMessageWithText:response.processedText]];
     [self finishSendingMessageAnimated:YES];
         
     
@@ -325,7 +321,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [response autorelease];
             EVFlowElement* element = [response.flow.flowElements objectAtIndex:0];
-            [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:element.sayIt]];
+            [self.messages addObject:[EVChatMessage serverMessageWithText:element.sayIt]];
             [self finishReceivingMessageAnimated:YES];
             if ([self.delegate respondsToSelector:@selector(evSearchGotResponse:)]) {
                 [self.delegate evSearchGotResponse:response];
@@ -338,7 +334,7 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
-        [self.messages addObject:[JSQMessage messageWithSenderId:kSenderIdEva displayName:kSenderDisplayNameEva text:@"Connection error."]];
+        [self.messages addObject:[EVChatMessage serverMessageWithText:@"Connection error."]];
         [self finishReceivingMessageAnimated:YES];
     }
     if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {

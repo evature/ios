@@ -7,6 +7,10 @@
 //
 
 #import "EVSearchContext.h"
+#import "EVCruiseSearchDelegate.h"
+#import "EVHotelSearchDelegate.h"
+#import "EVCarSearchDelegate.h"
+#import "EVFlightSearchDelegate.h"
 
 @implementation EVSearchContext
 
@@ -20,7 +24,18 @@
     if ([delegate respondsToSelector:@selector(searchContext)]) {
         return [self contextWithType:[delegate searchContext]];
     }
-    return [self contextWithType:0xFFFF];
+    
+    if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
+        return [self contextWithType:EVSearchContextTypeFlight];
+    } else if ([delegate conformsToProtocol:@protocol(EVCarSearchDelegate)]) {
+        return [self contextWithType:EVSearchContextTypeCar];
+    } else if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
+        return [self contextWithType:EVSearchContextTypeCruise];
+    } else if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
+        return [self contextWithType:EVSearchContextTypeHotel];
+    }
+    
+    return [self contextWithType:0];
 }
 
 @end

@@ -11,7 +11,7 @@
 @implementation EVTime
 
 - (NSInteger)daysDelta {
-    NSInteger result = 0;
+    NSInteger result = -1;
     if (self.delta != nil) {
         if ([self.delta hasPrefix:@"days=+"]) {
             result = [[self.delta substringFromIndex:6] integerValue];

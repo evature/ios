@@ -22,6 +22,51 @@ typedef NS_ENUM(int16_t, EVFlightAttributesSeatClass) {
     EVFlightAttributesSeatClassEconomy
 };
 
+typedef NS_ENUM(int16_t, EVFlightAttributesFoodType) {
+    EVFlightAttributesFoodTypeUnknown = -1,
+    // Religious:
+    EVFlightAttributesFoodTypeKosher = 0,
+    EVFlightAttributesFoodTypeGlattKosher,
+    EVFlightAttributesFoodTypeMuslim,
+    EVFlightAttributesFoodTypeHindu,
+    // Vegetarian:
+    EVFlightAttributesFoodTypeVegetarian,
+    EVFlightAttributesFoodTypeVegan,
+    EVFlightAttributesFoodTypeIndianVegetarian,
+    EVFlightAttributesFoodTypeRawVegetarian,
+    EVFlightAttributesFoodTypeOrientalVegetarian,
+    EVFlightAttributesFoodTypeLactoOvoVegetarian,
+    EVFlightAttributesFoodTypeLactoVegetarian,
+    EVFlightAttributesFoodTypeOvoVegetarian,
+    EVFlightAttributesFoodTypeJainVegetarian,
+    // Medical meals:
+    EVFlightAttributesFoodTypeBland,
+    EVFlightAttributesFoodTypeDiabetic,
+    EVFlightAttributesFoodTypeFruitPlatter,
+    EVFlightAttributesFoodTypeGlutenFree,
+    EVFlightAttributesFoodTypeLowSodium,
+    EVFlightAttributesFoodTypeLowCalorie,
+    EVFlightAttributesFoodTypeLowFat,
+    EVFlightAttributesFoodTypeLowFibre,
+    EVFlightAttributesFoodTypeNonCarbohydrate,
+    EVFlightAttributesFoodTypeNonLactose,
+    EVFlightAttributesFoodTypeSoftFluid,
+    EVFlightAttributesFoodTypeSemiFluid,
+    EVFlightAttributesFoodTypeUlcerDiet,
+    EVFlightAttributesFoodTypeNutFree,
+    EVFlightAttributesFoodTypeLowPurine,
+    EVFlightAttributesFoodTypeLowProtein,
+    EVFlightAttributesFoodTypeHighFibre,
+    // Infant and child:
+    EVFlightAttributesFoodTypeBaby,
+    EVFlightAttributesFoodTypePostWeaning,
+    EVFlightAttributesFoodTypeChild, // In airline jargon, baby and infant < 2 years. 1 year < Toddler < 3 years.
+    // Other:
+    EVFlightAttributesFoodTypeSeafood,
+    EVFlightAttributesFoodTypeJapanese
+};
+
+
 @interface EVFlightAttributes : NSObject
 
 @property (nonatomic, assign, readwrite) BOOL nonstop; // A Non stop flight - Boolean attribute.
@@ -32,7 +77,7 @@ typedef NS_ENUM(int16_t, EVFlightAttributesSeatClass) {
 @property (nonatomic, assign, readwrite) BOOL twoWay; // Specific request for round trip. Example: ???????3 ticket roundtrip from tagbilaran to manila/
 // 1/26/2011-1/30/2011????????
 @property (nonatomic, strong, readwrite) NSArray* airlines;
-@property (nonatomic, strong, readwrite) NSString* food;
+@property (nonatomic, assign, readwrite) EVFlightAttributesFoodType food;
 
 @property (nonatomic, assign, readwrite) EVFlightAttributesSeatType seatType;
 

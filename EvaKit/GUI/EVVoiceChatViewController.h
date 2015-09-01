@@ -24,7 +24,6 @@
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImage;
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImage;
 
-//@property (nonatomic, assign) EVVoiceChatButton* openButton;
 @property (nonatomic, assign) EVApplication* evApplication;
 @property (nonatomic, assign) id<EVSearchDelegate> delegate;
 
