@@ -8,12 +8,14 @@
 
 #import "EVServiceAttributes.h"
 
+const NSString* EVServiceAttributesCallSupport = @"Call Support";
+
 @implementation EVServiceAttributes
 
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
-        self.callSupportRequested = [[[response objectForKey:@"Call Support"] objectForKey:@"Requested"] boolValue];
+        self.callSupportRequested = [[[response objectForKey:EVServiceAttributesCallSupport] objectForKey:@"Requested"] boolValue];
     }
     return self;
 }

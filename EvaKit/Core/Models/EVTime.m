@@ -10,14 +10,18 @@
 
 @implementation EVTime
 
-- (NSInteger)daysDelta {
++ (NSInteger)daysDelta:(NSString*)deltaString {
     NSInteger result = -1;
-    if (self.delta != nil) {
-        if ([self.delta hasPrefix:@"days=+"]) {
-            result = [[self.delta substringFromIndex:6] integerValue];
+    if (deltaString != nil) {
+        if ([deltaString hasPrefix:@"days=+"]) {
+            result = [[deltaString substringFromIndex:6] integerValue];
         }
     }
     return result;
+}
+
+- (NSInteger)daysDelta {
+    return [[self class] daysDelta:self.delta];
 }
 
 - (instancetype)initWithResponse:(NSDictionary *)response {

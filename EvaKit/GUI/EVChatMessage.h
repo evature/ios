@@ -13,16 +13,15 @@
 
 @property (nonatomic, strong, readwrite) EVSearchModel* searchModel;
 
-+ (instancetype)serverMessageWithText:(NSString *)text;
++ (instancetype)serverMessageWithID:(NSString*)messageID text:(NSString *)text;
 + (instancetype)clientMessageWithText:(NSString *)text;
 
-+ (instancetype)serverMessageWithMedia:(id<JSQMessageMediaData>)media;
++ (instancetype)serverMessageWithID:(NSString*)messageID media:(id<JSQMessageMediaData>)media;
 + (instancetype)clientMessageWithMedia:(id<JSQMessageMediaData>)media;
 
-+ (NSString*)serverID;
 + (NSString*)clientID;
 + (NSString*)clientDisplayName;
 
-- (BOOL)isServerMessage;
+- (BOOL)isClientMessage;
 
 @end

@@ -97,7 +97,7 @@ typedef NS_ENUM(int16_t, EVHotelAttributesAccommodationType) {
 @property (nonatomic, assign, readwrite) NSInteger maxStars;
 
 // Set of NSNumbers with EVHotelAttributesAmentities values.
-@property (nonatomic, strong, readwrite) NSSet* amentities;
+@property (nonatomic, strong, readwrite) NSSet* amenities;
 
 @property (nonatomic, assign, readwrite) EVHotelAttributesPoolType poolType;
 @property (nonatomic, assign, readwrite) EVHotelAttributesAccommodationType accommodationType;

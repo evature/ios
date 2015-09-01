@@ -11,6 +11,43 @@
 
 @implementation ViewController
 
+- (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
+                                 fromLocation:(EVLocation *)origin
+                                   toLocation:(EVLocation *)destination
+                                minDepartDate:(NSDate *)departDateMin
+                                maxDepartDate:(NSDate *)departDateMax
+                                    travelers:(EVTravelers*)travelers
+                                      nonStop:(BOOL)nonstop
+                                  seatClasses:(NSArray*)seatClasses
+                                     airlines:(NSArray*)airlines
+                                       redEye:(BOOL)redeye
+                                     foodType:(EVFlightAttributesFoodType)food
+                                     seatType:(EVFlightAttributesSeatType)seatType
+                                       sortBy:(EVRequestAttributesSort)sortBy
+                                    sortOrder:(EVRequestAttributesSortOrder)sortOrder {
+    NSLog(@"Handled one way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+}
+
+
+- (void)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
+                                    fromLocation:(EVLocation *)origin
+                                      toLocation:(EVLocation *) destination
+                                   minDepartDate:(NSDate *)departDateMin
+                                   maxDepartDate:(NSDate*) departDateMax
+                                   minReturnDate:(NSDate*)returnDateMin
+                                   maxReturnDate:(NSDate*)returnDateMax
+                                       travelers:(EVTravelers*)travelers
+                                         nonStop:(BOOL)nonstop
+                                     seatClasses:(NSArray*)seatClasses
+                                        airlines:(NSArray*)airlines
+                                          redEye:(BOOL)redeye
+                                        foodType:(EVFlightAttributesFoodType)food
+                                        seatType:(EVFlightAttributesSeatType)seatType
+                                          sortBy:(EVRequestAttributesSort)sortBy
+                                       sortOrder:(EVRequestAttributesSortOrder)sortOrder {
+    NSLog(@"Handled two way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.

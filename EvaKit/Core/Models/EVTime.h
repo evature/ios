@@ -37,6 +37,7 @@
 @property (nonatomic, assign, readwrite) BOOL calculated;
 
 - (NSInteger)daysDelta;
++ (NSInteger)daysDelta:(NSString*)deltaString;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 

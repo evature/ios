@@ -100,7 +100,7 @@
 		968BBA5D1B94FC3A001EF0C9 /* EVSearchResultsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA5B1B94FC3A001EF0C9 /* EVSearchResultsHandler.m */; };
 		968BBA601B9503F0001EF0C9 /* NSDate+EVA.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA5E1B9503F0001EF0C9 /* NSDate+EVA.h */; };
 		968BBA611B9503F0001EF0C9 /* NSDate+EVA.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA5F1B9503F0001EF0C9 /* NSDate+EVA.m */; };
-		968BBA631B950CED001EF0C9 /* EVFlightSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA621B950CED001EF0C9 /* EVFlightSearchDelegate.h */; };
+		968BBA631B950CED001EF0C9 /* EVFlightSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA621B950CED001EF0C9 /* EVFlightSearchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA661B95110F001EF0C9 /* EVSearchModel.h */; };
 		968BBA691B95110F001EF0C9 /* EVSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA671B95110F001EF0C9 /* EVSearchModel.m */; };
 		968BBA6C1B951239001EF0C9 /* EVHotelSearchModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA6A1B951239001EF0C9 /* EVHotelSearchModel.h */; };
@@ -109,9 +109,9 @@
 		968BBA711B951256001EF0C9 /* EVFlightSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA6F1B951256001EF0C9 /* EVFlightSearchModel.m */; };
 		968BBA741B951266001EF0C9 /* EVCruiseSearchModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA721B951266001EF0C9 /* EVCruiseSearchModel.h */; };
 		968BBA751B951266001EF0C9 /* EVCruiseSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA731B951266001EF0C9 /* EVCruiseSearchModel.m */; };
-		968BBA771B95128A001EF0C9 /* EVCruiseSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA761B95128A001EF0C9 /* EVCruiseSearchDelegate.h */; };
-		968BBA791B9512A2001EF0C9 /* EVHotelSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA781B9512A2001EF0C9 /* EVHotelSearchDelegate.h */; };
-		968BBA7B1B9512CA001EF0C9 /* EVCarSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA7A1B9512CA001EF0C9 /* EVCarSearchDelegate.h */; };
+		968BBA771B95128A001EF0C9 /* EVCruiseSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA761B95128A001EF0C9 /* EVCruiseSearchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		968BBA791B9512A2001EF0C9 /* EVHotelSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA781B9512A2001EF0C9 /* EVHotelSearchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		968BBA7B1B9512CA001EF0C9 /* EVCarSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA7A1B9512CA001EF0C9 /* EVCarSearchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		968BBA7E1B951F0E001EF0C9 /* EVChatMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 968BBA7C1B951F0E001EF0C9 /* EVChatMessage.h */; };
 		968BBA7F1B951F0E001EF0C9 /* EVChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 968BBA7D1B951F0E001EF0C9 /* EVChatMessage.m */; };
 		9696BCF81B7375C8000E2104 /* EVLocationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9696BCF61B7375C8000E2104 /* EVLocationManager.h */; };
@@ -690,22 +690,18 @@
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
 				968BBA7E1B951F0E001EF0C9 /* EVChatMessage.h in Headers */,
-				968BBA631B950CED001EF0C9 /* EVFlightSearchDelegate.h in Headers */,
 				96454A851B84F44600C26FFD /* EVTravelers.h in Headers */,
 				9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */,
-				968BBA791B9512A2001EF0C9 /* EVHotelSearchDelegate.h in Headers */,
 				96454A791B84D37A00C26FFD /* EVSabre.h in Headers */,
 				968BBA741B951266001EF0C9 /* EVCruiseSearchModel.h in Headers */,
 				967948461B84A3C000198130 /* EVTime.h in Headers */,
 				967948321B84917B00198130 /* EVResponse.h in Headers */,
-				968BBA771B95128A001EF0C9 /* EVCruiseSearchDelegate.h in Headers */,
 				9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */,
 				96454A891B84FBF600C26FFD /* EVMoney.h in Headers */,
 				968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */,
 				9679484E1B84BC7A00198130 /* EVFlightAttributes.h in Headers */,
 				96454A911B851A3600C26FFD /* EVWarning.h in Headers */,
 				96454A8D1B85193A00C26FFD /* EVPNRAttributes.h in Headers */,
-				968BBA7B1B9512CA001EF0C9 /* EVCarSearchDelegate.h in Headers */,
 				9679483A1B84950A00198130 /* EVDialog.h in Headers */,
 				9679483E1B84981C00198130 /* EVRequestAttributes.h in Headers */,
 				96454A951B851BA000C26FFD /* EVParsedText.h in Headers */,
@@ -717,9 +713,13 @@
 				96804C3E1B85EFF300FA9998 /* EVQuestionFlowElement.h in Headers */,
 				96804C3A1B85EC1300FA9998 /* EVStatementFlowElement.h in Headers */,
 				96804C361B85EA1700FA9998 /* EVReplyFlowElement.h in Headers */,
+				968BBA791B9512A2001EF0C9 /* EVHotelSearchDelegate.h in Headers */,
+				968BBA771B95128A001EF0C9 /* EVCruiseSearchDelegate.h in Headers */,
 				96454A811B84D7F200C26FFD /* EVCruiseAttributes.h in Headers */,
 				96804C471B86166300FA9998 /* EVSearchScope.h in Headers */,
+				968BBA631B950CED001EF0C9 /* EVFlightSearchDelegate.h in Headers */,
 				96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */,
+				968BBA7B1B9512CA001EF0C9 /* EVCarSearchDelegate.h in Headers */,
 				96804C4B1B861E6400FA9998 /* EVSearchContext.h in Headers */,
 				96804C4F1B861F5700FA9998 /* EVSearchContextBase.h in Headers */,
 				96804C591B86797400FA9998 /* EVApplicationSound.h in Headers */,

@@ -30,7 +30,7 @@
 
 @implementation EVHotelAttributes
 
-static NSDictionary* amentitiesKeys = nil;
+static NSDictionary* amenitiesKeys = nil;
 static NSDictionary* poolKeys = nil;
 static NSDictionary* accomodationKeys = nil;
 
@@ -40,7 +40,7 @@ static NSDictionary* accomodationKeys = nil;
                   @"Outdoor": @(EVHotelAttributesPoolTypeOutdoor)
                   } retain];
 
-    amentitiesKeys  =  [@{@"Child Free": @(EVHotelAttributesAmentitiesChildFree),
+    amenitiesKeys  =  [@{@"Child Free": @(EVHotelAttributesAmentitiesChildFree),
                           @"Business": @(EVHotelAttributesAmentitiesBusiness),
                           @"Airport Shuttle": @(EVHotelAttributesAmentitiesAirportShuttle),
                           @"Casino": @(EVHotelAttributesAmentitiesCasino),
@@ -148,13 +148,13 @@ static NSDictionary* accomodationKeys = nil;
             self.parkingValet = [[parking objectForKey:@"Valet"] boolValue];
             self.parkingFree = [[parking objectForKey:@"Free"] boolValue];
         }
-        NSMutableArray* amentities = [NSMutableArray array];
-        for (NSString* ament in [amentitiesKeys allKeys]) {
+        NSMutableArray* amenities = [NSMutableArray array];
+        for (NSString* ament in [amenitiesKeys allKeys]) {
             if ([[response objectForKey:ament] boolValue]) {
-                [amentities addObject:[amentitiesKeys objectForKey:ament]];
+                [amenities addObject:[amenitiesKeys objectForKey:ament]];
             }
         }
-        self.amentities = [NSSet setWithArray:amentities];
+        self.amenities = [NSSet setWithArray:amenities];
     }
     return self;
 }

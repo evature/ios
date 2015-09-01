@@ -13,6 +13,9 @@
 #import <objc/runtime.h>
 #import "EVApplication.h"
 #import "EVChatMessage.h"
+#import "EVStatementFlowElement.h"
+#import "EVReplyFlowElement.h"
+#import "EVSearchResultsHandler.h"
 
 static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadDataKey";
 
@@ -63,6 +66,11 @@ void reloadData(id collectionView, SEL selector) {
 
 - (UIImage*)imageOfBackgroundView;
 - (void)setHelloMessage;
+
+
+// Eva response methods
+- (void)handleFlowForResponse:(EVResponse*)response;
+- (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message;
 
 @end
 
@@ -141,7 +149,7 @@ void reloadData(id collectionView, SEL selector) {
             message = @"Hello, how may I help you?";
             break;
     }
-    [self.messages addObject:[EVChatMessage serverMessageWithText:message]];
+    [self.messages addObject:[EVChatMessage serverMessageWithID:@"1" text:message]];
 }
 
 - (void)viewDidLoad {
@@ -162,7 +170,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (BOOL)isMyMessageInRow:(NSInteger)row {
-    return ![((EVChatMessage*)[self.messages objectAtIndex:row]) isServerMessage];
+    return [((EVChatMessage*)[self.messages objectAtIndex:row]) isClientMessage];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -171,7 +179,7 @@ void reloadData(id collectionView, SEL selector) {
     self.topBarSizeConstraint.constant += [UIApplication sharedApplication].statusBarFrame.size.height;
 }
 
-- (UIStatusBarStyle) preferredStatusBarStyle {
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
 
@@ -239,11 +247,11 @@ void reloadData(id collectionView, SEL selector) {
      */
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
-    JSQMessage *msg = [self.messages objectAtIndex:indexPath.item];
+    EVChatMessage *msg = [self.messages objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
-        if ([msg.senderId isEqualToString:self.senderId]) {
+        if ([msg isClientMessage]) {
             cell.textView.textColor = [UIColor blackColor];
         }
         else {
@@ -305,36 +313,127 @@ void reloadData(id collectionView, SEL selector) {
     self.viewSettings = newSettings;
 }
 
+#pragma mark == EVA Search Methods ==
+
+- (void)handleFlowForResponse:(EVResponse*)response {
+    BOOL hasQuestion = false;
+    for (EVFlowElement* flow in response.flow.flowElements) {
+        if (flow.type == EVFlowElementTypeQuestion) {
+            hasQuestion = true;
+            break;
+        }
+    }
+    
+    BOOL first = true;
+    
+    // if there is a question - show and activate only statements and questions
+    // otherwise - show all items and activate the first
+    for (EVFlowElement* flow in response.flow.flowElements) {
+        EVChatMessage* chatItem = nil;
+        if (flow.type == EVFlowElementTypeQuestion) {
+            EVChatMessage* questionChatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
+            chatItem = questionChatItem;
+            [self.messages addObject:chatItem];
+            [self finishReceivingMessageAnimated:YES];
+            
+            [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
+        } else {
+            if (!hasQuestion || flow.type == EVFlowElementTypeStatement) {
+                chatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
+                [self.messages addObject:chatItem];
+                [self finishReceivingMessageAnimated:YES];
+                if (!hasQuestion && flow.type != EVFlowElementTypeStatement && first) {
+                    first = false;
+                    // activate only the first non-statement
+                    [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
+                }
+            }
+            if (flow.type == EVFlowElementTypeStatement) {
+                [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
+            }
+        }
+    }
+}
+
+- (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message {
+    switch (element.type) {
+        case EVFlowElementTypeReply: {
+            EVReplyFlowElement* replyElement = (EVReplyFlowElement*)element;
+            if ([EVServiceAttributesCallSupport isEqualToString:replyElement.attributeKey]) {
+                // TODO: trigger call support
+            }
+            break;
+        }
+        case EVFlowElementTypeFlight:
+        case EVFlowElementTypeCar:
+        case EVFlowElementTypeHotel:
+        case EVFlowElementTypeExplore:
+        case EVFlowElementTypeTrain:
+        case EVFlowElementTypeCruise:
+        case EVFlowElementTypeQuestion:
+            [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element responseDelegate:self.delegate andMessageHandler:^(EVSearchModel *response, BOOL complete) {
+                message.searchModel = response;
+            }];
+            break;
+            
+        case EVFlowElementTypeStatement: {
+            EVStatementFlowElement* se = (EVStatementFlowElement*)element;
+            switch (se.statementType) {
+                case EVStatementFlowElementTypeUnderstanding:
+                case EVStatementFlowElementTypeUnknownExpression:
+                case EVStatementFlowElementTypeUnsupported: {
+                    // TODO: Show undo tutorial
+                    break;
+                }
+                case EVStatementFlowElementTypeChat:
+                    if (response.originalInputText != nil && [[response.originalInputText lowercaseString] isEqualToString:@"bye bye"]) {
+                        [self hideChatView:self];
+                    }
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        default:
+            EV_LOG_INFO("Unexpected flow type %d", element.type);
+            break;
+            
+    }
+}
+
+
 #pragma mark == EVApplication delegate ===
 - (void)evApplication:(EVApplication*)application didObtainResponse:(EVResponse*)response {
     
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     
-    
+    // TODO: Process text and show errors and warnings
     [self.messages addObject:[EVChatMessage clientMessageWithText:response.processedText]];
     [self finishSendingMessageAnimated:YES];
-        
     
-    if ([response.flow.flowElements count] > 0) {
+    if (response.flow != nil) {
         [response retain];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [response autorelease];
-            EVFlowElement* element = [response.flow.flowElements objectAtIndex:0];
-            [self.messages addObject:[EVChatMessage serverMessageWithText:element.sayIt]];
-            [self finishReceivingMessageAnimated:YES];
+            [self handleFlowForResponse:response];
             if ([self.delegate respondsToSelector:@selector(evSearchGotResponse:)]) {
                 [self.delegate evSearchGotResponse:response];
             }
         });
     }
+    
+    // TODO: show warnings message
 }
+
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
     EV_LOG_ERROR(@"%@", error);
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
-        [self.messages addObject:[EVChatMessage serverMessageWithText:@"Connection error."]];
+        [self.messages addObject:[EVChatMessage serverMessageWithID:@"1" text:@"Connection error."]];
         [self finishReceivingMessageAnimated:YES];
     }
     if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {

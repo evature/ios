@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString* EVServiceAttributesCallSupport;
+
 @interface EVServiceAttributes : NSObject
 
 @property (nonatomic, assign, readwrite) BOOL callSupportRequested;
