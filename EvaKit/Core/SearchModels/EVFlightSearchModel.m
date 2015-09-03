@@ -20,9 +20,9 @@
 @property (nonatomic, strong, readwrite) NSDate* returnDateMax;
 @property (nonatomic, strong, readwrite) EVTravelers* travelers;
 
-@property (nonatomic, assign, readwrite) BOOL nonstop; // A Non stop flight - Boolean attribute; null= not specified, false = explicitly request NOT nonstop, true = explicitly requested nonstop flight
-@property (nonatomic, assign, readwrite) BOOL redeye; // A Red eye flight - Boolean attribute; null= not specified, false = explicitly request NOT red eye, true = explicitly requested red eye flight
-@property (nonatomic, assign, readwrite) BOOL oneWay;
+@property (nonatomic, assign, readwrite) EVBool nonstop; // A Non stop flight - Boolean attribute; null= not specified, false = explicitly request NOT nonstop, true = explicitly requested nonstop flight
+@property (nonatomic, assign, readwrite) EVBool redeye; // A Red eye flight - Boolean attribute; null= not specified, false = explicitly request NOT red eye, true = explicitly requested red eye flight
+@property (nonatomic, assign, readwrite) EVBool oneWay;
 @property (nonatomic, strong, readwrite) NSArray* airlines;
 @property (nonatomic, assign, readwrite) EVFlightAttributesFoodType food;
 @property (nonatomic, assign, readwrite) EVFlightAttributesSeatType seatType;
@@ -41,9 +41,9 @@
                    returnDateMin:(NSDate*)returnDateMin
                    returnDateMax:(NSDate*)returnDateMax
                        travelers:(EVTravelers*)travelers
-                         nonstop:(BOOL)nonstop
-                          redeye:(BOOL)redeye
-                          oneWay:(BOOL)oneWay
+                         nonstop:(EVBool)nonstop
+                          redeye:(EVBool)redeye
+                          oneWay:(EVBool)oneWay
                         airlines:(NSArray*)airlines
                             food:(EVFlightAttributesFoodType)food
                         seatType:(EVFlightAttributesSeatType)seatType
@@ -80,9 +80,9 @@
                 returnDateMin:(NSDate*)returnDateMin
                 returnDateMax:(NSDate*)returnDateMax
                     travelers:(EVTravelers*)travelers
-                      nonstop:(BOOL)nonstop
-                       redeye:(BOOL)redeye
-                       oneWay:(BOOL)oneWay
+                      nonstop:(EVBool)nonstop
+                       redeye:(EVBool)redeye
+                       oneWay:(EVBool)oneWay
                      airlines:(NSArray*)airlines
                          food:(EVFlightAttributesFoodType)food
                      seatType:(EVFlightAttributesSeatType)seatType

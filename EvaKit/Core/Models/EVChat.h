@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 @interface EVChat : NSObject
 
-@property (nonatomic, assign, readwrite) BOOL hello;
-@property (nonatomic, assign, readwrite) BOOL yes;
-@property (nonatomic, assign, readwrite) BOOL no;
-@property (nonatomic, assign, readwrite) BOOL meaningOfLife;
-@property (nonatomic, assign, readwrite) BOOL who;
+@property (nonatomic, assign, readwrite) EVBool hello;
+@property (nonatomic, assign, readwrite) EVBool yes;
+@property (nonatomic, assign, readwrite) EVBool no;
+@property (nonatomic, assign, readwrite) EVBool meaningOfLife;
+@property (nonatomic, assign, readwrite) EVBool who;
 @property (nonatomic, assign, readwrite) NSString* name;
-@property (nonatomic, assign, readwrite) BOOL newSession;
+@property (nonatomic, assign, readwrite) EVBool newSession;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 typedef NS_ENUM(int16_t, EVFlightAttributesSeatType) {
     EVFlightAttributesSeatTypeUnknown = -1,
@@ -69,12 +70,12 @@ typedef NS_ENUM(int16_t, EVFlightAttributesFoodType) {
 
 @interface EVFlightAttributes : NSObject
 
-@property (nonatomic, assign, readwrite) BOOL nonstop; // A Non stop flight - Boolean attribute.
-@property (nonatomic, assign, readwrite) BOOL redeye; // A Red eye flight - Boolean attribute.
-@property (nonatomic, assign, readwrite) BOOL only; // The request is specifically asking for just-a-flight (and no hotel, car etc.) - Boolean
+@property (nonatomic, assign, readwrite) EVBool nonstop; // A Non stop flight - Boolean attribute.
+@property (nonatomic, assign, readwrite) EVBool redeye; // A Red eye flight - Boolean attribute.
+@property (nonatomic, assign, readwrite) EVBool only; // The request is specifically asking for just-a-flight (and no hotel, car etc.) - Boolean
 // attribute
-@property (nonatomic, assign, readwrite) BOOL oneWay; // Specific request for one way trip. Example: ???????united airlines one way flights to ny????????
-@property (nonatomic, assign, readwrite) BOOL twoWay; // Specific request for round trip. Example: ???????3 ticket roundtrip from tagbilaran to manila/
+@property (nonatomic, assign, readwrite) EVBool oneWay; // Specific request for one way trip. Example: ???????united airlines one way flights to ny????????
+@property (nonatomic, assign, readwrite) EVBool twoWay; // Specific request for round trip. Example: ???????3 ticket roundtrip from tagbilaran to manila/
 // 1/26/2011-1/30/2011????????
 @property (nonatomic, strong, readwrite) NSArray* airlines;
 @property (nonatomic, assign, readwrite) EVFlightAttributesFoodType food;

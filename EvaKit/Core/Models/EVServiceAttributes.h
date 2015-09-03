@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 extern NSString* EVServiceAttributesCallSupport;
 
 @interface EVServiceAttributes : NSObject
 
-@property (nonatomic, assign, readwrite) BOOL callSupportRequested;
+@property (nonatomic, assign, readwrite) EVBool callSupportRequested;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 

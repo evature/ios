@@ -13,7 +13,7 @@
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
-        self.requested = [[response objectForKey:@"Requested"] boolValue];
+        self.requested = [response objectForKey:@"Requested"] != nil ?[[response objectForKey:@"Requested"] boolValue] : EVBoolNotSet;
     }
     return self;
 }

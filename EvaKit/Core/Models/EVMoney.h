@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 typedef NS_ENUM(int16_t, EVMoneyRestictionType) {
     EVMoneyRestictionTypeUnknown = -1,
@@ -24,7 +25,7 @@ typedef NS_ENUM(int16_t, EVMoneyRestictionType) {
 
 @property (nonatomic, assign, readwrite) EVMoneyRestictionType restriction;
 
-@property (nonatomic, assign, readwrite) BOOL perPerson;
+@property (nonatomic, assign, readwrite) EVBool perPerson;
 @property (nonatomic, strong, readwrite) NSString* endOfRange;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;

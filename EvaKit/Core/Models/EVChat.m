@@ -13,6 +13,12 @@
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
+        self.hello = EVBoolNotSet;
+        self.yes = EVBoolNotSet;
+        self.no = EVBoolNotSet;
+        self.meaningOfLife = EVBoolNotSet;
+        self.who = EVBoolNotSet;
+        
         if ([response objectForKey:@"Hello"] != nil) {
             self.hello = [[response objectForKey:@"Hello"] boolValue];
         }
@@ -29,9 +35,9 @@
             self.who = [[response objectForKey:@"Who/What"] boolValue];
         }
         if ([response objectForKey:@"Name"] != nil) {
-            self.name = [response objectForKey:@"Who/What"];
+            self.name = [response objectForKey:@"Name"];
         }
-        self.newSession = [[response objectForKey:@"New Session"] boolValue];
+        self.newSession = [response objectForKey:@"New Session"] != nil ? [[response objectForKey:@"New Session"] boolValue] : EVBoolNotSet;
     }
     return self;
 }

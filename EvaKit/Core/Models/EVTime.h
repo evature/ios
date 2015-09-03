@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 @interface EVTime : NSObject
 
@@ -34,7 +35,7 @@
 // A boolean flag representing that a particular time has been calculated from other times, and not directly derived
 // from the input text. In most cases if an arrival time to a location is specified, the departure time from the
 // previous location is calculated.
-@property (nonatomic, assign, readwrite) BOOL calculated;
+@property (nonatomic, assign, readwrite) EVBool calculated;
 
 - (NSInteger)daysDelta;
 + (NSInteger)daysDelta:(NSString*)deltaString;

@@ -22,12 +22,12 @@
                            durationMax:(NSInteger)durationMax
                              travelers:(EVTravelers*)travelers
                            hotelsChain:(NSArray*)chain
-                          selfCatering:(BOOL)selfCatering
-                       bedAndBreakfast:(BOOL)bedAndBreakfast
-                             halfBoard:(BOOL)halfBoard
-                             fullBoard:(BOOL)fullBoard
-                          allInclusive:(BOOL)allInclusive
-                       drinksInclusive:(BOOL)drinksInclusive
+                          selfCatering:(EVBool)selfCatering
+                       bedAndBreakfast:(EVBool)bedAndBreakfast
+                             halfBoard:(EVBool)halfBoard
+                             fullBoard:(EVBool)fullBoard
+                          allInclusive:(EVBool)allInclusive
+                       drinksInclusive:(EVBool)drinksInclusive
                               minStars:(NSInteger)minStars
                               maxStars:(NSInteger)maxStars
                              amenities:(NSSet*)amenities

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 @interface EVCruiseline : NSObject
 
@@ -74,21 +75,21 @@ typedef NS_ENUM(int16_t, EVCruiseAttributesShipSize) {
 @property (nonatomic, assign, readwrite) EVCruiseAttributesCabinType cabin;
 @property (nonatomic, assign, readwrite) EVCruiseAttributesPoolType pool;
 
-@property (nonatomic, assign, readwrite) BOOL family;
-@property (nonatomic, assign, readwrite) BOOL romantic;
-@property (nonatomic, assign, readwrite) BOOL adventure;
-@property (nonatomic, assign, readwrite) BOOL childFree; // adult only
-@property (nonatomic, assign, readwrite) BOOL yacht;
-@property (nonatomic, assign, readwrite) BOOL barge;
-@property (nonatomic, assign, readwrite) BOOL sailingShip;
-@property (nonatomic, assign, readwrite) BOOL riverCruise;
-@property (nonatomic, assign, readwrite) BOOL forSingles;
-@property (nonatomic, assign, readwrite) BOOL forGays;
-@property (nonatomic, assign, readwrite) BOOL steamboat;
-@property (nonatomic, assign, readwrite) BOOL petFriendly;
-@property (nonatomic, assign, readwrite) BOOL yoga;
-@property (nonatomic, assign, readwrite) BOOL landTour;
-@property (nonatomic, assign, readwrite) BOOL oneWay;
+@property (nonatomic, assign, readwrite) EVBool family;
+@property (nonatomic, assign, readwrite) EVBool romantic;
+@property (nonatomic, assign, readwrite) EVBool adventure;
+@property (nonatomic, assign, readwrite) EVBool childFree; // adult only
+@property (nonatomic, assign, readwrite) EVBool yacht;
+@property (nonatomic, assign, readwrite) EVBool barge;
+@property (nonatomic, assign, readwrite) EVBool sailingShip;
+@property (nonatomic, assign, readwrite) EVBool riverCruise;
+@property (nonatomic, assign, readwrite) EVBool forSingles;
+@property (nonatomic, assign, readwrite) EVBool forGays;
+@property (nonatomic, assign, readwrite) EVBool steamboat;
+@property (nonatomic, assign, readwrite) EVBool petFriendly;
+@property (nonatomic, assign, readwrite) EVBool yoga;
+@property (nonatomic, assign, readwrite) EVBool landTour;
+@property (nonatomic, assign, readwrite) EVBool oneWay;
 
 @property (nonatomic, assign, readwrite) EVCruiseAttributesBoardType board;
 @property (nonatomic, assign, readwrite) NSInteger minStars;

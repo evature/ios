@@ -15,7 +15,7 @@ const NSString* EVServiceAttributesCallSupport = @"Call Support";
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
-        self.callSupportRequested = [[[response objectForKey:EVServiceAttributesCallSupport] objectForKey:@"Requested"] boolValue];
+        self.callSupportRequested = [[response objectForKey:EVServiceAttributesCallSupport] objectForKey:@"Requested"] != nil ? [[[response objectForKey:EVServiceAttributesCallSupport] objectForKey:@"Requested"] boolValue] : EVBoolNotSet;
     }
     return self;
 }

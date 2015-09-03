@@ -104,8 +104,8 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     self.leftButtonLayer.backgroundLayer.shadowOpacity = self.rightButtonLayer.backgroundLayer.shadowOpacity = _leftRightButtonsBackgroundShadowOpacity;
     self.leftButtonLayer.backgroundLayer.shadowRadius = self.rightButtonLayer.backgroundLayer.shadowRadius = _leftRightButtonsBackgroundShadowRadius;
     
-    [self.leftButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Undo" ofType:@"svg"]];
-    [self.rightButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Trash" ofType:@"svg"]];
+    [self.leftButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_Undo" ofType:@"svg"]];
+    [self.rightButtonLayer setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_Trash" ofType:@"svg"]];
     
     [self.layer addSublayer:self.leftButtonLayer];
     [self.layer addSublayer:self.rightButtonLayer];

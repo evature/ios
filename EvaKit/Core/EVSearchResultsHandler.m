@@ -74,22 +74,21 @@
         sortOrder = response.requestAttributes.sortOrder;
     }
     
-    BOOL nonstop;
-    BOOL redeye;
+    EVBool nonstop;
+    EVBool redeye;
     NSArray* airlines;
     EVFlightAttributesFoodType food;
     EVFlightAttributesSeatType seatType;
     NSArray* seatClass;
     
     if (response.flightAttributes == nil) {
-        nonstop = NO;
-        redeye = NO;
+        nonstop = EVBoolNotSet;
+        redeye = EVBoolNotSet;
         airlines = nil;
         food = EVFlightAttributesFoodTypeUnknown;
         seatType = EVFlightAttributesSeatTypeUnknown;
         seatClass = nil;
-    }
-    else {
+    } else {
         EVFlightAttributes* fa = response.flightAttributes;
         nonstop = fa.nonstop;
         redeye = fa.redeye;
@@ -269,12 +268,12 @@
     
     NSArray* chains = [NSArray array];
     // The hotel board:
-    BOOL selfCatering = NO;
-    BOOL bedAndBreakfast = NO;
-    BOOL halfBoard = NO;
-    BOOL fullBoard = NO;
-    BOOL allInclusive = NO;
-    BOOL drinksInclusive = NO;
+    EVBool selfCatering = EVBoolNotSet;
+    EVBool bedAndBreakfast = EVBoolNotSet;
+    EVBool halfBoard = EVBoolNotSet;
+    EVBool fullBoard = EVBoolNotSet;
+    EVBool allInclusive = EVBoolNotSet;
+    EVBool drinksInclusive = EVBoolNotSet;
     
     // The quality of the hotel, measure in Stars
     NSInteger minStars = -1;
@@ -299,27 +298,34 @@
     
     if (location.hotelAttributes != nil) {
         EVHotelAttributes* ha = location.hotelAttributes;
-        selfCatering = ha.selfCatering;
-        bedAndBreakfast = ha.bedAndBreakfast;
-        
-        halfBoard = ha.halfBoard;
-        
-        fullBoard = ha.fullBoard;
-        
-        allInclusive = ha.allInclusive;
-        
-        
-        drinksInclusive = ha.drinksInclusive;
-        
-        
-        chains = ha.chains;
+        if (EV_IS_BOOL_SET(ha.selfCatering)) {
+            selfCatering = ha.selfCatering;
+        }
+        if (EV_IS_BOOL_SET(ha.bedAndBreakfast)) {
+            bedAndBreakfast = ha.bedAndBreakfast;
+        }
+        if (EV_IS_BOOL_SET(ha.halfBoard)) {
+            halfBoard = ha.halfBoard;
+        }
+        if (EV_IS_BOOL_SET(ha.fullBoard)) {
+            fullBoard = ha.fullBoard;
+        }
+        if (EV_IS_BOOL_SET(ha.allInclusive)) {
+            allInclusive = ha.allInclusive;
+        }
+        if (EV_IS_BOOL_SET(ha.drinksInclusive)) {
+            drinksInclusive = ha.drinksInclusive;
+        }
+        if ([ha.chains count] > 0) {
+            chains = ha.chains;
+        }
         if (ha.minStars != -1) {
             minStars = ha.minStars;
         }
         if (ha.maxStars != -1) {
             maxStars = ha.maxStars;
         }
-        if (ha.amenities != nil) {
+        if ([ha.amenities count] > 0) {
             amenities = ha.amenities;
         }
         

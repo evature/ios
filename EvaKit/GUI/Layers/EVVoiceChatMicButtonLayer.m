@@ -30,7 +30,7 @@ NSString* const kEVStrokeAnimationKey = @"kEVStrokeAnimationKey";
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        [self setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"Mic" ofType:@"svg"]];
+        [self setImageFromSVGFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_Mic" ofType:@"svg"]];
         
         self.voiceGraphLayer = [EVVoiceLevelMicButtonLayer layer];
         self.voiceGraphLayer.zPosition = 1500.0f;

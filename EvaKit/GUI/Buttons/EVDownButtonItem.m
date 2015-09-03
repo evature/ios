@@ -19,7 +19,7 @@
 
 - (UIImage*)generateImage {
     CGRect bounds = [[self performSelector:@selector(view)] bounds];
-    EVSVGLayer* layer = [EVSVGLayer layerWithSVGPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"DownArrow" ofType:@"svg"]];
+    EVSVGLayer* layer = [EVSVGLayer layerWithSVGPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_DownArrow" ofType:@"svg"]];
     layer.fillColor = [UIColor blackColor].CGColor;
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(bounds.size.width, bounds.size.height+10), NO, [UIScreen mainScreen].scale);
     [layer setFrame:bounds];

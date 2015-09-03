@@ -64,11 +64,11 @@ static NSDictionary *foodKeys = nil;
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
-        self.nonstop = [[response objectForKey:@"Nonstop"] boolValue];
-        self.redeye = [[response objectForKey:@"Redeye"] boolValue];
-        self.only = [[response objectForKey:@"Only"] boolValue];
-        self.twoWay = [[response objectForKey:@"Two-Way"] boolValue];
-        self.oneWay = [[response objectForKey:@"One-Way"] boolValue];
+        self.nonstop = [response objectForKey:@"Nonstop"] != nil ? [[response objectForKey:@"Nonstop"] boolValue] : EVBoolNotSet;
+        self.redeye = [response objectForKey:@"Redeye"] != nil ? [[response objectForKey:@"Redeye"] boolValue] : EVBoolNotSet;
+        self.only = [response objectForKey:@"Only"] != nil ? [[response objectForKey:@"Only"] boolValue] : EVBoolNotSet;
+        self.twoWay = [response objectForKey:@"Two-Way"] != nil ? [[response objectForKey:@"Two-Way"] boolValue] : EVBoolNotSet;
+        self.oneWay = [response objectForKey:@"One-Way"] != nil ? [[response objectForKey:@"One-Way"] boolValue] : EVBoolNotSet;
         NSMutableArray* airlines = [NSMutableArray array];
         for (NSDictionary* airline in [response objectForKey:@"Airline"]) {
             [airlines addObject:[airline objectForKey:@"IATA"]];

@@ -21,12 +21,12 @@
 @property (nonatomic, strong, readonly) NSArray* chains;
 
 // The hotel board:
-@property (nonatomic, assign, readonly) BOOL selfCatering;
-@property (nonatomic, assign, readonly) BOOL bedAndBreakfast;
-@property (nonatomic, assign, readonly) BOOL halfBoard;
-@property (nonatomic, assign, readonly) BOOL fullBoard;
-@property (nonatomic, assign, readonly) BOOL allInclusive;
-@property (nonatomic, assign, readonly) BOOL drinksInclusive;
+@property (nonatomic, assign, readonly) EVBool selfCatering;
+@property (nonatomic, assign, readonly) EVBool bedAndBreakfast;
+@property (nonatomic, assign, readonly) EVBool halfBoard;
+@property (nonatomic, assign, readonly) EVBool fullBoard;
+@property (nonatomic, assign, readonly) EVBool allInclusive;
+@property (nonatomic, assign, readonly) EVBool drinksInclusive;
 
 // The quality of the hotel, measure in Stars
 @property (nonatomic, assign, readonly) NSInteger minStars;
@@ -45,12 +45,12 @@
                      durationMax:(NSInteger)durationMax
                        travelers:(EVTravelers*)travelers
                      hotelsChain:(NSArray*)chain
-                    selfCatering:(BOOL)selfCatering
-                 bedAndBreakfast:(BOOL)bedAndBreakfast
-                       halfBoard:(BOOL)halfBoard
-                       fullBoard:(BOOL)fullBoard
-                    allInclusive:(BOOL)allInclusive
-                 drinksInclusive:(BOOL)drinksInclusive
+                    selfCatering:(EVBool)selfCatering
+                 bedAndBreakfast:(EVBool)bedAndBreakfast
+                       halfBoard:(EVBool)halfBoard
+                       fullBoard:(EVBool)fullBoard
+                    allInclusive:(EVBool)allInclusive
+                 drinksInclusive:(EVBool)drinksInclusive
                         minStars:(NSInteger)minStars
                         maxStars:(NSInteger)maxStars
                        amenities:(NSSet*)amenities
@@ -65,12 +65,12 @@
                   durationMax:(NSInteger)durationMax
                     travelers:(EVTravelers*)travelers
                   hotelsChain:(NSArray*)chain
-                 selfCatering:(BOOL)selfCatering
-              bedAndBreakfast:(BOOL)bedAndBreakfast
-                    halfBoard:(BOOL)halfBoard
-                    fullBoard:(BOOL)fullBoard
-                 allInclusive:(BOOL)allInclusive
-              drinksInclusive:(BOOL)drinksInclusive
+                 selfCatering:(EVBool)selfCatering
+              bedAndBreakfast:(EVBool)bedAndBreakfast
+                    halfBoard:(EVBool)halfBoard
+                    fullBoard:(EVBool)fullBoard
+                 allInclusive:(EVBool)allInclusive
+              drinksInclusive:(EVBool)drinksInclusive
                      minStars:(NSInteger)minStars
                      maxStars:(NSInteger)maxStars
                     amenities:(NSSet*)amenities

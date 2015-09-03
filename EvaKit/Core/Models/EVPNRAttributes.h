@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 @interface EVPNRAttributes : NSObject
 
-@property (nonatomic, assign, readwrite) BOOL requested;
+@property (nonatomic, assign, readwrite) EVBool requested;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 

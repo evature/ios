@@ -17,10 +17,10 @@
                                 minDepartDate:(NSDate *)departDateMin
                                 maxDepartDate:(NSDate *)departDateMax
                                     travelers:(EVTravelers*)travelers
-                                      nonStop:(BOOL)nonstop
+                                      nonStop:(EVBool)nonstop
                                   seatClasses:(NSArray*)seatClasses
                                      airlines:(NSArray*)airlines
-                                       redEye:(BOOL)redeye
+                                       redEye:(EVBool)redeye
                                      foodType:(EVFlightAttributesFoodType)food
                                      seatType:(EVFlightAttributesSeatType)seatType
                                        sortBy:(EVRequestAttributesSort)sortBy
@@ -37,10 +37,10 @@
                                    minReturnDate:(NSDate*)returnDateMin
                                    maxReturnDate:(NSDate*)returnDateMax
                                        travelers:(EVTravelers*)travelers
-                                         nonStop:(BOOL)nonstop
+                                         nonStop:(EVBool)nonstop
                                      seatClasses:(NSArray*)seatClasses
                                         airlines:(NSArray*)airlines
-                                          redEye:(BOOL)redeye
+                                          redEye:(EVBool)redeye
                                         foodType:(EVFlightAttributesFoodType)food
                                         seatType:(EVFlightAttributesSeatType)seatType
                                           sortBy:(EVRequestAttributesSort)sortBy

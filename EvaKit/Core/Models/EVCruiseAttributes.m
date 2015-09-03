@@ -92,6 +92,8 @@ static NSDictionary* sizeKeys = nil;
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
+        self.minStars = -1;
+        self.maxStars = -1;
         if ([response objectForKey:@"Cruiseline"] != nil) {
             NSMutableArray* lines = [NSMutableArray array];
             for (NSDictionary* line in [response objectForKey:@"Cruiseline"]) {
@@ -106,21 +108,21 @@ static NSDictionary* sizeKeys = nil;
             }
             self.cruiseships = [NSArray arrayWithArray:lines];
         }
-        self.family = [[response objectForKey:@"Family"] boolValue];
-        self.romantic = [[response objectForKey:@"Romantic"] boolValue];
-        self.adventure = [[response objectForKey:@"Adventure"] boolValue];
-        self.childFree = [[response objectForKey:@"Child Free"] boolValue];
-        self.yacht = [[response objectForKey:@"Yacht"] boolValue];
-        self.barge = [[response objectForKey:@"Barge"] boolValue];
-        self.sailingShip = [[response objectForKey:@"Sailing Ship"] boolValue];
-        self.riverCruise = [[response objectForKey:@"River Cruise"] boolValue];
-        self.forSingles = [[response objectForKey:@"For Singles"] boolValue];
-        self.forGays = [[response objectForKey:@"For Gays"] boolValue];
-        self.steamboat = [[response objectForKey:@"Steamboat"] boolValue];
-        self.petFriendly = [[response objectForKey:@"Pet Friendly"] boolValue];
-        self.yoga = [[response objectForKey:@"Yoga"] boolValue];
-        self.landTour = [[response objectForKey:@"Land Tour"] boolValue];
-        self.oneWay = [[response objectForKey:@"One Way"] boolValue];
+        self.family = [response objectForKey:@"Family"] != nil ? [[response objectForKey:@"Family"] boolValue] : EVBoolNotSet;
+        self.romantic = [response objectForKey:@"Romantic"] != nil ? [[response objectForKey:@"Romantic"] boolValue] : EVBoolNotSet;
+        self.adventure = [response objectForKey:@"Adventure"] != nil ? [[response objectForKey:@"Adventure"] boolValue] : EVBoolNotSet;
+        self.childFree = [response objectForKey:@"Child Free"] != nil ? [[response objectForKey:@"Child Free"] boolValue] : EVBoolNotSet;
+        self.yacht = [response objectForKey:@"Yacht"] != nil ? [[response objectForKey:@"Yacht"] boolValue] : EVBoolNotSet;
+        self.barge = [response objectForKey:@"Barge"] != nil ? [[response objectForKey:@"Barge"] boolValue] : EVBoolNotSet;
+        self.sailingShip = [response objectForKey:@"Sailing Ship"] != nil ? [[response objectForKey:@"Sailing Ship"] boolValue] : EVBoolNotSet;
+        self.riverCruise = [response objectForKey:@"River Cruise"] != nil ? [[response objectForKey:@"River Cruise"] boolValue] : EVBoolNotSet;
+        self.forSingles = [response objectForKey:@"For Singles"] != nil ? [[response objectForKey:@"For Singles"] boolValue] : EVBoolNotSet;
+        self.forGays = [response objectForKey:@"For Gays"] != nil ? [[response objectForKey:@"For Gays"] boolValue] : EVBoolNotSet;
+        self.steamboat = [response objectForKey:@"Steamboat"] != nil ? [[response objectForKey:@"Steamboat"] boolValue] : EVBoolNotSet;
+        self.petFriendly = [response objectForKey:@"Pet Friendly"] != nil ? [[response objectForKey:@"Pet Friendly"] boolValue] : EVBoolNotSet;
+        self.yoga = [response objectForKey:@"Yoga"] != nil ? [[response objectForKey:@"Yoga"] boolValue] : EVBoolNotSet;
+        self.landTour = [response objectForKey:@"Land Tour"] != nil ? [[response objectForKey:@"Land Tour"] boolValue] : EVBoolNotSet;
+        self.oneWay = [response objectForKey:@"One Way"] != nil ? [[response objectForKey:@"One Way"] boolValue] : EVBoolNotSet;
         
         if ([response objectForKey:@"Quality"] != nil) {
             NSArray* quality = [response objectForKey:@"Quality"];

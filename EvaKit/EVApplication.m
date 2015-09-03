@@ -160,8 +160,8 @@
         
         self.applicationSounds = [NSMutableDictionary dictionaryWithCapacity:4];
         
-        EVApplicationSound* high = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"voice_high" ofType:@"aif"]];
-        EVApplicationSound* low = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"voice_low" ofType:@"aif"]];
+        EVApplicationSound* high = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_high" ofType:@"aif"]];
+        EVApplicationSound* low = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_low" ofType:@"aif"]];
         [self setSound:high forApplicationState:EVApplicationStateSoundRecordingStarted];
         [self setSound:low forApplicationState:EVApplicationStateSoundRecordingStoped];
         [self setSound:low forApplicationState:EVApplicationStateSoundCancelled];

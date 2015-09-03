@@ -33,7 +33,7 @@
         self.delta = [response objectForKey:@"Delta"];
         self.minDelta = [response objectForKey:@"MinDelta"];
         self.maxDelta = [response objectForKey:@"MaxDelta"];
-        self.calculated = [[response objectForKey:@"Calculated"] boolValue];
+        self.calculated = [response objectForKey:@"Calculated"] != nil ? [[response objectForKey:@"Calculated"] boolValue] : EVBoolNotSet;
     }
     return self;
 }

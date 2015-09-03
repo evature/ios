@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVBool.h"
 
 @interface EVHotelChain : NSObject
 
@@ -86,12 +87,12 @@ typedef NS_ENUM(int16_t, EVHotelAttributesAccommodationType) {
 // List of EVHotelChain objects
 @property (nonatomic, strong, readwrite) NSArray* chains;
 
-@property (nonatomic, assign, readwrite) BOOL selfCatering;
-@property (nonatomic, assign, readwrite) BOOL bedAndBreakfast;
-@property (nonatomic, assign, readwrite) BOOL halfBoard;
-@property (nonatomic, assign, readwrite) BOOL fullBoard;
-@property (nonatomic, assign, readwrite) BOOL allInclusive;
-@property (nonatomic, assign, readwrite) BOOL drinksInclusive;
+@property (nonatomic, assign, readwrite) EVBool selfCatering;
+@property (nonatomic, assign, readwrite) EVBool bedAndBreakfast;
+@property (nonatomic, assign, readwrite) EVBool halfBoard;
+@property (nonatomic, assign, readwrite) EVBool fullBoard;
+@property (nonatomic, assign, readwrite) EVBool allInclusive;
+@property (nonatomic, assign, readwrite) EVBool drinksInclusive;
 
 @property (nonatomic, assign, readwrite) NSInteger minStars;
 @property (nonatomic, assign, readwrite) NSInteger maxStars;
@@ -102,9 +103,9 @@ typedef NS_ENUM(int16_t, EVHotelAttributesAccommodationType) {
 @property (nonatomic, assign, readwrite) EVHotelAttributesPoolType poolType;
 @property (nonatomic, assign, readwrite) EVHotelAttributesAccommodationType accommodationType;
 
-@property (nonatomic, assign, readwrite) BOOL parkingFacilities;
-@property (nonatomic, assign, readwrite) BOOL parkingValet;
-@property (nonatomic, assign, readwrite) BOOL parkingFree;
+@property (nonatomic, assign, readwrite) EVBool parkingFacilities;
+@property (nonatomic, assign, readwrite) EVBool parkingValet;
+@property (nonatomic, assign, readwrite) EVBool parkingFree;
 
 // TODO: Rooms
 // TODO: Ski

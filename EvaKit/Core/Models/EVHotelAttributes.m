@@ -94,6 +94,19 @@ static NSDictionary* accomodationKeys = nil;
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
+        
+        self.selfCatering = EVBoolNotSet;
+        self.bedAndBreakfast = EVBoolNotSet;
+        self.halfBoard = EVBoolNotSet;
+        self.fullBoard = EVBoolNotSet;
+        self.allInclusive = EVBoolNotSet;
+        self.drinksInclusive = EVBoolNotSet;
+        self.parkingFacilities = EVBoolNotSet;
+        self.parkingValet = EVBoolNotSet;
+        self.parkingFree = EVBoolNotSet;
+        self.minStars = -1;
+        self.maxStars = -1;
+        
         if ([response objectForKey:@"Chain"] != nil) {
             id object = [response objectForKey:@"Chain"];
             if ([object isKindOfClass:[NSArray class]]) {
@@ -110,12 +123,26 @@ static NSDictionary* accomodationKeys = nil;
         }
         
         NSArray* board = [response objectForKey:@"Board"];
-        self.selfCatering = [board containsObject:@"Self Catering"];
-        self.bedAndBreakfast = [board containsObject:@"Bed and Breakfast"];
-        self.halfBoard = [board containsObject:@"Half Board"];
-        self.fullBoard = [board containsObject:@"Full Board"];
-        self.allInclusive = [board containsObject:@"All Inclusive"];
-        self.drinksInclusive = [board containsObject:@"Drinks Inclusive"];
+        if (board != nil) {
+            if ([board containsObject:@"Self Catering"]) {
+                self.selfCatering = EV_TRUE;
+            }
+            if ([board containsObject:@"Bed and Breakfast"]) {
+                self.bedAndBreakfast = EV_TRUE;
+            }
+            if ([board containsObject:@"Half Board"]) {
+                self.halfBoard = EV_TRUE;
+            }
+            if ([board containsObject:@"Full Board"]) {
+                self.fullBoard = EV_TRUE;
+            }
+            if ([board containsObject:@"All Inclusive"]) {
+                self.allInclusive = EV_TRUE;
+            }
+            if ([board containsObject:@"Drinks Inclusive"]) {
+                self.drinksInclusive = EV_TRUE;
+            }
+        }
         
         if ([response objectForKey:@"Quality"] != nil) {
             NSArray* quality = [response objectForKey:@"Quality"];
@@ -144,9 +171,9 @@ static NSDictionary* accomodationKeys = nil;
         }
         if ([response objectForKey:@"Parking"] != nil) {
             NSDictionary* parking = [response objectForKey:@"Parking"];
-            self.parkingFacilities = [[parking objectForKey:@"Facilities"] boolValue];
-            self.parkingValet = [[parking objectForKey:@"Valet"] boolValue];
-            self.parkingFree = [[parking objectForKey:@"Free"] boolValue];
+            self.parkingFacilities = [parking objectForKey:@"Facilities"] != nil ?[[parking objectForKey:@"Facilities"] boolValue] : EVBoolNotSet;
+            self.parkingValet = [parking objectForKey:@"Valet"] != nil ? [[parking objectForKey:@"Valet"] boolValue] : EVBoolNotSet;
+            self.parkingFree = [parking objectForKey:@"Free"]  != nil ? [[parking objectForKey:@"Free"] boolValue] : EVBoolNotSet;
         }
         NSMutableArray* amenities = [NSMutableArray array];
         for (NSString* ament in [amenitiesKeys allKeys]) {

@@ -27,7 +27,7 @@ static NSDictionary* restrictionKeys = nil;
     if (self != nil) {
         self.amount = [response objectForKey:@"Amount"];
         self.currency = [response objectForKey:@"Currency"];
-        self.perPerson = [[response objectForKey:@"Per Person"] boolValue];
+        self.perPerson = [response objectForKey:@"Per Person"] != nil ?[[response objectForKey:@"Per Person"] boolValue] : EVBoolNotSet;
         self.endOfRange = [response objectForKey:@"End Of Range"];
         if ([response objectForKey:@"Restriction"] != nil) {
             NSNumber* val = [restrictionKeys objectForKey:[response objectForKey:@"Restriction"]];
