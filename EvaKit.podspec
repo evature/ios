@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EvaKit"
-  s.version      = "0.0.1"
+  s.version      = "1.6.1"
   s.summary      = "A short description of EvaKit."
 
   # This description is used to generate tags and improve search results.
@@ -24,7 +24,11 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
+  
   s.description  = <<-DESC
+  	Voice enable your travel application in a couple of hours using the latest Eva Voice SDK.
+	With the new release you can add a cutting edge voice interface to your travel application with super simple integration.
+	Take advantage of the latest Deep Learning algorithms delivering near human precision.
                    DESC
 
   s.homepage     = "https://www.evature.com/"
