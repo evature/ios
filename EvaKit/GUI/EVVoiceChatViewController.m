@@ -27,14 +27,10 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 
 #define COMBINE_VOICE_LEVELS_COUNT 2
 
+#define EV_UNDO_TUTORIAL @"Drag the microphone button to the left to undo the last utterance."
+
 typedef void (*R_IMP)(void*, SEL);
 R_IMP oldReloadData;
-
-id emptyInitMethod(id lookupObject, SEL selector, id pr1, id p2, id p3, id p4) {
-    [lookupObject init];
-    [lookupObject release];
-    return nil;
-}
 
 void reloadData(id collectionView, SEL selector) {
     if (![objc_getAssociatedObject(collectionView, kEVCollectionViewReloadDataKey) boolValue]) {
@@ -57,9 +53,10 @@ void reloadData(id collectionView, SEL selector) {
     double currentCombinedVolume;
     unsigned int currentCombinedVolumeCount;
     BOOL isRecording;
+    BOOL _undoRequest;
+    BOOL _shownWarningsTutorial;
 }
 
-@property (nonatomic, strong) NSMutableArray* messages;
 @property (nonatomic, strong) NSDictionary* viewSettings;
 @property (nonatomic, assign) BOOL isNewSession;
 @property (nonatomic, strong) EVSearchContext* oldContext;
@@ -72,6 +69,9 @@ void reloadData(id collectionView, SEL selector) {
 - (void)handleFlowForResponse:(EVResponse*)response;
 - (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message;
 
+- (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
+- (void)showWarningMessage:(NSString*)message;
+
 @end
 
 @implementation EVVoiceChatViewController
@@ -83,10 +83,6 @@ void reloadData(id collectionView, SEL selector) {
 
 
 + (void)initialize {
-    // This is workaround for creating of keyboard controller (which can't work without text view in toolbar). Replacing init with empty init
-    SEL allocSel = @selector(initWithTextView:contextView:panGestureRecognizer:delegate:);
-    class_replaceMethod([JSQMessagesKeyboardController class], allocSel, (IMP)emptyInitMethod, "@@:@@@@");
-    
     SEL reloadDataSel = @selector(reloadData);
     oldReloadData = (R_IMP)class_replaceMethod([JSQMessagesCollectionView class], reloadDataSel, (IMP)reloadData, "v@:");
     if (oldReloadData == NULL) {
@@ -114,12 +110,16 @@ void reloadData(id collectionView, SEL selector) {
         self.senderId = [EVChatMessage clientID];
         self.senderDisplayName = [EVChatMessage clientDisplayName];
         self.startRecordingOnShow = NO;
+        self.semanticHighlightingEnabled = YES;
+        self.semanticHighlightLocations = YES;
+        self.semanticHighlightTimes = YES;
         self.isNewSession = YES;
         isRecording = NO;
-        self.messages = [NSMutableArray array];
+        _shownWarningsTutorial = NO;
         
+        self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         
-        JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
+        JSQMessagesBubbleImageFactory *bubbleFactory = [JSQMessagesBubbleImageFactory new];
         
         self.outgoingBubbleImage = [bubbleFactory outgoingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(FF, FF, FF, FF)];
         self.incomingBubbleImage = [bubbleFactory incomingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(03, A9, F4, FF)];
@@ -127,6 +127,14 @@ void reloadData(id collectionView, SEL selector) {
         
     }
     return self;
+}
+
+- (void)dealloc {
+    self.viewSettings = nil;
+    self.outgoingBubbleImage = nil;
+    self.incomingBubbleImage = nil;
+    self.oldContext = nil;
+    [super dealloc];
 }
 
 - (void)setHelloMessage {
@@ -149,7 +157,7 @@ void reloadData(id collectionView, SEL selector) {
             message = @"Hello, how may I help you?";
             break;
     }
-    [self.messages addObject:[EVChatMessage serverMessageWithID:@"1" text:message]];
+    [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:@"1" text:message]];
 }
 
 - (void)viewDidLoad {
@@ -165,12 +173,14 @@ void reloadData(id collectionView, SEL selector) {
     }
     self.oldContext = self.evApplication.context;
     self.evApplication.context = [EVSearchContext contextForDelegate:self.delegate];
-    [self setHelloMessage];
+    if ([self.evApplication.sessionMessages count] == 0) {
+        [self setHelloMessage];
+    }
     //self.collectionView.collectionViewLayout.springinessEnabled = YES;
 }
 
 - (BOOL)isMyMessageInRow:(NSInteger)row {
-    return [((EVChatMessage*)[self.messages objectAtIndex:row]) isClientMessage];
+    return [((EVChatMessage*)[self.evApplication.sessionMessages objectAtIndex:row]) isClientMessage];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -195,6 +205,7 @@ void reloadData(id collectionView, SEL selector) {
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Undo pressed!");
     [self.evApplication editLastQueryWithText:nil];
+    _undoRequest = YES;
 }
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
@@ -214,18 +225,18 @@ void reloadData(id collectionView, SEL selector) {
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Trash pressed!");
     self.isNewSession = YES;
-    [self.messages removeAllObjects];
+    [self.evApplication.sessionMessages removeAllObjects];
     [self setHelloMessage];
     [self.collectionView reloadData];
     //[self.evApplication queryText:@"" withNewSession:self.isNewSession];
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.messages objectAtIndex:indexPath.item];
+    return [self.evApplication.sessionMessages objectAtIndex:indexPath.item];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.messages count];
+    return [self.evApplication.sessionMessages count];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -247,26 +258,36 @@ void reloadData(id collectionView, SEL selector) {
      */
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
-    EVChatMessage *msg = [self.messages objectAtIndex:indexPath.item];
+    
+    EVChatMessage *msg = [self.evApplication.sessionMessages objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
+        if (msg.attributedText != nil) {
+            cell.textView.text = nil;
+            cell.textView.attributedText = msg.attributedText;
+        } else {
+            cell.textView.attributedText = nil;
+            cell.textView.text = msg.text;
+        
         if ([msg isClientMessage]) {
             cell.textView.textColor = [UIColor blackColor];
-        }
-        else {
+        } else {
             cell.textView.textColor = RGBA_HEX_COLOR(F5, F5, F5, FF);
         }
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
+        }
+    } else {
+        cell.textView.attributedText = nil;
     }
     
     return cell;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
-    EV_LOG_DEBUG(@"Tapped message: %@", [[self.messages objectAtIndex:indexPath.item] text]);
+    EV_LOG_DEBUG(@"Tapped message: %@", [[self.evApplication.sessionMessages objectAtIndex:indexPath.item] text]);
 }
 
 - (IBAction)hideChatView:(id)sender {
@@ -275,6 +296,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     UIImageView* backView = [[UIImageView alloc] initWithFrame:self.view.frame];
     backView.image = [self imageOfBackgroundView];
     [backView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -282,11 +304,13 @@ void reloadData(id collectionView, SEL selector) {
     [self.view insertSubview:backView atIndex:0];
     [self.view jsq_pinAllEdgesOfSubview:backView];
     [backView release];
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    JSQMessagesCollectionViewFlowLayoutInvalidationContext* context = [JSQMessagesCollectionViewFlowLayoutInvalidationContext context];
+    context.invalidateFlowLayoutMessagesCache = YES;
+    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:context];
     if (self.startRecordingOnShow) {
         [self messagesInputToolbar:((EVChatToolbarView*)self.inputToolbar) didPressCenterBarButton:nil];
     }
@@ -313,6 +337,69 @@ void reloadData(id collectionView, SEL selector) {
     self.viewSettings = newSettings;
 }
 
+- (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings {
+    NSMutableAttributedString* chat = nil;
+    if (response.processedText != nil && ![response.processedText isEqualToString:@""]) {
+        // reply of voice -  add a "Me" chat item for the input text
+        chat = [[[NSMutableAttributedString alloc] initWithString:response.processedText attributes:@{NSFontAttributeName: self.collectionView.collectionViewLayout.messageBubbleFont}] autorelease];
+        if ([response.warnings count] > 0) {
+            for (EVWarning* warning in response.warnings) {
+                if (warning.position == -1 || warning.text == nil) {
+                    continue;
+                }
+                *hasWarnings = YES;
+                [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
+                                      NSUnderlineColorAttributeName:RGBA_COLOR(208.0f, 67.0f, 62.0f, 255.0f)}
+                              range:NSMakeRange(warning.position, [warning.text length])
+                 ];
+            }
+        }
+        if (self.semanticHighlightingEnabled && response.parsedText != nil) {
+            @try {
+                if (self.semanticHighlightTimes && response.parsedText.times != nil) {
+                    UIColor* highlightColor = RGBA_HEX_COLOR(4C, AF, 50, FF);
+                    
+                    for (EVTimesMarkup* time in response.parsedText.times) {
+                        if (time.text == nil) {
+                            continue;
+                        }
+                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
+                                              NSUnderlineColorAttributeName:highlightColor}
+                                      range:NSMakeRange(time.position, [time.text length])];
+                    }
+                }
+                
+                if (self.semanticHighlightLocations && response.parsedText.locations != nil) {
+                    UIColor* highlightColor = RGBA_HEX_COLOR(03,A9,F4,FF);
+                    
+                    for (EVLocationMarkup* location in response.parsedText.locations) {
+                        if (location.text == nil) {
+                            continue;
+                        }
+                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
+                                              NSUnderlineColorAttributeName:highlightColor}
+                                      range:NSMakeRange(location.position, [location.text length])];
+                    }
+                }
+            }
+            @catch (NSException* e) {
+                EV_LOG_ERROR(@"Index out of bounds setting spans of chat [%@]: %@", chat, e);
+            }
+        }
+    }
+    EVChatMessage* message = [EVChatMessage clientMessageWithText:[[[NSAttributedString alloc] initWithAttributedString:chat] autorelease]];
+    [self.evApplication.sessionMessages addObject:message];
+    [self finishSendingMessageAnimated:YES];
+}
+
+
+- (void)showWarningMessage:(NSString*)message {
+    NSAttributedString* aS = [[[NSMutableAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: self.collectionView.collectionViewLayout.messageBubbleFont, NSForegroundColorAttributeName: [UIColor grayColor]}] autorelease];
+    EVChatMessage* cm = [EVChatMessage serverMessageWithID:@"1" text:aS];
+    [self.evApplication.sessionMessages addObject:cm];
+    [self finishSendingMessageAnimated:YES];
+}
+
 #pragma mark == EVA Search Methods ==
 
 - (void)handleFlowForResponse:(EVResponse*)response {
@@ -333,14 +420,14 @@ void reloadData(id collectionView, SEL selector) {
         if (flow.type == EVFlowElementTypeQuestion) {
             EVChatMessage* questionChatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
             chatItem = questionChatItem;
-            [self.messages addObject:chatItem];
+            [self.evApplication.sessionMessages addObject:chatItem];
             [self finishReceivingMessageAnimated:YES];
             
             [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
         } else {
             if (!hasQuestion || flow.type == EVFlowElementTypeStatement) {
                 chatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
-                [self.messages addObject:chatItem];
+                [self.evApplication.sessionMessages addObject:chatItem];
                 [self finishReceivingMessageAnimated:YES];
                 if (!hasQuestion && flow.type != EVFlowElementTypeStatement && first) {
                     first = false;
@@ -382,7 +469,8 @@ void reloadData(id collectionView, SEL selector) {
                 case EVStatementFlowElementTypeUnderstanding:
                 case EVStatementFlowElementTypeUnknownExpression:
                 case EVStatementFlowElementTypeUnsupported: {
-                    // TODO: Show undo tutorial
+                    _shownWarningsTutorial = YES;
+                    [self showWarningMessage:EV_UNDO_TUTORIAL];
                     break;
                 }
                 case EVStatementFlowElementTypeChat:
@@ -406,34 +494,57 @@ void reloadData(id collectionView, SEL selector) {
 
 #pragma mark == EVApplication delegate ===
 - (void)evApplication:(EVApplication*)application didObtainResponse:(EVResponse*)response {
-    
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     
-    // TODO: Process text and show errors and warnings
-    [self.messages addObject:[EVChatMessage clientMessageWithText:response.processedText]];
-    [self finishSendingMessageAnimated:YES];
+    if (response.isNewSession) {
+        [self.evApplication.sessionMessages removeAllObjects];
+    }
+    
+    BOOL hasWarnings = NO;
+    
+    if (_undoRequest) {
+        NSMutableArray* messages = self.evApplication.sessionMessages;
+        NSUInteger count = [messages count];
+        NSInteger i;
+        for (i = count-2; i >= 0; i--) {
+            if (![self isMyMessageInRow:i]) {
+                break;
+            }
+        }
+        i = i < 0 ? 0 : i;
+        [messages removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(i, count-i)]];
+        [self.collectionView reloadData];
+        _undoRequest = NO;
+    } else {
+        [self showMyMessageForResponse:response hasWarnings:&hasWarnings];
+    }
     
     if (response.flow != nil) {
         [response retain];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [response autorelease];
             [self handleFlowForResponse:response];
+            
+            if (hasWarnings && !_shownWarningsTutorial) {
+                _shownWarningsTutorial = YES;
+                [self showWarningMessage:EV_UNDO_TUTORIAL];
+            }
+            
             if ([self.delegate respondsToSelector:@selector(evSearchGotResponse:)]) {
                 [self.delegate evSearchGotResponse:response];
             }
         });
     }
-    
-    // TODO: show warnings message
 }
 
 - (void)evApplication:(EVApplication*)application didObtainError:(NSError*)error {
     EV_LOG_ERROR(@"%@", error);
+    _undoRequest = NO;
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
-        [self.messages addObject:[EVChatMessage serverMessageWithID:@"1" text:@"Connection error."]];
+        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:@"1" text:@"Connection error."]];
         [self finishReceivingMessageAnimated:YES];
     }
     if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {

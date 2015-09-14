@@ -34,6 +34,14 @@
     return self;
 }
 
+- (void)dealloc {
+    self.logHandler = NULL;
+    self.errorLogHandler = NULL;
+    self.debugLogHandler = NULL;
+    self.infoLogHandler = NULL;
+    [super dealloc];
+}
+
 + (instancetype)logger {
     static EVLogger* sharedInstance = nil;
     static dispatch_once_t predicate;

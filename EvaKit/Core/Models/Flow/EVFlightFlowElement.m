@@ -32,4 +32,9 @@
     return [super sayIt];
 }
 
+- (void)dealloc {
+    self.roundTripSayIt = nil;
+    [super dealloc];
+}
+
 @end

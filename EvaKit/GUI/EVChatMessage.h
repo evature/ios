@@ -12,9 +12,10 @@
 @interface EVChatMessage : JSQMessage
 
 @property (nonatomic, strong, readwrite) EVSearchModel* searchModel;
+@property (nonatomic, strong, readwrite) NSAttributedString* attributedText;
 
-+ (instancetype)serverMessageWithID:(NSString*)messageID text:(NSString *)text;
-+ (instancetype)clientMessageWithText:(NSString *)text;
++ (instancetype)serverMessageWithID:(NSString*)messageID text:(id)text;
++ (instancetype)clientMessageWithText:(id)text;
 
 + (instancetype)serverMessageWithID:(NSString*)messageID media:(id<JSQMessageMediaData>)media;
 + (instancetype)clientMessageWithMedia:(id<JSQMessageMediaData>)media;

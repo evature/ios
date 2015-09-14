@@ -64,6 +64,7 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
     dispatch_async(self.operationQueue, ^{
         _encoder = FLAC__stream_encoder_new();
         self.currentEncodedData = [NSMutableData new];
+        [self.currentEncodedData release];
         
         FLAC__stream_encoder_set_verify(_encoder, ([EVLogger logger].logLevel == EVLoggerLogLevelDebug));
         FLAC__stream_encoder_set_compression_level(_encoder, 5);

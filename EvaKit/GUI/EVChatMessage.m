@@ -14,12 +14,12 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 
 @implementation EVChatMessage
 
-+ (instancetype)serverMessageWithID:(NSString*)messageID text:(NSString *)text {
++ (instancetype)serverMessageWithID:(NSString*)messageID text:(id)text {
     //return [self messageWithSenderId:messageID displayName:kSenderDisplayNameEva text:text];
     return [[[self alloc] initWithSenderId:messageID senderDisplayName:kSenderDisplayNameEva date:[NSDate date] text:text] autorelease];
 }
 
-+ (instancetype)clientMessageWithText:(NSString *)text {
++ (instancetype)clientMessageWithText:(id)text {
     return [[[self alloc] initWithSenderId:kSenderIdMe senderDisplayName:kSenderDisplayNameMe date:[NSDate date] text:text] autorelease];
 }
 
@@ -37,14 +37,33 @@ NSString* const kSenderDisplayNameEva = @"Eva";
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
                             text:(NSString *)text {
-    return [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date text:text];
+    NSAttributedString* attrText = nil;
+    if ([text isKindOfClass:[NSAttributedString class]]) {
+        attrText = (NSAttributedString*)text;
+        text = attrText.string;
+    }
+    self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date text:text];
+    if (self != nil) {
+        self.attributedText = attrText;
+    }
+    return self;
 }
 
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
                            media:(id<JSQMessageMediaData>)media {
-    return [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date media:media];
+    self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date media:media];
+    if (self != nil) {
+        self.attributedText = nil;
+    }
+    return self;
+}
+
+- (void)dealloc {
+    self.searchModel = nil;
+    self.attributedText = nil;
+    [super dealloc];
 }
 
 - (BOOL)isClientMessage {

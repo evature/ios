@@ -81,6 +81,12 @@ static NSMutableDictionary* childsRegistry = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.sayIt = nil;
+    self.relatedLocations = nil;
+    [super dealloc];
+}
+
 // Registration for Child classes
 + (void)registerClass:(Class)clazz forElementType:(EVFlowElementType)type {
     [childsRegistry setObject:clazz forKey:@(type)];

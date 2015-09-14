@@ -38,4 +38,14 @@
     return self;
 }
 
+- (void)dealloc {
+    self.date = nil;
+    self.time = nil;
+    self.delta = nil;
+    self.maxDelta = nil;
+    self.minDelta = nil;
+    self.restriction = nil;
+    [super dealloc];
+}
+
 @end

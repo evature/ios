@@ -46,6 +46,7 @@
 - (void)dealloc {
     dispatch_release(_queue);
     dispatch_release(_queueSemaphore);
+    self.providers = nil;
     [super dealloc];
 }
 

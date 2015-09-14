@@ -17,6 +17,7 @@
 
 @interface EVVoiceChatButton ()
 
+@property (nonatomic, strong, readwrite) id controllerObserverDelegate;
 @property (nonatomic, strong) NSMutableDictionary* chatProperties;
 
 - (UIImage *)generateImage;
@@ -140,6 +141,15 @@
 }
 
 - (void)dealloc {
+    self.controllerObserverDelegate = nil;
+    self.chatProperties = nil;
+    self.micLineColor = nil;
+    self.micFillColor = nil;
+    self.borderLineColor = nil;
+    self.backgroundFillColor = nil;
+    self.highlightColor = nil;
+    self.micShadowColor = nil;
+    self.backgroundShadowColor = nil;
     [super dealloc];
 }
 

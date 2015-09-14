@@ -30,6 +30,12 @@
     return self;
 }
 
+- (void)dealloc {
+    self.connection = nil;
+    self.responseData = nil;
+    [super dealloc];
+}
+
 - (void)start {
     [self.connection start];
 }

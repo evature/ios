@@ -33,4 +33,9 @@
     return self;
 }
 
+- (void)dealloc {
+    self.flowElements = nil;
+    [super dealloc];
+}
+
 @end

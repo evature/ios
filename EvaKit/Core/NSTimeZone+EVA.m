@@ -15,9 +15,9 @@
     NSInteger minutesFromGMT = (([self secondsFromGMT])%3600)/60;
     
     if (hoursFromGMT>=0) {
-        return [NSString stringWithFormat:@"+%02d:%02d",hoursFromGMT,minutesFromGMT];
+        return [NSString stringWithFormat:@"+%02d:%02d",(int)hoursFromGMT,(int)minutesFromGMT];
     }else{
-        return [NSString stringWithFormat:@"%02d:%02d",hoursFromGMT,minutesFromGMT];
+        return [NSString stringWithFormat:@"%02d:%02d",(int)hoursFromGMT,(int)minutesFromGMT];
     }
 
 }

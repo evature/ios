@@ -25,6 +25,11 @@
     return self;
 }
 
+- (void)dealloc {
+    self.name = nil;
+    self.key = nil;
+    [super dealloc];
+}
 
 @end
 
@@ -43,6 +48,12 @@
         }
     }
     return self;
+}
+
+- (void)dealloc {
+    self.name = nil;
+    self.key = nil;
+    [super dealloc];
 }
 
 @end
@@ -173,5 +184,10 @@ static NSDictionary* sizeKeys = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.cruiselines = nil;
+    self.cruiseships = nil;
+    [super dealloc];
+}
 
 @end

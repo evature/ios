@@ -61,4 +61,10 @@ static NSDictionary* questionCategories = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.questionSubCategory = nil;
+    self.choices = nil;
+    [super dealloc];
+}
+
 @end

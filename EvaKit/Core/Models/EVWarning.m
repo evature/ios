@@ -24,4 +24,10 @@
     return self;
 }
 
+- (void)dealloc {
+    self.type = nil;
+    self.text = nil;
+    [super dealloc];
+}
+
 @end

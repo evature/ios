@@ -86,4 +86,14 @@
     }
 }
 
+- (void)dealloc {
+    self.from = nil;
+    self.to = nil;
+    self.fromDate = nil;
+    self.toDate = nil;
+    
+    self.attributes = nil;
+    [super dealloc];
+}
+
 @end

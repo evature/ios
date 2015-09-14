@@ -130,4 +130,20 @@
     }
 }
 
+- (void)dealloc {
+    self.origin = nil;
+    self.destination = nil;
+    
+    self.departDateMin = nil;
+    self.departDateMax = nil;
+    self.returnDateMin = nil;
+    self.returnDateMax = nil;
+    self.travelers = nil;
+  
+    self.airlines = nil;
+ 
+    self.seatClasses = nil;
+    [super dealloc];
+}
+
 @end

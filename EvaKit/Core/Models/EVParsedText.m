@@ -20,6 +20,12 @@
     return self;
 }
 
+- (void)dealloc {
+    self.type = nil;
+    self.text = nil;
+    [super dealloc];
+}
+
 @end
 
 @implementation EVLocationMarkup
@@ -31,6 +37,11 @@
         self.position = [response objectForKey:@"Position"] == nil ? -1 : [[response objectForKey:@"Position"] integerValue];
     }
     return self;
+}
+
+- (void)dealloc {
+    self.text = nil;
+    [super dealloc];
 }
 
 @end
@@ -60,6 +71,12 @@
         }
     }
     return self;
+}
+
+- (void)dealloc {
+    self.locations = nil;
+    self.times = nil;
+    [super dealloc];
 }
 
 @end

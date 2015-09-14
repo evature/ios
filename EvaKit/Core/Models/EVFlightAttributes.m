@@ -115,4 +115,10 @@ static NSDictionary *foodKeys = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.seatClass = nil;
+    self.airlines = nil;
+    [super dealloc];
+}
+
 @end

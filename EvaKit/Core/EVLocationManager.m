@@ -19,12 +19,17 @@
 - (instancetype)init {
     self = [super init];
     if (self != nil) {
-        self.locationManager = [CLLocationManager new];
+        self.locationManager = [[CLLocationManager new] autorelease];
         self.locationManager.delegate = self;
         self.locationManager.distanceFilter = 500.0; //1km movement
         self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     }
     return self;
+}
+
+- (void)dealloc {
+    self.locationManager = nil;
+    [super dealloc];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {

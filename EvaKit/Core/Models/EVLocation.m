@@ -218,4 +218,26 @@ static NSDictionary* typeKeys = nil;
     return self.actions != nil && [self.actions containsObject:@"Get There"];
 }
 
+- (void)dealloc {
+    self.allAirportCode = nil;
+    self.airports = nil;
+    self.geoId = nil;
+    self.actions = nil;
+    
+    self.requestAttributes = nil;
+    self.name = nil;
+    self.departure = nil;
+    self.arrival = nil;
+    self.stay = nil;
+    self.purpose = nil;
+    self.derivedFrom = nil;
+    
+    self.hotelAttributes = nil;
+    self.flightAttributes = nil;
+    
+    self.keys = nil;
+    self.nearestCustomerLocation = nil;
+    [super dealloc];
+}
+
 @end

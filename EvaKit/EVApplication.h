@@ -54,6 +54,8 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 @property (nonatomic, strong, readwrite) NSString* language;
 @property (nonatomic, strong, readonly) NSDictionary* extraParameters;
 
+@property (nonatomic, strong, readonly) NSMutableArray* sessionMessages;
+
 @property (nonatomic, strong, readonly) NSDictionary* applicationSounds;
 
 // View Classes. Can be changed //

@@ -129,4 +129,14 @@
     }
 }
 
+- (void)dealloc {
+    self.location = nil;
+    self.arriveDateMin = nil;
+    self.arriveDateMax = nil;
+    self.travelers = nil;
+    self.chains = nil;
+    self.amenities = nil;
+    [super dealloc];
+}
+
 @end

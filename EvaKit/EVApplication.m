@@ -43,6 +43,8 @@
 @property (nonatomic, strong, readwrite) NSDictionary* applicationSounds;
 @property (nonatomic, strong, readwrite) NSDictionary* extraParameters;
 
+@property (nonatomic, strong, readwrite) NSMutableArray* sessionMessages;
+
 - (void)setAVSession;
 - (void)setupRecorderChain;
 - (void)updateURL;
@@ -101,7 +103,7 @@
 }
 
 - (void)setupRecorderChain {
-    self.soundRecorder = [EVAudioRecorder new];
+    self.soundRecorder = [[EVAudioRecorder new] autorelease];
     self.soundRecorder.delegate = self;
     
     self.soundRecorder.audioFormat = kAudioFormatLinearPCM;
@@ -116,7 +118,7 @@
     self.soundRecorder.silentStopRecordTime = 0.7; // time of silence for record stop
 
     
-    self.flacConverter = [EVAudioConvertionOperation new];
+    self.flacConverter = [[EVAudioConvertionOperation new] autorelease];
     self.flacConverter.sampleRate = 16000;
     self.flacConverter.bitsPerSample = 16;
     self.flacConverter.numberOfChannels = 1;
@@ -139,7 +141,7 @@
         [self.chatViewControllerPathRewrites setObject:@"" forKey:@"controller."];
         self.defaultButtonBottomOffset = 60.0f;
         
-        self.locationManager = [EVLocationManager new];
+        self.locationManager = [[EVLocationManager new] autorelease];
         self.locationManager.delegate = self;
         
         self.currentSessionID = EV_NEW_SESSION_ID;
@@ -160,6 +162,8 @@
         
         self.applicationSounds = [NSMutableDictionary dictionaryWithCapacity:4];
         
+        self.sessionMessages = [NSMutableArray array];
+        
         EVApplicationSound* high = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_high" ofType:@"aif"]];
         EVApplicationSound* low = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_low" ofType:@"aif"]];
         [self setSound:high forApplicationState:EVApplicationStateSoundRecordingStarted];
@@ -172,6 +176,28 @@
         [self setAVSession];
     }
     return self;
+}
+
+- (void)dealloc {
+    self.apiVersion = nil;
+    self.APIKey = nil;
+    self.siteCode = nil;
+    self.serverHost = nil;
+    self.textServerHost = nil;
+    self.currentSessionID = nil;
+    self.scope = nil;
+    self.context = nil;
+    self.language = nil;
+    self.extraParameters = nil;
+    self.sessionMessages = nil;
+    self.applicationSounds = nil;
+    self.chatViewControllerPathRewrites = nil;
+    self.locationManager = nil;
+    self.soundRecorder = nil;
+    self.flacConverter = nil;
+    self.dataStreamer = nil;
+    self.currentApiRequest = nil;
+    [super dealloc];
 }
 
 - (EVVoiceChatButton*)addButtonInController:(UIViewController*)viewController {
@@ -478,6 +504,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [evResponse autorelease];
+            evResponse.isNewSession = ![self.currentSessionID isEqualToString:EV_NEW_SESSION_ID] && ![self.currentSessionID isEqualToString:evResponse.sessionId];
             self.currentSessionID = evResponse.sessionId;
             [self.delegate evApplication:self didObtainResponse:evResponse];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

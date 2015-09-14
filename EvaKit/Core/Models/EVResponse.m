@@ -18,6 +18,7 @@
     }
     self = [super init];
     if (self != nil) {
+        self.isNewSession = NO;
         self.sessionId = [response objectForKey:@"session_id"];
         self.transactionId = [response objectForKey:@"transaction_key"];
         
@@ -97,6 +98,42 @@
         self.rawResponse = response;
     }
     return self;
+}
+
+- (void)dealloc {
+    self.sayIt = nil;
+    self.sessionId = nil;
+    self.transactionId = nil;
+    self.processedText = nil;
+    self.originalInputText = nil;
+    
+    self.chat = nil;
+    self.dialog = nil;
+    
+    self.locations = nil;
+    self.altLocations = nil;
+    self.ean = nil;
+    self.sabre = nil;
+    
+    self.requestAttributes = nil;
+    self.geoAttributes = nil;
+    
+    self.flightAttributes = nil;
+    self.hotelAttributes = nil;
+    self.serviceAttributes = nil;
+    self.cruiseAttributes = nil;
+    
+    self.travelers = nil;
+    self.money = nil;
+    self.pnrAttributes = nil;
+    self.flow = nil;
+    
+    self.warnings = nil;
+    self.parsedText = nil;
+    self.sessionText = nil;
+    
+    self.rawResponse = nil;
+    [super dealloc];
 }
 
 @end

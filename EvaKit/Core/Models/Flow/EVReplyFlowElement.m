@@ -23,4 +23,10 @@
     return self;
 }
 
+- (void)dealloc {
+    self.attributeKey = nil;
+    self.attributeType = nil;
+    [super dealloc];
+}
+
 @end

@@ -25,6 +25,14 @@
     return self;
 }
 
+- (void)dealloc {
+    self.name = nil;
+    self.simpleName = nil;
+    self.gdsCode = nil;
+    self.evaCode = nil;
+    [super dealloc];
+}
+
 @end
 
 
@@ -184,6 +192,12 @@ static NSDictionary* accomodationKeys = nil;
         self.amenities = [NSSet setWithArray:amenities];
     }
     return self;
+}
+
+- (void)dealloc {
+    self.amenities = nil;
+    self.chains = nil;
+    [super dealloc];
 }
 
 @end

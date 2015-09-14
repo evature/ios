@@ -22,7 +22,7 @@
 
 @interface EVAPIRequest : NSObject
 
-@property (nonatomic, strong, readwrite) NSString* name;
+//@property (nonatomic, strong, readwrite) NSString* name;
 @property (nonatomic, assign, readwrite) id<EVAPIRequestDelegate> delegate;
 
 - (instancetype)initWithURL:(NSURL*)URL timeout:(NSTimeInterval)timeout andDelegate:(id<EVAPIRequestDelegate>)delegate;

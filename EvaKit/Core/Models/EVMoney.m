@@ -43,4 +43,11 @@ static NSDictionary* restrictionKeys = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.amount = nil;
+    self.currency = nil;
+    self.endOfRange = nil;
+    [super dealloc];
+}
+
 @end

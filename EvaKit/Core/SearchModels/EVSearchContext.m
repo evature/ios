@@ -15,7 +15,7 @@
 @implementation EVSearchContext
 
 + (instancetype)contextWithType:(EVSearchContextType)contextType {
-    EVSearchContext *context = [EVSearchContext new];
+    EVSearchContext *context = [[EVSearchContext new] autorelease];
     context->_type = contextType;
     return context;
 }

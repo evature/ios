@@ -28,6 +28,15 @@
     return self;
 }
 
+- (void)dealloc {
+    self.content = nil;
+    self.type = nil;
+    self.relatedLocation = nil;
+    self.subType = nil;
+    self.choices = nil;
+    [super dealloc];
+}
+
 @end
 
 
@@ -46,6 +55,12 @@
         }
     }
     return self;
+}
+
+- (void)dealloc {
+    self.sayIt = nil;
+    self.dialogElements = nil;
+    [super dealloc];
 }
 
 @end

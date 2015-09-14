@@ -11,7 +11,7 @@
 @implementation EVSearchScope
 
 + (instancetype)scopeWithContextTypes:(EVSearchContextType)types {
-    EVSearchScope *scope = [EVSearchScope new];
+    EVSearchScope *scope = [[EVSearchScope new] autorelease];
     scope->_type = types;
     return scope;
 }

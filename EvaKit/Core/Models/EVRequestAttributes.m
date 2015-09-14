@@ -83,4 +83,9 @@ static NSDictionary* orderKeys = nil;
     return self;
 }
 
+- (void)dealloc {
+    self.transportType = nil;
+    [super dealloc];
+}
+
 @end

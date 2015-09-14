@@ -19,4 +19,10 @@
     return self;
 }
 
+- (void)dealloc {
+    self.cryptic = nil;
+    self.warnings = nil;
+    [super dealloc];
+}
+
 @end

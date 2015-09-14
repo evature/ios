@@ -20,6 +20,9 @@
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *topBarTopConstraint;
 
 @property (assign, nonatomic) BOOL startRecordingOnShow;
+@property (assign, nonatomic) BOOL semanticHighlightingEnabled;
+@property (assign, nonatomic) BOOL semanticHighlightTimes;
+@property (assign, nonatomic) BOOL semanticHighlightLocations;
 
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImage;
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImage;

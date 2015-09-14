@@ -56,6 +56,8 @@
 @property (nonatomic, strong, readwrite) EVParsedText* parsedText;
 @property (nonatomic, strong, readwrite) NSArray* sessionText;
 
+@property (nonatomic, assign, readwrite) BOOL isNewSession;
+
 @property (nonatomic, strong, readwrite) NSDictionary* rawResponse;
 
 - (instancetype)initWithResponse:(NSDictionary*)response;

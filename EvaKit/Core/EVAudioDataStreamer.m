@@ -33,6 +33,7 @@
     [self.dataProviderDelegate release];
     self.dataProviderDelegate = nil;
     self.responseData = nil;
+    self.webServiceURL = nil;
     [super dealloc];
 }
 
