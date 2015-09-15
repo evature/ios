@@ -32,6 +32,12 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 typedef void (*R_IMP)(void*, SEL);
 R_IMP oldReloadData;
 
+id emptyInitMethod(id lookupObject, SEL selector, id pr1, id p2, id p3, id p4) {
+    [lookupObject init];
+    [lookupObject release];
+    return nil;
+}
+
 void reloadData(id collectionView, SEL selector) {
     if (![objc_getAssociatedObject(collectionView, kEVCollectionViewReloadDataKey) boolValue]) {
         objc_setAssociatedObject(collectionView, kEVCollectionViewReloadDataKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -83,6 +89,9 @@ void reloadData(id collectionView, SEL selector) {
 
 
 + (void)initialize {
+    SEL allocSel = @selector(initWithTextView:contextView:panGestureRecognizer:delegate:);
+    class_replaceMethod([JSQMessagesKeyboardController class], allocSel, (IMP)emptyInitMethod, "@@:@@@@");
+    
     SEL reloadDataSel = @selector(reloadData);
     oldReloadData = (R_IMP)class_replaceMethod([JSQMessagesCollectionView class], reloadDataSel, (IMP)reloadData, "v@:");
     if (oldReloadData == NULL) {
