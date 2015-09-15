@@ -16,6 +16,7 @@
 #import "EVStatementFlowElement.h"
 #import "EVReplyFlowElement.h"
 #import "EVSearchResultsHandler.h"
+#import <AVFoundation/AVFoundation.h>
 
 static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadDataKey";
 
@@ -66,6 +67,7 @@ void reloadData(id collectionView, SEL selector) {
 @property (nonatomic, strong) NSDictionary* viewSettings;
 @property (nonatomic, assign) BOOL isNewSession;
 @property (nonatomic, strong) EVSearchContext* oldContext;
+@property (nonatomic, strong) AVSpeechSynthesizer* speechSynthesizer;
 
 - (UIImage*)imageOfBackgroundView;
 - (void)setHelloMessage;
@@ -77,6 +79,8 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
+- (void)speakText:(NSString*)text;
+- (void)stopSpeaking;
 
 @end
 
@@ -123,6 +127,7 @@ void reloadData(id collectionView, SEL selector) {
         self.semanticHighlightLocations = YES;
         self.semanticHighlightTimes = YES;
         self.isNewSession = YES;
+        self.speakEnabled = YES;
         isRecording = NO;
         _shownWarningsTutorial = NO;
         
@@ -134,6 +139,7 @@ void reloadData(id collectionView, SEL selector) {
         self.incomingBubbleImage = [bubbleFactory incomingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(03, A9, F4, FF)];
         [bubbleFactory release];
         
+        self.speechSynthesizer = [[AVSpeechSynthesizer new] autorelease];
     }
     return self;
 }
@@ -143,6 +149,8 @@ void reloadData(id collectionView, SEL selector) {
     self.outgoingBubbleImage = nil;
     self.incomingBubbleImage = nil;
     self.oldContext = nil;
+    [self stopSpeaking];
+    self.speechSynthesizer = nil;
     [super dealloc];
 }
 
@@ -166,7 +174,8 @@ void reloadData(id collectionView, SEL selector) {
             message = @"Hello, how may I help you?";
             break;
     }
-    [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:@"1" text:message]];
+    [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:message]];
+    [self speakText:message];
 }
 
 - (void)viewDidLoad {
@@ -185,6 +194,7 @@ void reloadData(id collectionView, SEL selector) {
     if ([self.evApplication.sessionMessages count] == 0) {
         [self setHelloMessage];
     }
+    self.isNewSession = [self.evApplication.currentSessionID isEqualToString:EV_NEW_SESSION_ID];
     //self.collectionView.collectionViewLayout.springinessEnabled = YES;
 }
 
@@ -221,6 +231,7 @@ void reloadData(id collectionView, SEL selector) {
     if (isRecording) {
         [self.evApplication stopRecording];
     } else {
+        [self stopSpeaking];
         minVolume = DBL_MAX;
         maxVolume = DBL_MIN;
         currentCombinedVolume = 0.0;
@@ -392,7 +403,7 @@ void reloadData(id collectionView, SEL selector) {
                 }
             }
             @catch (NSException* e) {
-                EV_LOG_ERROR(@"Index out of bounds setting spans of chat [%@]: %@", chat, e);
+                EV_LOG_ERROR(@"Error in setting spans of chat [%@]: %@", chat, e);
             }
         }
     }
@@ -404,9 +415,21 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)showWarningMessage:(NSString*)message {
     NSAttributedString* aS = [[[NSMutableAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: self.collectionView.collectionViewLayout.messageBubbleFont, NSForegroundColorAttributeName: [UIColor grayColor]}] autorelease];
-    EVChatMessage* cm = [EVChatMessage serverMessageWithID:@"1" text:aS];
+    EVChatMessage* cm = [EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:aS];
     [self.evApplication.sessionMessages addObject:cm];
     [self finishSendingMessageAnimated:YES];
+}
+
+- (void)speakText:(NSString *)text {
+    if (self.speakEnabled && !isRecording) {
+        AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:text];
+        [self.speechSynthesizer speakUtterance:utterance];
+    }
+}
+- (void)stopSpeaking {
+    if (self.speechSynthesizer.speaking) {
+        [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    }
 }
 
 #pragma mark == EVA Search Methods ==
@@ -452,6 +475,12 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message {
+    
+    NSString* sayIt = [element sayIt];
+    if (sayIt != nil && ![sayIt isEqualToString:@""]) {
+        [self speakText:sayIt];
+    }
+    
     switch (element.type) {
         case EVFlowElementTypeReply: {
             EVReplyFlowElement* replyElement = (EVReplyFlowElement*)element;
@@ -496,7 +525,6 @@ void reloadData(id collectionView, SEL selector) {
         default:
             EV_LOG_INFO("Unexpected flow type %d", element.type);
             break;
-            
     }
 }
 
@@ -553,7 +581,7 @@ void reloadData(id collectionView, SEL selector) {
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
-        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:@"1" text:@"Connection error."]];
+        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:@"Connection error."]];
         [self finishReceivingMessageAnimated:YES];
     }
     if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {

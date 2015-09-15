@@ -20,6 +20,7 @@
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *topBarTopConstraint;
 
 @property (assign, nonatomic) BOOL startRecordingOnShow;
+@property (assign, nonatomic) BOOL speakEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightingEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightTimes;
 @property (assign, nonatomic) BOOL semanticHighlightLocations;

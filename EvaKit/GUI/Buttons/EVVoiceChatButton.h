@@ -40,6 +40,7 @@ IB_DESIGNABLE
 
 @property (nonatomic, assign) IBInspectable BOOL autoHide;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerStartRecordingOnShow;
+@property (nonatomic, assign) IBInspectable BOOL chatControllerSpeakEnabled;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSemanticHighlightingEnabled;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSemanticHighlightTimes;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSemanticHighlightLocations;
