@@ -280,7 +280,7 @@ void reloadData(id collectionView, SEL selector) {
      */
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
-    
+    cell.textView.dataDetectorTypes = UIDataDetectorTypeNone;
     EVChatMessage *msg = [self.evApplication.sessionMessages objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
