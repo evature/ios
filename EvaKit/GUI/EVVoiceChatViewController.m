@@ -30,6 +30,8 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 
 #define COMBINE_VOICE_LEVELS_COUNT 2
 
+#define EV_EVA_TEXT_COLOR RGBA_HEX_COLOR(F5, F5, F5, FF)
+
 #define EV_UNDO_TUTORIAL @"Drag the microphone button to the left to undo the last utterance."
 
 typedef void (*R_IMP)(void*, SEL);
@@ -295,7 +297,7 @@ void reloadData(id collectionView, SEL selector) {
         if ([msg isClientMessage]) {
             cell.textView.textColor = [UIColor blackColor];
         } else {
-            cell.textView.textColor = RGBA_HEX_COLOR(F5, F5, F5, FF);
+            cell.textView.textColor = EV_EVA_TEXT_COLOR;
         }
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
@@ -418,7 +420,8 @@ void reloadData(id collectionView, SEL selector) {
 
 
 - (void)showWarningMessage:(NSString*)message {
-    NSAttributedString* aS = [[[NSMutableAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: self.collectionView.collectionViewLayout.messageBubbleFont, NSForegroundColorAttributeName: [UIColor grayColor]}] autorelease];
+    UIFont* font = [UIFont italicSystemFontOfSize:self.collectionView.collectionViewLayout.messageBubbleFont.pointSize];
+    NSAttributedString* aS = [[[NSMutableAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: EV_EVA_TEXT_COLOR}] autorelease];
     EVChatMessage* cm = [EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:aS];
     [self.evApplication.sessionMessages addObject:cm];
     [self finishSendingMessageAnimated:YES];
@@ -549,7 +552,7 @@ void reloadData(id collectionView, SEL selector) {
         NSMutableArray* messages = self.evApplication.sessionMessages;
         NSUInteger count = [messages count];
         NSInteger i;
-        for (i = count-2; i >= 0; i--) {
+        for (i = count-3; i >= 0; i--) {
             if (![self isMyMessageInRow:i]) {
                 break;
             }
