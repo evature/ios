@@ -1,21 +1,21 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Eva Voice SDK - iOS 7+](#eva-voice-sdk---ios-7)
-  - [Introduction](#introduction)
-  - [Step 1: Include the SDK in your Xcode project](#step-1-include-the-sdk-in-your-xcode-project)
-  - [Step 2: Initialize Eva Application](#step-2-initialize-eva-application)
-  - [Step 3: Add Chat Button to your GUI](#step-3-add-chat-button-to-your-gui)
-  - [Step 4: Implement one of Search Delegates](#step-4-implement-one-of-search-delegates)
-  - [More details](#more-details)
-  - [Support](#support)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Eva Voice SDK - iOS 7+
 
 Version 2.0
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Introduction](#introduction)
+- [Step 1: Include the SDK in your Xcode project](#step-1-include-the-sdk-in-your-xcode-project)
+- [Step 2: Initialize Eva Application](#step-2-initialize-eva-application)
+- [Step 3: Add Chat Button to your GUI](#step-3-add-chat-button-to-your-gui)
+- [Step 4: Implement one of Search Delegates](#step-4-implement-one-of-search-delegates)
+- [More details](#more-details)
+- [Support](#support)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
 
@@ -65,11 +65,11 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   ```
 
 ## Step 3: Add Chat Button to your GUI  
-  ### Method 1 - Interface Builder
+### Method 1 - Interface Builder
   EvaKit uses new features of Xcode 6 so you can configure button and Chat View in Interface Builder.
   Add empty view inside your view and change its class to `EVVoiceChatButton`. You can setup all buttons and controller properties in Xcode. If no action added to button, button will show Chat View for current controller by default.
 
-  ### Method 2 - From Code using EVApplication
+### Method 2 - From Code using EVApplication
   ``` objc
   - (void)viewDidLoad {
       [super viewDidLoad];
@@ -84,7 +84,7 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   }
   ```
   
-  ### Method 3 - Use own button
+### Method 3 - Use own button
   Call this method of EVApplication for Chat View popup
   ``` objc
   [[EVApplication sharedApplication] showChatViewController:self withViewSettings:@{}];
@@ -98,10 +98,10 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
 ## More details
 
-More info about Eva can be obtained in Android SDK repository [Android GitHub Repository](https://github.com/evature/android)
+  More info about Eva can be obtained in Android SDK repository [Android GitHub Repository](https://github.com/evature/android)
 
-More methods and properties can be found in `EVApplication.h`, `EVVoiceChatButton.h`, `EVLogger.h`, `EVVoiceChatViewController.h`, `EVChatToolbarContentView.h`.
+  More methods and properties can be found in `EVApplication.h`, `EVVoiceChatButton.h`, `EVLogger.h`, `EVVoiceChatViewController.h`, `EVChatToolbarContentView.h`.
 
 ## Support
 
-We would love to hear from you. Ask us anything at [info@evature.com](mailto:info@evature.com)
+  We would love to hear from you. Ask us anything at [info@evature.com](mailto:info@evature.com)
