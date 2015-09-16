@@ -26,6 +26,8 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 #define UI_BAR_HEIGHT_PORTRAIT 40
 #define UI_BAR_HEIGHT_LANDSCAPE 32
 
+#define EV_SPEECH_RATE 0.35f
+
 #define COMBINE_VOICE_LEVELS_COUNT 2
 
 #define EV_UNDO_TUTORIAL @"Drag the microphone button to the left to undo the last utterance."
@@ -383,9 +385,10 @@ void reloadData(id collectionView, SEL selector) {
                         if (time.text == nil) {
                             continue;
                         }
-                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
-                                              NSUnderlineColorAttributeName:highlightColor}
-                                      range:NSMakeRange(time.position, [time.text length])];
+                        [chat addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(time.position, [time.text length])];
+//                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
+//                                              NSUnderlineColorAttributeName:highlightColor}
+//                                      range:NSMakeRange(time.position, [time.text length])];
                     }
                 }
                 
@@ -396,9 +399,10 @@ void reloadData(id collectionView, SEL selector) {
                         if (location.text == nil) {
                             continue;
                         }
-                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
-                                              NSUnderlineColorAttributeName:highlightColor}
-                                      range:NSMakeRange(location.position, [location.text length])];
+                        [chat addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(location.position, [location.text length])];
+//                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
+//                                              NSUnderlineColorAttributeName:highlightColor}
+//                                      range:NSMakeRange(location.position, [location.text length])];
                     }
                 }
             }
@@ -423,6 +427,7 @@ void reloadData(id collectionView, SEL selector) {
 - (void)speakText:(NSString *)text {
     if (self.speakEnabled && !isRecording) {
         AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:text];
+        utterance.rate = EV_SPEECH_RATE;
         [self.speechSynthesizer speakUtterance:utterance];
     }
 }
