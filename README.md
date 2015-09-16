@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Eva Voice SDK - iOS 7+](#eva-voice-sdk---ios-7)
+  - [Introduction](#introduction)
+  - [Step 1: Include the SDK in your Xcode project](#step-1-include-the-sdk-in-your-xcode-project)
+  - [Step 2: Initialize Eva Application](#step-2-initialize-eva-application)
+  - [Step 3: Add Chat Button to your GUI](#step-3-add-chat-button-to-your-gui)
+  - [Step 4: Implement one of Search Delegates](#step-4-implement-one-of-search-delegates)
+  - [More details](#more-details)
+  - [Support](#support)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Eva Voice SDK - iOS 7+
 
 Version 2.0
@@ -35,7 +50,7 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   #import <EvaKit/EvaKit.h>
   ```
 
-3. Initialize EvaKit  
+## Step 2: Initialize Eva Application
   ``` objc
   - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       // Set level of logging. See EVLogger.h.
@@ -49,7 +64,7 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   }
   ```
 
-4. Add Chat Button to your GUI  
+## Step 3: Add Chat Button to your GUI  
   ### Method 1 - Interface Builder
   EvaKit uses new features of Xcode 6 so you can configure button and Chat View in Interface Builder.
   Add empty view inside your view and change its class to `EVVoiceChatButton`. You can setup all buttons and controller properties in Xcode. If no action added to button, button will show Chat View for current controller by default.
@@ -77,7 +92,7 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   Where View Settings is a `NSDictionary` with Chat View and Chat Toolbar settings.
   Chat View parameters can be provided with `controller.` prefix. Chat Toolbar parameters with `toolbar.` prefix. All parameters can be obtained in `EVVoiceChatViewController.h` and `EVChatToolbarContentView.h`
 
-5. Implement one of Search Delegates  
+## Step 4: Implement one of Search Delegates
   You can implement it in current View Controller or in Application Delegate. Also you can provide own object for this. If you want own object then set it to `chatControllerDelegate` property of Chat Button or provide as `controller.delegate` value in Settings Dictionary.  
   All Search Delegate protocols can be found in `Core/SearchModels/SearchDelegates` folder.
 
