@@ -1,5 +1,3 @@
-
-
 # Eva Voice SDK - iOS 7+
 
 Version 2.0
@@ -7,10 +5,14 @@ Version 2.0
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Introduction](#introduction)
 - [Step 1: Include the SDK in your Xcode project](#step-1-include-the-sdk-in-your-xcode-project)
 - [Step 2: Initialize Eva Application](#step-2-initialize-eva-application)
 - [Step 3: Add Chat Button to your GUI](#step-3-add-chat-button-to-your-gui)
+  - [Method 1 - Interface Builder](#method-1---interface-builder)
+  - [Method 2 - From Code using EVApplication](#method-2---from-code-using-evapplication)
+  - [Method 3 - Use own button](#method-3---use-own-button)
 - [Step 4: Implement one of Search Delegates](#step-4-implement-one-of-search-delegates)
 - [More details](#more-details)
 - [Support](#support)
