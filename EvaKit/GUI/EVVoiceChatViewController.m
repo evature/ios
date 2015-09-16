@@ -26,7 +26,7 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 #define UI_BAR_HEIGHT_PORTRAIT 40
 #define UI_BAR_HEIGHT_LANDSCAPE 32
 
-#define EV_SPEECH_RATE 0.35f
+#define EV_SPEECH_RATE 0.15f
 
 #define COMBINE_VOICE_LEVELS_COUNT 2
 
