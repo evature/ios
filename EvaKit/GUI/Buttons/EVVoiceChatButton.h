@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "EVViewControllerVisibilityObserverDelegate.h"
+#import "EVSearchDelegate.h"
 
 IB_DESIGNABLE
 @interface EVVoiceChatButton : UIButton <EVViewControllerVisibilityObserverDelegate>
 
 //Connect controller for which Chat window will show. EVApplication will search for if it not connected.
 @property (nonatomic, assign) IBOutlet UIViewController* connectedController;
+@property (nonatomic, assign) IBOutlet id<EVSearchDelegate> chatControllerDelegate;
 
 // Button properties
 @property (nonatomic, strong) IBInspectable UIColor *micLineColor;

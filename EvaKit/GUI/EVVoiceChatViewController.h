@@ -19,17 +19,20 @@
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *topBarSizeConstraint;
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *topBarTopConstraint;
 
+
+// This options can be set from Button or Settings Dictionary
 @property (assign, nonatomic) BOOL startRecordingOnShow;
 @property (assign, nonatomic) BOOL speakEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightingEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightTimes;
 @property (assign, nonatomic) BOOL semanticHighlightLocations;
+@property (nonatomic, assign) id<EVSearchDelegate> delegate;
+// End of options
 
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImage;
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImage;
 
 @property (nonatomic, assign) EVApplication* evApplication;
-@property (nonatomic, assign) id<EVSearchDelegate> delegate;
 
 - (IBAction)hideChatView:(id)sender;
 

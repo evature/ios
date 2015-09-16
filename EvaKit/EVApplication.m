@@ -236,14 +236,20 @@
                 [(EVVoiceChatButton*)sender setConnectedController:[self traverseResponderChainForUIViewControllerForView:((EVVoiceChatButton*)sender)]];
             }
             ctrl = [(EVVoiceChatButton*)sender connectedController];
+            if ([(EVVoiceChatButton*)sender chatControllerDelegate] == nil) {
+                [(EVVoiceChatButton*)sender setChatControllerDelegate:[self searchForDelegate:ctrl.view]];
+            }
+            delegate = [(EVVoiceChatButton*)sender chatControllerDelegate];
         } else {
             ctrl = [self traverseResponderChainForUIViewControllerForView:((UIView*)sender)];
         }
     }
-    if ([ctrl conformsToProtocol:@protocol(EVSearchDelegate)]) {
-        delegate = ctrl;
-    } else {
-        delegate = [self searchForDelegate:ctrl.view];
+    if (delegate == nil) {
+        if ([ctrl conformsToProtocol:@protocol(EVSearchDelegate)]) {
+            delegate = ctrl;
+        } else {
+            delegate = [self searchForDelegate:ctrl.view];
+        }
     }
     if (delegate == nil) {
         EV_LOG_ERROR(@"Delegate not found in responder chain. Check protocols on delegate");

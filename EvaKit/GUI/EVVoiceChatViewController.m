@@ -195,6 +195,9 @@ void reloadData(id collectionView, SEL selector) {
     }
     self.oldContext = self.evApplication.context;
     self.evApplication.context = [EVSearchContext contextForDelegate:self.delegate];
+    if (self.semanticHighlightingEnabled && !self.evApplication.highlightText) {
+        self.semanticHighlightingEnabled = NO;
+    }
     if ([self.evApplication.sessionMessages count] == 0) {
         [self setHelloMessage];
     }
@@ -388,9 +391,6 @@ void reloadData(id collectionView, SEL selector) {
                             continue;
                         }
                         [chat addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(time.position, [time.text length])];
-//                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
-//                                              NSUnderlineColorAttributeName:highlightColor}
-//                                      range:NSMakeRange(time.position, [time.text length])];
                     }
                 }
                 
@@ -402,9 +402,6 @@ void reloadData(id collectionView, SEL selector) {
                             continue;
                         }
                         [chat addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(location.position, [location.text length])];
-//                        [chat addAttributes:@{NSUnderlineStyleAttributeName:@(NSUnderlineStyleSingle | NSUnderlinePatternDot),
-//                                              NSUnderlineColorAttributeName:highlightColor}
-//                                      range:NSMakeRange(location.position, [location.text length])];
                     }
                 }
             }

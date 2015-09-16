@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EvaKit"
-  s.version      = "1.6.4"
-  s.summary      = "A short description of EvaKit."
+  s.version      = "2.0.0"
+  s.summary      = "Evature API for iOS"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/ypopovych/ios.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/evature/ios.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

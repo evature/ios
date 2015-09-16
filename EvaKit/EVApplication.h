@@ -17,7 +17,7 @@
 
 #define EV_NEW_SESSION_ID @"1"
 #define EV_DEFAULT_MAX_RECORDING_TIME 15.0f
-#define EV_KIT_VERSION @"1.6.4"
+#define EV_KIT_VERSION @"2.0.0"
 
 typedef NS_ENUM(char, EVApplicationStateSound) {
     EVApplicationStateSoundRecordingStarted = 0,
