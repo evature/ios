@@ -358,6 +358,9 @@ void reloadData(id collectionView, SEL selector) {
         }
         id obj = [settings objectForKey:path];
         [newSettings setObject:obj forKey:newPath];
+        if ([newPath isEqualToString:@"delegate"]) {
+            obj = [obj nonretainedObjectValue];
+        }
         [self setValue:obj forKeyPath:newPath];
     }
     

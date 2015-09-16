@@ -30,6 +30,14 @@
 
 @implementation EVVoiceChatButton
 
+@dynamic chatControllerDelegate;
+
+@dynamic chatControllerStartRecordingOnShow;
+@dynamic chatControllerSpeakEnabled;
+@dynamic chatControllerSemanticHighlightingEnabled;
+@dynamic chatControllerSemanticHighlightTimes;
+@dynamic chatControllerSemanticHighlightLocations;
+
 @dynamic chatToolbarCenterButtonMicLineColor;
 @dynamic chatToolbarCenterButtonMicLineWidth;
 @dynamic chatToolbarCenterButtonMicColor;
@@ -49,6 +57,15 @@
 @dynamic chatToolbarLeftRightButtonsActiveBackgroundScale;
 @dynamic chatToolbarLeftRightButtonsMaxImageScale;
 @dynamic chatToolbarLeftRightButtonsMaxBackgroundScale;
+
+@dynamic chatToolbarLeftRightButtonsImageShadowColor;
+@dynamic chatToolbarLeftRightButtonsImageShadowOffset;
+@dynamic chatToolbarLeftRightButtonsImageShadowRadius;
+@dynamic chatToolbarLeftRightButtonsImageShadowOpacity;
+@dynamic chatToolbarLeftRightButtonsBackgroundShadowColor;
+@dynamic chatToolbarLeftRightButtonsBackgroundShadowOffset;
+@dynamic chatToolbarLeftRightButtonsBackgroundShadowRadius;
+@dynamic chatToolbarLeftRightButtonsBackgroundShadowOpacity;
 
 @dynamic chatToolbarLeftRightButtonsOffset;
 
@@ -200,6 +217,9 @@
 - (id)valueForUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
         key = [self controllerPropertyNameFromSelfName:key];
+        if ([key isEqualToString:@"controller.delegate"]) {
+            return [[self.chatProperties objectForKey:key] nonretainedObjectValue];
+        }
         return [self.chatProperties objectForKey:key];
     }
     return [super valueForUndefinedKey:key];
@@ -208,6 +228,9 @@
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
         key = [self controllerPropertyNameFromSelfName:key];
+        if ([key isEqualToString:@"controller.delegate"]) {
+            value = [NSValue valueWithNonretainedObject:value];
+        }
         [self.chatProperties setValue:value forKey:key];
     } else {
         [super setValue:value forKey:key];
