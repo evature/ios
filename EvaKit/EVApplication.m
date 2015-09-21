@@ -19,7 +19,7 @@
 #import "NSTimeZone+EVA.h"
 
 
-#define EV_HOST_ADDRESS @"http://vproxy.evaws.com"
+#define EV_HOST_ADDRESS @"https://vproxy.evaws.com"
 #define EV_HOST_ADDRESS_FOR_TEXT  EV_HOST_ADDRESS
 #define EV_API_VERSION @"v1.0"
 
