@@ -191,7 +191,11 @@ void reloadData(id collectionView, SEL selector) {
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     for (NSString* path in self.viewSettings) {
-        [self setValue:[self.viewSettings objectForKey:path] forKeyPath:path];
+        id obj = [self.viewSettings objectForKey:path];
+        if ([path isEqualToString:@"delegate"]) {
+            obj = [obj nonretainedObjectValue];
+        }
+        [self setValue:obj forKeyPath:path];
     }
     self.oldContext = self.evApplication.context;
     self.evApplication.context = [EVSearchContext contextForDelegate:self.delegate];
@@ -354,16 +358,11 @@ void reloadData(id collectionView, SEL selector) {
     for (NSString* path in settings) {
         NSMutableString* newPath = [NSMutableString stringWithString:path];
         for (NSString* rewrite in pathRewrites) {
-            [newPath replaceOccurrencesOfString:rewrite withString:[pathRewrites objectForKey:rewrite] options:0 range:NSMakeRange(0, [rewrite length]+1)];
+            [newPath replaceOccurrencesOfString:rewrite withString:[pathRewrites objectForKey:rewrite] options:0 range:NSMakeRange(0, MIN([rewrite length]+1, [newPath length]))];
         }
         id obj = [settings objectForKey:path];
         [newSettings setObject:obj forKey:newPath];
-        if ([newPath isEqualToString:@"delegate"]) {
-            obj = [obj nonretainedObjectValue];
-        }
-        [self setValue:obj forKeyPath:newPath];
     }
-    
     self.viewSettings = newSettings;
 }
 

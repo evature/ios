@@ -11,9 +11,12 @@
 #import "EVApplication.h"
 #import "EVVoiceChatMicButtonLayer.h"
 #import "EVViewControllerVisibilityObserver.h"
+#import <objc/runtime.h>
 
 #define BUTTON_DEFAULT_SIZE 60.0f
 
+NSMethodSignature* getterSignatureForProperty(objc_property_t property);
+NSMethodSignature* setterSignatureForProperty(objc_property_t property);
 
 @interface EVVoiceChatButton ()
 
@@ -214,6 +217,60 @@
     return [obj stringByAppendingPathExtension:name];
 }
 
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    NSString* selector = NSStringFromSelector([anInvocation selector]);
+    if ([selector hasPrefix:@"chat"]) {
+        id value = [self valueForUndefinedKey:selector];
+        anInvocation.target = nil;
+        [anInvocation setReturnValue:&value];
+        [anInvocation invoke];
+    } else if ([selector hasPrefix:@"setChat"]) {
+        selector = [[selector substringToIndex:[selector length]-1] stringByReplacingOccurrencesOfString:@"setChat" withString:@"chat" options:0 range:NSMakeRange(0, 7)];
+        id value = nil;
+        [anInvocation getArgument:&value atIndex:2];
+        [self setValue:value forUndefinedKey:selector];
+        value = nil;
+        anInvocation.target = nil;
+        [anInvocation invoke];
+    } else {
+        [super forwardInvocation:anInvocation];
+    }
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+    NSString* aSelector = NSStringFromSelector(selector);
+    if ([aSelector hasPrefix:@"chat"] || [aSelector hasPrefix:@"setChat"]) {
+        BOOL setter = ![aSelector hasPrefix:@"chat"];
+        if (setter) {
+            aSelector = [[aSelector substringToIndex:[aSelector length]-1] stringByReplacingOccurrencesOfString:@"setChat" withString:@"chat" options:0 range:NSMakeRange(0, 7)];
+        }
+        objc_property_t property = class_getProperty([self class], [aSelector UTF8String] );
+        if ( property == NULL )
+            return ( NULL );
+        
+        if (setter) {
+            return setterSignatureForProperty(property);
+        }
+        return getterSignatureForProperty(property);
+    }
+    return [super methodSignatureForSelector:selector];
+}
+
++ (BOOL)instancesRespondToSelector:(SEL)aSelector {
+    NSString* selector = NSStringFromSelector(aSelector);
+    if ([selector hasPrefix:@"chat"] || [selector hasPrefix:@"setChat"]) {
+        return YES;
+    }
+    return [super instancesRespondToSelector:aSelector];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    if ([super respondsToSelector:aSelector]) {
+        return YES;
+    }
+    return [[self class] instancesRespondToSelector:aSelector];
+}
+
 - (id)valueForUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
         key = [self controllerPropertyNameFromSelfName:key];
@@ -324,3 +381,25 @@
 }
 
 @end
+
+NSMethodSignature* getterSignatureForProperty(objc_property_t property) {
+    static NSString* format = nil;
+    if (format == nil) {
+        format = [[NSString alloc] initWithFormat:@"%s%s%s", "%s", @encode(id), @encode(SEL)];
+    }
+    char *type = property_copyAttributeValue(property, "T");
+    NSString* propTypes = [NSString stringWithFormat:format, type];
+    free(type);
+    return [NSMethodSignature signatureWithObjCTypes:[propTypes UTF8String]];
+}
+
+NSMethodSignature* setterSignatureForProperty(objc_property_t property) {
+    static NSString* format = nil;
+    if (format == nil) {
+        format = [[NSString alloc] initWithFormat:@"%s%s%s%s", @encode(void), @encode(id), @encode(SEL), "%s"];
+    }
+    char *type = property_copyAttributeValue(property, "T");
+    NSString* propTypes = [NSString stringWithFormat:format, type];
+    free(type);
+    return [NSMethodSignature signatureWithObjCTypes:[propTypes UTF8String]];
+}

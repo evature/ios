@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "EvaKit"
   s.version      = "2.0.0"
-  s.summary      = "Evature API for iOS"
+  s.summary      = "Evature voice search API for iOS"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -56,9 +56,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "Yehor Popovych" => "y.popovych@crossplusplus.com" }
-  # Or just: s.author    = "Yehor Popovych"
-  # s.authors            = { "Yehor Popovych" => "y.popovych@crossplusplus.com" }
+  s.author             = { "Yehor Popovych" => "popovych.yegor@gmail.com" }
   # s.social_media_url   = "http://twitter.com/Yehor Popovych"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -76,7 +74,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/evature/ios.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/ypopovych/ios.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -114,7 +112,7 @@ Pod::Spec.new do |s|
   #
 
   
-  s.frameworks = "AVFoundation", "AudioToolbox", "CoreLocation", "FLAC", "Ogg"
+  s.frameworks = "AVFoundation", "AudioToolbox", "CoreLocation"
 
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
@@ -128,11 +126,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = false
   
+  s.dependency 'libFLAC', "~>1.3.0"
   s.dependency 'JSQMessagesViewController', "~>7.1.0"
-
-  # ---- FLAC --------- #
-  
-  s.preserve_paths = 'EvaKit/Frameworks/FLAC.framework', 'EvaKit/Frameworks/Ogg.framework'
-  s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"$(PODS_ROOT)/EvaKit/EvaKit/Frameworks/"' }
 
 end

@@ -135,8 +135,6 @@
 		96A7FA1D1B6B6861009D6561 /* EVAudioConvertionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A7FA1B1B6B6861009D6561 /* EVAudioConvertionOperation.m */; };
 		96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */; };
 		96A7FA211B6B6F44009D6561 /* NSError+EVA.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */; };
-		96B46C801B5FFF1F00507A04 /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C7F1B5FFF1F00507A04 /* FLAC.framework */; };
-		96B46C981B60012800507A04 /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C971B60012800507A04 /* Ogg.framework */; };
 		96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C991B6009A500507A04 /* EVApplicationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96B46C9C1B6029FF00507A04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9B1B6029FF00507A04 /* AVFoundation.framework */; };
 		96B46C9E1B602A0500507A04 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B46C9D1B602A0500507A04 /* AudioToolbox.framework */; };
@@ -296,8 +294,6 @@
 		96A7FA1B1B6B6861009D6561 /* EVAudioConvertionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioConvertionOperation.m; sourceTree = "<group>"; };
 		96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+EVA.h"; sourceTree = "<group>"; };
 		96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+EVA.m"; sourceTree = "<group>"; };
-		96B46C7F1B5FFF1F00507A04 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = EvaKit/Frameworks/FLAC.framework; sourceTree = "<group>"; };
-		96B46C971B60012800507A04 /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = EvaKit/Frameworks/Ogg.framework; sourceTree = "<group>"; };
 		96B46C991B6009A500507A04 /* EVApplicationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVApplicationDelegate.h; sourceTree = "<group>"; };
 		96B46C9B1B6029FF00507A04 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		96B46C9D1B602A0500507A04 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -334,8 +330,6 @@
 				96B46CA01B602A2900507A04 /* CoreLocation.framework in Frameworks */,
 				96B46C9E1B602A0500507A04 /* AudioToolbox.framework in Frameworks */,
 				96B46C9C1B6029FF00507A04 /* AVFoundation.framework in Frameworks */,
-				96B46C981B60012800507A04 /* Ogg.framework in Frameworks */,
-				96B46C801B5FFF1F00507A04 /* FLAC.framework in Frameworks */,
 				4670CC06AE5332DF92032526 /* Pods_EvaKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,8 +360,6 @@
 				96B46C9F1B602A2900507A04 /* CoreLocation.framework */,
 				96B46C9D1B602A0500507A04 /* AudioToolbox.framework */,
 				96B46C9B1B6029FF00507A04 /* AVFoundation.framework */,
-				96B46C971B60012800507A04 /* Ogg.framework */,
-				96B46C7F1B5FFF1F00507A04 /* FLAC.framework */,
 				ED9DF85380B2B1D0BB0D3674 /* Pods_EvaKit.framework */,
 			);
 			name = Frameworks;
@@ -805,7 +797,7 @@
 		96675F291B457F1D00494BAA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Evature;
 				TargetAttributes = {
 					96675F311B457F1D00494BAA = {
@@ -1019,6 +1011,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1101,6 +1094,7 @@
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1123,6 +1117,7 @@
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1140,6 +1135,7 @@
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1152,6 +1148,7 @@
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
