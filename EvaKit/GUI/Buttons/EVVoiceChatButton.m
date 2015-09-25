@@ -12,6 +12,7 @@
 #import "EVVoiceChatMicButtonLayer.h"
 #import "EVViewControllerVisibilityObserver.h"
 #import <objc/runtime.h>
+#import "NSValue+EVConstructors.h"
 
 #define BUTTON_DEFAULT_SIZE 60.0f
 
@@ -26,6 +27,8 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
 - (UIImage *)generateImage;
 - (UIImage *)generateHighlightMask;
 - (NSString*)controllerPropertyNameFromSelfName:(NSString*)name;
+
+- (BOOL)isStrongProperty:(NSString*)propertyName;
 
 - (IBAction)clicked:(id)button;
 
@@ -50,6 +53,15 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
 @dynamic chatToolbarCenterButtonHighlightColor;
 @dynamic chatToolbarCenterButtonBorderWidth;
 @dynamic chatToolbarCenterButtonSpinningBorderWidth;
+
+@dynamic chatToolbarCenterButtonMicShadowColor;
+@dynamic chatToolbarCenterButtonMicShadowOffset;
+@dynamic chatToolbarCenterButtonMicShadowRadius;
+@dynamic chatToolbarCenterButtonMicShadowOpacity;
+@dynamic chatToolbarCenterButtonBackgroundShadowColor;
+@dynamic chatToolbarCenterButtonBackgroundShadowOffset;
+@dynamic chatToolbarCenterButtonBackgroundShadowRadius;
+@dynamic chatToolbarCenterButtonBackgroundShadowOpacity;
 
 @dynamic chatToolbarLeftRightButtonsBackgroundColor;
 @dynamic chatToolbarLeftRightButtonsImageColor;
@@ -221,15 +233,38 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
     NSString* selector = NSStringFromSelector([anInvocation selector]);
     if ([selector hasPrefix:@"chat"]) {
         id value = [self valueForUndefinedKey:selector];
+        void* data = NULL;
+        if ([value isKindOfClass:[NSValue class]]) {
+            data = malloc([anInvocation.methodSignature methodReturnLength]);
+            [value getValue:data];
+            [anInvocation setReturnValue:data];
+        } else {
+            [anInvocation setReturnValue:&value];
+        }
         anInvocation.target = nil;
-        [anInvocation setReturnValue:&value];
         [anInvocation invoke];
+        if (data != NULL) {
+            free(data), data = NULL;
+        }
     } else if ([selector hasPrefix:@"setChat"]) {
         selector = [[selector substringToIndex:[selector length]-1] stringByReplacingOccurrencesOfString:@"setChat" withString:@"chat" options:0 range:NSMakeRange(0, 7)];
-        id value = nil;
-        [anInvocation getArgument:&value atIndex:2];
-        [self setValue:value forUndefinedKey:selector];
-        value = nil;
+        
+        void* value = NULL;
+        NSUInteger size = 0;
+
+        const char* type = [[anInvocation methodSignature] getArgumentTypeAtIndex:2];
+        NSGetSizeAndAlignment(type, &size, NULL);
+        value = malloc(size);
+        
+        [anInvocation getArgument:value atIndex:2];
+        
+        if (type[0] == @encode(id)[0]) {
+            [self setValue:*(id*)value forUndefinedKey:selector];
+        } else {
+            [self setValue:[NSValue ev_valueWithValue:value andObjCType:type] forUndefinedKey:selector];
+        }
+        free(value), value = NULL;
+        
         anInvocation.target = nil;
         [anInvocation invoke];
     } else {
@@ -244,7 +279,7 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
         if (setter) {
             aSelector = [[aSelector substringToIndex:[aSelector length]-1] stringByReplacingOccurrencesOfString:@"setChat" withString:@"chat" options:0 range:NSMakeRange(0, 7)];
         }
-        objc_property_t property = class_getProperty([self class], [aSelector UTF8String] );
+        objc_property_t property = class_getProperty([self class], [aSelector UTF8String]);
         if ( property == NULL )
             return ( NULL );
         
@@ -271,26 +306,39 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
     return [[self class] instancesRespondToSelector:aSelector];
 }
 
+- (BOOL)isStrongProperty:(NSString*)propertyName {
+    objc_property_t property = class_getProperty([self class], [propertyName UTF8String]);
+    if (property != NULL) {
+        const char* attrs = property_getAttributes(property);
+        if (strstr(attrs, ",&,") != NULL || strstr(attrs, ",C,") != NULL) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (id)valueForUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
-        key = [self controllerPropertyNameFromSelfName:key];
-        if ([key isEqualToString:@"controller.delegate"]) {
-            return [[self.chatProperties objectForKey:key] nonretainedObjectValue];
+        id object = [self.chatProperties objectForKey:[self controllerPropertyNameFromSelfName:key]];
+        if ([object isKindOfClass:[NSValue class]] && strcmp([(NSValue*)object objCType], @encode(void*)) == 0) {
+            return [object nonretainedObjectValue];
         }
-        return [self.chatProperties objectForKey:key];
+        return object;
     }
     return [super valueForUndefinedKey:key];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     if ([key hasPrefix:@"chat"]) {
-        key = [self controllerPropertyNameFromSelfName:key];
-        if ([key isEqualToString:@"controller.delegate"]) {
-            value = [NSValue valueWithNonretainedObject:value];
+        if (![value isKindOfClass:[NSValue class]]) {
+            if (![self isStrongProperty:key]) {
+                value = [NSValue valueWithNonretainedObject:value];
+            }
         }
+        key = [self controllerPropertyNameFromSelfName:key];
         [self.chatProperties setValue:value forKey:key];
     } else {
-        [super setValue:value forKey:key];
+        [super setValue:value forUndefinedKey:key];
     }
 }
 

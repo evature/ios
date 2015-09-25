@@ -52,6 +52,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     EVVoiceChatButton* button = [[EVApplication sharedApplication] addButtonInController:self];
+    button.chatToolbarCenterButtonBackgroundShadowRadius = 3.0f;
+    button.chatToolbarCenterButtonBackgroundShadowOffset = CGSizeMake(1.0, 1.0);
+    CGSize test = button.chatToolbarCenterButtonBackgroundShadowOffset;
     [button ev_pinToBottomCenteredWithOffset:90.0f];
 }
 

@@ -14,6 +14,8 @@
 		9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */; };
 		960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 960C05D91B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h */; };
 		960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 960C05DA1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m */; };
+		960F69AE1BB59690000178D5 /* NSValue+EVConstructors.h in Headers */ = {isa = PBXBuildFile; fileRef = 960F69AC1BB59690000178D5 /* NSValue+EVConstructors.h */; settings = {ASSET_TAGS = (); }; };
+		960F69AF1BB59691000178D5 /* NSValue+EVConstructors.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F69AD1BB59690000178D5 /* NSValue+EVConstructors.m */; settings = {ASSET_TAGS = (); }; };
 		9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */; };
 		9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */; };
 		9615BED31B727E5000F31F38 /* EVAudioDataStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */; };
@@ -43,6 +45,7 @@
 		9653D4271B5C6F9E00FC37AF /* EVDownButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */; };
 		9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 9659512B1B55BE3200B15AA2 /* UIImageEffects.h */; };
 		9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9659512C1B55BE3200B15AA2 /* UIImageEffects.m */; };
+		9665C1351BB59C57003538EA /* New_York_Trip.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9665C1341BB59C57003538EA /* New_York_Trip.gpx */; settings = {ASSET_TAGS = (); }; };
 		96675F381B457F1D00494BAA /* EvaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F371B457F1D00494BAA /* EvaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96675F541B458F3900494BAA /* EVVoiceChatButton.m */; };
@@ -166,6 +169,8 @@
 		9608E8131B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceLevelMicButtonLayer.m; sourceTree = "<group>"; };
 		960C05D91B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSVGButtonWithCircleBackgroundLayer.h; sourceTree = "<group>"; };
 		960C05DA1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVSVGButtonWithCircleBackgroundLayer.m; sourceTree = "<group>"; };
+		960F69AC1BB59690000178D5 /* NSValue+EVConstructors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+EVConstructors.h"; sourceTree = "<group>"; };
+		960F69AD1BB59690000178D5 /* NSValue+EVConstructors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+EVConstructors.m"; sourceTree = "<group>"; };
 		9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVStreamURLWriter.h; sourceTree = "<group>"; };
 		9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVStreamURLWriter.m; sourceTree = "<group>"; };
 		9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioDataStreamer.h; sourceTree = "<group>"; };
@@ -195,6 +200,7 @@
 		9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDownButtonItem.m; sourceTree = "<group>"; };
 		9659512B1B55BE3200B15AA2 /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageEffects.h; sourceTree = "<group>"; };
 		9659512C1B55BE3200B15AA2 /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageEffects.m; sourceTree = "<group>"; };
+		9665C1341BB59C57003538EA /* New_York_Trip.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = New_York_Trip.gpx; sourceTree = "<group>"; };
 		96675F321B457F1D00494BAA /* EvaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EvaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96675F361B457F1D00494BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96675F371B457F1D00494BAA /* EvaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaKit.h; sourceTree = "<group>"; };
@@ -421,6 +427,8 @@
 				968BBA5B1B94FC3A001EF0C9 /* EVSearchResultsHandler.m */,
 				968BBA5E1B9503F0001EF0C9 /* NSDate+EVA.h */,
 				968BBA5F1B9503F0001EF0C9 /* NSDate+EVA.m */,
+				960F69AC1BB59690000178D5 /* NSValue+EVConstructors.h */,
+				960F69AD1BB59690000178D5 /* NSValue+EVConstructors.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -616,6 +624,7 @@
 		969797B01B4BE13E00C0244D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9665C1341BB59C57003538EA /* New_York_Trip.gpx */,
 				969797B11B4BE13E00C0244D /* Info.plist */,
 				969797B21B4BE13E00C0244D /* main.m */,
 			);
@@ -739,6 +748,7 @@
 				96675F381B457F1D00494BAA /* EvaKit.h in Headers */,
 				96E0148C1B51533900E8ADE4 /* EVSVGLayer.h in Headers */,
 				96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */,
+				960F69AE1BB59690000178D5 /* NSValue+EVConstructors.h in Headers */,
 				96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */,
 				960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */,
 				9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */,
@@ -848,6 +858,7 @@
 			files = (
 				969797BC1B4BE13E00C0244D /* Main.storyboard in Resources */,
 				969797C11B4BE13E00C0244D /* LaunchScreen.xib in Resources */,
+				9665C1351BB59C57003538EA /* New_York_Trip.gpx in Resources */,
 				969797BE1B4BE13E00C0244D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -904,6 +915,7 @@
 				96804C501B861F5700FA9998 /* EVSearchContextBase.m in Sources */,
 				9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */,
 				9679483F1B84981C00198130 /* EVRequestAttributes.m in Sources */,
+				960F69AF1BB59691000178D5 /* NSValue+EVConstructors.m in Sources */,
 				96804C4C1B861E6400FA9998 /* EVSearchContext.m in Sources */,
 				96454A8E1B85193A00C26FFD /* EVPNRAttributes.m in Sources */,
 				969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */,

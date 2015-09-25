@@ -192,7 +192,7 @@ void reloadData(id collectionView, SEL selector) {
     
     for (NSString* path in self.viewSettings) {
         id obj = [self.viewSettings objectForKey:path];
-        if ([path isEqualToString:@"delegate"]) {
+        if ([obj isKindOfClass:[NSValue class]] && strcmp([(NSValue*)obj objCType], @encode(void*)) == 0) {
             obj = [obj nonretainedObjectValue];
         }
         [self setValue:obj forKeyPath:path];
