@@ -8,6 +8,7 @@
 
 #import "EVChatToolbarView.h"
 #import "EVChatToolbarContentView.h"
+#import "UIView+SizeCalculations.h"
 
 #define BAR_HEIGHT_X1 48.0f
 
@@ -17,7 +18,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.preferredDefaultHeight = BAR_HEIGHT_X1*[UIScreen mainScreen].scale;
+    NSLog(@"Scale: %lf", [UIScreen mainScreen].scale);
+    self.preferredDefaultHeight = [self recalculateSizeForDeviceFrom1xSize:BAR_HEIGHT_X1];
     [(EVChatToolbarContentView*)self.contentView setTouchDelegate:self];
 }
 

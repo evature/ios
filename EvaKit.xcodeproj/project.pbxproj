@@ -45,6 +45,10 @@
 		9653D4271B5C6F9E00FC37AF /* EVDownButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */; };
 		9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 9659512B1B55BE3200B15AA2 /* UIImageEffects.h */; };
 		9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9659512C1B55BE3200B15AA2 /* UIImageEffects.m */; };
+		965E503B1BBA9D0D009B5EB3 /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		965E503C1BBA9D0D009B5EB3 /* EvaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		966298031BBAC3E1005AC730 /* UIView+SizeCalculations.h in Headers */ = {isa = PBXBuildFile; fileRef = 966298011BBAC3E1005AC730 /* UIView+SizeCalculations.h */; settings = {ASSET_TAGS = (); }; };
+		966298041BBAC3E1005AC730 /* UIView+SizeCalculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 966298021BBAC3E1005AC730 /* UIView+SizeCalculations.m */; settings = {ASSET_TAGS = (); }; };
 		9665C1351BB59C57003538EA /* New_York_Trip.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9665C1341BB59C57003538EA /* New_York_Trip.gpx */; settings = {ASSET_TAGS = (); }; };
 		96675F381B457F1D00494BAA /* EvaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F371B457F1D00494BAA /* EvaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 96675F531B458F3900494BAA /* EVVoiceChatButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -129,7 +133,6 @@
 		969797BC1B4BE13E00C0244D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969797BA1B4BE13E00C0244D /* Main.storyboard */; };
 		969797BE1B4BE13E00C0244D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 969797BD1B4BE13E00C0244D /* Images.xcassets */; };
 		969797C11B4BE13E00C0244D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969797BF1B4BE13E00C0244D /* LaunchScreen.xib */; };
-		969797D41B4BE2E000C0244D /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
 		969797DB1B4C0D2800C0244D /* EvaKit_Mic.svg in Resources */ = {isa = PBXBuildFile; fileRef = 969797DA1B4C0D2800C0244D /* EvaKit_Mic.svg */; };
 		969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */; };
 		969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */; };
@@ -160,9 +163,36 @@
 		96E0148D1B51533900E8ADE4 /* EVSVGLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E0148B1B51533900E8ADE4 /* EVSVGLayer.m */; };
 		96E014901B5154E800E8ADE4 /* EVResizableShapeLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E0148E1B5154E800E8ADE4 /* EVResizableShapeLayer.h */; };
 		96E014911B5154E800E8ADE4 /* EVResizableShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E0148F1B5154E800E8ADE4 /* EVResizableShapeLayer.m */; };
+		E0917B7FD08F683A6F859858 /* Pods_EvaKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEC46E59DD7E563AEEE65B81 /* Pods_EvaKitExample.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		965E503D1BBA9D0D009B5EB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96675F291B457F1D00494BAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96675F311B457F1D00494BAA;
+			remoteInfo = EvaKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		965E503F1BBA9D0E009B5EB3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				965E503C1BBA9D0D009B5EB3 /* EvaKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		08BA1BEC0467A8372FF881B6 /* Pods-EvaKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKitExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKitExample/Pods-EvaKitExample.release.xcconfig"; sourceTree = "<group>"; };
+		822CF7195BCB2DE5005478C8 /* Pods-EvaKitExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKitExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKitExample/Pods-EvaKitExample.debug.xcconfig"; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
@@ -200,6 +230,11 @@
 		9653D4251B5C6F9E00FC37AF /* EVDownButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDownButtonItem.m; sourceTree = "<group>"; };
 		9659512B1B55BE3200B15AA2 /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageEffects.h; sourceTree = "<group>"; };
 		9659512C1B55BE3200B15AA2 /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageEffects.m; sourceTree = "<group>"; };
+		965E50421BBAA132009B5EB3 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = "Pods/../build/Debug-iphoneos/FLAC.framework"; sourceTree = "<group>"; };
+		965E50441BBAA13E009B5EB3 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Debug-iphoneos/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
+		965E50461BBAA142009B5EB3 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQSystemSoundPlayer.framework; path = "Pods/../build/Debug-iphoneos/JSQSystemSoundPlayer.framework"; sourceTree = "<group>"; };
+		966298011BBAC3E1005AC730 /* UIView+SizeCalculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SizeCalculations.h"; sourceTree = "<group>"; };
+		966298021BBAC3E1005AC730 /* UIView+SizeCalculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SizeCalculations.m"; sourceTree = "<group>"; };
 		9665C1341BB59C57003538EA /* New_York_Trip.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = New_York_Trip.gpx; sourceTree = "<group>"; };
 		96675F321B457F1D00494BAA /* EvaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EvaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96675F361B457F1D00494BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -324,6 +359,7 @@
 		96E0148E1B5154E800E8ADE4 /* EVResizableShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVResizableShapeLayer.h; sourceTree = "<group>"; };
 		96E0148F1B5154E800E8ADE4 /* EVResizableShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVResizableShapeLayer.m; sourceTree = "<group>"; };
 		DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKit/Pods-EvaKit.debug.xcconfig"; sourceTree = "<group>"; };
+		DEC46E59DD7E563AEEE65B81 /* Pods_EvaKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EvaKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EvaKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-EvaKit/Pods-EvaKit.release.xcconfig"; sourceTree = "<group>"; };
 		ED9DF85380B2B1D0BB0D3674 /* Pods_EvaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EvaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -344,7 +380,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				969797D41B4BE2E000C0244D /* EvaKit.framework in Frameworks */,
+				965E503B1BBA9D0D009B5EB3 /* EvaKit.framework in Frameworks */,
+				E0917B7FD08F683A6F859858 /* Pods_EvaKitExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +393,8 @@
 			children = (
 				DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */,
 				E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */,
+				822CF7195BCB2DE5005478C8 /* Pods-EvaKitExample.debug.xcconfig */,
+				08BA1BEC0467A8372FF881B6 /* Pods-EvaKitExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -363,10 +402,14 @@
 		78552BCA315499B498422DEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				965E50461BBAA142009B5EB3 /* JSQSystemSoundPlayer.framework */,
+				965E50441BBAA13E009B5EB3 /* JSQMessagesViewController.framework */,
+				965E50421BBAA132009B5EB3 /* FLAC.framework */,
 				96B46C9F1B602A2900507A04 /* CoreLocation.framework */,
 				96B46C9D1B602A0500507A04 /* AudioToolbox.framework */,
 				96B46C9B1B6029FF00507A04 /* AVFoundation.framework */,
 				ED9DF85380B2B1D0BB0D3674 /* Pods_EvaKit.framework */,
+				DEC46E59DD7E563AEEE65B81 /* Pods_EvaKitExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -498,6 +541,8 @@
 				968934CE1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h */,
 				968BBA7C1B951F0E001EF0C9 /* EVChatMessage.h */,
 				968BBA7D1B951F0E001EF0C9 /* EVChatMessage.m */,
+				966298011BBAC3E1005AC730 /* UIView+SizeCalculations.h */,
+				966298021BBAC3E1005AC730 /* UIView+SizeCalculations.m */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -751,6 +796,7 @@
 				960F69AE1BB59690000178D5 /* NSValue+EVConstructors.h in Headers */,
 				96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */,
 				960C05DB1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.h in Headers */,
+				966298031BBAC3E1005AC730 /* UIView+SizeCalculations.h in Headers */,
 				9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */,
 				96A7FA1C1B6B6861009D6561 /* EVAudioConvertionOperation.h in Headers */,
 				968BBA6C1B951239001EF0C9 /* EVHotelSearchModel.h in Headers */,
@@ -788,13 +834,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 969797CE1B4BE13E00C0244D /* Build configuration list for PBXNativeTarget "EvaKitExample" */;
 			buildPhases = (
+				112C86489C5860938BB72FD1 /* Check Pods Manifest.lock */,
 				969797AA1B4BE13E00C0244D /* Sources */,
 				969797AB1B4BE13E00C0244D /* Frameworks */,
 				969797AC1B4BE13E00C0244D /* Resources */,
+				965E503F1BBA9D0E009B5EB3 /* Embed Frameworks */,
+				41E1359CE20D982FE628F4A3 /* Embed Pods Frameworks */,
+				ED9CB5F1132758C28EC63C1E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				965E503E1BBA9D0D009B5EB3 /* PBXTargetDependency */,
 			);
 			name = EvaKitExample;
 			productName = EvaKitExample;
@@ -866,6 +917,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		112C86489C5860938BB72FD1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		41E1359CE20D982FE628F4A3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EvaKitExample/Pods-EvaKitExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		847BBD3BA369646303AC147D /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -879,6 +960,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ED9CB5F1132758C28EC63C1E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EvaKitExample/Pods-EvaKitExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FF2BAEE618F49013D9A07A48 /* Copy Pods Resources */ = {
@@ -910,6 +1006,7 @@
 				96804C3F1B85EFF300FA9998 /* EVQuestionFlowElement.m in Sources */,
 				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,
 				9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */,
+				966298041BBAC3E1005AC730 /* UIView+SizeCalculations.m in Sources */,
 				96454A861B84F44600C26FFD /* EVTravelers.m in Sources */,
 				9679484F1B84BC7A00198130 /* EVFlightAttributes.m in Sources */,
 				96804C501B861F5700FA9998 /* EVSearchContextBase.m in Sources */,
@@ -980,6 +1077,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		965E503E1BBA9D0D009B5EB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96675F311B457F1D00494BAA /* EvaKit */;
+			targetProxy = 965E503D1BBA9D0D009B5EB3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		969797BA1B4BE13E00C0244D /* Main.storyboard */ = {
@@ -1137,9 +1242,14 @@
 		};
 		969797CF1B4BE13E00C0244D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 822CF7195BCB2DE5005478C8 /* Pods-EvaKitExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1147,20 +1257,25 @@
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		969797D01B4BE13E00C0244D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08BA1BEC0467A8372FF881B6 /* Pods-EvaKitExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

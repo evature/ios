@@ -10,4 +10,8 @@ target 'EvaKit' do
     pod 'libFLAC', '~>1.3.0'
 end
 
+target 'EvaKitExample' do
+    pod 'JSQMessagesViewController', '~>7.0'
+    pod 'libFLAC', '~>1.3.0'
+end
 

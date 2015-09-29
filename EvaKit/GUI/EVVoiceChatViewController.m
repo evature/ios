@@ -66,6 +66,7 @@ void reloadData(id collectionView, SEL selector) {
     BOOL isRecording;
     BOOL _undoRequest;
     BOOL _shownWarningsTutorial;
+    BOOL _isIOS9;
 }
 
 @property (nonatomic, strong) NSDictionary* viewSettings;
@@ -143,6 +144,8 @@ void reloadData(id collectionView, SEL selector) {
         self.incomingBubbleImage = [bubbleFactory incomingMessagesBubbleImageWithColor:RGBA_HEX_COLOR(03, A9, F4, FF)];
         [bubbleFactory release];
         
+        _isIOS9 = ([[[UIDevice currentDevice] systemVersion] floatValue] > 8.99f);
+       
         self.speechSynthesizer = [[AVSpeechSynthesizer new] autorelease];
     }
     return self;
@@ -429,7 +432,9 @@ void reloadData(id collectionView, SEL selector) {
 - (void)speakText:(NSString *)text {
     if (self.speakEnabled && !isRecording) {
         AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:text];
-        utterance.rate = EV_SPEECH_RATE;
+        if (!_isIOS9) {
+            utterance.rate = EV_SPEECH_RATE;
+        }
         [self.speechSynthesizer speakUtterance:utterance];
     }
 }

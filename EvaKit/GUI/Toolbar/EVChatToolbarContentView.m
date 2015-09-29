@@ -13,7 +13,7 @@
 #import "EVSpringAnimation.h"
 
 #define BUTTON_MARGIN 8.0f
-#define BUTTON_TOP_BOTTOM_MARGIN 8.0f
+//#define BUTTON_TOP_BOTTOM_MARGIN 8.0f
 
 typedef NS_ENUM(uint8_t, EVMicButtonState) {
     EVMicButtonStateShowingMic = 0,
@@ -204,7 +204,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         _leftRightButtonsImageShadowOpacity = _centerButtonMicShadowOpacity;
         _leftRightButtonsImageShadowRadius = _centerButtonMicShadowRadius;
         
-        _leftRightButtonsOffset = BUTTON_MARGIN * [UIScreen mainScreen].scale;
+        _leftRightButtonsOffset = BUTTON_MARGIN; //* [UIScreen mainScreen].scale;
         _micButtonState = EVMicButtonStateShowingMic;
         
         [self awakeFromNib];
