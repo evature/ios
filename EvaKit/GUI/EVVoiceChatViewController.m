@@ -162,24 +162,28 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)setHelloMessage {
-    EVSearchContext* context = self.evApplication.context;
     NSString* message = nil;
-    switch (context.type) {
-        case EVSearchContextTypeFlight:
-            message = @"What flight can I find for you?";
-            break;
-        case EVSearchContextTypeCruise:
-            message = @"What cruise can I find for you?";
-            break;
-        case EVSearchContextTypeCar:
-            message = @"What car can I find for you?";
-            break;
-        case EVSearchContextTypeHotel:
-            message = @"What hotel can I find for you?";
-            break;
-        default:
-            message = @"Hello, how may I help you?";
-            break;
+    if ([self.delegate respondsToSelector:@selector(helloMessage)]) {
+        message = [self.delegate helloMessage];
+    } else {
+        EVSearchContext* context = self.evApplication.context;
+        switch (context.type) {
+            case EVSearchContextTypeFlight:
+                message = @"What flight can I find for you?";
+                break;
+            case EVSearchContextTypeCruise:
+                message = @"What cruise can I find for you?";
+                break;
+            case EVSearchContextTypeCar:
+                message = @"What car can I find for you?";
+                break;
+            case EVSearchContextTypeHotel:
+                message = @"What hotel can I find for you?";
+                break;
+            default:
+                message = @"Hello, how may I help you?";
+                break;
+        }
     }
     [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:message]];
     [self speakText:message];
@@ -237,6 +241,7 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Undo pressed!");
+    [self stopSpeaking];
     [self.evApplication editLastQueryWithText:nil];
     _undoRequest = YES;
 }

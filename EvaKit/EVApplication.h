@@ -23,6 +23,7 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
     EVApplicationStateSoundRecordingStarted = 0,
     EVApplicationStateSoundRecordingStoped,
     EVApplicationStateSoundRequestFinished,
+    EVApplicationStateSoundRequestError,
     EVApplicationStateSoundCancelled
 };
 

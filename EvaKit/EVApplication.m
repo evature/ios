@@ -166,10 +166,12 @@
         
         EVApplicationSound* high = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_high" ofType:@"aif"]];
         EVApplicationSound* low = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_low" ofType:@"aif"]];
+        EVApplicationSound* vlow = [EVApplicationSound soundWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"EvaKit_voice_verylow" ofType:@"aif"]];
         [self setSound:high forApplicationState:EVApplicationStateSoundRecordingStarted];
         [self setSound:low forApplicationState:EVApplicationStateSoundRecordingStoped];
         [self setSound:low forApplicationState:EVApplicationStateSoundCancelled];
         [self setSound:low forApplicationState:EVApplicationStateSoundRequestFinished];
+        [self setSound:vlow forApplicationState:EVApplicationStateSoundRequestError];
         
         [self setupRecorderChain];
         
@@ -494,6 +496,7 @@
                 [self.delegate evApplicationRecordingIsCancelled:self];
             }
         } else {
+            [[self soundForState:EVApplicationStateSoundRequestError] play];
             [self.delegate evApplication:self didObtainError:error];
         }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -504,10 +507,9 @@
 
 - (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response {
     EV_LOG_DEBUG(@"Response: %@", response);
-    [[self soundForState:EVApplicationStateSoundRequestFinished] play];
     @try {
         EVResponse* evResponse = [[EVResponse alloc] initWithResponse:response];
-        
+        [[self soundForState:EVApplicationStateSoundRequestFinished] play];
         dispatch_async(dispatch_get_main_queue(), ^{
             [evResponse autorelease];
             evResponse.isNewSession = ![self.currentSessionID isEqualToString:EV_NEW_SESSION_ID] && ![self.currentSessionID isEqualToString:evResponse.sessionId];

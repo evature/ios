@@ -11,10 +11,12 @@
 @implementation UIView (SizeCalculations)
 
 + (CGFloat)recalculateSizeForDeviceFrom1xSize:(CGFloat)size1x {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    scale = scale > 2.0 ? 2.0 : scale;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        return size1x*2*[UIScreen mainScreen].scale;
+        return size1x*2;
     }
-    return size1x*[UIScreen mainScreen].scale;
+    return size1x*scale;
 }
 
 - (CGFloat)recalculateSizeForDeviceFrom1xSize:(CGFloat)size1x {

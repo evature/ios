@@ -47,6 +47,7 @@
 		9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9659512C1B55BE3200B15AA2 /* UIImageEffects.m */; };
 		965E503B1BBA9D0D009B5EB3 /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		965E503C1BBA9D0D009B5EB3 /* EvaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96612BEE1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif in Resources */ = {isa = PBXBuildFile; fileRef = 96612BED1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif */; settings = {ASSET_TAGS = (); }; };
 		966298031BBAC3E1005AC730 /* UIView+SizeCalculations.h in Headers */ = {isa = PBXBuildFile; fileRef = 966298011BBAC3E1005AC730 /* UIView+SizeCalculations.h */; settings = {ASSET_TAGS = (); }; };
 		966298041BBAC3E1005AC730 /* UIView+SizeCalculations.m in Sources */ = {isa = PBXBuildFile; fileRef = 966298021BBAC3E1005AC730 /* UIView+SizeCalculations.m */; settings = {ASSET_TAGS = (); }; };
 		9665C1351BB59C57003538EA /* New_York_Trip.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 9665C1341BB59C57003538EA /* New_York_Trip.gpx */; settings = {ASSET_TAGS = (); }; };
@@ -233,6 +234,7 @@
 		965E50421BBAA132009B5EB3 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = "Pods/../build/Debug-iphoneos/FLAC.framework"; sourceTree = "<group>"; };
 		965E50441BBAA13E009B5EB3 /* JSQMessagesViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQMessagesViewController.framework; path = "Pods/../build/Debug-iphoneos/JSQMessagesViewController.framework"; sourceTree = "<group>"; };
 		965E50461BBAA142009B5EB3 /* JSQSystemSoundPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSQSystemSoundPlayer.framework; path = "Pods/../build/Debug-iphoneos/JSQSystemSoundPlayer.framework"; sourceTree = "<group>"; };
+		96612BED1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvaKit_voice_verylow.aif; sourceTree = "<group>"; };
 		966298011BBAC3E1005AC730 /* UIView+SizeCalculations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SizeCalculations.h"; sourceTree = "<group>"; };
 		966298021BBAC3E1005AC730 /* UIView+SizeCalculations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SizeCalculations.m"; sourceTree = "<group>"; };
 		9665C1341BB59C57003538EA /* New_York_Trip.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = New_York_Trip.gpx; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 		96675F351B457F1D00494BAA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				96612BED1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif */,
 				96804C531B8677AF00FA9998 /* EvaKit_voice_high.aif */,
 				96804C541B8677AF00FA9998 /* EvaKit_voice_low.aif */,
 				96675F361B457F1D00494BAA /* Info.plist */,
@@ -899,6 +902,7 @@
 				96D9C8571B546D5C00276ADA /* EvaKit_Trash.svg in Resources */,
 				96D9C8591B54702300276ADA /* EvaKit_Undo.svg in Resources */,
 				9653D4231B5C6F7800FC37AF /* EvaKit_DownArrow.svg in Resources */,
+				96612BEE1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif in Resources */,
 				9679ABCB1B4E8BC500F475DE /* EVVoiceChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

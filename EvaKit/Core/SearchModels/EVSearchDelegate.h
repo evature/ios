@@ -16,5 +16,6 @@
 - (void)evSearchGotResponse:(EVResponse*)response;
 - (void)evSearchGotAnError:(NSError*)error;
 - (EVSearchContextType)searchContext;
+- (NSString*)helloMessage;
 
 @end

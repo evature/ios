@@ -35,6 +35,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 - (void)setupView;
 - (void)recalculateButtonBackgroundSize;
 - (void)setupButtonPositions;
+- (void)moveCenterButtonBack;
 
 @end
 
@@ -44,9 +45,9 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 #pragma mark === Layers and View Setup and Calculations ===
 
 - (void)setupView {
-    UITapGestureRecognizer* tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)] autorelease];
-    tapRecognizer.numberOfTapsRequired = 1;
-    [self addGestureRecognizer:tapRecognizer];
+//    UITapGestureRecognizer* tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)] autorelease];
+//    tapRecognizer.numberOfTapsRequired = 1;
+//    [self addGestureRecognizer:tapRecognizer];
     
     UIPanGestureRecognizer* panRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)] autorelease];
     panRecognizer.minimumNumberOfTouches = 1;
@@ -238,22 +239,55 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 }
 
 
+- (void)moveCenterButtonBack {
+    CGRect frame = [self.micButtonLayer frame];
+    if (CGRectIntersectsRect(frame, self.leftButtonLayer.frame)) {
+        CGFloat intersect = (frame.origin.x - self.leftButtonLayer.frame.origin.x) / frame.size.width;
+        if (intersect <= 0.2) {
+            [self.touchDelegate leftButtonTouched:self];
+        }
+    } else if (CGRectIntersectsRect(frame, self.rightButtonLayer.frame)) {
+        CGFloat intersect = (self.rightButtonLayer.frame.origin.x - frame.origin.x) / frame.size.width;
+        if (intersect <= 0.2) {
+            [self.touchDelegate rightButtonTouched:self];
+        }
+    }
+    
+    
+    //[CATransaction begin];
+    //[CATransaction setValue:@0.5 forKey:kCATransactionAnimationDuration];
+    EVSpringAnimation *animation = [EVSpringAnimation animationWithKeyPath:@"position.x"
+                                                                  duration:0.5f
+                                                    usingSpringWithDumping:0.8f
+                                                           initialVelocity:1.2f
+                                                                 fromValue:self.micButtonLayer.position.x
+                                                                   toValue:self.bounds.size.width/2.0f];
+    [self.micButtonLayer addAnimation:animation forKey:@"PositionSpringAnimation"];
+    self.micButtonLayer.position = CGPointMake(self.bounds.size.width/2.0f, self.bounds.size.height/2.0f);
+    
+    [self.micButtonLayer released];
+    [self.micButtonLayer showMic];
+    //[CATransaction commit];
+    
+    _buttonIsDragging = NO;
+    [self recalculateButtonBackgroundSize];
+}
 
 #pragma mark === Gesture recognizers for tap and drag ===
 
-- (IBAction)tapGesture:(UIGestureRecognizer*)recognizer {
-    CGPoint touchPoint = [recognizer locationInView:self];
-    touchPoint = [self.layer convertPoint:touchPoint toLayer:self.layer.superlayer];
-    CALayer* theLayer = [self.layer hitTest:touchPoint];
-    if (theLayer == self.micButtonLayer) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
-            [CATransaction begin];
-            [[self micButtonLayer] released];
-            [CATransaction commit];
-            [self.touchDelegate centerButtonTouched:self];
-        }
-    }
-}
+//- (IBAction)tapGesture:(UIGestureRecognizer*)recognizer {
+//    CGPoint touchPoint = [recognizer locationInView:self];
+//    touchPoint = [self.layer convertPoint:touchPoint toLayer:self.layer.superlayer];
+//    CALayer* theLayer = [self.layer hitTest:touchPoint];
+//    if (theLayer == self.micButtonLayer) {
+//        if (recognizer.state == UIGestureRecognizerStateEnded) {
+//            [CATransaction begin];
+//            [[self micButtonLayer] released];
+//            [CATransaction commit];
+//            [self.touchDelegate centerButtonTouched:self];
+//        }
+//    }
+//}
 
 - (IBAction)panGesture:(UIPanGestureRecognizer*)recognizer {
     CGPoint location = [recognizer locationInView:self];
@@ -271,32 +305,9 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         self.micButtonLayer.position = CGPointMake(location.x, self.bounds.size.height/2.0f);
         [CATransaction commit];
         if (recognizer.state == UIGestureRecognizerStateEnded) {
-            if (CGRectIntersectsRect(self.micButtonLayer.frame, self.leftButtonLayer.frame)) {
-                CGFloat intersect = (self.micButtonLayer.frame.origin.x - self.leftButtonLayer.frame.origin.x) / self.micButtonLayer.frame.size.width;
-                if (intersect <= 0.2) {
-                    [self.touchDelegate leftButtonTouched:self];
-                }
-            } else if (CGRectIntersectsRect(self.micButtonLayer.frame, self.rightButtonLayer.frame)) {
-                CGFloat intersect = (self.rightButtonLayer.frame.origin.x - self.micButtonLayer.frame.origin.x) / self.micButtonLayer.frame.size.width;
-                if (intersect <= 0.2) {
-                    [self.touchDelegate rightButtonTouched:self];
-                }
-            }
-            [CATransaction begin];
-            EVSpringAnimation *animation = [EVSpringAnimation animationWithKeyPath:@"position.x"
-                                                                          duration:0.5f
-                                                            usingSpringWithDumping:0.8f
-                                                                   initialVelocity:1.2f
-                                                                         fromValue:self.micButtonLayer.position.x
-                                                                           toValue:self.bounds.size.width/2.0f];
-            [self.micButtonLayer addAnimation:animation forKey:@"PositionStringAnimation"];
-            self.micButtonLayer.position = CGPointMake(self.bounds.size.width/2.0f, self.bounds.size.height/2.0f);
-            [self.micButtonLayer released];
-            [self.micButtonLayer showMic];
-            [CATransaction commit];
-            _buttonIsDragging = NO;
-            [self recalculateButtonBackgroundSize];
+            [self moveCenterButtonBack];
         } else if (recognizer.state == UIGestureRecognizerStateBegan) {
+            [self.micButtonLayer removeAllAnimations];
             [self.micButtonLayer hideMic];
         }
     }
@@ -311,10 +322,46 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         if (theLayer == self.micButtonLayer) {
             _buttonIsDragging = YES;
             [self.micButtonLayer touched];
+        } else if (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer) {
+            _buttonIsDragging = YES;
+            CGFloat x = 0.0;
+            if (theLayer == self.leftButtonLayer) {
+                x = theLayer.position.x + theLayer.frame.size.width/2.0;
+                ((EVResizableShapeLayer*)self.leftButtonLayer.backgroundLayer).pathScale = _leftRightButtonsMaxBackgroundScale;
+            } else {
+                x = theLayer.position.x - theLayer.frame.size.width/2.0;
+                ((EVResizableShapeLayer*)self.rightButtonLayer.backgroundLayer).pathScale = _leftRightButtonsMaxBackgroundScale;
+            }
+            CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            [anim setFromValue:@(self.micButtonLayer.position.x)];
+            [anim setToValue:@(x)];
+            [anim setDuration:0.4];
+            [anim setRemovedOnCompletion:NO];
+            [anim setFillMode:kCAFillModeBoth];
+            [self.micButtonLayer addAnimation:anim forKey:@"LeftRightClick"];
+            [self.micButtonLayer hideMic];
         }
     }
 }
 
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+    if ([touches count] == 1) {
+        CGPoint touchPoint = [[touches anyObject] locationInView:self];
+        touchPoint = [self.layer convertPoint:touchPoint toLayer:self.layer.superlayer];
+        CALayer* theLayer = [self.layer hitTest:touchPoint];
+        if (theLayer == self.micButtonLayer) {
+            _buttonIsDragging = NO;
+            [[self micButtonLayer] released];
+            [self.touchDelegate centerButtonTouched:self];
+        } else if (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer) {
+            self.micButtonLayer.position = [self.micButtonLayer.presentationLayer position];
+            [self.micButtonLayer removeAnimationForKey:@"LeftRightClick"];
+            [self moveCenterButtonBack];
+        }
+    }
+}
 
 #pragma mark === Animation external methods ===
 
