@@ -472,7 +472,6 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *error = nil;
     
-        
     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
     if (error != nil) {
         EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
@@ -480,6 +479,10 @@
     [session setMode:AVAudioSessionModeVoiceChat error:&error];
     if (error != nil) {
         EV_LOG_ERROR(@"Failed to setMode for AVAudioSession! %@", error);
+    }
+    [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+    if (error != nil) {
+        EV_LOG_ERROR(@"Failed to override output for AVAudioSession! %@", error);
     }
 }
 
