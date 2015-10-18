@@ -8,7 +8,7 @@
 
 #import "EVSearchContextBase.h"
 
-#define EVSearchContextTypesAll 0xFFFF
+#define EVSearchContextTypesAll UINT_MAX
 
 @interface EVSearchScope : EVSearchContextBase
 

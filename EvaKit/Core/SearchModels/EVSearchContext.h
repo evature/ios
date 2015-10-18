@@ -9,6 +9,8 @@
 #import "EVSearchContextBase.h"
 #import "EVSearchDelegate.h"
 
+#define EVSearchContextTypeNone 0
+
 @interface EVSearchContext : EVSearchContextBase
 
 + (instancetype)contextWithType:(EVSearchContextType)contextType;

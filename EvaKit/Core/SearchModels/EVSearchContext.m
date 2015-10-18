@@ -22,20 +22,39 @@
 
 + (instancetype)contextForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate respondsToSelector:@selector(searchContext)]) {
-        return [self contextWithType:[delegate searchContext]];
+        EVSearchContextType type = [delegate searchContext];
+        if (type == EVSearchContextTypeNone) {
+            return nil;
+        }
+        return [self contextWithType:type];
     }
+    
+    unsigned short protocolCount = 0;
+    EVSearchContextType type = EVSearchContextTypeNone;
     
     if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeFlight];
-    } else if ([delegate conformsToProtocol:@protocol(EVCarSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeCar];
-    } else if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeCruise];
-    } else if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeHotel];
+        protocolCount++;
+        type = EVSearchContextTypeFlight;
+    }
+    if ([delegate conformsToProtocol:@protocol(EVCarSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeCar;
+        
+    }
+    if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeCruise;
+    }
+    if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeHotel;
     }
     
-    return [self contextWithType:0];
+    if (protocolCount == 1) {
+        return [self contextWithType:type];
+    }
+    
+    return nil;
 }
 
 @end
