@@ -330,6 +330,8 @@
     [urlStr appendFormat:@"&device=%@&ios_ver=%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]];
     [urlStr appendFormat:@"&sdk_version=ios-%@", EV_KIT_VERSION];
     
+    [urlStr appendString:@"&ffi_statement&ffi_chains&ffi_icr_keys_v2"];
+    
     // Escape URL
     [urlStr replaceOccurrencesOfString:@" " withString:@"+" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [urlStr length])];
     return urlStr;
