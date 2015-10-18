@@ -15,6 +15,9 @@
 @implementation EVSearchContext
 
 + (instancetype)contextWithType:(EVSearchContextType)contextType {
+    if (contextType == EVSearchContextTypeNone) {
+        return nil;
+    }
     EVSearchContext *context = [[EVSearchContext new] autorelease];
     context->_type = contextType;
     return context;
@@ -22,11 +25,7 @@
 
 + (instancetype)contextForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate respondsToSelector:@selector(searchContext)]) {
-        EVSearchContextType type = [delegate searchContext];
-        if (type == EVSearchContextTypeNone) {
-            return nil;
-        }
-        return [self contextWithType:type];
+        return [self contextWithType:[delegate searchContext]];
     }
     
     unsigned short protocolCount = 0;
@@ -50,11 +49,10 @@
         type = EVSearchContextTypeHotel;
     }
     
-    if (protocolCount == 1) {
-        return [self contextWithType:type];
+    if (protocolCount > 1) {
+        type = EVSearchContextTypeNone;
     }
-    
-    return nil;
+    return [self contextWithType:type];
 }
 
 @end
