@@ -87,6 +87,8 @@ void reloadData(id collectionView, SEL selector) {
 - (void)speakText:(NSString*)text;
 - (void)stopSpeaking;
 
+- (void)startRecordingWithAutoStop:(BOOL)autoStop;
+
 @end
 
 @implementation EVVoiceChatViewController
@@ -246,19 +248,31 @@ void reloadData(id collectionView, SEL selector) {
     _undoRequest = YES;
 }
 
+- (void)startRecordingWithAutoStop:(BOOL)autoStop {
+    [self stopSpeaking];
+    minVolume = DBL_MAX;
+    maxVolume = DBL_MIN;
+    currentCombinedVolume = 0.0;
+    currentCombinedVolumeCount = 0;
+    [self.evApplication startRecordingWithNewSession:self.isNewSession andAutoStop:NO];
+    self.isNewSession = NO;
+}
+
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
     if (isRecording) {
         [self.evApplication stopRecording];
     } else {
-        [self stopSpeaking];
-        minVolume = DBL_MAX;
-        maxVolume = DBL_MIN;
-        currentCombinedVolume = 0.0;
-        currentCombinedVolumeCount = 0;
-        [self.evApplication startRecordingWithNewSession:self.isNewSession];
-        self.isNewSession = NO;
+        [self startRecordingWithAutoStop:YES];
     }
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:NO];
+}
+
+- (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressStarted:(UIButton*)sender {
+    [self startRecordingWithAutoStop:NO];
+}
+
+- (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressEnded:(UIButton*)sender {
+    [self.evApplication stopRecording];
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {

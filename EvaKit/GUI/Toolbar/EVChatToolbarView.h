@@ -16,6 +16,9 @@
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar
      didPressCenterBarButton:(UIButton *)sender;
 
+- (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressStarted:(UIButton*)sender;
+- (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressEnded:(UIButton*)sender;
+
 @end
 
 @interface EVChatToolbarView : JSQMessagesInputToolbar <EVChatToolbarContentViewTouchDelegate>

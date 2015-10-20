@@ -78,6 +78,9 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 // Start record from current active Audio, If 'withNewSession' is set to 'NO' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession;
 
+//The same but with autoSrop. If autostop disabled then will be stoped only on max recording time event.
+- (void)startRecordingWithNewSession:(BOOL)withNewSession andAutoStop:(BOOL)autoStop;
+
 // Stop record, Would send the record to Eva for analyze //
 - (void)stopRecording;
 
