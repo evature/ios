@@ -254,7 +254,7 @@ void reloadData(id collectionView, SEL selector) {
     maxVolume = DBL_MIN;
     currentCombinedVolume = 0.0;
     currentCombinedVolumeCount = 0;
-    [self.evApplication startRecordingWithNewSession:self.isNewSession andAutoStop:NO];
+    [self.evApplication startRecordingWithNewSession:self.isNewSession andAutoStop:autoStop];
     self.isNewSession = NO;
 }
 
