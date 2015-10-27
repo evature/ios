@@ -1,6 +1,8 @@
 # Eva VoiceKit SDK for iOS
 
-Version 2.0
+
+![Version](https://img.shields.io/badge/Version-2.0-blue.svg?style=flat) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/evature/ios/blob/master/license.md)
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
