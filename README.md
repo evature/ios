@@ -46,7 +46,8 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 ## Step 1: Include the SDK in your Xcode project
 1. Add EvaKit to your Podfile. If you don't need to deploy on iOS 7 then add `use_frameworks!` too.  
   ``` podfile
-    pod 'EvaKit', :git => 'https://github.com/evature/ios.git', :branch => 'master'
+    source 'https://github.com/evature/Eva-Pods.git'
+    pod 'EvaKit', '~>2.0'
   ```
 
 2. Import the EvaKit header in your App Delegate   
