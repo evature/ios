@@ -17,6 +17,9 @@
 - (void)centerButtonTouched:(EVChatToolbarContentView*)toolbarContentView;
 - (void)rightButtonTouched:(EVChatToolbarContentView*)toolbarContentView;
 
+- (void)centerButtonLongPressStarted:(EVChatToolbarContentView*)toolbarContentView;
+- (void)centerButtonLongPressEnded:(EVChatToolbarContentView*)toolbarContentView;
+
 @end
 
 @interface EVChatToolbarContentView : JSQMessagesToolbarContentView

@@ -411,6 +411,10 @@
 
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession {
+    [self startRecordingWithNewSession:withNewSession andAutoStop:YES];
+}
+
+- (void)startRecordingWithNewSession:(BOOL)withNewSession andAutoStop:(BOOL)autoStop {
     if (!self.isReady) {
         EV_LOG_ERROR(@"EVApplication is not ready!");
         return;
@@ -419,7 +423,7 @@
         self.currentSessionID = EV_NEW_SESSION_ID;
     }
     self.isReady = NO;
-    [self.soundRecorder startRecording:self.maxRecordingTime withAutoStop:YES];
+    [self.soundRecorder startRecording:self.maxRecordingTime withAutoStop:autoStop];
 }
 
 // Stop record, Would send the record to Eva for analyze //

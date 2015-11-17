@@ -40,4 +40,13 @@
     
 }
 
+- (void)centerButtonLongPressStarted:(EVChatToolbarContentView*)toolbarContentView {
+    [self.delegate messagesInputToolbar:self centerButtonLongPressStarted:nil];
+    
+}
+
+- (void)centerButtonLongPressEnded:(EVChatToolbarContentView*)toolbarContentView {
+    [self.delegate messagesInputToolbar:self centerButtonLongPressEnded:nil];
+}
+
 @end

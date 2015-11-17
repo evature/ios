@@ -15,6 +15,9 @@
 @implementation EVSearchContext
 
 + (instancetype)contextWithType:(EVSearchContextType)contextType {
+    if (contextType == EVSearchContextTypeNone) {
+        return nil;
+    }
     EVSearchContext *context = [[EVSearchContext new] autorelease];
     context->_type = contextType;
     return context;
@@ -25,17 +28,31 @@
         return [self contextWithType:[delegate searchContext]];
     }
     
+    unsigned short protocolCount = 0;
+    EVSearchContextType type = EVSearchContextTypeNone;
+    
     if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeFlight];
-    } else if ([delegate conformsToProtocol:@protocol(EVCarSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeCar];
-    } else if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeCruise];
-    } else if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
-        return [self contextWithType:EVSearchContextTypeHotel];
+        protocolCount++;
+        type = EVSearchContextTypeFlight;
+    }
+    if ([delegate conformsToProtocol:@protocol(EVCarSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeCar;
+        
+    }
+    if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeCruise;
+    }
+    if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeHotel;
     }
     
-    return [self contextWithType:0];
+    if (protocolCount > 1) {
+        type = EVSearchContextTypeNone;
+    }
+    return [self contextWithType:type];
 }
 
 @end

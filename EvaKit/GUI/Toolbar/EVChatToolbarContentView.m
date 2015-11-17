@@ -25,6 +25,8 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 @interface EVChatToolbarContentView () {
     BOOL _buttonIsDragging;
     EVMicButtonState _micButtonState;
+    BOOL _recording;
+    BOOL _ptt;
 }
 
 @property (nonatomic, strong, readwrite) EVVoiceChatMicButtonLayer *micButtonLayer;
@@ -36,6 +38,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 - (void)recalculateButtonBackgroundSize;
 - (void)setupButtonPositions;
 - (void)moveCenterButtonBack;
+- (void)pttStart;
 
 @end
 
@@ -55,6 +58,8 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     [self addGestureRecognizer:panRecognizer];
     
     _buttonIsDragging = NO;
+    _recording = NO;
+    _ptt = NO;
     
     self.micButtonLayer = [EVVoiceChatMicButtonLayer layer];
     self.micButtonLayer.svgLineWidth = _centerButtonMicLineWidth;
@@ -291,7 +296,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 
 - (IBAction)panGesture:(UIPanGestureRecognizer*)recognizer {
     CGPoint location = [recognizer locationInView:self];
-    if (_buttonIsDragging) {
+    if (_buttonIsDragging && !_recording) {
         CGFloat buttonCenter = self.micButtonLayer.bounds.size.width/2.0f;
         if (location.x < buttonCenter+_leftRightButtonsOffset) {
             location.x = buttonCenter+_leftRightButtonsOffset;
@@ -309,6 +314,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         } else if (recognizer.state == UIGestureRecognizerStateBegan) {
             [self.micButtonLayer removeAllAnimations];
             [self.micButtonLayer hideMic];
+            [NSObject cancelPreviousPerformRequestsWithTarget:self];
         }
     }
 }
@@ -322,7 +328,10 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         if (theLayer == self.micButtonLayer) {
             _buttonIsDragging = YES;
             [self.micButtonLayer touched];
-        } else if (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer) {
+            if (!_recording) {
+                [self performSelector:@selector(pttStart) withObject:nil afterDelay:1.0];
+            }
+        } else if (!_recording && (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer)) {
             _buttonIsDragging = YES;
             CGFloat x = 0.0;
             if (theLayer == self.leftButtonLayer) {
@@ -344,6 +353,10 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     }
 }
 
+- (void)pttStart {
+    _ptt = YES;
+    [self.touchDelegate centerButtonLongPressStarted:self];
+}
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
@@ -354,8 +367,14 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
         if (theLayer == self.micButtonLayer) {
             _buttonIsDragging = NO;
             [[self micButtonLayer] released];
-            [self.touchDelegate centerButtonTouched:self];
-        } else if (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:self];
+            if (_ptt) {
+                [self.touchDelegate centerButtonLongPressEnded:self];
+                _ptt = NO;
+            } else {
+                [self.touchDelegate centerButtonTouched:self];
+            }
+        } else if (!_recording && (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer)) {
             self.micButtonLayer.position = [self.micButtonLayer.presentationLayer position];
             [self.micButtonLayer removeAnimationForKey:@"LeftRightClick"];
             [self moveCenterButtonBack];
@@ -366,6 +385,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 #pragma mark === Animation external methods ===
 
 - (void)audioSessionStarted {
+    _recording = YES;
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         if (_micButtonState == EVMicButtonStateHidingMic) {
@@ -376,7 +396,6 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     [self.micButtonLayer hideMic];
     _micButtonState = EVMicButtonStateHidingMic;
     [CATransaction commit];
-    
 }
 
 - (void)audioSessionStoped {
@@ -398,6 +417,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 
 - (void)stopWaitAnimation {
     [self.micButtonLayer stopSpinning];
+    _recording = NO;
 }
 
 - (void)newAudioLevelData:(NSData*)data {
