@@ -1,6 +1,8 @@
-# Eva Voice SDK - iOS 7+
+# Eva VoiceKit SDK for iOS
 
-Version 2.0
+
+![Version](https://img.shields.io/badge/Version-2.0-blue.svg?style=flat) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/evature/ios/blob/master/license.md)
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -8,12 +10,12 @@ Version 2.0
 
 - [Introduction](#introduction)
 - [Step 1: Include the SDK in your Xcode project](#step-1-include-the-sdk-in-your-xcode-project)
-- [Step 2: Initialize Eva Application](#step-2-initialize-eva-application)
-- [Step 3: Add Chat Button to your GUI](#step-3-add-chat-button-to-your-gui)
-  - [Method 1 - Interface Builder](#method-1---interface-builder)
+- [Step 2: Initialize the Eva Application](#step-2-initialize-the-eva-application)
+- [Step 3: Add a Microphone Chat Button to the GUI](#step-3-add-a-microphone-chat-button-to-the-gui)
+  - [Method 1 - Using Interface Builder](#method-1---using-interface-builder)
   - [Method 2 - From Code using EVApplication](#method-2---from-code-using-evapplication)
-  - [Method 3 - Use own button](#method-3---use-own-button)
-- [Step 4: Implement one of Search Delegates](#step-4-implement-one-of-search-delegates)
+  - [Method 3 - Use an existing button in the user interface](#method-3---use-an-existing-button-in-the-user-interface)
+- [Step 4: Implement one or more Delegates](#step-4-implement-one-or-more-delegates)
 - [More details](#more-details)
 - [Support](#support)
 
@@ -21,13 +23,13 @@ Version 2.0
 
 ## Introduction
 
-Voice enable your travel application in a couple of hours using the latest Eva Voice SDK.
+Voice enable a travel application in a couple of hours using the Eva VoiceKit SDK.
 
-With the new release you can add a cutting edge voice interface to your travel application with super simple integration.
+With the VoiceKit you can add a cutting edge voice interface to your travel application with super simple integration.
 
 Take advantage of the latest Deep Learning algorithms delivering near human precision.
 
-The Eva Voice SDK comes batteries-included and has everything your application needs:
+The Eva Voice SDK comes batteries-included and has everything an application needs:
 
 * Speech Recognition
 
@@ -37,7 +39,7 @@ The Eva Voice SDK comes batteries-included and has everything your application n
 
 * Voice Chat user interface overlay
 
-The beautiful user interface conforms to the latest Material Design guidelines and is fully customizable to match your application.
+The beautiful user interface conforms to the latest design guidelines and is fully customizable to match your application.
 
 The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
@@ -47,12 +49,15 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
     pod 'EvaKit', :git => 'https://github.com/evature/ios.git', :branch => 'master'
   ```
 
-2. Import EvaKit header in your App Delegate   
+2. Import the EvaKit header in your App Delegate   
   ``` objc
   #import <EvaKit/EvaKit.h>
   ```
 
-## Step 2: Initialize Eva Application
+## Step 2: Initialize the Eva Application
+
+You will need credentials from Evature - register for a free account [here](http://www.evature.com/registration/form)
+
   ``` objc
   - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       // Set level of logging. See EVLogger.h.
@@ -66,10 +71,10 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
   }
   ```
 
-## Step 3: Add Chat Button to your GUI  
-### Method 1 - Interface Builder
-  EvaKit uses new features of Xcode 6 so you can configure button and Chat View in Interface Builder.
-  Add empty view inside your view and change its class to `EVVoiceChatButton`. You can setup all buttons and controller properties in Xcode. If no action added to button, button will show Chat View for current controller by default.
+## Step 3: Add a Microphone Chat Button to the GUI  
+### Method 1 - Using Interface Builder
+  EvaKit uses new features of Xcode 6 so you can configure the microphone button and the Chat View in Interface Builder.
+  Add an empty view inside your view and change its class to `EVVoiceChatButton`. You can setup all buttons and controller properties in Xcode. If no action is added to the button, the button will show the Chat View for the current controller by default.
 
 ### Method 2 - From Code using EVApplication
   ``` objc
@@ -85,25 +90,30 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
       button.chatToolbarCenterButtonMicLineWidth = 2.0f;
   }
   ```
-  
-### Method 3 - Use own button
-  Call this method of EVApplication for Chat View popup
+
+### Method 3 - Use an existing button in the user interface
+  Call this EVApplication method for the Chat View overlay
   ``` objc
   [[EVApplication sharedApplication] showChatViewController:self withViewSettings:@{}];
   ```
-  Where View Settings is a `NSDictionary` with Chat View and Chat Toolbar settings.
-  Chat View parameters can be provided with `controller.` prefix. Chat Toolbar parameters with `toolbar.` prefix. All parameters can be obtained in `EVVoiceChatViewController.h` and `EVChatToolbarContentView.h`
+  Where View Settings is an `NSDictionary` with Chat View and Chat Toolbar settings.
+  Chat View parameters can be provided with a `controller.` prefix. Chat Toolbar parameters with a `toolbar.` prefix. The complete list of configurable parameters is detailed in `EVVoiceChatViewController.h` and in `EVChatToolbarContentView.h`
 
-## Step 4: Implement one of Search Delegates
-  You can implement it in current View Controller or in Application Delegate. Also you can provide own object for this. If you want own object then set it to `chatControllerDelegate` property of Chat Button or provide as `controller.delegate` value in Settings Dictionary.  
-  All Search Delegate protocols can be found in `Core/SearchModels/SearchDelegates` folder.
-
+Repeat this for every applicable user interface destnation in your application.
+  
+## Step 4: Implement one or more Delegates
+  At this point Eva can interact with the end users using voice. The end user can say "Hi" and Eva will respond using both text-to-speech and a chat overlay. If information is required from the end user, Eva will ask questions.
+  When action is needed from the application (e.g. showing a boarding pass) a Delegate function will be called. 
+  You can implement the Delegate functions in current View Controller or in the Application Delegate. You can also provide your own object for this. If you want to use your own object, set it to the `chatControllerDelegate` property of the Microphone Chat Button or provide a `controller.delegate` value in the Settings Dictionary.  
+  The complete list of Delegate callbacks can be found in the `Core/SearchModels/SearchDelegates` folder.
+  Eva will infer the capabilities of the application by the Delegates that are, or are not implemented. For example if you do not implement the Car Search Delegate and the end user will request a "Car rental", Eva will reply that car rentals are not supported by this application.
+  
 ## More details
 
-  More info about Eva can be obtained in Android SDK repository [Android GitHub Repository](https://github.com/evature/android)
+  The  Eva VoiceKit is also available for Android: [Android GitHub Repository](https://github.com/evature/android)
 
   More methods and properties can be found in `EVApplication.h`, `EVVoiceChatButton.h`, `EVLogger.h`, `EVVoiceChatViewController.h`, `EVChatToolbarContentView.h`.
 
 ## Support
 
-  We would love to hear from you. Ask us anything at [info@evature.com](mailto:info@evature.com)
+  We would love to hear from you as issues and pull requests. Also feel free to ask us anything at [info@evature.com](mailto:info@evature.com)
