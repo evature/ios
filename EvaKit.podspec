@@ -42,8 +42,7 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  s.license      = "BSD"
-  #s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.license      = { :type => "MIT", :file => “license.md” }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -57,7 +56,6 @@ Pod::Spec.new do |s|
   #
 
   s.author             = { "Yehor Popovych" => "popovych.yegor@gmail.com" }
-  # s.social_media_url   = "http://twitter.com/Yehor Popovych"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -74,7 +72,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/ypopovych/ios.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/evature/ios.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -86,9 +84,6 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "EvaKit/*.{h,m}", "EvaKit/Core/**/*.{h,m}", "EvaKit/GUI/**/*.{h,m}", "EvaKit/ThirdParty/*.{h,m}"
-  #s.exclude_files = "Classes/Exclude"
-
-  #s.public_header_files = "Classes/**/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -99,10 +94,7 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
   
-  s.resources = "EvaKit/Images/*.svg", "EvaKit/*.aif"
-
-
-  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
+  s.resources = "EvaKit/Images/*.svg", "EvaKit/*.aif”, “EvaKit/GUI/*.xib”
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -113,9 +105,6 @@ Pod::Spec.new do |s|
 
   
   s.frameworks = "AVFoundation", "AudioToolbox", "CoreLocation"
-
-  # s.library   = "iconv"
-  # s.libraries = "iconv", "xml2"
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
