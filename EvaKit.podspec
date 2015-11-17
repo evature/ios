@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  s.license      = { :type => "MIT", :file => “license.md” }
+  s.license      = { :type => "MIT", :file => "license.md" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -94,7 +94,7 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
   
-  s.resources = "EvaKit/Images/*.svg", "EvaKit/*.aif”, “EvaKit/GUI/*.xib”
+  s.resources = "EvaKit/Images/*.svg", "EvaKit/*.aif", "EvaKit/GUI/*.xib"
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
