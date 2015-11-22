@@ -11,6 +11,12 @@
 
 @implementation ViewController
 
+- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)isTeam {
+    NSLog(@"Handled Navigate!");
+    NSLog(@"navigate to %d", page);
+    NSLog(@"navigate isTeam %d", isTeam);
+}
+
 - (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
                                  fromLocation:(EVLocation *)origin
                                    toLocation:(EVLocation *)destination
@@ -46,6 +52,30 @@
                                           sortBy:(EVRequestAttributesSort)sortBy
                                        sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     NSLog(@"Handled two way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+}
+
+- (void)handleHotelSearchWhichComplete:(BOOL)isComplete
+                              location:(EVLocation*)location
+                         arriveDateMin:(NSDate*)arriveDateMin
+                         arriveDateMax:(NSDate*)arriveDateMax
+                           durationMin:(NSInteger)durationMin
+                           durationMax:(NSInteger)durationMax
+                             travelers:(EVTravelers*)travelers
+                           hotelsChain:(NSArray*)chain
+                          selfCatering:(EVBool)selfCatering
+                       bedAndBreakfast:(EVBool)bedAndBreakfast
+                             halfBoard:(EVBool)halfBoard
+                             fullBoard:(EVBool)fullBoard
+                          allInclusive:(EVBool)allInclusive
+                       drinksInclusive:(EVBool)drinksInclusive
+                              minStars:(NSInteger)minStars
+                              maxStars:(NSInteger)maxStars
+                             amenities:(NSSet*)amenities
+                                sortBy:(EVRequestAttributesSort)sortBy
+                             sortOrder:(EVRequestAttributesSortOrder)sortOrder {
+    
+    NSLog(@"Handled hotel search! Complete: %@", isComplete ? @"YES" : @"NO");
+  
 }
 
 - (void)viewDidLoad {

@@ -13,6 +13,7 @@
 #import "EVSabre.h"
 #import "EVServiceAttributes.h"
 #import "EVCruiseAttributes.h"
+#import "EVCRMAttributes.h"
 #import "EVTravelers.h"
 #import "EVMoney.h"
 #import "EVPNRAttributes.h"
@@ -44,6 +45,7 @@
 @property (nonatomic, strong, readwrite) EVHotelAttributes* hotelAttributes;
 @property (nonatomic, strong, readwrite) EVServiceAttributes* serviceAttributes;
 @property (nonatomic, strong, readwrite) EVCruiseAttributes* cruiseAttributes;
+@property (nonatomic, strong, readwrite) EVCRMAttributes* crmAttributes;
 
 @property (nonatomic, strong, readwrite) EVTravelers* travelers;
 @property (nonatomic, strong, readwrite) EVMoney* money;

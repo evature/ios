@@ -11,6 +11,7 @@
 #import "EVHotelSearchDelegate.h"
 #import "EVCarSearchDelegate.h"
 #import "EVFlightSearchDelegate.h"
+#import "EVCRMNavigateDelegate.h"
 
 @implementation EVSearchContext
 
@@ -48,7 +49,10 @@
         protocolCount++;
         type = EVSearchContextTypeHotel;
     }
-    
+    if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
+        protocolCount++;
+        type = EVSearchContextTypeCRM;
+    }
     if (protocolCount > 1) {
         type = EVSearchContextTypeNone;
     }

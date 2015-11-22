@@ -20,6 +20,7 @@ static NSMutableDictionary* childsRegistry = nil;
                   @"Car": @(EVFlowElementTypeCar),
                   @"Cruise": @(EVFlowElementTypeCruise),
                   @"Train": @(EVFlowElementTypeTrain),
+                  @"Navigate": @(EVFlowElementTypeNavigate),
                   @"Explore": @(EVFlowElementTypeExplore),
                   @"Question": @(EVFlowElementTypeQuestion),
                   @"Answer": @(EVFlowElementTypeAnswer),

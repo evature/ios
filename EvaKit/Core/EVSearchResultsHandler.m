@@ -13,6 +13,7 @@
 #import "NSDate+EVA.h"
 #import "EVFlightSearchModel.h"
 #import "EVCruiseSearchModel.h"
+#import "EVCRMNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
 
@@ -156,6 +157,22 @@
         EV_LOG_ERROR("App reached flight search, but has no matching handler");
     }
 //    }
+}
+
++ (void)handleNavigateWithResponse:(EVResponse*)response responseDelegate:(id<EVSearchDelegate>)
+    delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
+    
+    EVSearchModel* model = [EVCRMNavigateModel modelComplete:true crmAttributes:response.crmAttributes];
+    
+    handler(model, true);
+    
+    if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
+        [model triggerSearchForDelegate:delegate];
+    }
+    else {
+        // TODO: insert new chat item saying the app doesn't support search?
+        EV_LOG_ERROR(@"App reached crm navigate, but has no matching handler");
+    }
 }
 
 + (void)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
@@ -420,6 +437,11 @@
             isComplete = false;
             break;
         }
+            
+        case EVFlowElementTypeNavigate: {
+            [self handleNavigateWithResponse:response responseDelegate:delegate andMessageHandler:handler];
+            break;
+        }
         default:
             break;
     }
@@ -440,6 +462,8 @@
         case EVFlowElementTypeHotel:
             [self handleHotelResultsWithResponse:response isComplete:isComplete location:from responseDelegate:delegate andMessageHandler:handler];
             break;
+        
+        
         default:
             break;
     }

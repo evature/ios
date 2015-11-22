@@ -35,6 +35,9 @@
     if (EV_CHECK_BITMASK(_type, EVSearchContextTypeExplore)) {
         [str appendString:@"e"];
     }
+    if (EV_CHECK_BITMASK(_type, EVSearchContextTypeCRM)) {
+        [str appendString:@"m"];
+    }
     return [NSString stringWithString:str];
 }
 

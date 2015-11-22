@@ -19,6 +19,7 @@ typedef NS_ENUM(int16_t, EVFlowElementType) {
     EVFlowElementTypeTrain,
     EVFlowElementTypeExplore,
     
+    EVFlowElementTypeNavigate,
     EVFlowElementTypeQuestion,
     EVFlowElementTypeAnswer,
     EVFlowElementTypeStatement,

@@ -84,6 +84,9 @@
         if ([apiReply objectForKey:@"Cruise Attributes"] != nil) {
             self.cruiseAttributes = [[[EVCruiseAttributes alloc] initWithResponse:[apiReply objectForKey:@"Cruise Attributes"]] autorelease];
         }
+        if ([apiReply objectForKey:@"CRM Attributes"] != nil) {
+            self.crmAttributes = [[[EVCRMAttributes alloc] initWithResponse:[apiReply objectForKey:@"CRM Attributes"]] autorelease];
+        }
         if ([apiReply objectForKey:@"Request Attributes"] != nil) {
             NSDictionary* requestAttrs = [apiReply objectForKey:@"Request Attributes"];
             if ([requestAttrs objectForKey:@"PNR"] != nil) {
@@ -122,6 +125,7 @@
     self.hotelAttributes = nil;
     self.serviceAttributes = nil;
     self.cruiseAttributes = nil;
+    self.crmAttributes = nil;
     
     self.travelers = nil;
     self.money = nil;

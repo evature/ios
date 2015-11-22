@@ -18,6 +18,7 @@ typedef NS_ENUM(unsigned int, EVSearchContextType) {
     EVSearchContextTypeVacation = 16,
     EVSearchContextTypeSki = 32,
     EVSearchContextTypeExplore = 64,
+    EVSearchContextTypeCRM = 128,
 };
 
 @interface EVSearchContextBase : NSObject {
