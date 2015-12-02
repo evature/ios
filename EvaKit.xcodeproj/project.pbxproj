@@ -15,7 +15,6 @@
 		9410377C1C01FE4D009A9A3F /* EVCRMNavigateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9410377A1C01FE4D009A9A3F /* EVCRMNavigateModel.m */; };
 		9410377D1C020E7E009A9A3F /* EVCRMAttributes.m in Headers */ = {isa = PBXBuildFile; fileRef = 941037761C01EDC1009A9A3F /* EVCRMAttributes.m */; };
 		941037801C020F3C009A9A3F /* EVCRMNavigateModel.m in Headers */ = {isa = PBXBuildFile; fileRef = 9410377A1C01FE4D009A9A3F /* EVCRMNavigateModel.m */; };
-		9412C4CC1C0DC1AF00ECA87C /* EVCRMDataSetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4CB1C0DC1AF00ECA87C /* EVCRMDataSetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9412C4CF1C0DC7A300ECA87C /* EVCRMDataSetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4CD1C0DC7A300ECA87C /* EVCRMDataSetModel.h */; };
 		9412C4D01C0DC7A300ECA87C /* EVCRMDataSetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */; };
 		9412C4D31C0DD95E00ECA87C /* EVDataFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */; };
@@ -211,12 +210,11 @@
 		941037761C01EDC1009A9A3F /* EVCRMAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMAttributes.m; sourceTree = "<group>"; };
 		941037791C01FE4D009A9A3F /* EVCRMNavigateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCRMNavigateModel.h; sourceTree = "<group>"; };
 		9410377A1C01FE4D009A9A3F /* EVCRMNavigateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMNavigateModel.m; sourceTree = "<group>"; };
-		9412C4CB1C0DC1AF00ECA87C /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
 		9412C4CD1C0DC7A300ECA87C /* EVCRMDataSetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCRMDataSetModel.h; sourceTree = "<group>"; };
 		9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMDataSetModel.m; sourceTree = "<group>"; };
 		9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataFlowElement.h; sourceTree = "<group>"; };
 		9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataFlowElement.m; sourceTree = "<group>"; };
-		9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = EvaKit/Core/SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
+		9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
@@ -442,7 +440,7 @@
 		941037741C01E951009A9A3F /* CRMDelegates */ = {
 			isa = PBXGroup;
 			children = (
-				9412C4CB1C0DC1AF00ECA87C /* EVCRMDataSetDelegate.h */,
+				9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */,
 				941037721C01E943009A9A3F /* EVCRMNavigateDelegate.h */,
 			);
 			name = CRMDelegates;
@@ -514,7 +512,6 @@
 		96675F281B457F1D00494BAA = {
 			isa = PBXGroup;
 			children = (
-				9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */,
 				96675F501B458A1A00494BAA /* Podfile */,
 				96675F341B457F1D00494BAA /* EvaKit */,
 				969797AF1B4BE13E00C0244D /* EvaKitExample */,
@@ -778,7 +775,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9412C4CC1C0DC1AF00ECA87C /* EVCRMDataSetDelegate.h in Headers */,
 				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
 				941037731C01E943009A9A3F /* EVCRMNavigateDelegate.h in Headers */,
 				968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */,

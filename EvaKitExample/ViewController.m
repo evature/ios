@@ -17,8 +17,8 @@
     NSLog(@"navigate isTeam %d", filter);
 }
 
-- (void) setField:(NSString*)fieldPath forObject:(EVCRMPageType)objType withId:(int)objId toValue:(NSDictionary*)value {
-    NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, objType, [value objectForKey:@"value"]);
+- (void) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(int)objId toValue:(NSDictionary*)value {
+    NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
 }
 
 - (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete

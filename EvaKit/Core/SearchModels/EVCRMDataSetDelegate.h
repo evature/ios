@@ -17,10 +17,10 @@
 //  Then -
 //  This delegate will be activated with:
 //    fieldPath = @"probability"
-//      objType = EVCRMPageTypeOpportunities
+//         page = EVCRMPageTypeOpportunities
 //        objId = 0
-//        value = @{ @"type" : EVValueTypeFloat,  @"value" : [NSNumber numberWithFloat:0.7f] }
-- (void) setField:(NSString*)fieldPath forObject:(EVCRMPageType)objType withId:(int)objId toValue:(NSDictionary*)value;
+//        value = @{ @"type" : EVValueTypeNumber,  @"value" : [NSNumber numberWithFloat:0.7f] }
+- (void) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(int)objId toValue:(NSDictionary*)value;
 
 
 @end

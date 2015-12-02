@@ -51,7 +51,7 @@
 - (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
         [(id<EVCRMDataSetDelegate>)delegate setField:self.fieldPath
-                                            forObject:(EVCRMPageType)self.page
+                                            inPage:(EVCRMPageType)self.page
                                               withId:0
                                              toValue: @{ @"type": self.valueType,
                                                          @"value": self.value }

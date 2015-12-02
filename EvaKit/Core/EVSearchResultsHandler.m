@@ -198,7 +198,13 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
         
         EVCRMPageType page = [EVSearchResultsHandler fieldPathToPageType:pathArray[1]];
         
-        NSArray *spliced = [pathArray subarrayWithRange:NSMakeRange(2,[pathArray count]-2)];
+        NSArray *spliced;
+        if (page == EVCRMPageTypeOther) {
+            spliced = [pathArray subarrayWithRange:NSMakeRange(1,[pathArray count]-1)];
+        }
+        else {
+            spliced = [pathArray subarrayWithRange:NSMakeRange(2,[pathArray count]-2)];
+        }
         
         
         EVSearchModel* model = [EVCRMDataSetModel modelComplete:true
@@ -505,7 +511,7 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
             break;
         }
         case EVFlowElementTypeData: {
-            [self handleDataWithResponse:response withFlow:flow responseDelegate:delegate andMessageHandler:handler];
+            [self handleDataWithResponse:response withFlow:(EVDataFlowElement*)flow responseDelegate:delegate andMessageHandler:handler];
             break;
         }
         default:
