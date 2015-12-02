@@ -28,7 +28,6 @@ typedef NS_ENUM(int16_t, EVCRMFilterType) {
 };
 
 
-
 @interface EVCRMAttributes : NSObject
 
 @property (nonatomic, assign, readwrite) EVCRMPageType page;
@@ -36,5 +35,6 @@ typedef NS_ENUM(int16_t, EVCRMFilterType) {
 
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
++ (EVCRMPageType)stringToPageType:(NSString*)pageName;
 
 @end

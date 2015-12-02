@@ -10,7 +10,8 @@
 #import <EvaKit/EvaKit.h>
 //#import "EVChatToolbarContentView.h"
 
-@interface ViewController : UIViewController <EVHotelSearchDelegate, EVFlightSearchDelegate, EVCRMNavigateDelegate>
+@interface ViewController : UIViewController <EVHotelSearchDelegate, EVFlightSearchDelegate,
+                                    EVCRMNavigateDelegate, EVCRMDataSetDelegate>
 
 @end
 

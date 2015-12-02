@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/ypopovych/Eva-Pods.git'
+source 'https://github.com/evature/Eva-Pods.git'
 
 platform :ios, '7.0'
 

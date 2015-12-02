@@ -22,7 +22,18 @@ static NSDictionary* pageKeys = nil;
                   @"Activities": @(EVCRMPageTypeActivities),
                   @"TodaysAppointments": @(EVCRMPageTypeTodaysAppointments),
                    } retain];
+}
 
++ (EVCRMPageType)stringToPageType:(NSString*)pageName {
+    if (pageName) {
+        NSNumber* val = [pageKeys objectForKey:[[pageName
+                                                 stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                                 stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+        if (val != nil) {
+            return [val shortValue];
+        }
+    }
+    return EVCRMPageTypeOther;
 }
 
 - (instancetype)initWithResponse:(NSDictionary *)response {
@@ -30,18 +41,7 @@ static NSDictionary* pageKeys = nil;
     if (self != nil) {
         if ([response objectForKey:@"Navigate"]) {
             NSDictionary *navigateDict = [response objectForKey:@"Navigate"];
-            if ([navigateDict objectForKey:@"Destination"] != nil) {
-                NSNumber* val = [pageKeys objectForKey:[[[navigateDict objectForKey:@"Destination"]
-                                                            stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                                            stringByReplacingOccurrencesOfString:@"'" withString:@""]];
-                if (val != nil) {
-                    self.page = [val shortValue];
-                } else {
-                    self.page = EVCRMPageTypeOther;
-                }
-            } else {
-                self.page = EVCRMPageTypeOther;
-            }
+            self.page = [EVCRMAttributes stringToPageType: [navigateDict objectForKey:@"Destination"]];
 
             if ([navigateDict objectForKey:@"Team"] != nil) {
                 if ([[navigateDict objectForKey:@"Team"] boolValue]) {

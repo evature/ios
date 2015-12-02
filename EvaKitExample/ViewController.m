@@ -11,10 +11,14 @@
 
 @implementation ViewController
 
-- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)isTeam {
+- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)filter {
     NSLog(@"Handled Navigate!");
     NSLog(@"navigate to %d", page);
-    NSLog(@"navigate isTeam %d", isTeam);
+    NSLog(@"navigate isTeam %d", filter);
+}
+
+- (void) setField:(NSString*)fieldPath forObject:(EVCRMPageType)objType withId:(int)objId toValue:(NSDictionary*)value {
+    NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, objType, [value objectForKey:@"value"]);
 }
 
 - (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete

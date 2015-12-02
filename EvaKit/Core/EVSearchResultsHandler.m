@@ -10,9 +10,11 @@
 #import "EVLocation.h"
 #import "EVLogger.h"
 #import "EVQuestionFlowElement.h"
+#import "EVDataFlowElement.h"
 #import "NSDate+EVA.h"
 #import "EVFlightSearchModel.h"
 #import "EVCruiseSearchModel.h"
+#import "EVCRMDataSetModel.h"
 #import "EVCRMNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
@@ -158,6 +160,66 @@
     }
 //    }
 }
+
+
+static NSDictionary* pageKeys = nil;
+
++ (void)load {
+    pageKeys = [@{@"lead": @(EVCRMPageTypeLeads),
+                  @"opportunity": @(EVCRMPageTypeOpportunities),
+                  @"salesquote": @(EVCRMPageTypeSalesQuotes),
+                  @"account": @(EVCRMPageTypeAccounts),
+                  @"contact": @(EVCRMPageTypeContacts),
+                  @"activity": @(EVCRMPageTypeActivities)
+                  } retain];
+}
+
++ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath {
+    if (fieldTopPath) {
+        NSNumber* val = [pageKeys objectForKey:[[fieldTopPath
+                                                 stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                                stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+        if (val != nil) {
+            return [val shortValue];
+        }
+    }
+    return EVCRMPageTypeOther;
+}
+
++ (void)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow responseDelegate:(id<EVSearchDelegate>)
+delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
+    
+    if (flow.verb == EVDataFlowElementVerbTypeSet) {
+        NSArray *pathArray = [flow.fieldPath componentsSeparatedByString:@"/"];
+        if (![pathArray[0] isEqualToString:@"crm"]) {
+            EV_LOG_ERROR(@"Expected path to start with CRM but was %@", flow.fieldPath);
+            return;
+        }
+        
+        EVCRMPageType page = [EVSearchResultsHandler fieldPathToPageType:pathArray[1]];
+        
+        NSArray *spliced = [pathArray subarrayWithRange:NSMakeRange(2,[pathArray count]-2)];
+        
+        
+        EVSearchModel* model = [EVCRMDataSetModel modelComplete:true
+                                                         inPage:page
+                                                       setField:[spliced componentsJoinedByString:@"."]
+                                                    ofValueType:flow.valueType
+                                                        toValue:flow.value
+                                ];
+        
+        handler(model, true);
+        
+        if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+            [model triggerSearchForDelegate:delegate];
+        }
+        else {
+            // TODO: insert new chat item saying the app doesn't support search?
+            EV_LOG_ERROR(@"App reached crm data set, but has no matching handler");
+        }
+    }
+}
+
 
 + (void)handleNavigateWithResponse:(EVResponse*)response responseDelegate:(id<EVSearchDelegate>)
     delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
@@ -440,6 +502,10 @@
             
         case EVFlowElementTypeNavigate: {
             [self handleNavigateWithResponse:response responseDelegate:delegate andMessageHandler:handler];
+            break;
+        }
+        case EVFlowElementTypeData: {
+            [self handleDataWithResponse:response withFlow:flow responseDelegate:delegate andMessageHandler:handler];
             break;
         }
         default:

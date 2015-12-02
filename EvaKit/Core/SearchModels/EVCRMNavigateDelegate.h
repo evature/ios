@@ -10,5 +10,6 @@
 
 @protocol EVCRMNavigateDelegate <EVSearchDelegate>
 
-- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)isTeam;
+- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)filter;
+
 @end

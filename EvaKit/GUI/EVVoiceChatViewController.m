@@ -528,6 +528,7 @@ void reloadData(id collectionView, SEL selector) {
         case EVFlowElementTypeCruise:
         case EVFlowElementTypeQuestion:
         case EVFlowElementTypeNavigate:
+        case EVFlowElementTypeData:
             [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element responseDelegate:self.delegate andMessageHandler:^(EVSearchModel *response, BOOL complete) {
                 message.searchModel = response;
             }];
