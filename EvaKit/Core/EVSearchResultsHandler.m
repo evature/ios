@@ -21,17 +21,22 @@
 
 @interface EVSearchResultsHandler ()
 
-+ (void)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler;
++ (EVCallbackResponse*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
-+ (void)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler;
++ (EVCallbackResponse*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
-+ (void)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler;
++ (EVCallbackResponse*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate;
+
++ (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
+
++ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response andResponseDelegate:(id<EVSearchDelegate>)
+delegate;
 
 @end
 
 @implementation EVSearchResultsHandler
 
-+ (void)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
++ (EVCallbackResponse*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
     BOOL oneWay = response.flightAttributes != nil && response.flightAttributes.oneWay;
     
     NSDate* departDateMin = nil;
@@ -117,7 +122,6 @@
                                                         seatClasses:seatClass
                                                              sortBy:sortBy
                                                           sortOrder:sortOrder];
-    handler(model, isComplete);
     
 //    chatItem.setSearchModel(new AppFlightSearchModel(isComplete, from, to, departDateMin, departDateMax, returnDateMin, returnDateMax, reply.travelers,
 //                                                     oneWay, nonstop, seatClass, airlines, redeye, food, seatType,
@@ -153,50 +157,26 @@
 //    else {
         // count is not supported - trigger search
     if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
-        [model triggerSearchForDelegate:delegate];
+        return [model triggerSearchForDelegate:delegate];
     } else {
         // TODO: insert new chat item saying the app doesn't support flight search?
         EV_LOG_ERROR("App reached flight search, but has no matching handler");
     }
 //    }
+    return [EVCallbackResponse responseWithNone];
 }
 
-
-static NSDictionary* pageKeys = nil;
-
-+ (void)load {
-    pageKeys = [@{@"lead": @(EVCRMPageTypeLeads),
-                  @"opportunity": @(EVCRMPageTypeOpportunities),
-                  @"salesquote": @(EVCRMPageTypeSalesQuotes),
-                  @"account": @(EVCRMPageTypeAccounts),
-                  @"contact": @(EVCRMPageTypeContacts),
-                  @"activity": @(EVCRMPageTypeActivities)
-                  } retain];
-}
-
-+ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath {
-    if (fieldTopPath) {
-        NSNumber* val = [pageKeys objectForKey:[[fieldTopPath
-                                                 stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                                stringByReplacingOccurrencesOfString:@"'" withString:@""]];
-        if (val != nil) {
-            return [val shortValue];
-        }
-    }
-    return EVCRMPageTypeOther;
-}
-
-+ (void)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow responseDelegate:(id<EVSearchDelegate>)
-delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
-    
++ (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
+delegate {
+    EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
     if (flow.verb == EVDataFlowElementVerbTypeSet) {
         NSArray *pathArray = [flow.fieldPath componentsSeparatedByString:@"/"];
         if (![pathArray[0] isEqualToString:@"crm"]) {
             EV_LOG_ERROR(@"Expected path to start with CRM but was %@", flow.fieldPath);
-            return;
+            return cbR;
         }
         
-        EVCRMPageType page = [EVSearchResultsHandler fieldPathToPageType:pathArray[1]];
+        EVCRMPageType page = [EVCRMAttributes fieldPathToPageType:pathArray[1]];
         
         NSArray *spliced;
         if (page == EVCRMPageTypeOther) {
@@ -214,36 +194,34 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
                                                         toValue:flow.value
                                 ];
         
-        handler(model, true);
-        
         if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-            [model triggerSearchForDelegate:delegate];
+            cbR = [model triggerSearchForDelegate:delegate];
         }
         else {
             // TODO: insert new chat item saying the app doesn't support search?
             EV_LOG_ERROR(@"App reached crm data set, but has no matching handler");
         }
     }
+    return cbR;
 }
 
 
-+ (void)handleNavigateWithResponse:(EVResponse*)response responseDelegate:(id<EVSearchDelegate>)
-    delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
++ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response andResponseDelegate:(id<EVSearchDelegate>)
+    delegate {
     
     EVSearchModel* model = [EVCRMNavigateModel modelComplete:true crmAttributes:response.crmAttributes];
     
-    handler(model, true);
-    
     if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
-        [model triggerSearchForDelegate:delegate];
+        return [model triggerSearchForDelegate:delegate];
     }
     else {
         // TODO: insert new chat item saying the app doesn't support search?
         EV_LOG_ERROR(@"App reached crm navigate, but has no matching handler");
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
-+ (void)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
++ (EVCallbackResponse*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
     NSDate *dateFrom = nil, *dateTo = nil;
     NSInteger durationFrom = -1, durationTo = -1;
     
@@ -287,8 +265,6 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
     
     EVSearchModel* model = [EVCruiseSearchModel modelComplete:isComplete fromLocation:from toLocation:to fromDate:dateFrom toDate:dateTo durationMin:durationFrom durationMax:durationTo cruiseAttributes:response.cruiseAttributes sortBy:sortBy sortOrder:sortOrder];
     
-    handler(model, isComplete);
-    
     
 //    if (EvaComponent.evaAppHandler instanceof CruiseCount) {
 //        
@@ -306,16 +282,17 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
 //    else {
         // count is not supported - trigger search
         if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
-            [model triggerSearchForDelegate:delegate];
+            return [model triggerSearchForDelegate:delegate];
         }
         else {
             // TODO: insert new chat item saying the app doesn't support search?
             EV_LOG_ERROR(@"App reached hotel search, but has no matching handler");
         }
 //    }
+    return [EVCallbackResponse responseWithNone];
 }
 
-+ (void)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
++ (EVCallbackResponse*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate {
     NSDate *arriveDateMin = nil;
     NSDate *arriveDateMax = nil;
     NSString *arrivalStr = (location != nil && location.arrival != nil) ? location.arrival.date : nil;
@@ -418,8 +395,6 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
     
     EVSearchModel *model = [EVHotelSearchModel modelComplete:isComplete location:location arriveDateMin:arriveDateMin arriveDateMax:arriveDateMax durationMin:durationMin durationMax:durationMax travelers:response.travelers hotelsChain:chains selfCatering:selfCatering bedAndBreakfast:bedAndBreakfast halfBoard:halfBoard fullBoard:fullBoard allInclusive:allInclusive drinksInclusive:drinksInclusive minStars:minStars maxStars:maxStars amenities:amenities sortBy:sortBy sortOrder:sortOrder];
     
-    handler(model, isComplete);
-    
 //    if (EvaComponent.evaAppHandler instanceof HotelCount) {
 //        chatItem.setStatus(ChatItem.Status.SEARCHING);
 //        chatItem.setSubLabel("Searching...");
@@ -452,16 +427,17 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
 //    else {
         // count is not supported - trigger search
         if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
-            [model triggerSearchForDelegate:delegate];
+            return [model triggerSearchForDelegate:delegate];
         }
         else {
             // TODO: insert new chat item saying the app doesn't support search?
             EV_LOG_ERROR(@"App reached hotel search, but has no matching handler");
         }
 //    }
+    return [EVCallbackResponse responseWithNone];
 }
 
-+ (void)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))handler {
++ (EVCallbackResponse*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate {
     EVLocation* from = nil;
     EVLocation* to = nil;
     EVFlowElementType searchType = EVFlowElementTypeOther;
@@ -472,8 +448,7 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
         case EVFlowElementTypeCar:
             if ([flow.relatedLocations count] < 2) {
                 EV_LOG_INFO(@"Search without two locations?");
-                handler(nil, isComplete);
-                return;
+                return [EVCallbackResponse responseWithNone];
             }
             searchType = flow.type;
             from = flow.relatedLocations[0];
@@ -484,8 +459,7 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
         case EVFlowElementTypeHotel:
             if ([flow.relatedLocations count] < 1) {
                 EV_LOG_INFO(@"Hotel search search without a location?");
-                handler(nil, isComplete);
-                return;
+                return [EVCallbackResponse responseWithNone];
             }
             searchType = flow.type;
             from = flow.relatedLocations[0];
@@ -507,11 +481,11 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
         }
             
         case EVFlowElementTypeNavigate: {
-            [self handleNavigateWithResponse:response responseDelegate:delegate andMessageHandler:handler];
+            return [self handleNavigateWithResponse:response andResponseDelegate:delegate];
             break;
         }
         case EVFlowElementTypeData: {
-            [self handleDataWithResponse:response withFlow:(EVDataFlowElement*)flow responseDelegate:delegate andMessageHandler:handler];
+            return [self handleDataWithResponse:response withFlow:(EVDataFlowElement*)flow andResponseDelegate:delegate];
             break;
         }
         default:
@@ -519,26 +493,26 @@ delegate andMessageHandler:(void (^)(EVSearchModel* message, BOOL complete))hand
     }
     
     if (searchType == EVFlowElementTypeOther) {
-        return;
+        return [EVCallbackResponse responseWithNone];
     }
     
     switch (searchType) {
         case EVFlowElementTypeCruise:
-            [self handleCruiseResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to responseDelegate:delegate andMessageHandler:handler];
+            return [self handleCruiseResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
             break;
             
         case EVFlowElementTypeFlight:
-            [self handleFlightResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to responseDelegate:delegate andMessageHandler:handler];
+            return [self handleFlightResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
             break;
             
         case EVFlowElementTypeHotel:
-            [self handleHotelResultsWithResponse:response isComplete:isComplete location:from responseDelegate:delegate andMessageHandler:handler];
+            return [self handleHotelResultsWithResponse:response isComplete:isComplete location:from andResponseDelegate:delegate];
             break;
-        
         
         default:
             break;
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
 @end

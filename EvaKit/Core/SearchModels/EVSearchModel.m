@@ -24,8 +24,9 @@
     return self;
 }
 
-- (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     NSAssert(false, @"Reload in subclasses");
+    return [EVCallbackResponse responseWithNone];
 }
 
 @end

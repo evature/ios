@@ -81,6 +81,7 @@ void reloadData(id collectionView, SEL selector) {
 // Eva response methods
 - (void)handleFlowForResponse:(EVResponse*)response;
 - (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message;
+- (void)handleCallbackResponse:(EVCallbackResponse*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message;
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
@@ -164,31 +165,31 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)setHelloMessage {
-    NSString* message = nil;
+    EVStyledString* message = nil;
     if ([self.delegate respondsToSelector:@selector(helloMessage)]) {
         message = [self.delegate helloMessage];
     } else {
         EVSearchContext* context = self.evApplication.context;
         switch (context.type) {
             case EVSearchContextTypeFlight:
-                message = @"What flight can I find for you?";
+                message = [EVStyledString styledStringWithString:@"What flight can I find for you?"];
                 break;
             case EVSearchContextTypeCruise:
-                message = @"What cruise can I find for you?";
+                message = [EVStyledString styledStringWithString:@"What cruise can I find for you?"];
                 break;
             case EVSearchContextTypeCar:
-                message = @"What car can I find for you?";
+                message = [EVStyledString styledStringWithString:@"What car can I find for you?"];
                 break;
             case EVSearchContextTypeHotel:
-                message = @"What hotel can I find for you?";
+                message = [EVStyledString styledStringWithString:@"What hotel can I find for you?"];
                 break;
             default:
-                message = @"Hello, how may I help you?";
+                message = [EVStyledString styledStringWithString:@"Hello, how may I help you?"];
                 break;
         }
     }
     [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:message]];
-    [self speakText:message];
+    [self speakText:[message string]];
 }
 
 - (void)viewDidLoad {
@@ -316,21 +317,21 @@ void reloadData(id collectionView, SEL selector) {
     
     if (!msg.isMediaMessage) {
         
-        if (msg.attributedText != nil) {
+        if (msg.styledText.hasStyle) {
             cell.textView.text = nil;
-            cell.textView.attributedText = msg.attributedText;
+            cell.textView.attributedText = [msg.styledText attributedString];
         } else {
             cell.textView.attributedText = nil;
-            cell.textView.text = msg.text;
+            cell.textView.text = [msg.styledText string];
         
-        if ([msg isClientMessage]) {
-            cell.textView.textColor = [UIColor blackColor];
-        } else {
-            cell.textView.textColor = EV_EVA_TEXT_COLOR;
-        }
+            if ([msg isClientMessage]) {
+                cell.textView.textColor = [UIColor blackColor];
+            } else {
+                cell.textView.textColor = EV_EVA_TEXT_COLOR;
+            }
         
-        cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
-                                              NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
+            cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
+                                                  NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
         }
     } else {
         cell.textView.attributedText = nil;
@@ -434,7 +435,7 @@ void reloadData(id collectionView, SEL selector) {
             }
         }
     }
-    EVChatMessage* message = [EVChatMessage clientMessageWithText:[[[NSAttributedString alloc] initWithAttributedString:chat] autorelease]];
+    EVChatMessage* message = [EVChatMessage clientMessageWithText:[EVStyledString styledStringWithAttributedString:chat]];
     [self.evApplication.sessionMessages addObject:message];
     [self finishSendingMessageAnimated:YES];
 }
@@ -443,7 +444,7 @@ void reloadData(id collectionView, SEL selector) {
 - (void)showWarningMessage:(NSString*)message {
     UIFont* font = [UIFont italicSystemFontOfSize:self.collectionView.collectionViewLayout.messageBubbleFont.pointSize];
     NSAttributedString* aS = [[[NSMutableAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: EV_EVA_TEXT_COLOR}] autorelease];
-    EVChatMessage* cm = [EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:aS];
+    EVChatMessage* cm = [EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:[EVStyledString styledStringWithAttributedString:aS]];
     [self.evApplication.sessionMessages addObject:cm];
     [self finishSendingMessageAnimated:YES];
 }
@@ -457,6 +458,7 @@ void reloadData(id collectionView, SEL selector) {
         [self.speechSynthesizer speakUtterance:utterance];
     }
 }
+
 - (void)stopSpeaking {
     if (self.speechSynthesizer.speaking) {
         [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
@@ -481,7 +483,7 @@ void reloadData(id collectionView, SEL selector) {
     for (EVFlowElement* flow in response.flow.flowElements) {
         EVChatMessage* chatItem = nil;
         if (flow.type == EVFlowElementTypeQuestion) {
-            EVChatMessage* questionChatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
+            EVChatMessage* questionChatItem = [EVChatMessage serverMessageWithID:response.transactionId text:[EVStyledString styledStringWithString:flow.sayIt]];
             chatItem = questionChatItem;
             [self.evApplication.sessionMessages addObject:chatItem];
             [self finishReceivingMessageAnimated:YES];
@@ -489,7 +491,7 @@ void reloadData(id collectionView, SEL selector) {
             [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
         } else {
             if (!hasQuestion || flow.type == EVFlowElementTypeStatement) {
-                chatItem = [EVChatMessage serverMessageWithID:response.transactionId text:flow.sayIt];
+                chatItem = [EVChatMessage serverMessageWithID:response.transactionId text:[EVStyledString styledStringWithString:flow.sayIt]];
                 [self.evApplication.sessionMessages addObject:chatItem];
                 [self finishReceivingMessageAnimated:YES];
                 if (!hasQuestion && flow.type != EVFlowElementTypeStatement && first) {
@@ -507,11 +509,6 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message {
     
-    NSString* sayIt = [element sayIt];
-    if (sayIt != nil && ![sayIt isEqualToString:@""]) {
-        [self speakText:sayIt];
-    }
-    
     switch (element.type) {
         case EVFlowElementTypeReply: {
             EVReplyFlowElement* replyElement = (EVReplyFlowElement*)element;
@@ -528,11 +525,10 @@ void reloadData(id collectionView, SEL selector) {
         case EVFlowElementTypeCruise:
         case EVFlowElementTypeQuestion:
         case EVFlowElementTypeNavigate:
-        case EVFlowElementTypeData:
-            [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element responseDelegate:self.delegate andMessageHandler:^(EVSearchModel *response, BOOL complete) {
-                message.searchModel = response;
-            }];
+        case EVFlowElementTypeData: {
+            [self handleCallbackResponse:[EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate] withElement:element forChatMessage:message];
             break;
+        }
             
         case EVFlowElementTypeStatement: {
             EVStatementFlowElement* se = (EVStatementFlowElement*)element;
@@ -561,6 +557,47 @@ void reloadData(id collectionView, SEL selector) {
     }
 }
 
+
+- (void)handleCallbackResponse:(EVCallbackResponse*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message {
+    switch ([response responseType]) {
+        case EVCallbackResponseTypePromise: {
+            [element retain];
+            [message retain];
+            [response promiseValue].then(^id(EVCallbackResponse* result) {
+                [element autorelease];
+                [message autorelease];
+                [self handleCallbackResponse:result withElement:element forChatMessage:message];
+                return result;
+            }, ^id(NSError* error) {
+                [element release];
+                [message release];
+                return error;
+            });
+            break;
+        }
+        case EVCallbackResponseTypeBool:
+        case EVCallbackResponseTypeNone: {
+            if ([response boolValue]) {
+                NSString* sayIt = [element sayIt];
+                if (sayIt != nil && ![sayIt isEqualToString:@""]) {
+                    [self speakText:sayIt];
+                }
+            } else {
+                
+            }
+            break;
+        }
+        case EVCallbackResponseTypeString: {
+            break;
+        }
+        case EVCallbackResponseTypeData: {
+            break;
+        }
+        case EVCallbackResponseTypeCloseChatAction: {
+            [self hideChatView:self];
+        }
+    }
+}
 
 #pragma mark == EVApplication delegate ===
 - (void)evApplication:(EVApplication*)application didObtainResponse:(EVResponse*)response {
@@ -614,7 +651,7 @@ void reloadData(id collectionView, SEL selector) {
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView stopWaitAnimation];
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
-        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:@"Connection error."]];
+        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:[EVStyledString styledStringWithString:@"Connection error."]]];
         [self finishReceivingMessageAnimated:YES];
     }
     if ([self.delegate respondsToSelector:@selector(evSearchGotAnError:)]) {

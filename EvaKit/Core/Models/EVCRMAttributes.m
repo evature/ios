@@ -10,6 +10,7 @@
 @implementation EVCRMAttributes
 
 static NSDictionary* pageKeys = nil;
+static NSDictionary* fieldPageKeys = nil;
 
 + (void)load {
     pageKeys = [@{@"Home": @(EVCRMPageTypeHome),
@@ -22,6 +23,13 @@ static NSDictionary* pageKeys = nil;
                   @"Activities": @(EVCRMPageTypeActivities),
                   @"TodaysAppointments": @(EVCRMPageTypeTodaysAppointments),
                    } retain];
+    fieldPageKeys = [@{@"lead": @(EVCRMPageTypeLeads),
+                       @"opportunity": @(EVCRMPageTypeOpportunities),
+                       @"salesquote": @(EVCRMPageTypeSalesQuotes),
+                       @"account": @(EVCRMPageTypeAccounts),
+                       @"contact": @(EVCRMPageTypeContacts),
+                       @"activity": @(EVCRMPageTypeActivities)
+                       } retain];
 }
 
 + (EVCRMPageType)stringToPageType:(NSString*)pageName {
@@ -29,6 +37,18 @@ static NSDictionary* pageKeys = nil;
         NSNumber* val = [pageKeys objectForKey:[[pageName
                                                  stringByReplacingOccurrencesOfString:@" " withString:@""]
                                                  stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+        if (val != nil) {
+            return [val shortValue];
+        }
+    }
+    return EVCRMPageTypeOther;
+}
+
++ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath {
+    if (fieldTopPath) {
+        NSNumber* val = [fieldPageKeys objectForKey:[[fieldTopPath
+                                                 stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                                stringByReplacingOccurrencesOfString:@"'" withString:@""]];
         if (val != nil) {
             return [val shortValue];
         }

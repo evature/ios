@@ -105,9 +105,9 @@
     return [[[self alloc] initWithComplete:isComplete location:location arriveDateMin:arriveDateMin arriveDateMax:arriveDateMax durationMin:durationMin durationMax:durationMax travelers:travelers hotelsChain:chain selfCatering:selfCatering bedAndBreakfast:bedAndBreakfast halfBoard:halfBoard fullBoard:fullBoard allInclusive:allInclusive drinksInclusive:drinksInclusive minStars:minStars maxStars:maxStars amenities:amenities sortBy:sortBy sortOrder:sortOrder] autorelease];
 }
 
-- (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVHotelSearchDelegate)]) {
-        [(id<EVHotelSearchDelegate>)delegate handleHotelSearchWhichComplete:self.isComplete
+        return [(id<EVHotelSearchDelegate>)delegate handleHotelSearchWhichComplete:self.isComplete
                                                                    location:self.location
                                                               arriveDateMin:self.arriveDateMin
                                                               arriveDateMax:self.arriveDateMax
@@ -127,6 +127,7 @@
                                                                      sortBy:self.sortBy
                                                                   sortOrder:self.sortOrder];
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
 - (void)dealloc {

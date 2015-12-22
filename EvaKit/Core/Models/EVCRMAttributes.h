@@ -36,5 +36,6 @@ typedef NS_ENUM(int16_t, EVCRMFilterType) {
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 + (EVCRMPageType)stringToPageType:(NSString*)pageName;
++ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath;
 
 @end

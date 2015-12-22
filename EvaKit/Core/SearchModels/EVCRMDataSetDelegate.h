@@ -20,7 +20,7 @@
 //         page = EVCRMPageTypeOpportunities
 //        objId = 0
 //        value = @{ @"type" : EVValueTypeNumber,  @"value" : [NSNumber numberWithFloat:0.7f] }
-- (void) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(int)objId toValue:(NSDictionary*)value;
+- (EVCallbackResponse*)setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(int)objId toValue:(NSDictionary*)value;
 
 
 @end

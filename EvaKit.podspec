@@ -115,7 +115,11 @@ Pod::Spec.new do |s|
 
   s.requires_arc = false
   
+  
+  # ――― Dependencies ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+  
   s.dependency 'libFLAC', "~>1.3.0"
-  s.dependency 'JSQMessagesViewController', "~>7.1.0"
+  s.dependency 'JSQMessagesViewController', "~>7.2.0"
+  s.dependency 'RXPromise', "~>0.13.0"
 
 end

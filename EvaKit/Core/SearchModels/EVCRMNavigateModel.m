@@ -33,12 +33,13 @@
 }
 
 
-- (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
-        [(id<EVCRMNavigateDelegate>)delegate   navigateTo:(EVCRMPageType)self.attributes.page
+        return [(id<EVCRMNavigateDelegate>)delegate   navigateTo:(EVCRMPageType)self.attributes.page
                                                withSubPage:0
                                                ofTeam:(EVCRMFilterType)self.attributes.filter];
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
 - (void)dealloc {

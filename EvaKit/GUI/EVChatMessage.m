@@ -36,15 +36,10 @@ NSString* const kSenderDisplayNameEva = @"Eva";
 - (instancetype)initWithSenderId:(NSString *)senderId
                senderDisplayName:(NSString *)senderDisplayName
                             date:(NSDate *)date
-                            text:(NSString *)text {
-    NSAttributedString* attrText = nil;
-    if ([text isKindOfClass:[NSAttributedString class]]) {
-        attrText = (NSAttributedString*)text;
-        text = attrText.string;
-    }
-    self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date text:text];
+                            text:(id)text {
+    self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date text:[(EVStyledString*)text string]];
     if (self != nil) {
-        self.attributedText = attrText;
+        self.styledText = text;
     }
     return self;
 }
@@ -55,14 +50,14 @@ NSString* const kSenderDisplayNameEva = @"Eva";
                            media:(id<JSQMessageMediaData>)media {
     self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date media:media];
     if (self != nil) {
-        self.attributedText = nil;
+        self.styledText = nil;
     }
     return self;
 }
 
 - (void)dealloc {
-    self.searchModel = nil;
-    self.attributedText = nil;
+//    self.searchModel = nil;
+    self.styledText = nil;
     [super dealloc];
 }
 

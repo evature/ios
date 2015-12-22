@@ -10,7 +10,10 @@
 
 @interface EVCRMDataSetModel ()
 
-@property (nonatomic, strong, readwrite) EVCRMAttributes* attributes;
+@property (nonatomic, assign, readwrite) EVCRMPageType page;
+@property (nonatomic, strong, readwrite) NSString* fieldPath;
+@property (nonatomic, strong, readwrite) NSNumber* valueType;
+@property (nonatomic, strong, readwrite) id value;
 
 @end
 
@@ -21,7 +24,7 @@
                           inPage:(EVCRMPageType)page
                         setField:(NSString*)field
                      ofValueType:(NSNumber*)valueType
-                         toValue:(NSObject*)value {
+                         toValue:(id)value {
     self = [super initWithComplete:isComplete];
     if (self != nil) {
         self.page = page;
@@ -37,7 +40,7 @@
                        inPage:(EVCRMPageType)page
                      setField:(NSString*)field
                   ofValueType:(NSNumber*)valueType
-                      toValue:(NSObject*)value {
+                      toValue:(id)value {
 
     return [[[self alloc] initWithComplete:isComplete
                                     inPage:page
@@ -48,19 +51,22 @@
 
 
 
-- (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-        [(id<EVCRMDataSetDelegate>)delegate setField:self.fieldPath
+        return [(id<EVCRMDataSetDelegate>)delegate setField:self.fieldPath
                                             inPage:(EVCRMPageType)self.page
                                               withId:0
                                              toValue: @{ @"type": self.valueType,
                                                          @"value": self.value }
                                              ];
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
 - (void)dealloc {
-    self.attributes = nil;
+    self.fieldPath = nil;
+    self.value = nil;
+    self.valueType = nil;
     [super dealloc];
 }
 

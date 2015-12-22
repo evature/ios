@@ -31,37 +31,37 @@
  * @param sortBy - how should the results be sorted (eg. price, date, etc..), or null if not mentioned
  * @param sortOrder - ascending or descending or null if not mentioned
  */
-- (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
-                                 fromLocation:(EVLocation *)origin
-                                   toLocation:(EVLocation *)destination
-                                minDepartDate:(NSDate *)departDateMin
-                                maxDepartDate:(NSDate *)departDateMax
-                                    travelers:(EVTravelers*)travelers
-                                      nonStop:(EVBool)nonstop
-                                  seatClasses:(NSArray*)seatClasses
-                                     airlines:(NSArray*)airlines
-                                       redEye:(EVBool)redeye
-                                     foodType:(EVFlightAttributesFoodType)food
-                                     seatType:(EVFlightAttributesSeatType)seatType
-                                       sortBy:(EVRequestAttributesSort)sortBy
-                                    sortOrder:(EVRequestAttributesSortOrder)sortOrder;
+- (EVCallbackResponse*)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
+                                                fromLocation:(EVLocation *)origin
+                                                  toLocation:(EVLocation *)destination
+                                               minDepartDate:(NSDate *)departDateMin
+                                               maxDepartDate:(NSDate *)departDateMax
+                                                   travelers:(EVTravelers*)travelers
+                                                     nonStop:(EVBool)nonstop
+                                                 seatClasses:(NSArray*)seatClasses
+                                                    airlines:(NSArray*)airlines
+                                                      redEye:(EVBool)redeye
+                                                    foodType:(EVFlightAttributesFoodType)food
+                                                    seatType:(EVFlightAttributesSeatType)seatType
+                                                      sortBy:(EVRequestAttributesSort)sortBy
+                                                   sortOrder:(EVRequestAttributesSortOrder)sortOrder;
 
 
-- (void)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
-                                   fromLocation:(EVLocation *)origin
-                                     toLocation:(EVLocation *) destination
-                                  minDepartDate:(NSDate *)departDateMin
-                                  maxDepartDate:(NSDate*) departDateMax
-                                  minReturnDate:(NSDate*)returnDateMin
-                                  maxReturnDate:(NSDate*)returnDateMax
-                                      travelers:(EVTravelers*)travelers
-                                        nonStop:(EVBool)nonstop
-                                    seatClasses:(NSArray*)seatClasses
-                                       airlines:(NSArray*)airlines
-                                         redEye:(EVBool)redeye
-                                       foodType:(EVFlightAttributesFoodType)food
-                                       seatType:(EVFlightAttributesSeatType)seatType
-                                         sortBy:(EVRequestAttributesSort)sortBy
-                                      sortOrder:(EVRequestAttributesSortOrder)sortOrder;
+- (EVCallbackResponse*)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
+                                                   fromLocation:(EVLocation *)origin
+                                                     toLocation:(EVLocation *) destination
+                                                  minDepartDate:(NSDate *)departDateMin
+                                                  maxDepartDate:(NSDate*) departDateMax
+                                                  minReturnDate:(NSDate*)returnDateMin
+                                                  maxReturnDate:(NSDate*)returnDateMax
+                                                      travelers:(EVTravelers*)travelers
+                                                        nonStop:(EVBool)nonstop
+                                                    seatClasses:(NSArray*)seatClasses
+                                                       airlines:(NSArray*)airlines
+                                                         redEye:(EVBool)redeye
+                                                       foodType:(EVFlightAttributesFoodType)food
+                                                       seatType:(EVFlightAttributesSeatType)seatType
+                                                         sortBy:(EVRequestAttributesSort)sortBy
+                                                      sortOrder:(EVRequestAttributesSortOrder)sortOrder;
 
 @end

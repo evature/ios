@@ -14,6 +14,7 @@
 
 #define BUTTON_MARGIN 8.0f
 //#define BUTTON_TOP_BOTTOM_MARGIN 8.0f
+#define LONG_PRESS_WAIT_TIME 0.5
 
 typedef NS_ENUM(uint8_t, EVMicButtonState) {
     EVMicButtonStateShowingMic = 0,
@@ -26,7 +27,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     BOOL _buttonIsDragging;
     EVMicButtonState _micButtonState;
     BOOL _recording;
-    BOOL _ptt;
+    BOOL _longPress;
 }
 
 @property (nonatomic, strong, readwrite) EVVoiceChatMicButtonLayer *micButtonLayer;
@@ -38,7 +39,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 - (void)recalculateButtonBackgroundSize;
 - (void)setupButtonPositions;
 - (void)moveCenterButtonBack;
-- (void)pttStart;
+- (void)longPressStart;
 
 @end
 
@@ -59,7 +60,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     
     _buttonIsDragging = NO;
     _recording = NO;
-    _ptt = NO;
+    _longPress = NO;
     
     self.micButtonLayer = [EVVoiceChatMicButtonLayer layer];
     self.micButtonLayer.svgLineWidth = _centerButtonMicLineWidth;
@@ -329,7 +330,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
             _buttonIsDragging = YES;
             [self.micButtonLayer touched];
             if (!_recording) {
-                [self performSelector:@selector(pttStart) withObject:nil afterDelay:1.0];
+                [self performSelector:@selector(longPressStart) withObject:nil afterDelay:LONG_PRESS_WAIT_TIME];
             }
         } else if (!_recording && (theLayer == self.leftButtonLayer || theLayer == self.rightButtonLayer)) {
             _buttonIsDragging = YES;
@@ -353,8 +354,8 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
     }
 }
 
-- (void)pttStart {
-    _ptt = YES;
+- (void)longPressStart {
+    _longPress = YES;
     [self.touchDelegate centerButtonLongPressStarted:self];
 }
 
@@ -368,9 +369,9 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
             _buttonIsDragging = NO;
             [[self micButtonLayer] released];
             [NSObject cancelPreviousPerformRequestsWithTarget:self];
-            if (_ptt) {
+            if (_longPress) {
                 [self.touchDelegate centerButtonLongPressEnded:self];
-                _ptt = NO;
+                _longPress = NO;
             } else {
                 [self.touchDelegate centerButtonTouched:self];
             }

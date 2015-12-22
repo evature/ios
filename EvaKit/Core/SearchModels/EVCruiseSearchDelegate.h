@@ -12,15 +12,15 @@
 
 @protocol EVCruiseSearchDelegate <EVSearchDelegate>
 
-- (void)handleCruiseSearchWhichComplete:(BOOL)isComplete
-                                   from:(EVLocation*)from
-                                     to:(EVLocation*)to
-                               fromDate:(NSDate*)fromDate
-                                 toDate:(NSDate*)toDate
-                            minDuration:(NSInteger)minDuration
-                            maxDuration:(NSInteger)maxDuration
-                             attributes:(EVCruiseAttributes*)attributes
-                                 sortBy:(EVRequestAttributesSort)sortBy
-                              sortOrder:(EVRequestAttributesSortOrder)sortOrder;
+- (EVCallbackResponse*)handleCruiseSearchWhichComplete:(BOOL)isComplete
+                                                  from:(EVLocation*)from
+                                                    to:(EVLocation*)to
+                                              fromDate:(NSDate*)fromDate
+                                                toDate:(NSDate*)toDate
+                                           minDuration:(NSInteger)minDuration
+                                           maxDuration:(NSInteger)maxDuration
+                                            attributes:(EVCruiseAttributes*)attributes
+                                                sortBy:(EVRequestAttributesSort)sortBy
+                                             sortOrder:(EVRequestAttributesSortOrder)sortOrder;
 
 @end

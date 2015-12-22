@@ -14,6 +14,6 @@
 
 @interface EVSearchResultsHandler : NSObject
 
-+ (void)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow responseDelegate:(id<EVSearchDelegate>)delegate andMessageHandler:(void (^)(EVSearchModel* response, BOOL complete))handler;
++ (EVCallbackResponse*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
 @end

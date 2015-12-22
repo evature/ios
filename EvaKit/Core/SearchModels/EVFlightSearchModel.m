@@ -92,10 +92,10 @@
     return [[[self alloc] initWithComplete:isComplete origin:origin destination:destination departDateMin:departDateMin departDateMax:departDateMax returnDateMin:returnDateMin returnDateMax:returnDateMax travelers:travelers nonstop:nonstop redeye:redeye oneWay:oneWay airlines:airlines food:food seatType:seatType seatClasses:seatClasses sortBy:sortBy sortOrder:sortOrder] autorelease];
 }
 
-- (void)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
         if (self.oneWay) {
-            [(id<EVFlightSearchDelegate>)delegate handleOneWayFlightSearchWhichComplete:self.isComplete
+            return [(id<EVFlightSearchDelegate>)delegate handleOneWayFlightSearchWhichComplete:self.isComplete
                                                                            fromLocation:self.origin
                                                                              toLocation:self.destination
                                                                           minDepartDate:self.departDateMin
@@ -110,7 +110,7 @@
                                                                                  sortBy:self.sortBy
                                                                               sortOrder:self.sortOrder];
         } else {
-            [(id<EVFlightSearchDelegate>)delegate handleRoundTripFlightSearchWhichComplete:self.isComplete
+            return [(id<EVFlightSearchDelegate>)delegate handleRoundTripFlightSearchWhichComplete:self.isComplete
                                                                            fromLocation:self.origin
                                                                              toLocation:self.destination
                                                                           minDepartDate:self.departDateMin
@@ -128,6 +128,7 @@
                                                                               sortOrder:self.sortOrder];
         }
     }
+    return [EVCallbackResponse responseWithNone];
 }
 
 - (void)dealloc {

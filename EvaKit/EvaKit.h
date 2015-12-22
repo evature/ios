@@ -20,6 +20,8 @@ FOUNDATION_EXPORT const unsigned char EvaKitVersionString[];
 #import "EVApplicationDelegate.h"
 #import "EVApplicationSound.h"
 #import "EVApplication.h"
+#import "EVStyledString.h"
+#import "EVCallbackResponse.h"
 #import "EVSearchDelegate.h"
 #import "EVHotelSearchDelegate.h"
 #import "EVFlightSearchDelegate.h"
