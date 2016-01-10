@@ -10,6 +10,7 @@
 
 
 typedef NS_ENUM(int16_t, EVCRMPageType) {
+    EVCRMPageTypeCurrent = -2,
     EVCRMPageTypeOther = -1,
     EVCRMPageTypeHome = 0,
     EVCRMPageTypeFeed,
@@ -36,6 +37,6 @@ typedef NS_ENUM(int16_t, EVCRMFilterType) {
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
 + (EVCRMPageType)stringToPageType:(NSString*)pageName;
-+ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath;
++ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldToPath;
 
 @end

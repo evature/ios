@@ -17,6 +17,11 @@
 		9412C4D01C0DC7A300ECA87C /* EVCRMDataSetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */; };
 		9412C4D31C0DD95E00ECA87C /* EVDataFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */; };
 		9412C4D41C0DD95E00ECA87C /* EVDataFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */; };
+		943F7A241C42923900B67894 /* EVCRMDataGetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		943F7A261C42929000B67894 /* EVCRMDataGetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A251C42929000B67894 /* EVCRMDataGetModel.h */; };
+		943F7A281C4292A600B67894 /* EVCRMDataGetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */; };
+		943F7A2B1C42A1A900B67894 /* EVNavigateFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A291C42A1A900B67894 /* EVNavigateFlowElement.h */; };
+		943F7A2C1C42A1A900B67894 /* EVNavigateFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F7A2A1C42A1A900B67894 /* EVNavigateFlowElement.m */; };
 		9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */; };
 		9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */; };
 		9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */; };
@@ -218,6 +223,11 @@
 		9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataFlowElement.h; sourceTree = "<group>"; };
 		9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataFlowElement.m; sourceTree = "<group>"; };
 		9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
+		943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVCRMDataGetDelegate.h; path = SearchModels/EVCRMDataGetDelegate.h; sourceTree = "<group>"; };
+		943F7A251C42929000B67894 /* EVCRMDataGetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCRMDataGetModel.h; sourceTree = "<group>"; };
+		943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMDataGetModel.m; sourceTree = "<group>"; };
+		943F7A291C42A1A900B67894 /* EVNavigateFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVNavigateFlowElement.h; sourceTree = "<group>"; };
+		943F7A2A1C42A1A900B67894 /* EVNavigateFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVNavigateFlowElement.m; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
@@ -447,6 +457,7 @@
 		941037741C01E951009A9A3F /* CRMDelegates */ = {
 			isa = PBXGroup;
 			children = (
+				943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */,
 				9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */,
 				941037721C01E943009A9A3F /* EVCRMNavigateDelegate.h */,
 			);
@@ -647,6 +658,8 @@
 				96804C381B85EC1300FA9998 /* EVStatementFlowElement.h */,
 				96804C391B85EC1300FA9998 /* EVStatementFlowElement.m */,
 				9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */,
+				943F7A291C42A1A900B67894 /* EVNavigateFlowElement.h */,
+				943F7A2A1C42A1A900B67894 /* EVNavigateFlowElement.m */,
 				9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */,
 				96804C3C1B85EFF300FA9998 /* EVQuestionFlowElement.h */,
 				96804C3D1B85EFF300FA9998 /* EVQuestionFlowElement.m */,
@@ -672,6 +685,8 @@
 				9410377A1C01FE4D009A9A3F /* EVCRMNavigateModel.m */,
 				9412C4CD1C0DC7A300ECA87C /* EVCRMDataSetModel.h */,
 				9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */,
+				943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */,
+				943F7A251C42929000B67894 /* EVCRMDataGetModel.h */,
 				968BBA721B951266001EF0C9 /* EVCruiseSearchModel.h */,
 				968BBA731B951266001EF0C9 /* EVCruiseSearchModel.m */,
 			);
@@ -791,6 +806,7 @@
 				968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */,
 				961221CE1C29A82F004AE998 /* EVCRMDataSetDelegate.h in Headers */,
 				96C1EAFB1B78D34800C6FEA4 /* EVLogger.h in Headers */,
+				943F7A2B1C42A1A900B67894 /* EVNavigateFlowElement.h in Headers */,
 				9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */,
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
@@ -805,6 +821,7 @@
 				96454A891B84FBF600C26FFD /* EVMoney.h in Headers */,
 				968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */,
 				9679484E1B84BC7A00198130 /* EVFlightAttributes.h in Headers */,
+				943F7A261C42929000B67894 /* EVCRMDataGetModel.h in Headers */,
 				96454A911B851A3600C26FFD /* EVWarning.h in Headers */,
 				96454A8D1B85193A00C26FFD /* EVPNRAttributes.h in Headers */,
 				9679483A1B84950A00198130 /* EVDialog.h in Headers */,
@@ -812,6 +829,7 @@
 				96454A951B851BA000C26FFD /* EVParsedText.h in Headers */,
 				967948421B84A14200198130 /* EVLocation.h in Headers */,
 				96804C2E1B85E1E500FA9998 /* EVFlowElement.h in Headers */,
+				943F7A241C42923900B67894 /* EVCRMDataGetDelegate.h in Headers */,
 				96804C2A1B85E12E00FA9998 /* EVFlow.h in Headers */,
 				96804C321B85E89800FA9998 /* EVFlightFlowElement.h in Headers */,
 				96454A7D1B84D4D200C26FFD /* EVServiceAttributes.h in Headers */,
@@ -1063,6 +1081,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96C1EAFC1B78D34800C6FEA4 /* EVLogger.m in Sources */,
+				943F7A2C1C42A1A900B67894 /* EVNavigateFlowElement.m in Sources */,
 				9679484B1B84A6F000198130 /* EVHotelAttributes.m in Sources */,
 				967948431B84A14200198130 /* EVLocation.m in Sources */,
 				9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */,
@@ -1114,6 +1133,7 @@
 				9412C4D41C0DD95E00ECA87C /* EVDataFlowElement.m in Sources */,
 				96454A821B84D7F200C26FFD /* EVCruiseAttributes.m in Sources */,
 				967948371B8492CE00198130 /* EVChat.m in Sources */,
+				943F7A281C4292A600B67894 /* EVCRMDataGetModel.m in Sources */,
 				96804C331B85E89800FA9998 /* EVFlightFlowElement.m in Sources */,
 				96804C3B1B85EC1300FA9998 /* EVStatementFlowElement.m in Sources */,
 				96804C371B85EA1700FA9998 /* EVReplyFlowElement.m in Sources */,

@@ -36,14 +36,16 @@ static NSDictionary* verbTypeKeys = nil;
         self.fieldPath = [response objectForKey:@"URL"];
         
         self.value = [response objectForKey:@"Value"];
-        if ([self.value isKindOfClass:[NSDate class]]) {
-            self.valueType = @(EVDataFlowElementValueTypeDate);
-        }
-        else if ([self.value isKindOfClass:[NSNumber class]]) {
-            self.valueType = @(EVDataFlowElementValueTypeNumber);
-        }
-        else {
-            self.valueType = @(EVDataFlowElementValueTypeString);
+        if (self.value != nil) {
+            if ([self.value isKindOfClass:[NSDate class]]) {
+                self.valueType = @(EVDataFlowElementValueTypeDate);
+            }
+            else if ([self.value isKindOfClass:[NSNumber class]]) {
+                self.valueType = @(EVDataFlowElementValueTypeNumber);
+            }
+            else {
+                self.valueType = @(EVDataFlowElementValueTypeString);
+            }
         }
     }
     return self;

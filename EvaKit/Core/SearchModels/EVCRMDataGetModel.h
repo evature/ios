@@ -7,25 +7,24 @@
 //
 
 #import "EVSearchModel.h"
-#import "EVCRMNavigateDelegate.h"
+#import "EVCRMDataGetDelegate.h"
 #import "EVCRMAttributes.h"
 
-@interface EVCRMNavigateModel : EVSearchModel
+@interface EVCRMDataGetModel : EVSearchModel
 
-@property (nonatomic, strong, readonly) EVCRMAttributes* attributes;
 @property (nonatomic, assign, readonly) EVCRMPageType page;
 @property (nonatomic, strong, readonly) NSString* subPage;
-
+@property (nonatomic, strong, readonly) NSString* field;
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
                          subPage:(NSString*)subPage
-                   crmAttributes:(EVCRMAttributes *)attributes;
+                        setField:(NSString*)field;
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
                       subPage:(NSString*)subPage
-                crmAttributes:(EVCRMAttributes *)attributes;
+                     setField:(NSString*)field;
 
 
 

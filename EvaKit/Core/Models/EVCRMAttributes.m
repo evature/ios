@@ -13,15 +13,15 @@ static NSDictionary* pageKeys = nil;
 static NSDictionary* fieldPageKeys = nil;
 
 + (void)load {
-    pageKeys = [@{@"Home": @(EVCRMPageTypeHome),
-                  @"Feed": @(EVCRMPageTypeFeed),
-                  @"Leads": @(EVCRMPageTypeLeads),
-                  @"Opportunities": @(EVCRMPageTypeOpportunities),
-                  @"SalesQuotes": @(EVCRMPageTypeSalesQuotes),
-                  @"Accounts": @(EVCRMPageTypeAccounts),
-                  @"Contacts": @(EVCRMPageTypeContacts),
-                  @"Activities": @(EVCRMPageTypeActivities),
-                  @"TodaysAppointments": @(EVCRMPageTypeTodaysAppointments),
+    pageKeys = [@{@"home": @(EVCRMPageTypeHome),
+                  @"feed": @(EVCRMPageTypeFeed),
+                  @"leads": @(EVCRMPageTypeLeads),
+                  @"opportunities": @(EVCRMPageTypeOpportunities),
+                  @"salesquotes": @(EVCRMPageTypeSalesQuotes),
+                  @"accounts": @(EVCRMPageTypeAccounts),
+                  @"contacts": @(EVCRMPageTypeContacts),
+                  @"activities": @(EVCRMPageTypeActivities),
+                  @"todaysappointments": @(EVCRMPageTypeTodaysAppointments),
                    } retain];
     fieldPageKeys = [@{@"lead": @(EVCRMPageTypeLeads),
                        @"opportunity": @(EVCRMPageTypeOpportunities),
@@ -34,7 +34,7 @@ static NSDictionary* fieldPageKeys = nil;
 
 + (EVCRMPageType)stringToPageType:(NSString*)pageName {
     if (pageName) {
-        NSNumber* val = [pageKeys objectForKey:[[pageName
+        NSNumber* val = [pageKeys objectForKey:[[[pageName lowercaseString]
                                                  stringByReplacingOccurrencesOfString:@" " withString:@""]
                                                  stringByReplacingOccurrencesOfString:@"'" withString:@""]];
         if (val != nil) {
@@ -44,9 +44,9 @@ static NSDictionary* fieldPageKeys = nil;
     return EVCRMPageTypeOther;
 }
 
-+ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldTopPath {
-    if (fieldTopPath) {
-        NSNumber* val = [fieldPageKeys objectForKey:[[fieldTopPath
++ (EVCRMPageType)fieldPathToPageType:(NSString*)fieldToPath {
+    if (fieldToPath) {
+        NSNumber* val = [fieldPageKeys objectForKey:[[[fieldToPath lowercaseString]
                                                  stringByReplacingOccurrencesOfString:@" " withString:@""]
                                                 stringByReplacingOccurrencesOfString:@"'" withString:@""]];
         if (val != nil) {

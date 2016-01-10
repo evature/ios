@@ -11,10 +11,12 @@
 #import "EVLogger.h"
 #import "EVQuestionFlowElement.h"
 #import "EVDataFlowElement.h"
+#import "EVNavigateFlowElement.h"
 #import "NSDate+EVA.h"
 #import "EVFlightSearchModel.h"
 #import "EVCruiseSearchModel.h"
 #import "EVCRMDataSetModel.h"
+#import "EVCRMDataGetModel.h"
 #import "EVCRMNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
@@ -29,7 +31,7 @@
 
 + (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
-+ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate;
 
 @end
@@ -166,50 +168,101 @@ delegate;
     return [EVCallbackResponse responseWithNone];
 }
 
+
 + (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate {
     EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
-    if (flow.verb == EVDataFlowElementVerbTypeSet) {
+    if (flow.verb == EVDataFlowElementVerbTypeSet || flow.verb == EVDataFlowElementVerbTypeGet) {
         NSArray *pathArray = [flow.fieldPath componentsSeparatedByString:@"/"];
         if (![pathArray[0] isEqualToString:@"crm"]) {
             EV_LOG_ERROR(@"Expected path to start with CRM but was %@", flow.fieldPath);
             return cbR;
         }
         
-        EVCRMPageType page = [EVCRMAttributes fieldPathToPageType:pathArray[1]];
+        // expecting one of:
+        //         crm/page/sub-page-id/field
+        //         crm/page/field
+        //         crm/field
+        EVCRMPageType page = EVCRMPageTypeCurrent;
+        NSString *field = [pathArray objectAtIndex:[pathArray count]-1];
+        NSString *subPage = nil;
+        NSUInteger count = [pathArray count];
+        if (count > 2) {
+            page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
+        }
+        if (count > 3) {
+            subPage = [pathArray objectAtIndex:2];
+        }
         
-        NSArray *spliced;
-        if (page == EVCRMPageTypeOther) {
-            spliced = [pathArray subarrayWithRange:NSMakeRange(1,[pathArray count]-1)];
+        if (flow.verb == EVDataFlowElementVerbTypeSet) {
+            EVSearchModel* model = [EVCRMDataSetModel modelComplete:true
+                                                             inPage:page
+                                                            subPage:subPage
+                                                           setField:field
+                                                        ofValueType:flow.valueType
+                                                            toValue:flow.value
+                                    ];
+            
+            if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+                cbR = [model triggerSearchForDelegate:delegate];
+            }
+            else {
+                // TODO: insert new chat item saying the app doesn't support search?
+                EV_LOG_ERROR(@"App reached crm data set, but has no matching handler");
+            }
         }
         else {
-            spliced = [pathArray subarrayWithRange:NSMakeRange(2,[pathArray count]-2)];
-        }
-        
-        
-        EVSearchModel* model = [EVCRMDataSetModel modelComplete:true
-                                                         inPage:page
-                                                       setField:[spliced componentsJoinedByString:@"."]
-                                                    ofValueType:flow.valueType
-                                                        toValue:flow.value
-                                ];
-        
-        if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-            cbR = [model triggerSearchForDelegate:delegate];
-        }
-        else {
-            // TODO: insert new chat item saying the app doesn't support search?
-            EV_LOG_ERROR(@"App reached crm data set, but has no matching handler");
+            EVSearchModel* model = [EVCRMDataGetModel modelComplete:true
+                                                             inPage:page
+                                                            subPage:subPage
+                                                           setField:field
+                                    ];
+            
+            if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
+                cbR = [model triggerSearchForDelegate:delegate];
+            }
+            else {
+                // TODO: insert new chat item saying the app doesn't support search?
+                EV_LOG_ERROR(@"App reached crm data get, but has no matching handler");
+            }
+
         }
     }
     return cbR;
 }
 
 
-+ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
     delegate {
     
-    EVSearchModel* model = [EVCRMNavigateModel modelComplete:true crmAttributes:response.crmAttributes];
+    EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
+    NSArray *pathArray = [flow.pagePath componentsSeparatedByString:@"/"];
+    if (![pathArray[0] isEqualToString:@"crm"]) {
+        EV_LOG_ERROR(@"Expected path to start with CRM but was %@", flow.pagePath);
+        return cbR;
+    }
+    
+    // expecting one of:
+    //         crm/page/sub-page-id/field
+    //         crm/page/field
+    //         crm/field
+    EVCRMPageType page = EVCRMPageTypeCurrent;
+    NSString *subPage = nil;
+    NSUInteger count = [pathArray count];
+    if (count > 3) {
+        subPage = [pathArray objectAtIndex:2];
+        page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
+    }
+    else if (count > 1) {
+        page = [EVCRMAttributes stringToPageType:[pathArray objectAtIndex:1]];
+    }
+
+    
+    
+    EVSearchModel* model = [EVCRMNavigateModel  modelComplete:true
+                                                       inPage:(EVCRMPageType)page
+                                                      subPage:(NSString*)subPage
+                                                crmAttributes:response.crmAttributes];
     
     if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
         return [model triggerSearchForDelegate:delegate];
@@ -218,7 +271,7 @@ delegate {
         // TODO: insert new chat item saying the app doesn't support search?
         EV_LOG_ERROR(@"App reached crm navigate, but has no matching handler");
     }
-    return [EVCallbackResponse responseWithNone];
+    return cbR;
 }
 
 + (EVCallbackResponse*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
@@ -481,7 +534,7 @@ delegate {
         }
             
         case EVFlowElementTypeNavigate: {
-            return [self handleNavigateWithResponse:response andResponseDelegate:delegate];
+            return [self handleNavigateWithResponse:response withFlow:(EVNavigateFlowElement*)flow  andResponseDelegate:delegate];
             break;
         }
         case EVFlowElementTypeData: {

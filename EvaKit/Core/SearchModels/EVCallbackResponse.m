@@ -32,9 +32,9 @@
     return [[[self alloc] initWithType:EVCallbackResponseTypeString andData:stringValue] autorelease];
 }
 
-+ (instancetype)responseWithResponseData:(EVCallbackResponseData*)responseData {
-    return [[[self alloc] initWithType:EVCallbackResponseTypeData andData:responseData] autorelease];
-}
+//+ (instancetype)responseWithResponseData:(EVCallbackResponseData*)responseData {
+//    return [[[self alloc] initWithType:EVCallbackResponseTypeData andData:responseData] autorelease];
+//}
 
 + (instancetype)responseWithNone {
     return [[[self alloc] initWithType:EVCallbackResponseTypeNone andData:nil] autorelease];
@@ -66,7 +66,7 @@
     if (_type != EVCallbackResponseTypeBool && _type != EVCallbackResponseTypeNone) {
         @throw [NSException exceptionWithName:@"EVCallbackResponseWrongType" reason:@"Can't get BOOL from Response" userInfo:@{@"EVCallbackResponse": self}];
     }
-    return [self.data boolValue];
+    return _type == EVCallbackResponseTypeNone || [self.data boolValue];
 }
 
 - (EVStyledString*)stringValue {

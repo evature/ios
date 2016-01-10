@@ -5,55 +5,61 @@
 //  Copyright (c) 2015 Evature. All rights reserved.
 //
 
-#import "EVCRMNavigateModel.h"
-#import "EVCRMNavigateDelegate.h"
+#import "EVCRMDataGetModel.h"
+#import "EVCRMDataGetDelegate.h"
 
-@interface EVCRMNavigateModel ()
+@interface EVCRMDataGetModel ()
 
-@property (nonatomic, strong, readwrite) EVCRMAttributes* attributes;
 @property (nonatomic, assign, readwrite) EVCRMPageType page;
 @property (nonatomic, strong, readwrite) NSString* subPage;
+@property (nonatomic, strong, readwrite) NSString* field;
 
 @end
 
-@implementation EVCRMNavigateModel
+@implementation EVCRMDataGetModel
+
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
-                        subPage:(NSString*)subPage
-                   crmAttributes:(EVCRMAttributes *)attributes {
+                         subPage:(NSString*)subPage
+                        setField:(NSString*)field {
     self = [super initWithComplete:isComplete];
     if (self != nil) {
-        self.attributes = attributes;
         self.page = page;
         self.subPage = subPage;
+        self.field = field;
     }
     return self;
+    
 }
-
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
                       subPage:(NSString*)subPage
-                crmAttributes:(EVCRMAttributes *)attributes {
+                     setField:(NSString*)field {
+
     return [[[self alloc] initWithComplete:isComplete
                                     inPage:page
-                                  subPage:subPage
-                             crmAttributes:attributes] autorelease];
+                                   subPage:subPage
+                                  setField:field
+                               ] autorelease];
 }
 
 
+
 - (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
-    if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
-        return [(id<EVCRMNavigateDelegate>)delegate   navigateTo:(EVCRMPageType)self.page
-                                               withSubPage:self.subPage
-                                               ofTeam:(EVCRMFilterType)self.attributes.filter];
+    if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
+        return [(id<EVCRMDataGetDelegate>)delegate getField:self.field
+                                            inPage:(EVCRMPageType)self.page
+                                              withId:self.subPage
+                                             ];
     }
     return [EVCallbackResponse responseWithNone];
 }
 
 - (void)dealloc {
-    self.attributes = nil;
+    self.field = nil;
+    self.subPage = nil;
     [super dealloc];
 }
 

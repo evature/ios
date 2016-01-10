@@ -11,7 +11,8 @@
 @interface EVCRMDataSetModel ()
 
 @property (nonatomic, assign, readwrite) EVCRMPageType page;
-@property (nonatomic, strong, readwrite) NSString* fieldPath;
+@property (nonatomic, strong, readwrite) NSString* subPage;
+@property (nonatomic, strong, readwrite) NSString* field;
 @property (nonatomic, strong, readwrite) NSNumber* valueType;
 @property (nonatomic, strong, readwrite) id value;
 
@@ -22,13 +23,15 @@
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
+                         subPage:(NSString*)subPage
                         setField:(NSString*)field
                      ofValueType:(NSNumber*)valueType
                          toValue:(id)value {
     self = [super initWithComplete:isComplete];
     if (self != nil) {
         self.page = page;
-        self.fieldPath = field;
+        self.subPage = subPage;
+        self.field = field;
         self.valueType = valueType;
         self.value = value;
     }
@@ -38,12 +41,14 @@
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
+                      subPage:(NSString*)subPage
                      setField:(NSString*)field
                   ofValueType:(NSNumber*)valueType
                       toValue:(id)value {
 
     return [[[self alloc] initWithComplete:isComplete
                                     inPage:page
+                                   subPage:subPage
                                   setField:field
                                ofValueType:valueType
                                    toValue:value] autorelease];
@@ -53,9 +58,9 @@
 
 - (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-        return [(id<EVCRMDataSetDelegate>)delegate setField:self.fieldPath
+        return [(id<EVCRMDataSetDelegate>)delegate setField:self.field
                                             inPage:(EVCRMPageType)self.page
-                                              withId:0
+                                              withId:self.subPage
                                              toValue: @{ @"type": self.valueType,
                                                          @"value": self.value }
                                              ];
@@ -64,7 +69,8 @@
 }
 
 - (void)dealloc {
-    self.fieldPath = nil;
+    self.field = nil;
+    self.subPage = nil;
     self.value = nil;
     self.valueType = nil;
     [super dealloc];

@@ -10,6 +10,6 @@
 
 @protocol EVCRMNavigateDelegate <EVSearchDelegate>
 
-- (EVCallbackResponse*)navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)filter;
+- (EVCallbackResponse*)navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter;
 
 @end

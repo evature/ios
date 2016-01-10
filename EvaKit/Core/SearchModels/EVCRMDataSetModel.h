@@ -13,18 +13,21 @@
 @interface EVCRMDataSetModel : EVSearchModel
 
 @property (nonatomic, assign, readonly) EVCRMPageType page;
-@property (nonatomic, strong, readonly) NSString* fieldPath;
+@property (nonatomic, strong, readonly) NSString* subPage;
+@property (nonatomic, strong, readonly) NSString* field;
 @property (nonatomic, strong, readonly) NSNumber* valueType;
 @property (nonatomic, strong, readonly) id value;
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
+                         subPage:(NSString*)subPage
                         setField:(NSString*)field
                      ofValueType:(NSNumber*)valueType
                          toValue:(id)value;
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
+                      subPage:(NSString*)subPage
                      setField:(NSString*)field
                   ofValueType:(NSNumber*)valueType
                       toValue:(id)value;

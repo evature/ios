@@ -11,17 +11,27 @@
 
 @implementation ViewController
 
-- (void) navigateTo:(EVCRMPageType)page  withSubPage:(int)subPageId  ofTeam:(EVCRMFilterType)filter {
+- (EVCallbackResponse*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter {
     NSLog(@"Handled Navigate!");
     NSLog(@"navigate to %d", page);
     NSLog(@"navigate isTeam %d", filter);
+//    EVStyledString *result = [EVStyledString styledStringWithString:@"Navigate!"];
+//    return [EVCallbackResponse responseWithString:result];
+    return [EVCallbackResponse responseWithNone];
 }
 
-- (void) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(int)objId toValue:(NSDictionary*)value {
+- (EVCallbackResponse*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
+    return [EVCallbackResponse responseWithNone];
 }
 
-- (void)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResponse*) getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId {
+    NSLog(@"Data getting %@ in page %d", fieldPath, page);
+    EVStyledString* result =[EVStyledString styledStringWithString:@"The value is 60%"];
+    return [EVCallbackResponse responseWithString:result];
+}
+
+- (EVCallbackResponse*)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
                                  fromLocation:(EVLocation *)origin
                                    toLocation:(EVLocation *)destination
                                 minDepartDate:(NSDate *)departDateMin
@@ -36,10 +46,11 @@
                                        sortBy:(EVRequestAttributesSort)sortBy
                                     sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     NSLog(@"Handled one way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+    return [EVCallbackResponse responseWithNone];
 }
 
 
-- (void)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResponse*)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
                                     fromLocation:(EVLocation *)origin
                                       toLocation:(EVLocation *) destination
                                    minDepartDate:(NSDate *)departDateMin
@@ -56,9 +67,10 @@
                                           sortBy:(EVRequestAttributesSort)sortBy
                                        sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     NSLog(@"Handled two way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+    return [EVCallbackResponse responseWithNone];
 }
 
-- (void)handleHotelSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResponse*)handleHotelSearchWhichComplete:(BOOL)isComplete
                               location:(EVLocation*)location
                          arriveDateMin:(NSDate*)arriveDateMin
                          arriveDateMax:(NSDate*)arriveDateMax
@@ -79,7 +91,7 @@
                              sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     
     NSLog(@"Handled hotel search! Complete: %@", isComplete ? @"YES" : @"NO");
-  
+    return [EVCallbackResponse responseWithNone];
 }
 
 - (void)viewDidLoad {
@@ -88,7 +100,7 @@
     EVVoiceChatButton* button = [[EVApplication sharedApplication] addButtonInController:self];
     button.chatToolbarCenterButtonBackgroundShadowRadius = 3.0f;
     button.chatToolbarCenterButtonBackgroundShadowOffset = CGSizeMake(1.0, 1.0);
-    CGSize test = button.chatToolbarCenterButtonBackgroundShadowOffset;
+    //CGSize test = button.chatToolbarCenterButtonBackgroundShadowOffset;
     [button ev_pinToBottomCenteredWithOffset:90.0f];
 }
 
