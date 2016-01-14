@@ -20,7 +20,7 @@
     // Override point for customization after application launch.
     [EVLogger logger].logLevel = EVLoggerLogLevelDebug;
     [[EVApplication sharedApplication] setAPIKey:@"cb86881f-c5f0-4310-8f99-6e6399d11d2c" andSiteCode:@"auto44d8bc3bc7e646db91f6b12471403652"];
-    [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:EVSearchContextTypeCRM];
+    [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:EVSearchContextTypeFlight];
     return YES;
 }
 

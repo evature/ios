@@ -31,11 +31,13 @@
     return [EVCallbackResponse responseWithString:result];
 }
 
-- (EVCallbackResponse*)handleOneWayFlightSearchWhichComplete:(BOOL)isComplete
-                                 fromLocation:(EVLocation *)origin
-                                   toLocation:(EVLocation *)destination
-                                minDepartDate:(NSDate *)departDateMin
-                                maxDepartDate:(NSDate *)departDateMax
+- (EVCallbackResponse*)handleFlightSearch:(BOOL)isComplete
+                             fromLocation:(EVLocation *)origin
+                               toLocation:(EVLocation *)destination
+                            minDepartDate:(NSDate *)departDateMin
+                            maxDepartDate:(NSDate *)departDateMax
+                            minReturnDate:(NSDate*)returnDateMin
+                            maxReturnDate:(NSDate*)returnDateMax
                                     travelers:(EVTravelers*)travelers
                                       nonStop:(EVBool)nonstop
                                   seatClasses:(NSArray*)seatClasses
@@ -45,30 +47,15 @@
                                      seatType:(EVFlightAttributesSeatType)seatType
                                        sortBy:(EVRequestAttributesSort)sortBy
                                     sortOrder:(EVRequestAttributesSortOrder)sortOrder {
-    NSLog(@"Handled one way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+    NSLog(@"Handled  flight search! Complete: %@", isComplete ? @"YES" : @"NO");
     return [EVCallbackResponse responseWithNone];
 }
 
-
-- (EVCallbackResponse*)handleRoundTripFlightSearchWhichComplete:(BOOL)isComplete
-                                    fromLocation:(EVLocation *)origin
-                                      toLocation:(EVLocation *) destination
-                                   minDepartDate:(NSDate *)departDateMin
-                                   maxDepartDate:(NSDate*) departDateMax
-                                   minReturnDate:(NSDate*)returnDateMin
-                                   maxReturnDate:(NSDate*)returnDateMax
-                                       travelers:(EVTravelers*)travelers
-                                         nonStop:(EVBool)nonstop
-                                     seatClasses:(NSArray*)seatClasses
-                                        airlines:(NSArray*)airlines
-                                          redEye:(EVBool)redeye
-                                        foodType:(EVFlightAttributesFoodType)food
-                                        seatType:(EVFlightAttributesSeatType)seatType
-                                          sortBy:(EVRequestAttributesSort)sortBy
-                                       sortOrder:(EVRequestAttributesSortOrder)sortOrder {
-    NSLog(@"Handled two way flight search! Complete: %@", isComplete ? @"YES" : @"NO");
+- (EVCallbackResponse*)navigateTo:(EVFlightPageType)page {
+    NSLog(@"Handled  trip navigate to %d", page);
     return [EVCallbackResponse responseWithNone];
 }
+
 
 - (EVCallbackResponse*)handleHotelSearchWhichComplete:(BOOL)isComplete
                               location:(EVLocation*)location

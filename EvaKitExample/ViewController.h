@@ -11,7 +11,8 @@
 //#import "EVChatToolbarContentView.h"
 
 @interface ViewController : UIViewController <EVHotelSearchDelegate, EVFlightSearchDelegate,
-                                    EVCRMNavigateDelegate, EVCRMDataSetDelegate, EVCRMDataGetDelegate>
+                                    EVCRMNavigateDelegate, EVCRMDataSetDelegate, EVCRMDataGetDelegate,
+                                    EVFlightNavigateDelegate>
 
 @end
 

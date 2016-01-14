@@ -9,6 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "EVBool.h"
 
+typedef NS_ENUM(int16_t, EVFlightPageType) {
+    EVFlightPageTypeUnknown = -1,
+    EVFlightPageTypeItinerary = 0,
+    EVFlightPageTypeGate,
+    EVFlightPageTypeBoardingPass,
+    EVFlightPageTypeDepartureTime,
+    EVFlightPageTypeArrivalTime,
+    EVFlightPageTypeBoardingTime
+};
+
 typedef NS_ENUM(int16_t, EVFlightAttributesSeatType) {
     EVFlightAttributesSeatTypeUnknown = -1,
     EVFlightAttributesSeatTypeWindow = 0,
@@ -86,5 +96,6 @@ typedef NS_ENUM(int16_t, EVFlightAttributesFoodType) {
 @property (nonatomic, strong, readwrite) NSArray* seatClass;
 
 - (instancetype)initWithResponse:(NSDictionary *)response;
++ (EVFlightPageType)stringToPageType:(NSString*)pageName;
 
 @end
