@@ -13,8 +13,17 @@
 static NSDictionary* seatClassKeys = nil;
 static NSDictionary* seatTypeKeys = nil;
 static NSDictionary *foodKeys = nil;
+static NSDictionary *pageKeys = nil;
 
 + (void)load {
+    pageKeys = [@{@"itinerary": @(EVFlightPageTypeItinerary),
+                  @"gate": @(EVFlightPageTypeGate),
+                  @"departuretime": @(EVFlightPageTypeDepartureTime),
+                  @"boardingtime": @(EVFlightPageTypeBoardingTime),
+                  @"boardingpass": @(EVFlightPageTypeBoardingPass),
+                  @"arrivaltime": @(EVFlightPageTypeArrivalTime),
+                  } retain];
+    
     seatClassKeys = [@{@"First": @(EVFlightAttributesSeatClassFirst),
                        @"Business": @(EVFlightAttributesSeatClassBusiness),
                        @"Premium": @(EVFlightAttributesSeatClassPremium),
@@ -59,6 +68,18 @@ static NSDictionary *foodKeys = nil;
                   @"Child": @(EVFlightAttributesFoodTypeChild),
                   @"Seafood": @(EVFlightAttributesFoodTypeSeafood),
                   @"Japanese": @(EVFlightAttributesFoodTypeJapanese)} retain];
+}
+
++ (EVFlightPageType)stringToPageType:(NSString*)pageName {
+    if (pageName) {
+        NSNumber* val = [pageKeys objectForKey:[[[pageName lowercaseString]
+                                                 stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                                stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+        if (val != nil) {
+            return [val shortValue];
+        }
+    }
+    return EVFlightPageTypeUnknown;
 }
 
 - (instancetype)initWithResponse:(NSDictionary *)response {

@@ -18,6 +18,7 @@
 #import "EVCRMDataSetModel.h"
 #import "EVCRMDataGetModel.h"
 #import "EVCRMNavigateModel.h"
+#import "EVFlightNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
 
@@ -237,39 +238,57 @@ delegate {
     
     EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
     NSArray *pathArray = [flow.pagePath componentsSeparatedByString:@"/"];
-    if (![pathArray[0] isEqualToString:@"crm"]) {
-        EV_LOG_ERROR(@"Expected path to start with CRM but was %@", flow.pagePath);
+    NSUInteger count = [pathArray count];
+    if (count < 2) {
+        EV_LOG_ERROR(@"Expected path to be scope/page but was %@", flow.pagePath);
         return cbR;
     }
-    
-    // expecting one of:
-    //         crm/page/sub-page-id/field
-    //         crm/page/field
-    //         crm/field
-    EVCRMPageType page = EVCRMPageTypeCurrent;
-    NSString *subPage = nil;
-    NSUInteger count = [pathArray count];
-    if (count > 3) {
-        subPage = [pathArray objectAtIndex:2];
-        page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
-    }
-    else if (count > 1) {
-        page = [EVCRMAttributes stringToPageType:[pathArray objectAtIndex:1]];
-    }
+    if ([pathArray[0] isEqualToString:@"crm"]) {
+        
+        // expecting one of:
+        //         crm/page/sub-page-id/field
+        //         crm/page/field
+        //         crm/field
+        EVCRMPageType page = EVCRMPageTypeCurrent;
+        NSString *subPage = nil;
+        NSUInteger count = [pathArray count];
+        if (count > 3) {
+            subPage = [pathArray objectAtIndex:2];
+            page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
+        }
+        else if (count > 1) {
+            page = [EVCRMAttributes stringToPageType:[pathArray objectAtIndex:1]];
+        }
 
-    
-    
-    EVSearchModel* model = [EVCRMNavigateModel  modelComplete:true
-                                                       inPage:(EVCRMPageType)page
-                                                      subPage:(NSString*)subPage
-                                                crmAttributes:response.crmAttributes];
-    
-    if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
-        return [model triggerSearchForDelegate:delegate];
+        
+        
+        EVSearchModel* model = [EVCRMNavigateModel  modelComplete:true
+                                                           inPage:(EVCRMPageType)page
+                                                          subPage:(NSString*)subPage
+                                                    crmAttributes:response.crmAttributes];
+        
+        if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
+            return [model triggerSearchForDelegate:delegate];
+        }
+        else {
+            // TODO: insert new chat item saying the app doesn't support search?
+            EV_LOG_ERROR(@"App reached crm navigate, but has no matching handler");
+        }
     }
     else {
-        // TODO: insert new chat item saying the app doesn't support search?
-        EV_LOG_ERROR(@"App reached crm navigate, but has no matching handler");
+        // expecting
+        //         flight/page
+
+        EVFlightPageType  page = [EVFlightAttributes stringToPageType:[pathArray objectAtIndex:1]];
+        EVSearchModel* model = [EVFlightNavigateModel  modelComplete:true
+                                                           inPage:(EVFlightPageType)page];
+        if ([delegate conformsToProtocol:@protocol(EVFlightNavigateDelegate)]) {
+            return [model triggerSearchForDelegate:delegate];
+        }
+        else {
+            // TODO: insert new chat item saying the app doesn't support search?
+            EV_LOG_ERROR(@"App reached flight navigate, but has no matching handler");
+        }
     }
     return cbR;
 }
