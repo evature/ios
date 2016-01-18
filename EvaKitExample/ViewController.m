@@ -12,8 +12,8 @@
 @implementation ViewController
 
 - (EVCallbackResponse*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter {
-    NSLog(@"Handled Navigate!");
-    NSLog(@"navigate to %d", page);
+    NSLog(@"Handled CRM Navigate!");
+    NSLog(@"navigate to %d,   subpage %@", page, subPageId);
     NSLog(@"navigate isTeam %d", filter);
 //    EVStyledString *result = [EVStyledString styledStringWithString:@"Navigate!"];
 //    return [EVCallbackResponse responseWithString:result];
@@ -26,7 +26,7 @@
 }
 
 - (EVCallbackResponse*) getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId {
-    NSLog(@"Data getting %@ in page %d", fieldPath, page);
+    NSLog(@"Data getting %@ in page %d  %@", fieldPath, page, objId);
     EVStyledString* result =[EVStyledString styledStringWithString:@"The value is 60%"];
     return [EVCallbackResponse responseWithString:result];
 }

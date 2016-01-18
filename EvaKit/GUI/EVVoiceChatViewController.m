@@ -559,7 +559,11 @@ void reloadData(id collectionView, SEL selector) {
 
 
 - (void)handleCallbackResponse:(EVCallbackResponse*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message {
-    switch ([response responseType]) {
+    EVCallbackResponseType responseType = EVCallbackResponseTypeNone;
+    if (response != nil) {
+        responseType = [response responseType];
+    }
+    switch (responseType) {
         case EVCallbackResponseTypePromise: {
             [element retain];
             [message retain];
