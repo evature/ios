@@ -251,8 +251,7 @@ delegate {
         //         crm/field
         EVCRMPageType page = EVCRMPageTypeCurrent;
         NSString *subPage = nil;
-        NSUInteger count = [pathArray count];
-        if (count > 3) {
+        if (count > 2) {
             subPage = [pathArray objectAtIndex:2];
             page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
         }
