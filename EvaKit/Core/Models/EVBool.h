@@ -22,3 +22,5 @@ typedef NS_ENUM(int8_t, EVBool) {
 #define EV_IS_TRUE(__val) ((__val) == EV_TRUE)
 #define EV_IS_BOOL_SET(__val) ((__val) != EVBoolNotSet)
 #define EV_IS_FALSE(__val) ((__val) == EV_FALSE)
+
+#define EV_NOT_TRUE(__val) ((__val) != EV_TRUE)

@@ -40,7 +40,7 @@ delegate;
 @implementation EVSearchResultsHandler
 
 + (EVCallbackResponse*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
-    BOOL oneWay = response.flightAttributes != nil && response.flightAttributes.oneWay;
+    BOOL oneWay = response.flightAttributes != nil && EV_IS_TRUE(response.flightAttributes.oneWay);
     
     NSDate* departDateMin = nil;
     NSDate* departDateMax = nil;

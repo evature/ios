@@ -25,6 +25,9 @@
 		944C72A91C47AB76005B9EF3 /* EVFlightNavigateDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 944C72A71C47AB76005B9EF3 /* EVFlightNavigateDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		944C72AA1C47AB76005B9EF3 /* EVFlightNavigateModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 944C72A81C47AB76005B9EF3 /* EVFlightNavigateModel.h */; };
 		944C72AC1C47D4EE005B9EF3 /* EVFlightNavigateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 944C72AB1C47D4EE005B9EF3 /* EVFlightNavigateModel.m */; };
+		94613E711C50DF5E003F5D42 /* EvaKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E701C50DF5E003F5D42 /* EvaKitTests.m */; };
+		94613E731C50DF5E003F5D42 /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
+		94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */; };
 		9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */; };
 		9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */; };
 		9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */; };
@@ -190,6 +193,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		94613E741C50DF5E003F5D42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96675F291B457F1D00494BAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96675F311B457F1D00494BAA;
+			remoteInfo = EvaKit;
+		};
+		94613E821C51100A003F5D42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96675F291B457F1D00494BAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 969797AD1B4BE13E00C0244D;
+			remoteInfo = EvaKitExample;
+		};
 		965E503D1BBA9D0D009B5EB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96675F291B457F1D00494BAA /* Project object */;
@@ -234,6 +251,11 @@
 		944C72A71C47AB76005B9EF3 /* EVFlightNavigateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVFlightNavigateDelegate.h; sourceTree = "<group>"; };
 		944C72A81C47AB76005B9EF3 /* EVFlightNavigateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVFlightNavigateModel.h; sourceTree = "<group>"; };
 		944C72AB1C47D4EE005B9EF3 /* EVFlightNavigateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVFlightNavigateModel.m; sourceTree = "<group>"; };
+		94613E6E1C50DF5E003F5D42 /* EvaKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94613E701C50DF5E003F5D42 /* EvaKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaKitTests.m; sourceTree = "<group>"; };
+		94613E721C50DF5E003F5D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestFlightSearch.m; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
@@ -411,6 +433,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		94613E6B1C50DF5E003F5D42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94613E731C50DF5E003F5D42 /* EvaKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94613E7A1C51100A003F5D42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96675F2E1B457F1D00494BAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -469,6 +506,16 @@
 			);
 			name = CRMDelegates;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		94613E6F1C50DF5E003F5D42 /* EvaKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */,
+				94613E701C50DF5E003F5D42 /* EvaKitTests.m */,
+				94613E721C50DF5E003F5D42 /* Info.plist */,
+			);
+			path = EvaKitTests;
 			sourceTree = "<group>";
 		};
 		9608E80F1B4D40E200EB603D /* Layers */ = {
@@ -541,6 +588,7 @@
 				96675F501B458A1A00494BAA /* Podfile */,
 				96675F341B457F1D00494BAA /* EvaKit */,
 				969797AF1B4BE13E00C0244D /* EvaKitExample */,
+				94613E6F1C50DF5E003F5D42 /* EvaKitTests */,
 				96675F331B457F1D00494BAA /* Products */,
 				723C653F5948D7917F77CA7D /* Pods */,
 				78552BCA315499B498422DEC /* Frameworks */,
@@ -552,6 +600,8 @@
 			children = (
 				96675F321B457F1D00494BAA /* EvaKit.framework */,
 				969797AE1B4BE13E00C0244D /* EvaKitExample.app */,
+				94613E6E1C50DF5E003F5D42 /* EvaKitTests.xctest */,
+				94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -901,6 +951,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		94613E6D1C50DF5E003F5D42 /* EvaKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94613E781C50DF5E003F5D42 /* Build configuration list for PBXNativeTarget "EvaKitTests" */;
+			buildPhases = (
+				94613E6A1C50DF5E003F5D42 /* Sources */,
+				94613E6B1C50DF5E003F5D42 /* Frameworks */,
+				94613E6C1C50DF5E003F5D42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94613E751C50DF5E003F5D42 /* PBXTargetDependency */,
+			);
+			name = EvaKitTests;
+			productName = EvaKitTests;
+			productReference = 94613E6E1C50DF5E003F5D42 /* EvaKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		94613E7C1C51100A003F5D42 /* EvaKitExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94613E841C51100A003F5D42 /* Build configuration list for PBXNativeTarget "EvaKitExampleUITests" */;
+			buildPhases = (
+				94613E791C51100A003F5D42 /* Sources */,
+				94613E7A1C51100A003F5D42 /* Frameworks */,
+				94613E7B1C51100A003F5D42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94613E831C51100A003F5D42 /* PBXTargetDependency */,
+			);
+			name = EvaKitExampleUITests;
+			productName = EvaKitExampleUITests;
+			productReference = 94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		96675F311B457F1D00494BAA /* EvaKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96675F481B457F1E00494BAA /* Build configuration list for PBXNativeTarget "EvaKit" */;
@@ -952,6 +1038,13 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Evature;
 				TargetAttributes = {
+					94613E6D1C50DF5E003F5D42 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					94613E7C1C51100A003F5D42 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 969797AD1B4BE13E00C0244D;
+					};
 					96675F311B457F1D00494BAA = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -975,11 +1068,27 @@
 			targets = (
 				96675F311B457F1D00494BAA /* EvaKit */,
 				969797AD1B4BE13E00C0244D /* EvaKitExample */,
+				94613E6D1C50DF5E003F5D42 /* EvaKitTests */,
+				94613E7C1C51100A003F5D42 /* EvaKitExampleUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		94613E6C1C50DF5E003F5D42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94613E7B1C51100A003F5D42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96675F301B457F1D00494BAA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1087,6 +1196,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		94613E6A1C50DF5E003F5D42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94613E711C50DF5E003F5D42 /* EvaKitTests.m in Sources */,
+				94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94613E791C51100A003F5D42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96675F2D1B457F1D00494BAA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1180,6 +1305,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		94613E751C50DF5E003F5D42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96675F311B457F1D00494BAA /* EvaKit */;
+			targetProxy = 94613E741C50DF5E003F5D42 /* PBXContainerItemProxy */;
+		};
+		94613E831C51100A003F5D42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 969797AD1B4BE13E00C0244D /* EvaKitExample */;
+			targetProxy = 94613E821C51100A003F5D42 /* PBXContainerItemProxy */;
+		};
 		965E503E1BBA9D0D009B5EB3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 96675F311B457F1D00494BAA /* EvaKit */;
@@ -1207,6 +1342,60 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		94613E761C50DF5E003F5D42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = EvaKitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		94613E771C50DF5E003F5D42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				INFOPLIST_FILE = EvaKitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		94613E851C51100A003F5D42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = EvaKitExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = EvaKitExample;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		94613E861C51100A003F5D42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				INFOPLIST_FILE = EvaKitExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = EvaKitExample;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		96675F461B457F1E00494BAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1311,6 +1500,7 @@
 				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1334,6 +1524,7 @@
 				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1356,7 +1547,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1374,7 +1565,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1384,6 +1575,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		94613E781C50DF5E003F5D42 /* Build configuration list for PBXNativeTarget "EvaKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94613E761C50DF5E003F5D42 /* Debug */,
+				94613E771C50DF5E003F5D42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94613E841C51100A003F5D42 /* Build configuration list for PBXNativeTarget "EvaKitExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94613E851C51100A003F5D42 /* Debug */,
+				94613E861C51100A003F5D42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		96675F2C1B457F1D00494BAA /* Build configuration list for PBXProject "EvaKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

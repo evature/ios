@@ -435,8 +435,10 @@ void reloadData(id collectionView, SEL selector) {
             }
         }
     }
-    EVChatMessage* message = [EVChatMessage clientMessageWithText:[EVStyledString styledStringWithAttributedString:chat]];
-    [self.evApplication.sessionMessages addObject:message];
+    if (chat != nil) {
+        EVChatMessage* message = [EVChatMessage clientMessageWithText:[EVStyledString styledStringWithAttributedString:chat]];
+        [self.evApplication.sessionMessages addObject:message];
+    }
     [self finishSendingMessageAnimated:YES];
 }
 
