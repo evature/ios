@@ -122,7 +122,7 @@ static NSDictionary *pageKeys = nil;
             for (NSString* seatCls in [response objectForKey:@"Seat Class"]) {
                 NSNumber* val = [seatClassKeys objectForKey:seatCls];
                 if (val != nil) {
-                    [classes addObject:seatCls];
+                    [classes addObject:val];
                 } else {
                     [classes addObject:@(EVFlightAttributesSeatClassUnknown)];
                 }
