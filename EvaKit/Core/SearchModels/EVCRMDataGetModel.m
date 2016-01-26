@@ -47,14 +47,14 @@
 
 
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
         return [(id<EVCRMDataGetDelegate>)delegate getField:self.field
                                             inPage:(EVCRMPageType)self.page
                                               withId:self.subPage
                                              ];
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)dealloc {

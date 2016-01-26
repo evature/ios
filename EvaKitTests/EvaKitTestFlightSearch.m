@@ -43,7 +43,7 @@
     return self;
 }
 
-- (EVCallbackResponse*)handleFlightSearch:(BOOL)isComplete
+- (EVCallbackResult*)handleFlightSearch:(BOOL)isComplete
                              fromLocation:(EVLocation *)origin
                                toLocation:(EVLocation *) destination
                             minDepartDate:(NSDate *)departDateMin

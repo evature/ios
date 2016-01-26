@@ -33,11 +33,11 @@
 }
 
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVFlightNavigateDelegate)]) {
         return [(id<EVFlightNavigateDelegate>)delegate   navigateTo:(EVFlightPageType)self.page];
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)dealloc {

@@ -19,7 +19,7 @@
 //    fieldPath = @"probability"
 //         page = EVCRMPageTypeOpportunities
 //        objId = UUID of the object, or nil
-- (EVCallbackResponse*)getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId;
+- (EVCallbackResult*)getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId;
 
 
 @end

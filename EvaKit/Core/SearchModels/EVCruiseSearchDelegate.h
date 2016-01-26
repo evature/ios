@@ -12,7 +12,7 @@
 
 @protocol EVCruiseSearchDelegate <EVSearchDelegate>
 
-- (EVCallbackResponse*)handleCruiseSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResult*)handleCruiseSearchWhichComplete:(BOOL)isComplete
                                                   from:(EVLocation*)from
                                                     to:(EVLocation*)to
                                               fromDate:(NSDate*)fromDate

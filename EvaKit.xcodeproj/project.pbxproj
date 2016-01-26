@@ -38,8 +38,8 @@
 		960F69AF1BB59691000178D5 /* NSValue+EVConstructors.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F69AD1BB59690000178D5 /* NSValue+EVConstructors.m */; };
 		961221C81C299ED2004AE998 /* EVStyledString.h in Headers */ = {isa = PBXBuildFile; fileRef = 961221C61C299ED1004AE998 /* EVStyledString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		961221C91C299ED2004AE998 /* EVStyledString.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221C71C299ED2004AE998 /* EVStyledString.m */; };
-		961221CC1C29A692004AE998 /* EVCallbackResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 961221CA1C29A692004AE998 /* EVCallbackResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		961221CD1C29A692004AE998 /* EVCallbackResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221CB1C29A692004AE998 /* EVCallbackResponse.m */; };
+		961221CC1C29A692004AE998 /* EVCallbackResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 961221CA1C29A692004AE998 /* EVCallbackResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		961221CD1C29A692004AE998 /* EVCallbackResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221CB1C29A692004AE998 /* EVCallbackResult.m */; };
 		961221CE1C29A82F004AE998 /* EVCRMDataSetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */; };
 		9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */; };
@@ -266,8 +266,8 @@
 		960F69AD1BB59690000178D5 /* NSValue+EVConstructors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+EVConstructors.m"; sourceTree = "<group>"; };
 		961221C61C299ED1004AE998 /* EVStyledString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVStyledString.h; sourceTree = "<group>"; };
 		961221C71C299ED2004AE998 /* EVStyledString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVStyledString.m; sourceTree = "<group>"; };
-		961221CA1C29A692004AE998 /* EVCallbackResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCallbackResponse.h; sourceTree = "<group>"; };
-		961221CB1C29A692004AE998 /* EVCallbackResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCallbackResponse.m; sourceTree = "<group>"; };
+		961221CA1C29A692004AE998 /* EVCallbackResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCallbackResult.h; sourceTree = "<group>"; };
+		961221CB1C29A692004AE998 /* EVCallbackResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCallbackResult.m; sourceTree = "<group>"; };
 		9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVStreamURLWriter.h; sourceTree = "<group>"; };
 		9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVStreamURLWriter.m; sourceTree = "<group>"; };
 		9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioDataStreamer.h; sourceTree = "<group>"; };
@@ -731,8 +731,8 @@
 				941037741C01E951009A9A3F /* CRMDelegates */,
 				968BBA661B95110F001EF0C9 /* EVSearchModel.h */,
 				968BBA671B95110F001EF0C9 /* EVSearchModel.m */,
-				961221CA1C29A692004AE998 /* EVCallbackResponse.h */,
-				961221CB1C29A692004AE998 /* EVCallbackResponse.m */,
+				961221CA1C29A692004AE998 /* EVCallbackResult.h */,
+				961221CB1C29A692004AE998 /* EVCallbackResult.m */,
 				968BBA6A1B951239001EF0C9 /* EVHotelSearchModel.h */,
 				968BBA6B1B951239001EF0C9 /* EVHotelSearchModel.m */,
 				968BBA6E1B951256001EF0C9 /* EVFlightSearchModel.h */,
@@ -860,6 +860,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				961221CC1C29A692004AE998 /* EVCallbackResult.h in Headers */,
 				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
 				941037731C01E943009A9A3F /* EVCRMNavigateDelegate.h in Headers */,
 				944C72A91C47AB76005B9EF3 /* EVFlightNavigateDelegate.h in Headers */,
@@ -907,7 +908,6 @@
 				968BBA7B1B9512CA001EF0C9 /* EVCarSearchDelegate.h in Headers */,
 				941037771C01EDC1009A9A3F /* EVCRMAttributes.h in Headers */,
 				96A2D5F31B985F3400E9AF37 /* EVBool.h in Headers */,
-				961221CC1C29A692004AE998 /* EVCallbackResponse.h in Headers */,
 				96804C4B1B861E6400FA9998 /* EVSearchContext.h in Headers */,
 				96804C4F1B861F5700FA9998 /* EVSearchContextBase.h in Headers */,
 				9412C4CF1C0DC7A300ECA87C /* EVCRMDataSetModel.h in Headers */,
@@ -1050,6 +1050,7 @@
 					};
 					969797AD1B4BE13E00C0244D = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 2852PM5X28;
 					};
 				};
 			};
@@ -1256,7 +1257,7 @@
 				96454A921B851A3600C26FFD /* EVWarning.m in Sources */,
 				96804C481B86166300FA9998 /* EVSearchScope.m in Sources */,
 				968BBA611B9503F0001EF0C9 /* NSDate+EVA.m in Sources */,
-				961221CD1C29A692004AE998 /* EVCallbackResponse.m in Sources */,
+				961221CD1C29A692004AE998 /* EVCallbackResult.m in Sources */,
 				9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */,
 				9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */,
 				96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */,
@@ -1538,6 +1539,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1551,6 +1554,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1560,6 +1564,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1569,6 +1575,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

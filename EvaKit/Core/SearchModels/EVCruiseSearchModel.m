@@ -71,7 +71,7 @@
                                  sortOrder:sortOrder] autorelease];
 }
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCruiseSearchDelegate)]) {
         return [(id<EVCruiseSearchDelegate>)delegate handleCruiseSearchWhichComplete:self.isComplete
                                                                          from:self.from
@@ -84,7 +84,7 @@
                                                                        sortBy:self.sortBy
                                                                     sortOrder:self.sortOrder];
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)dealloc {

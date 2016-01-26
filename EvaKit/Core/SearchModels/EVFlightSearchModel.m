@@ -92,7 +92,7 @@
     return [[[self alloc] initWithComplete:isComplete origin:origin destination:destination departDateMin:departDateMin departDateMax:departDateMax returnDateMin:returnDateMin returnDateMax:returnDateMax travelers:travelers nonstop:nonstop redeye:redeye oneWay:oneWay airlines:airlines food:food seatType:seatType seatClasses:seatClasses sortBy:sortBy sortOrder:sortOrder] autorelease];
 }
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVFlightSearchDelegate)]) {
         return [(id<EVFlightSearchDelegate>)delegate handleFlightSearch:self.isComplete
                                                                        fromLocation:self.origin
@@ -112,7 +112,7 @@
                                                                           sortOrder:self.sortOrder];
     
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)dealloc {

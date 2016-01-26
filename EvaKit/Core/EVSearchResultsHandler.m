@@ -24,22 +24,22 @@
 
 @interface EVSearchResultsHandler ()
 
-+ (EVCallbackResponse*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
++ (EVCallbackResult*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
-+ (EVCallbackResponse*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
++ (EVCallbackResult*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
-+ (EVCallbackResponse*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate;
++ (EVCallbackResult*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
-+ (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
++ (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
-+ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResult*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate;
 
 @end
 
 @implementation EVSearchResultsHandler
 
-+ (EVCallbackResponse*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
++ (EVCallbackResult*)handleFlightResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
     BOOL oneWay = response.flightAttributes != nil && EV_IS_TRUE(response.flightAttributes.oneWay);
     
     NSDate* departDateMin = nil;
@@ -166,13 +166,13 @@ delegate;
         EV_LOG_ERROR("App reached flight search, but has no matching handler");
     }
 //    }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 
-+ (EVCallbackResponse*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate {
-    EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
+    EVCallbackResult* cbR = [EVCallbackResult resultWithNone];
     if (flow.verb == EVDataFlowElementVerbTypeSet || flow.verb == EVDataFlowElementVerbTypeGet) {
         NSArray *pathArray = [flow.fieldPath componentsSeparatedByString:@"/"];
         if (![pathArray[0] isEqualToString:@"crm"]) {
@@ -233,10 +233,10 @@ delegate {
 }
 
 
-+ (EVCallbackResponse*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResult*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
     delegate {
     
-    EVCallbackResponse* cbR = [EVCallbackResponse responseWithNone];
+    EVCallbackResult* cbR = [EVCallbackResult resultWithNone];
     NSArray *pathArray = [flow.pagePath componentsSeparatedByString:@"/"];
     NSUInteger count = [pathArray count];
     if (count < 2) {
@@ -292,7 +292,7 @@ delegate {
     return cbR;
 }
 
-+ (EVCallbackResponse*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
++ (EVCallbackResult*)handleCruiseResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete fromLocation:(EVLocation*)from toLocation:(EVLocation*)to andResponseDelegate:(id<EVSearchDelegate>)delegate {
     NSDate *dateFrom = nil, *dateTo = nil;
     NSInteger durationFrom = -1, durationTo = -1;
     
@@ -360,10 +360,10 @@ delegate {
             EV_LOG_ERROR(@"App reached hotel search, but has no matching handler");
         }
 //    }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
-+ (EVCallbackResponse*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate {
++ (EVCallbackResult*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate {
     NSDate *arriveDateMin = nil;
     NSDate *arriveDateMax = nil;
     NSString *arrivalStr = (location != nil && location.arrival != nil) ? location.arrival.date : nil;
@@ -505,10 +505,10 @@ delegate {
             EV_LOG_ERROR(@"App reached hotel search, but has no matching handler");
         }
 //    }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
-+ (EVCallbackResponse*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate {
++ (EVCallbackResult*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate {
     EVLocation* from = nil;
     EVLocation* to = nil;
     EVFlowElementType searchType = EVFlowElementTypeOther;
@@ -519,7 +519,7 @@ delegate {
         case EVFlowElementTypeCar:
             if ([flow.relatedLocations count] < 2) {
                 EV_LOG_INFO(@"Search without two locations?");
-                return [EVCallbackResponse responseWithNone];
+                return [EVCallbackResult resultWithNone];
             }
             searchType = flow.type;
             from = flow.relatedLocations[0];
@@ -530,7 +530,7 @@ delegate {
         case EVFlowElementTypeHotel:
             if ([flow.relatedLocations count] < 1) {
                 EV_LOG_INFO(@"Hotel search search without a location?");
-                return [EVCallbackResponse responseWithNone];
+                return [EVCallbackResult resultWithNone];
             }
             searchType = flow.type;
             from = flow.relatedLocations[0];
@@ -564,7 +564,7 @@ delegate {
     }
     
     if (searchType == EVFlowElementTypeOther) {
-        return [EVCallbackResponse responseWithNone];
+        return [EVCallbackResult resultWithNone];
     }
     
     switch (searchType) {
@@ -583,7 +583,7 @@ delegate {
         default:
             break;
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 @end

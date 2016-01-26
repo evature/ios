@@ -56,7 +56,7 @@
 
 
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
         return [(id<EVCRMDataSetDelegate>)delegate setField:self.field
                                             inPage:(EVCRMPageType)self.page
@@ -65,7 +65,7 @@
                                                          @"value": self.value }
                                              ];
     }
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)dealloc {

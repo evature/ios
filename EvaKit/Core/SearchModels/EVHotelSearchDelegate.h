@@ -14,7 +14,7 @@
 
 @protocol EVHotelSearchDelegate <EVSearchDelegate>
 
-- (EVCallbackResponse*)handleHotelSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResult*)handleHotelSearchWhichComplete:(BOOL)isComplete
                                              location:(EVLocation*)location
                                         arriveDateMin:(NSDate*)arriveDateMin
                                         arriveDateMax:(NSDate*)arriveDateMax

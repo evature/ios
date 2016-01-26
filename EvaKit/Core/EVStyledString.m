@@ -63,4 +63,11 @@
     return self.value;
 }
 
+-(id)copyWithZone:(NSZone*)zone {
+    EVStyledString *copy = [[[self class] allocWithZone: zone] init];
+    copy.value = self.value;
+    copy.hasStyle = self.hasStyle;
+    return copy;
+}
+
 @end

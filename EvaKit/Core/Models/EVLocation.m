@@ -199,8 +199,8 @@ static NSDictionary* typeKeys = nil;
 }
 
 - (NSString*)airportCode {
-    if (self.airportCode != nil) {
-        return self.airportCode;
+    if (self.allAirportCode != nil) {
+        return self.allAirportCode;
     }
     if ([self.airports count] > 0) {
         return [self.airports objectAtIndex:0];

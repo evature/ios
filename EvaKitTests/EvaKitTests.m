@@ -15,7 +15,7 @@
 @end
 
 @interface NavigateHandler : UIViewController<EVFlightNavigateDelegate>
-    - (EVCallbackResponse*)navigateTo:(EVFlightPageType)page;
+    - (EVCallbackResult*)navigateTo:(EVFlightPageType)page;
     @property EVFlightPageType navigatedTo;
     @property __block BOOL waitingForNavigate;
 @end
@@ -28,7 +28,7 @@
     self.waitingForNavigate = YES;
     return self;
 }
-- (EVCallbackResponse*)navigateTo:(EVFlightPageType)page {
+- (EVCallbackResult*)navigateTo:(EVFlightPageType)page {
     self.navigatedTo = page;
     self.waitingForNavigate = NO;
     return nil;

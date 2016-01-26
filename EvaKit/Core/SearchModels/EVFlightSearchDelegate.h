@@ -32,7 +32,7 @@
  * @param sortBy - how should the results be sorted (eg. price, date, etc..), or null if not mentioned
  * @param sortOrder - ascending or descending or null if not mentioned
  */
-- (EVCallbackResponse*)handleFlightSearch:(BOOL)isComplete
+- (EVCallbackResult*)handleFlightSearch:(BOOL)isComplete
                                                    fromLocation:(EVLocation *)origin
                                                      toLocation:(EVLocation *) destination
                                                   minDepartDate:(NSDate *)departDateMin

@@ -8,30 +8,38 @@
 
 #import "ViewController.h"
 #import <EvaKit/EvaKit.h>
+#import "TableViewController.h"
 
 @implementation ViewController
 
-- (EVCallbackResponse*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter {
+- (EVCallbackResult*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter {
     NSLog(@"Handled CRM Navigate!");
     NSLog(@"navigate to %d,   subpage %@", page, subPageId);
     NSLog(@"navigate isTeam %d", filter);
 //    EVStyledString *result = [EVStyledString styledStringWithString:@"Navigate!"];
-//    return [EVCallbackResponse responseWithString:result];
-    return [EVCallbackResponse responseWithNone];
+//    return [EVCallbackResult responseWithString:result];
+    return [EVCallbackResult resultWithNone];
 }
 
-- (EVCallbackResponse*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
+- (EVStyledString*)helloMessage {
+    return [EVStyledString styledStringWithString:@"This is a demo app. Hello there!"];
+    //return nil;
+}
+
+- (EVCallbackResult*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
-- (EVCallbackResponse*) getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId {
+- (EVCallbackResult*) getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId {
     NSLog(@"Data getting %@ in page %d  %@", fieldPath, page, objId);
-    EVStyledString* result =[EVStyledString styledStringWithString:@"The value is 60%"];
-    return [EVCallbackResponse responseWithString:result];
+    NSMutableAttributedString* result = [[NSMutableAttributedString alloc] initWithString:@"The value is 60%"];
+    UIColor* highlightColor = [UIColor colorWithRed:0.9f green:0.9f blue:0.2f alpha:1.0f];
+    [result addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(13, 3)];
+    return [EVCallbackResult resultWithString:[EVStyledString styledStringWithAttributedString:result]];
 }
 
-- (EVCallbackResponse*)handleFlightSearch:(BOOL)isComplete
+- (EVCallbackResult*)handleFlightSearch:(BOOL)isComplete
                              fromLocation:(EVLocation *)origin
                                toLocation:(EVLocation *)destination
                             minDepartDate:(NSDate *)departDateMin
@@ -48,16 +56,26 @@
                                        sortBy:(EVRequestAttributesSort)sortBy
                                     sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     NSLog(@"Handled  flight search! Complete: %@", isComplete ? @"YES" : @"NO");
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
-- (EVCallbackResponse*)navigateTo:(EVFlightPageType)page {
+- (EVCallbackResult*)navigateTo:(EVFlightPageType)page {
     NSLog(@"Handled  trip navigate to %d", page);
-    return [EVCallbackResponse responseWithNone];
+    if (page == EVFlightPageTypeBoardingTime) {
+        EVStyledString *styledString = [EVStyledString styledStringWithString:@"Your Boarding time is 12:56pm"];
+        return [EVCallbackResult resultWithString:styledString];
+    }
+    if (page == EVFlightPageTypeArrivalTime) {
+        EVCallbackResultData *data = [[EVCallbackResultData alloc]init];
+        data.sayIt = @"11:24am";
+        data.displayIt = [EVStyledString styledStringWithString:@"Your arrival time is 11:24am"];
+        return [EVCallbackResult resultWithResultData:data];
+    }
+    return [EVCallbackResult resultWithNone];
 }
 
 
-- (EVCallbackResponse*)handleHotelSearchWhichComplete:(BOOL)isComplete
+- (EVCallbackResult*)handleHotelSearchWhichComplete:(BOOL)isComplete
                               location:(EVLocation*)location
                          arriveDateMin:(NSDate*)arriveDateMin
                          arriveDateMax:(NSDate*)arriveDateMax
@@ -78,7 +96,7 @@
                              sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     
     NSLog(@"Handled hotel search! Complete: %@", isComplete ? @"YES" : @"NO");
-    return [EVCallbackResponse responseWithNone];
+    return [EVCallbackResult resultWithNone];
 }
 
 - (void)viewDidLoad {

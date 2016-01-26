@@ -7,7 +7,7 @@
 //
 
 #import "EVSearchContextBase.h"
-#import "EVCallbackResponse.h"
+#import "EVCallbackResult.h"
 
 @class EVResponse;
 
@@ -19,26 +19,6 @@
 - (EVSearchContextType)searchContext;
 
 - (EVStyledString*)helloMessage;
-
-#pragma mark === Callbacks
-
-// eg. "What is my departure time?"
-- (EVCallbackResponse*)departureTime;
-
-// eg. "What is my arrival time?"
-- (EVCallbackResponse*)arrivalTime;
-
-// eg. "What is the boarding time?"
-- (EVCallbackResponse*)boardingTime;
-
-// eg. "What is my gate number?"
-- (EVCallbackResponse*)gate;
-
-// eg. "Show me my boarding pass"
-- (EVCallbackResponse*)boardingPass;
-
-// eg. "Show me my trip info"
-- (EVCallbackResponse*)itinerary;
 
 #pragma mark === Raw response
 - (void)evSearchGotResponse:(EVResponse*)response;

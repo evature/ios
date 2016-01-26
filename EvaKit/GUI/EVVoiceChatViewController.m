@@ -33,6 +33,7 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 #define EV_EVA_TEXT_COLOR RGBA_HEX_COLOR(F5, F5, F5, FF)
 
 #define EV_UNDO_TUTORIAL @"Drag the microphone button to the left to undo the last utterance."
+#define EV_THINKING_TEXT @"Thinking..."
 
 typedef void (*R_IMP)(void*, SEL);
 R_IMP oldReloadData;
@@ -81,10 +82,11 @@ void reloadData(id collectionView, SEL selector) {
 // Eva response methods
 - (void)handleFlowForResponse:(EVResponse*)response;
 - (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message;
-- (void)handleCallbackResponse:(EVCallbackResponse*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message;
+- (void)handleCallbackResult:(EVCallbackResult*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message;
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
+- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateMessage:(EVChatMessage*)message;
 - (void)speakText:(NSString*)text;
 - (void)stopSpeaking;
 
@@ -159,7 +161,7 @@ void reloadData(id collectionView, SEL selector) {
     self.outgoingBubbleImage = nil;
     self.incomingBubbleImage = nil;
     self.oldContext = nil;
-    [self stopSpeaking];
+    // [self stopSpeaking];
     self.speechSynthesizer = nil;
     [super dealloc];
 }
@@ -188,8 +190,10 @@ void reloadData(id collectionView, SEL selector) {
                 break;
         }
     }
-    [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:message]];
-    [self speakText:[message string]];
+    if (message != nil) {
+        [self.evApplication.sessionMessages addObject:[EVChatMessage serverMessageWithID:self.evApplication.currentSessionID text:message]];
+        [self speakText:[message string]];
+    }
 }
 
 - (void)viewDidLoad {
@@ -345,6 +349,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (IBAction)hideChatView:(id)sender {
+    [self stopSpeaking];
     self.evApplication.context = self.oldContext;
     [self.evApplication hideChatViewController:self];
 }
@@ -451,6 +456,30 @@ void reloadData(id collectionView, SEL selector) {
     [self finishSendingMessageAnimated:YES];
 }
 
+
+- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId {
+    if (updateLast) {
+        NSInteger index = [self.evApplication.sessionMessages count];
+        while (--index > 0 && [self isMyMessageInRow:index]) {;}
+        if (index > 0) {
+            [self.evApplication.sessionMessages removeObjectAtIndex:index];
+        }
+    }
+
+    EVChatMessage* chatItem = [EVChatMessage serverMessageWithID:messageId text:message];
+    [self.evApplication.sessionMessages addObject:chatItem];
+    [self finishReceivingMessageAnimated:YES];
+    if (speakText != nil) {
+        [self speakText:speakText];
+    }
+}
+
+- (void)showThinkingMessage {
+    [self showWarningMessage:EV_THINKING_TEXT];
+}
+
+
+
 - (void)speakText:(NSString *)text {
     if (self.speakEnabled && !isRecording) {
         AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:text];
@@ -528,7 +557,7 @@ void reloadData(id collectionView, SEL selector) {
         case EVFlowElementTypeQuestion:
         case EVFlowElementTypeNavigate:
         case EVFlowElementTypeData: {
-            [self handleCallbackResponse:[EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate] withElement:element forChatMessage:message];
+            [self handleCallbackResult:[EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate] withElement:element forChatMessage:message];
             break;
         }
             
@@ -559,20 +588,20 @@ void reloadData(id collectionView, SEL selector) {
     }
 }
 
-
-- (void)handleCallbackResponse:(EVCallbackResponse*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message {
-    EVCallbackResponseType responseType = EVCallbackResponseTypeNone;
-    if (response != nil) {
-        responseType = [response responseType];
+- (void)handleCallbackResult:(EVCallbackResult*)result withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message {
+    EVCallbackResultType resultType = EVCallbackResultTypeNone;
+    if (result != nil) {
+        resultType = [result resultType];
     }
-    switch (responseType) {
-        case EVCallbackResponseTypePromise: {
+    NSString* sayString = element.sayIt;
+    switch (resultType) {
+        case EVCallbackResultTypePromise: {
             [element retain];
             [message retain];
-            [response promiseValue].then(^id(EVCallbackResponse* result) {
+            [result promiseValue].then(^id(EVCallbackResult* result) {
                 [element autorelease];
                 [message autorelease];
-                [self handleCallbackResponse:result withElement:element forChatMessage:message];
+                [self handleCallbackResult:result withElement:element forChatMessage:message];
                 return result;
             }, ^id(NSError* error) {
                 [element release];
@@ -581,25 +610,42 @@ void reloadData(id collectionView, SEL selector) {
             });
             break;
         }
-        case EVCallbackResponseTypeBool:
-        case EVCallbackResponseTypeNone: {
-            if ([response boolValue]) {
-                NSString* sayIt = [element sayIt];
-                if (sayIt != nil && ![sayIt isEqualToString:@""]) {
-                    [self speakText:sayIt];
-                }
+        case EVCallbackResultTypeBool:
+        case EVCallbackResultTypeNone: {
+            if ([result boolValue]) {
+                [self showEvaMessage:[EVStyledString styledStringWithString:sayString] withSpeakText:sayString updateLast:YES andMessageId:[message senderId]];
             } else {
                 
             }
             break;
         }
-        case EVCallbackResponseTypeString: {
+        case EVCallbackResultTypeString: {
+            //EVStyledString *styledString = [result stringValue];
+            //NSString *msgId = [message senderId];
+            //EVChatMessage *newMessage = [EVChatMessage serverMessageWithID:msgId text:styledString];
+            //NSUInteger index = [self.evApplication.sessionMessages indexOfObject:message];
+            //[self.evApplication.sessionMessages replaceObjectAtIndex:index withObject:newMessage];
+            //[self finishReceivingMessageAnimated:YES];
+            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:YES andMessageId:[message senderId]];
             break;
         }
-        case EVCallbackResponseTypeData: {
+        case EVCallbackResultTypeData: {
+            EVCallbackResultData *data = [result resultDataValue];
+            EVStyledString *displayIt = [data displayIt];
+            if (displayIt == nil) {
+                displayIt = [EVStyledString styledStringWithString:[data sayIt]];
+            }
+            NSString *sayIt = [data sayIt];
+            if (sayIt == nil) {
+                sayIt = [displayIt string];
+            }
+            if ([data appendToEvaSayIt]) {
+                displayIt = [EVStyledString styledStringWithString:[sayString stringByAppendingString:[displayIt string]]];
+            }
+            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:YES andMessageId:[message senderId]];
             break;
         }
-        case EVCallbackResponseTypeCloseChatAction: {
+        case EVCallbackResultTypeCloseChatAction: {
             [self hideChatView:self];
         }
     }

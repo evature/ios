@@ -15,6 +15,6 @@
 
 - (instancetype)initWithComplete:(BOOL)isComplete;
 
-- (EVCallbackResponse*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate;
+- (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate;
 
 @end
