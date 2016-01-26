@@ -184,7 +184,7 @@ delegate {
         //         crm/page/sub-page-id/field
         //         crm/page/field
         //         crm/field
-        EVCRMPageType page = EVCRMPageTypeCurrent;
+        EVCRMPageType page = EVCRMPageTypeOther;
         NSString *field = [pathArray objectAtIndex:[pathArray count]-1];
         NSString *subPage = nil;
         NSUInteger count = [pathArray count];
@@ -249,7 +249,7 @@ delegate {
         //         crm/page/sub-page-id/field
         //         crm/page/field
         //         crm/field
-        EVCRMPageType page = EVCRMPageTypeCurrent;
+        EVCRMPageType page = EVCRMPageTypeOther;
         NSString *subPage = nil;
         if (count > 2) {
             subPage = [pathArray objectAtIndex:2];

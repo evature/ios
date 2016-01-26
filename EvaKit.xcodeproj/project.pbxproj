@@ -256,6 +256,7 @@
 		94613E721C50DF5E003F5D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestFlightSearch.m; sourceTree = "<group>"; };
+		94E64DA41C583A3D002E3F31 /* credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credentials.h; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
 		9608E80C1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatMicButtonLayer.m; sourceTree = "<group>"; };
 		9608E8121B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceLevelMicButtonLayer.h; sourceTree = "<group>"; };
@@ -790,6 +791,7 @@
 				969797B01B4BE13E00C0244D /* Supporting Files */,
 				9674AE971B5FD7B100BFBEB5 /* TableViewController.h */,
 				9674AE981B5FD7B100BFBEB5 /* TableViewController.m */,
+				94E64DA41C583A3D002E3F31 /* credentials.h */,
 			);
 			path = EvaKitExample;
 			sourceTree = "<group>";

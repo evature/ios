@@ -56,6 +56,31 @@ static NSDictionary* fieldPageKeys = nil;
     return EVCRMPageTypeOther;
 }
 
++ (NSString*)pageTypeToString:(EVCRMPageType) page {
+    switch (page) {
+        case EVCRMPageTypeHome: return @"Home";
+        case EVCRMPageTypeFeed: return @"Feed";
+        case EVCRMPageTypeLeads: return @"Leads";
+        case EVCRMPageTypeOpportunities: return @"Opportunities";
+        case EVCRMPageTypeSalesQuotes: return @"SalesQuotes";
+        case EVCRMPageTypeAccounts: return @"Accounts";
+        case EVCRMPageTypeContacts: return @"Contacts";
+        case EVCRMPageTypeActivities: return @"Activities";
+        case EVCRMPageTypeTodaysAppointments: return @"TodaysAppointments";
+        default: return @"Other";
+    }
+}
+
++ (NSString*)filterTypeToString:(EVCRMFilterType) filter {
+    switch(filter) {
+        case EVCRMFilterTypeMyAccounts: return @"My";
+        case EVCRMFilterTypeNone: return @"None";
+        case EVCRMFilterTypeTeamAccounts: return @"Team";
+        default: return @"Other";
+    }
+}
+
+
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {

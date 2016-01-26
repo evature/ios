@@ -59,6 +59,8 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 
 @property (nonatomic, strong, readonly) NSDictionary* applicationSounds;
 
+
+
 // View Classes. Can be changed //
 @property (nonatomic, assign, readwrite) Class chatViewControllerClass;
 @property (nonatomic, assign, readwrite) Class chatButtonClass;
@@ -74,6 +76,9 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 
 // Set API key and Site Code for application
 - (void)setAPIKey:(NSString*)apiKey andSiteCode:(NSString*)siteCode;
+
+// tell Eva what is currently being viewee in the app
+- (void)setCurrentPage:(EVCRMPageType)currentPage andSubPage:(NSString*)subPage andFilter:(EVCRMFilterType)filter;
 
 // Start record from current active Audio, If 'withNewSession' is set to 'NO' the function keeps last session. //
 - (void)startRecordingWithNewSession:(BOOL)withNewSession;

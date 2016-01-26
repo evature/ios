@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <EvaKit/EvaKit.h>
+#import "credentials.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +20,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [EVLogger logger].logLevel = EVLoggerLogLevelDebug;
-    [[EVApplication sharedApplication] setAPIKey:@"cb86881f-c5f0-4310-8f99-6e6399d11d2c" andSiteCode:@"auto44d8bc3bc7e646db91f6b12471403652"];
-    [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:EVSearchContextTypeFlight];
+    
+    [[EVApplication sharedApplication] setAPIKey:API_KEY andSiteCode:SITE_CODE];
+    [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:SCOPE];
+    [[EVApplication sharedApplication] setCurrentPage:EVCRMPageTypeAccounts andSubPage:@"abcde" andFilter:EVCRMFilterTypeNone];
     return YES;
 }
 

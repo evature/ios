@@ -45,6 +45,11 @@
 
 @property (nonatomic, strong, readwrite) NSMutableArray* sessionMessages;
 
+@property (nonatomic, assign, readwrite) EVCRMPageType currentPage;
+@property (nonatomic, strong, readwrite) NSString *currentSubPage;
+@property (nonatomic, assign, readwrite) EVCRMFilterType subPageFilter;
+
+
 - (void)setAVSession;
 - (void)setupRecorderChain;
 - (void)updateURL;
@@ -149,6 +154,9 @@
         self.textServerHost = EV_HOST_ADDRESS_FOR_TEXT;
         self.apiVersion = EV_API_VERSION;
         self.scope = [EVSearchScope scopeWithContextTypes:EVSearchContextTypesAll];
+        self.currentPage = EVCRMPageTypeOther;
+        self.currentSubPage = nil;
+        self.subPageFilter = EVCRMFilterTypeNone;
         
         self.sendVolumeLevelUpdates = YES;
         self.isReady = NO;
@@ -199,7 +207,15 @@
     self.flacConverter = nil;
     self.dataStreamer = nil;
     self.currentApiRequest = nil;
+    self.currentSubPage = nil;
     [super dealloc];
+}
+
+
+- (void)setCurrentPage:(EVCRMPageType)currentPage andSubPage:(NSString*)subPage andFilter:(EVCRMFilterType)filter {
+    self.currentPage = currentPage;
+    self.subPageFilter = filter;
+    self.currentSubPage = subPage;
 }
 
 - (EVVoiceChatButton*)addButtonInController:(UIViewController*)viewController {
@@ -312,6 +328,15 @@
     }
     if (self.context != nil) {
         [urlStr appendFormat:@"&context=%@", [self.context requestParameterValue]];
+    }
+    if (self.currentPage != EVCRMPageTypeOther) {
+        if (self.currentSubPage != nil) {
+            [urlStr appendFormat:@"&page=%@/%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage],
+                                                    self.currentSubPage,   [EVCRMAttributes filterTypeToString:self.subPageFilter]];
+        }
+        else {
+            [urlStr appendFormat:@"&page=%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage], [EVCRMAttributes filterTypeToString:self.subPageFilter]];
+        }
     }
     [urlStr appendFormat:@"&audio_files_used=%@%@%@%@",
                          [self soundForState:EVApplicationStateSoundRecordingStarted] == nil ? @"N": @"Y",
