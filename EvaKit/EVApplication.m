@@ -331,11 +331,14 @@
     }
     if (self.currentPage != EVCRMPageTypeOther) {
         if (self.currentSubPage != nil) {
-            [urlStr appendFormat:@"&page=%@/%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage],
-                                                    self.currentSubPage,   [EVCRMAttributes filterTypeToString:self.subPageFilter]];
+            [urlStr appendFormat:@"&page=%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage],
+                                                    self.currentSubPage];
         }
         else {
-            [urlStr appendFormat:@"&page=%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage], [EVCRMAttributes filterTypeToString:self.subPageFilter]];
+            [urlStr appendFormat:@"&page=%@", [EVCRMAttributes pageTypeToString:self.currentPage]];
+        }
+        if (self.subPageFilter != EVCRMFilterTypeNone) {
+            [urlStr appendFormat:@"/%@",  [EVCRMAttributes filterTypeToString:self.subPageFilter]];
         }
     }
     [urlStr appendFormat:@"&audio_files_used=%@%@%@%@",
