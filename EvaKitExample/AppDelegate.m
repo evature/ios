@@ -23,7 +23,7 @@
     
     [[EVApplication sharedApplication] setAPIKey:API_KEY andSiteCode:SITE_CODE];
     [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:SCOPE];
-    [[EVApplication sharedApplication] setCurrentPage:EVCRMPageTypeAccounts andSubPage:@"abcde" andFilter:EVCRMFilterTypeNone];
+//    [[EVApplication sharedApplication] setCurrentPage:EVCRMPageTypeAccounts andSubPage:@"abcde" andFilter:EVCRMFilterTypeNone];
     return YES;
 }
 
