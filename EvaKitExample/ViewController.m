@@ -22,7 +22,7 @@
 }
 
 - (EVStyledString*)helloMessage {
-    return [EVStyledString styledStringWithString:@"This is a demo app. Hello there!"];
+    return [EVStyledString styledStringWithString:@"This is a demo app, hello there!"];
     //return nil;
 }
 

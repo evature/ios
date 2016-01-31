@@ -17,6 +17,7 @@
 		9412C4D01C0DC7A300ECA87C /* EVCRMDataSetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */; };
 		9412C4D31C0DD95E00ECA87C /* EVDataFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */; };
 		9412C4D41C0DD95E00ECA87C /* EVDataFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */; };
+		941824F41C5E72ED00D70F7A /* EVApplicationSoundDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		943F7A241C42923900B67894 /* EVCRMDataGetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		943F7A261C42929000B67894 /* EVCRMDataGetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A251C42929000B67894 /* EVCRMDataGetModel.h */; };
 		943F7A281C4292A600B67894 /* EVCRMDataGetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */; };
@@ -242,6 +243,7 @@
 		9412C4CE1C0DC7A300ECA87C /* EVCRMDataSetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMDataSetModel.m; sourceTree = "<group>"; };
 		9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataFlowElement.h; sourceTree = "<group>"; };
 		9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataFlowElement.m; sourceTree = "<group>"; };
+		941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVApplicationSoundDelegate.h; sourceTree = "<group>"; };
 		9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
 		943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVCRMDataGetDelegate.h; path = SearchModels/EVCRMDataGetDelegate.h; sourceTree = "<group>"; };
 		943F7A251C42929000B67894 /* EVCRMDataGetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCRMDataGetModel.h; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				969797D91B4C0D2800C0244D /* Images */,
 				96675F371B457F1D00494BAA /* EvaKit.h */,
 				96804C571B86797400FA9998 /* EVApplicationSound.h */,
+				941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */,
 				96804C581B86797400FA9998 /* EVApplicationSound.m */,
 				96B46C991B6009A500507A04 /* EVApplicationDelegate.h */,
 				96CDF67E1B4C6DEA001FC7B5 /* EVApplication.h */,
@@ -865,6 +868,7 @@
 				961221CC1C29A692004AE998 /* EVCallbackResult.h in Headers */,
 				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
 				941037731C01E943009A9A3F /* EVCRMNavigateDelegate.h in Headers */,
+				941824F41C5E72ED00D70F7A /* EVApplicationSoundDelegate.h in Headers */,
 				944C72A91C47AB76005B9EF3 /* EVFlightNavigateDelegate.h in Headers */,
 				968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */,
 				961221CE1C29A82F004AE998 /* EVCRMDataSetDelegate.h in Headers */,
@@ -1554,7 +1558,7 @@
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitExample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1575,7 +1579,7 @@
 				INFOPLIST_FILE = EvaKitExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.crossplusplus.EvaKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitExample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

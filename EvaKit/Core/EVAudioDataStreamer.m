@@ -78,7 +78,7 @@
 
 
 - (void)streamWriter:(EVStreamURLWriter*)writer gotResponseData:(NSData*)data {
-    EV_LOG_DEBUG("StreamWtiter got some response");
+    EV_LOG_DEBUG("StreamWriter got some response");
     [data retain];
     dispatch_async(self.operationQueue, ^{
         [self.responseData appendData:data];

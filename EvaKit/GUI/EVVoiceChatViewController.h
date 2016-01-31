@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "EVChatToolbarView.h"
 #import "EVVoiceChatButton.h"
 #import "EVApplicationDelegate.h"
 #import "EVSearchDelegate.h"
 
-@interface EVVoiceChatViewController : JSQMessagesViewController <EVChatToolbarViewDelegate, EVApplicationDelegate>
+@interface EVVoiceChatViewController : JSQMessagesViewController <EVChatToolbarViewDelegate, EVApplicationDelegate, AVSpeechSynthesizerDelegate>
 
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *toolbarHeightConstraint;
 @property (assign, nonatomic) IBOutlet NSLayoutConstraint *toolbarBottomLayoutGuide;

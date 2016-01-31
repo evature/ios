@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EVApplicationSoundDelegate.h"
 
 // Supports only CAF, AIF, or WAV files. And length less than 30 seconds.
 @interface EVApplicationSound : NSObject
 
 @property (nonatomic, strong, readonly) NSString* filePath;
+@property (nonatomic, assign, readwrite) id<EVApplicationSoundDelegate> delegate;
 
 + (instancetype)soundWithPath:(NSString*)path;
 - (instancetype)initWithPath:(NSString*)path;
+
 
 - (void)play;
 

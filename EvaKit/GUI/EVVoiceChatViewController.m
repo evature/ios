@@ -68,6 +68,7 @@ void reloadData(id collectionView, SEL selector) {
     BOOL _undoRequest;
     BOOL _shownWarningsTutorial;
     BOOL _isIOS9;
+    EVBool _startRecordAfterSpeech;
 }
 
 @property (nonatomic, strong) NSDictionary* viewSettings;
@@ -86,7 +87,7 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
-- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateMessage:(EVChatMessage*)message;
+- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId;
 - (void)speakText:(NSString*)text;
 - (void)stopSpeaking;
 
@@ -150,8 +151,10 @@ void reloadData(id collectionView, SEL selector) {
         [bubbleFactory release];
         
         _isIOS9 = ([[[UIDevice currentDevice] systemVersion] floatValue] > 8.99f);
-       
+        _startRecordAfterSpeech = EVBoolNotSet;
+        
         self.speechSynthesizer = [[AVSpeechSynthesizer new] autorelease];
+        [self.speechSynthesizer setDelegate:self];
     }
     return self;
 }
@@ -255,6 +258,11 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)startRecordingWithAutoStop:(BOOL)autoStop {
     [self stopSpeaking];
+    if (self.speechSynthesizer.speaking) {
+        EV_LOG_DEBUG(@"Delaying recording to when speaking is done");
+        _startRecordAfterSpeech = autoStop;
+        return;
+    }
     minVolume = DBL_MAX;
     maxVolume = DBL_MIN;
     currentCombinedVolume = 0.0;
@@ -262,6 +270,20 @@ void reloadData(id collectionView, SEL selector) {
     [self.evApplication startRecordingWithNewSession:self.isNewSession andAutoStop:autoStop];
     self.isNewSession = NO;
 }
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
+    [self speechSynthesizer:synthesizer didCancelSpeechUtterance:utterance];
+}
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance {
+    if (self.speechSynthesizer.speaking) {
+        EV_LOG_ERROR(@"Unepxected speech speaking");
+    }
+    if (EV_IS_BOOL_SET(_startRecordAfterSpeech)) {
+        [self startRecordingWithAutoStop:EV_IS_TRUE(_startRecordAfterSpeech)];
+        _startRecordAfterSpeech = EVBoolNotSet;
+    }
+}
+
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
     if (isRecording) {
@@ -496,6 +518,7 @@ void reloadData(id collectionView, SEL selector) {
     }
 }
 
+
 #pragma mark == EVA Search Methods ==
 
 - (void)handleFlowForResponse:(EVResponse*)response {
@@ -717,6 +740,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)evApplicationRecordingIsCancelled:(EVApplication *)application {
+    EV_LOG_DEBUG(@"Record canceled!");
     isRecording = NO;
     [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStoped];
@@ -724,6 +748,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)evApplicationRecordingIsStarted:(EVApplication *)application {
+    EV_LOG_DEBUG(@"Record started!");
     isRecording = YES;
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

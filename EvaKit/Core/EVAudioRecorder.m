@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "NSError+EVA.h"
 #import "EVLogger.h"
+#import "EVApplication.h"
 
 
 @interface EVAudioRecorder () {
@@ -52,11 +53,13 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         _audioBuffer = nil;
         self.audioBufferSize = 0; //Set default buffer
         self.autoStopper = [[[EVAudioRecorderAutoStopper alloc] initWithDelegate:self] autorelease];
+        [self setAVSessionWithRecord:NO];
     }
     return self;
 }
 
 - (void)dealloc {
+    [self setAVSessionWithRecord:NO];
     self.autoStopper = nil;
     [self stopAudioQueue];
     [super dealloc];
@@ -84,10 +87,55 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     [self startRecording:maxRecordingTime withAutoStop:YES];
 }
 
+/*
+ - (void)setAVSession {
+     EV_LOG_DEBUG(@"Setting session to Play and Record");
+     AVAudioSession *session = [AVAudioSession sharedInstance];
+     NSError *error = nil;
+ 
+     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
+     if (error != nil) {
+         EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
+     }
+     [session setMode:AVAudioSessionModeVoiceChat error:&error];
+     if (error != nil) {
+         EV_LOG_ERROR(@"Failed to setMode for AVAudioSession! %@", error);
+     }
+     [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+     if (error != nil) {
+         EV_LOG_ERROR(@"Failed to override output for AVAudioSession! %@", error);
+     }
+ }
+*/
+
+
+- (void)setAVSessionWithRecord:(BOOL)isRecord {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *error = nil;
+    if (isRecord) {
+        EV_LOG_DEBUG(@"Setting session to Record");
+        
+        [session setCategory:AVAudioSessionCategoryRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
+        if (error != nil) {
+            EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
+        }
+    }
+    else {
+        EV_LOG_DEBUG(@"Setting session to Play");
+        
+        [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+        if (error != nil) {
+            EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
+        }
+    }
+}
+
+
 - (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop {
     if (!self.isRecording) {
         _autoStop = autoStop;
         NSError* error = nil;
+        [self setAVSessionWithRecord:YES];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setActive:YES for AVAudioSession! %@", error);
@@ -111,6 +159,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
         [self.dataProviderDelegate provider:self gotAnError:error];
     }
+    [self setAVSessionWithRecord:NO];
     self.isRecording = NO;
     [self.dataProviderDelegate providerFinished:self];
 }
