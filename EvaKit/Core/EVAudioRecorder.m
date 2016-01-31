@@ -151,14 +151,14 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 }
 
 - (void)stopRecordingNoDelegate {
-    NSError* error = nil;
+//    NSError* error = nil;
     [self.autoStopper stop];
     [self stopAudioQueue];
-    [[AVAudioSession sharedInstance] setActive:NO error:&error];
-    if (error != nil) {
-        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
-        [self.dataProviderDelegate provider:self gotAnError:error];
-    }
+//    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+//    if (error != nil) {
+//        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
+//        [self.dataProviderDelegate provider:self gotAnError:error];
+//    }
     [self setAVSessionWithRecord:NO];
     self.isRecording = NO;
     [self.dataProviderDelegate providerFinished:self];
