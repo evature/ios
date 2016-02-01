@@ -82,12 +82,11 @@ void reloadData(id collectionView, SEL selector) {
 
 // Eva response methods
 - (void)handleFlowForResponse:(EVResponse*)response;
-- (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message;
-- (void)handleCallbackResult:(EVCallbackResult*)response withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message;
+- (void)handleCallbackResult:(EVCallbackResult*)result withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message withTransactionId:(NSString*)transactionId;
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
-- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId;
+- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId;
 - (void)speakText:(NSString*)text;
 - (void)stopSpeaking;
 
@@ -272,17 +271,43 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer didFinishSpeechUtterance speaking=%d  paused=%d", [synthesizer isSpeaking], [synthesizer isPaused]);
     [self speechSynthesizer:synthesizer didCancelSpeechUtterance:utterance];
 }
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer didCancelSpeechUtterance speaking=%d  paused=%d", [synthesizer isSpeaking], [synthesizer isPaused]);
     if (self.speechSynthesizer.speaking) {
         EV_LOG_ERROR(@"Unepxected speech speaking");
     }
+//    NSError *error=nil;
+//    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+//    if (error != nil) {
+//        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
+//    }
     if (EV_IS_BOOL_SET(_startRecordAfterSpeech)) {
         [self startRecordingWithAutoStop:EV_IS_TRUE(_startRecordAfterSpeech)];
         _startRecordAfterSpeech = EVBoolNotSet;
+        // attempt to overcome bug of TTS going bad after stopping in speech
+        AVSpeechUtterance* utterance2 = [AVSpeechUtterance speechUtteranceWithString:@" "];
+        [self.speechSynthesizer speakUtterance:utterance2];
+
     }
 }
+
+
+//- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer didStartSpeechUtterance speaking=%d  paused=%d", [synthesizer isSpeaking], [synthesizer isPaused]);
+//}
+//- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didPauseSpeechUtterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer didPauseSpeechUtterance speaking=%d  paused=%d", [synthesizer isSpeaking], [synthesizer isPaused]);
+//}
+//- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didContinueSpeechUtterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer didContinueSpeechUtterance speaking=%d  paused=%d", [synthesizer isSpeaking], [synthesizer isPaused]);
+//}
+//
+//- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer willSpeakRangeOfSpeechString:(NSRange)characterRange utterance:(AVSpeechUtterance *)utterance {
+//    EV_LOG_DEBUG(@"AVSpeechSynthesizer willSpeakRangeOfSpeechString speaking=%d  paused=%d text=%@", [synthesizer isSpeaking], [synthesizer isPaused], [[utterance speechString] substringWithRange:characterRange]);
+//}
 
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
@@ -479,7 +504,7 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 
-- (void)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId {
+- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId {
     if (updateLast) {
         NSInteger index = [self.evApplication.sessionMessages count];
         while (--index > 0 && [self isMyMessageInRow:index]) {;}
@@ -494,6 +519,7 @@ void reloadData(id collectionView, SEL selector) {
     if (speakText != nil) {
         [self speakText:speakText];
     }
+    return chatItem;
 }
 
 - (void)showThinkingMessage {
@@ -508,12 +534,18 @@ void reloadData(id collectionView, SEL selector) {
         if (!_isIOS9) {
             utterance.rate = EV_SPEECH_RATE;
         }
+        EV_LOG_DEBUG(@"Speaking: %@", text);
         [self.speechSynthesizer speakUtterance:utterance];
+        
+        // sometimes the speechSynthesizer doesn't speak!
+        // according to http://stackoverflow.com/a/34008710/519995  a workaround is to play some silence in AVPlayer!
+        //[_audioPlayer play];        
     }
 }
 
 - (void)stopSpeaking {
     if (self.speechSynthesizer.speaking) {
+        EV_LOG_DEBUG(@"stopSpeaking");
         [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     }
 }
@@ -523,95 +555,93 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)handleFlowForResponse:(EVResponse*)response {
     BOOL hasQuestion = false;
+    EVFlowElement *lastActionElement = nil;
     for (EVFlowElement* flow in response.flow.flowElements) {
         if (flow.type == EVFlowElementTypeQuestion) {
             hasQuestion = true;
-            break;
+        }
+        else if (flow.type != EVFlowElementTypeQuestion &&
+                 flow.type != EVFlowElementTypeAnswer  &&
+                 flow.type != EVFlowElementTypeStatement &&
+                 flow.type != EVFlowElementTypeOther) {
+            lastActionElement = flow;
         }
     }
     
-    BOOL first = true;
+    BOOL spokenStatement = NO;
     
     // if there is a question - show and activate only statements and questions
-    // otherwise - show all items and activate the first
-    for (EVFlowElement* flow in response.flow.flowElements) {
-        EVChatMessage* chatItem = nil;
-        if (flow.type == EVFlowElementTypeQuestion) {
-            EVChatMessage* questionChatItem = [EVChatMessage serverMessageWithID:response.transactionId text:[EVStyledString styledStringWithString:flow.sayIt]];
-            chatItem = questionChatItem;
-            [self.evApplication.sessionMessages addObject:chatItem];
-            [self finishReceivingMessageAnimated:YES];
-            
-            [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
-        } else {
-            if (!hasQuestion || flow.type == EVFlowElementTypeStatement) {
-                chatItem = [EVChatMessage serverMessageWithID:response.transactionId text:[EVStyledString styledStringWithString:flow.sayIt]];
-                [self.evApplication.sessionMessages addObject:chatItem];
-                [self finishReceivingMessageAnimated:YES];
-                if (!hasQuestion && flow.type != EVFlowElementTypeStatement && first) {
-                    first = false;
-                    // activate only the first non-statement
-                    [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
+    // otherwise - show all items and activate only the last action element
+    for (EVFlowElement* element in response.flow.flowElements) {
+        
+        switch (element.type) {
+            case EVFlowElementTypeReply: {
+                EVReplyFlowElement* replyElement = (EVReplyFlowElement*)element;
+                if ([EVServiceAttributesCallSupport isEqualToString:replyElement.attributeKey]) {
+                    // TODO: trigger call support
                 }
+                break;
             }
-            if (flow.type == EVFlowElementTypeStatement) {
-                [self executeFlowElement:flow forResponse:response andChatMessage:chatItem];
-            }
-        }
-    }
-}
-
-- (void)executeFlowElement:(EVFlowElement*)element forResponse:(EVResponse*)response andChatMessage:(EVChatMessage*)message {
-    
-    switch (element.type) {
-        case EVFlowElementTypeReply: {
-            EVReplyFlowElement* replyElement = (EVReplyFlowElement*)element;
-            if ([EVServiceAttributesCallSupport isEqualToString:replyElement.attributeKey]) {
-                // TODO: trigger call support
-            }
-            break;
-        }
-        case EVFlowElementTypeFlight:
-        case EVFlowElementTypeCar:
-        case EVFlowElementTypeHotel:
-        case EVFlowElementTypeExplore:
-        case EVFlowElementTypeTrain:
-        case EVFlowElementTypeCruise:
-        case EVFlowElementTypeQuestion:
-        case EVFlowElementTypeNavigate:
-        case EVFlowElementTypeData: {
-            [self handleCallbackResult:[EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate] withElement:element forChatMessage:message];
-            break;
-        }
-            
-        case EVFlowElementTypeStatement: {
-            EVStatementFlowElement* se = (EVStatementFlowElement*)element;
-            switch (se.statementType) {
-                case EVStatementFlowElementTypeUnderstanding:
-                case EVStatementFlowElementTypeUnknownExpression:
-                case EVStatementFlowElementTypeUnsupported: {
-                    _shownWarningsTutorial = YES;
-                    [self showWarningMessage:EV_UNDO_TUTORIAL];
-                    break;
+            case EVFlowElementTypeFlight:
+            case EVFlowElementTypeCar:
+            case EVFlowElementTypeHotel:
+            case EVFlowElementTypeExplore:
+            case EVFlowElementTypeTrain:
+            case EVFlowElementTypeCruise:
+            case EVFlowElementTypeNavigate:
+            case EVFlowElementTypeData: {
+                // ignore all but the last action-elements
+                if (lastActionElement == element) {
+                    EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate];
+                    [self handleCallbackResult:result withElement:element forChatMessage:nil withTransactionId:[response transactionId]];
                 }
-                case EVStatementFlowElementTypeChat:
-                    if (response.originalInputText != nil && [[response.originalInputText lowercaseString] isEqualToString:@"bye bye"]) {
-                        [self hideChatView:self];
+                break;
+            }
+                
+            case EVFlowElementTypeQuestion: {
+                EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate];
+                [self handleCallbackResult:result withElement:element  forChatMessage:nil withTransactionId:[response transactionId]];
+                break;
+            }
+                
+            case EVFlowElementTypeStatement: {
+                EVStatementFlowElement* se = (EVStatementFlowElement*)element;
+                NSString *sayIt = nil;
+                if (!hasQuestion && !spokenStatement) {
+                    // speak out loud only the first statement - and only if there isn't a question
+                    spokenStatement = YES;
+                    sayIt = element.sayIt;
+                }
+                [self showEvaMessage:[EVStyledString styledStringWithString:element.sayIt] withSpeakText:sayIt updateLast:NO andMessageId:[response transactionId]];
+                switch (se.statementType) {
+                    case EVStatementFlowElementTypeUnderstanding:
+                    case EVStatementFlowElementTypeUnknownExpression:
+                    case EVStatementFlowElementTypeUnsupported: {
+                        _shownWarningsTutorial = YES;
+                        [self showWarningMessage:EV_UNDO_TUTORIAL];
+                        break;
                     }
-                    break;
-                default:
-                    break;
+                    case EVStatementFlowElementTypeChat:
+                        if (response.originalInputText != nil && [[response.originalInputText lowercaseString] isEqualToString:@"bye bye"]) {
+                            [self hideChatView:self];
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
             }
-            break;
+                
+            default:
+                EV_LOG_INFO("Unexpected flow type %d", element.type);
+                break;
         }
-            
-        default:
-            EV_LOG_INFO("Unexpected flow type %d", element.type);
-            break;
     }
+
 }
 
-- (void)handleCallbackResult:(EVCallbackResult*)result withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message {
+
+- (void)handleCallbackResult:(EVCallbackResult*)result withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message withTransactionId:(NSString*)transactionId {
     EVCallbackResultType resultType = EVCallbackResultTypeNone;
     if (result != nil) {
         resultType = [result resultType];
@@ -624,7 +654,7 @@ void reloadData(id collectionView, SEL selector) {
             [result promiseValue].then(^id(EVCallbackResult* result) {
                 [element autorelease];
                 [message autorelease];
-                [self handleCallbackResult:result withElement:element forChatMessage:message];
+                [self handleCallbackResult:result withElement:element forChatMessage:message withTransactionId:transactionId];
                 return result;
             }, ^id(NSError* error) {
                 [element release];
@@ -636,7 +666,7 @@ void reloadData(id collectionView, SEL selector) {
         case EVCallbackResultTypeBool:
         case EVCallbackResultTypeNone: {
             if ([result boolValue]) {
-                [self showEvaMessage:[EVStyledString styledStringWithString:sayString] withSpeakText:sayString updateLast:YES andMessageId:[message senderId]];
+                [self showEvaMessage:[EVStyledString styledStringWithString:sayString] withSpeakText:sayString updateLast:NO andMessageId:transactionId];
             } else {
                 
             }
@@ -649,7 +679,7 @@ void reloadData(id collectionView, SEL selector) {
             //NSUInteger index = [self.evApplication.sessionMessages indexOfObject:message];
             //[self.evApplication.sessionMessages replaceObjectAtIndex:index withObject:newMessage];
             //[self finishReceivingMessageAnimated:YES];
-            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:YES andMessageId:[message senderId]];
+            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:NO andMessageId:[message senderId]];
             break;
         }
         case EVCallbackResultTypeData: {
@@ -665,7 +695,7 @@ void reloadData(id collectionView, SEL selector) {
             if ([data appendToEvaSayIt]) {
                 displayIt = [EVStyledString styledStringWithString:[sayString stringByAppendingString:[displayIt string]]];
             }
-            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:YES andMessageId:[message senderId]];
+            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:NO andMessageId:[message senderId]];
             break;
         }
         case EVCallbackResultTypeCloseChatAction: {

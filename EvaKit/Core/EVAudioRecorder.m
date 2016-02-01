@@ -151,9 +151,9 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 }
 
 - (void)stopRecordingNoDelegate {
-//    NSError* error = nil;
     [self.autoStopper stop];
     [self stopAudioQueue];
+//    NSError* error = nil;
 //    [[AVAudioSession sharedInstance] setActive:NO error:&error];
 //    if (error != nil) {
 //        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
