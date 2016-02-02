@@ -679,7 +679,7 @@ void reloadData(id collectionView, SEL selector) {
             //NSUInteger index = [self.evApplication.sessionMessages indexOfObject:message];
             //[self.evApplication.sessionMessages replaceObjectAtIndex:index withObject:newMessage];
             //[self finishReceivingMessageAnimated:YES];
-            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:NO andMessageId:[message senderId]];
+            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:NO andMessageId:transactionId];
             break;
         }
         case EVCallbackResultTypeData: {
@@ -695,7 +695,7 @@ void reloadData(id collectionView, SEL selector) {
             if ([data appendToEvaSayIt]) {
                 displayIt = [EVStyledString styledStringWithString:[sayString stringByAppendingString:[displayIt string]]];
             }
-            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:NO andMessageId:[message senderId]];
+            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:NO andMessageId:transactionId];
             break;
         }
         case EVCallbackResultTypeCloseChatAction: {

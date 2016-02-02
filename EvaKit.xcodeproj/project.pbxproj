@@ -616,7 +616,6 @@
 				96675F521B458EF000494BAA /* GUI */,
 				962809CC1B50333A00263567 /* ThirdParty */,
 				969797D91B4C0D2800C0244D /* Images */,
-				96675F371B457F1D00494BAA /* EvaKit.h */,
 				96804C571B86797400FA9998 /* EVApplicationSound.h */,
 				941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */,
 				96804C581B86797400FA9998 /* EVApplicationSound.m */,
@@ -635,6 +634,7 @@
 				96804C531B8677AF00FA9998 /* EvaKit_voice_high.aif */,
 				96804C541B8677AF00FA9998 /* EvaKit_voice_low.aif */,
 				96675F361B457F1D00494BAA /* Info.plist */,
+				96675F371B457F1D00494BAA /* EvaKit.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
