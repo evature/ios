@@ -61,6 +61,13 @@
 
 - (EVCallbackResult*)navigateTo:(EVFlightPageType)page {
     NSLog(@"Handled  trip navigate to %d", page);
+    if (page == EVFlightPageTypeItinerary) {
+        UIViewController *secondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigatedToScene"];
+
+        [[self navigationController] setViewControllers:[NSArray arrayWithObject: secondViewController]
+                                               animated: YES];
+        [[EVApplication sharedApplication] hideChatViewController:self];
+    }
     if (page == EVFlightPageTypeBoardingTime) {
         EVStyledString *styledString = [EVStyledString styledStringWithString:@"Your Boarding time is 12:56pm"];
         return [EVCallbackResult resultWithString:styledString];
