@@ -28,15 +28,31 @@
 
 - (EVCallbackResult*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
-    return [EVCallbackResult resultWithNone];
+    return nil;
 }
 
 - (EVCallbackResult*) getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId {
     NSLog(@"Data getting %@ in page %d  %@", fieldPath, page, objId);
-    NSMutableAttributedString* result = [[NSMutableAttributedString alloc] initWithString:@"The value is 60%"];
+
+    if ([fieldPath isEqualToString:@"value"]) {
+        RXPromise* promise = [[RXPromise alloc] init];
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 1.5);
+        dispatch_after(delay, dispatch_get_main_queue(), ^(void){
+            NSMutableAttributedString* text = [[NSMutableAttributedString alloc] initWithString:@"The expected value is 10,000,000 $"];
+            UIColor* highlightColor = [UIColor colorWithRed:0.9f green:0.9f blue:0.2f alpha:1.0f];
+            [text addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(22, 12)];
+            EVCallbackResult *result = [EVCallbackResult resultWithDisplayString:[EVStyledString styledStringWithAttributedString:text] andSayString:@"10,000,000 $"];
+            [promise fulfillWithValue:result];
+        });
+        EVCallbackResult *immediate = [EVCallbackResult resultWithString:@"The expected value is "];
+        return [EVCallbackResult resultWithPromise:promise andImmediateResult:immediate];
+    }
+    
+    NSMutableAttributedString* text = [[NSMutableAttributedString alloc] initWithString:@"The value is 60%"];
     UIColor* highlightColor = [UIColor colorWithRed:0.9f green:0.9f blue:0.2f alpha:1.0f];
-    [result addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(13, 3)];
-    return [EVCallbackResult resultWithString:[EVStyledString styledStringWithAttributedString:result]];
+    [text addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(13, 3)];
+    EVCallbackResult *result = [EVCallbackResult resultWithStyledString:[EVStyledString styledStringWithAttributedString:text]];
+    return result;
 }
 
 - (EVCallbackResult*)handleFlightSearch:(BOOL)isComplete
@@ -62,14 +78,10 @@
 - (EVCallbackResult*)navigateTo:(EVFlightPageType)page {
     NSLog(@"Handled  trip navigate to %d", page);
     if (page == EVFlightPageTypeBoardingTime) {
-        EVStyledString *styledString = [EVStyledString styledStringWithString:@"Your Boarding time is 12:56pm"];
-        return [EVCallbackResult resultWithString:styledString];
+        return [EVCallbackResult resultWithString:@"Your Boarding time is 12:56pm"];
     }
     if (page == EVFlightPageTypeArrivalTime) {
-        EVCallbackResultData *data = [[EVCallbackResultData alloc]init];
-        data.sayIt = @"11:24am";
-        data.displayIt = [EVStyledString styledStringWithString:@"Your arrival time is 11:24am"];
-        return [EVCallbackResult resultWithResultData:data];
+        return [EVCallbackResult resultWithDisplayString:[EVStyledString styledStringWithString:@"Your arrival time is 11:24am"] andSayString:@"11:24am"];
     }
     return [EVCallbackResult resultWithNone];
 }

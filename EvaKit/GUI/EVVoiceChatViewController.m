@@ -86,7 +86,7 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)showMyMessageForResponse:(EVResponse*)response hasWarnings:(BOOL*)hasWarnings;
 - (void)showWarningMessage:(NSString*)message;
-- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId;
+- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(EVChatMessage*)updateLast andMessageId:(NSString*)messageId;
 - (void)speakText:(NSString*)text;
 - (void)stopSpeaking;
 
@@ -504,19 +504,22 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 
-- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(BOOL)updateLast andMessageId:(NSString*)messageId {
-    if (updateLast) {
-        NSInteger index = [self.evApplication.sessionMessages count];
-        while (--index > 0 && [self isMyMessageInRow:index]) {;}
-        if (index > 0) {
-            [self.evApplication.sessionMessages removeObjectAtIndex:index];
-        }
-    }
+- (EVChatMessage*)showEvaMessage:(EVStyledString*)message withSpeakText:(NSString*)speakText updateLast:(EVChatMessage*)updateLast andMessageId:(NSString*)messageId {
 
-    EVChatMessage* chatItem = [EVChatMessage serverMessageWithID:messageId text:message];
-    [self.evApplication.sessionMessages addObject:chatItem];
-    [self finishReceivingMessageAnimated:YES];
-    if (speakText != nil) {
+
+    EVChatMessage* chatItem  = nil;
+    if (message != nil && ([[message string] isEqualToString:@""] == false)) {
+        chatItem = [EVChatMessage serverMessageWithID:messageId text:message];
+        if (updateLast) {
+            NSUInteger index = [self.evApplication.sessionMessages indexOfObject:updateLast];
+            [self.evApplication.sessionMessages replaceObjectAtIndex:index withObject:chatItem];
+        }
+        else {
+            [self.evApplication.sessionMessages addObject:chatItem];
+        }
+        [self finishReceivingMessageAnimated:YES];
+    }
+    if (speakText != nil && ([speakText isEqualToString:@""] == false)) {
         [self speakText:speakText];
     }
     return chatItem;
@@ -612,7 +615,7 @@ void reloadData(id collectionView, SEL selector) {
                     spokenStatement = YES;
                     sayIt = element.sayIt;
                 }
-                [self showEvaMessage:[EVStyledString styledStringWithString:element.sayIt] withSpeakText:sayIt updateLast:NO andMessageId:[response transactionId]];
+                [self showEvaMessage:[EVStyledString styledStringWithString:element.sayIt] withSpeakText:sayIt updateLast:nil andMessageId:[response transactionId]];
                 switch (se.statementType) {
                     case EVStatementFlowElementTypeUnderstanding:
                     case EVStatementFlowElementTypeUnknownExpression:
@@ -642,66 +645,55 @@ void reloadData(id collectionView, SEL selector) {
 
 
 - (void)handleCallbackResult:(EVCallbackResult*)result withElement:(EVFlowElement*)element forChatMessage:(EVChatMessage*)message withTransactionId:(NSString*)transactionId {
-    EVCallbackResultType resultType = EVCallbackResultTypeNone;
-    if (result != nil) {
-        resultType = [result resultType];
+    EVStyledString *displayString = [result displayIt];
+    NSString *sayString = [result sayIt];
+
+    if (sayString == nil) {
+        // default to Eva's sayIt
+        sayString = element.sayIt;
     }
-    NSString* sayString = element.sayIt;
-    switch (resultType) {
-        case EVCallbackResultTypePromise: {
-            [element retain];
-            [message retain];
-            [result promiseValue].then(^id(EVCallbackResult* result) {
-                [element autorelease];
-                [message autorelease];
-                [self handleCallbackResult:result withElement:element forChatMessage:message withTransactionId:transactionId];
-                return result;
-            }, ^id(NSError* error) {
-                [element release];
-                [message release];
-                return error;
-            });
-            break;
+    else {
+        if ([result appendToEvaSayIt]) {
+            sayString = [element.sayIt stringByAppendingString:sayString];
         }
-        case EVCallbackResultTypeBool:
-        case EVCallbackResultTypeNone: {
-            if ([result boolValue]) {
-                [self showEvaMessage:[EVStyledString styledStringWithString:sayString] withSpeakText:sayString updateLast:NO andMessageId:transactionId];
-            } else {
-                
-            }
-            break;
-        }
-        case EVCallbackResultTypeString: {
-            //EVStyledString *styledString = [result stringValue];
-            //NSString *msgId = [message senderId];
-            //EVChatMessage *newMessage = [EVChatMessage serverMessageWithID:msgId text:styledString];
-            //NSUInteger index = [self.evApplication.sessionMessages indexOfObject:message];
-            //[self.evApplication.sessionMessages replaceObjectAtIndex:index withObject:newMessage];
-            //[self finishReceivingMessageAnimated:YES];
-            [self showEvaMessage:[result stringValue] withSpeakText:[[result stringValue] string] updateLast:NO andMessageId:transactionId];
-            break;
-        }
-        case EVCallbackResultTypeData: {
-            EVCallbackResultData *data = [result resultDataValue];
-            EVStyledString *displayIt = [data displayIt];
-            if (displayIt == nil) {
-                displayIt = [EVStyledString styledStringWithString:[data sayIt]];
-            }
-            NSString *sayIt = [data sayIt];
-            if (sayIt == nil) {
-                sayIt = [displayIt string];
-            }
-            if ([data appendToEvaSayIt]) {
-                displayIt = [EVStyledString styledStringWithString:[sayString stringByAppendingString:[displayIt string]]];
-            }
-            [self showEvaMessage:displayIt withSpeakText:sayIt updateLast:NO andMessageId:transactionId];
-            break;
-        }
-        case EVCallbackResultTypeCloseChatAction: {
-            [self hideChatView:self];
+        
+    }
+    if (displayString == nil) {
+        // default to Eva's sayIt
+        displayString = [EVStyledString styledStringWithString:element.sayIt];
+    }
+    else {
+        if ([result appendToEvaSayIt]) {
+            displayString = [EVStyledString styledStringWithString:[element.sayIt stringByAppendingString:[displayString string]]];
         }
     }
+    
+    
+    EVChatMessage *chatMessage = [self showEvaMessage:displayString withSpeakText:sayString updateLast:message andMessageId:transactionId];
+    
+    if ([result deferredResult] != nil) {
+        [element retain];
+        //[element.sayIt retain];
+        [chatMessage retain];
+        [result retain]; // avoid releasing result since it cancels the deferred in the dealloc
+        [result deferredResult].thenOnMain(^id(EVCallbackResult* asyncResult) {
+            [self handleCallbackResult:asyncResult withElement:element forChatMessage:chatMessage withTransactionId:transactionId];
+            [element autorelease];
+            [chatMessage autorelease];
+            [result autorelease];
+            return nil;
+        }, ^id(NSError* error) {
+            [element release];
+            [chatMessage release];
+            [result release];
+            return error;
+        });
+    }
+    
+    if ([result closeChat]) {
+        [self hideChatView:self];
+    }
+
 }
 
 #pragma mark == EVApplication delegate ===

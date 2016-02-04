@@ -172,7 +172,7 @@ delegate;
 
 + (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate {
-    EVCallbackResult* cbR = [EVCallbackResult resultWithNone];
+    EVCallbackResult* cbR = nil;
     if (flow.verb == EVDataFlowElementVerbTypeSet || flow.verb == EVDataFlowElementVerbTypeGet) {
         NSArray *pathArray = [flow.fieldPath componentsSeparatedByString:@"/"];
         if (![pathArray[0] isEqualToString:@"crm"]) {

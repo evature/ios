@@ -11,45 +11,49 @@
 #import "EVStyledString.h"
 
 
-typedef NS_ENUM(int16_t, EVCallbackResultType) {
-    EVCallbackResultTypeNone = 0,
-    EVCallbackResultTypeBool,
-    EVCallbackResultTypeString,
-    EVCallbackResultTypeData,
-    EVCallbackResultTypePromise,
-    EVCallbackResultTypeCloseChatAction
-};
 
 @interface EVCallbackResultData : NSObject
 
-@property (nonatomic, strong) NSString* sayIt;
-@property (nonatomic, strong) EVStyledString* displayIt;
-//@property (nonatomic, assign) NSInteger resultsCount;
-@property (nonatomic, assign) BOOL appendToEvaSayIt;
+@property (nonatomic, assign, readwrite) BOOL appendToEvaSayIt;  // append the display/say strings to the Eva reply
+@property (nonatomic, assign, readwrite) BOOL closeChat;  // set to true to close the chat screen immediately after the result handling is complete
 
-+ (instancetype)resultData;
-
--(id)copyWithZone:(NSZone*)zone;
-
+@property (nonatomic, strong, readwrite) NSString* sayIt;
+@property (nonatomic, strong, readwrite) EVStyledString* displayIt;
+@property (nonatomic, strong, readwrite) RXPromise* deferredResult;
 
 @end
 
 @interface EVCallbackResult : NSObject
 
-+ (instancetype)resultWithPromise:(RXPromise*)promise;
-+ (instancetype)resultWithBool:(BOOL)boolValue;
-+ (instancetype)resultWithString:(EVStyledString*)stringValue;
-+ (instancetype)resultWithResultData:(EVCallbackResultData*)resultData;
+
+
+// default handling - say+display Eva's text  - same as returning nil
++ (instancetype)resultDefault;
 + (instancetype)resultWithNone;
-+ (instancetype)resultWithCloseChatAction;
 
-- (EVCallbackResultType)resultType;
+// do nothing (no say nor display)
++ (instancetype)resultDoNothing;
 
-- (BOOL)boolValue;
-- (EVStyledString*)stringValue;
-- (RXPromise*)promiseValue;
-- (EVCallbackResultData*)resultDataValue;
-- (BOOL)isNone;
-- (BOOL)isCloseChatAction;
+// display+say the same string
++ (instancetype)resultWithStyledString:(EVStyledString*)stringValue;
++ (instancetype)resultWithString:(NSString*)stringValue;
+
+// display one string and say another
++ (instancetype)resultWithDisplayString:(EVStyledString*)displayValue andSayString:(NSString*)sayString;  // nil = default Eva,  @"" = do not display/speak
+
+// the promise will resolve to a EVCallbackResult, nothing will be spoken/displayed until then
++ (instancetype)resultWithPromise:(RXPromise*)promise;
+
+// handle the immediate result (eg. say/display) and then replace it with the result which will be resolved by the promise
++ (instancetype)resultWithPromise:(RXPromise*)promise andImmediateResult:(EVCallbackResult*)immediate;
+
+
+
+
+- (EVStyledString*)displayIt;
+- (NSString*)sayIt;
+- (RXPromise*)deferredResult;
+- (BOOL)closeChat;
+- (BOOL)appendToEvaSayIt;
 
 @end

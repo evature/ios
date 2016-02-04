@@ -57,13 +57,15 @@
 
 
 - (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
-    if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-        return [(id<EVCRMDataSetDelegate>)delegate setField:self.field
-                                            inPage:(EVCRMPageType)self.page
-                                              withId:self.subPage
-                                             toValue: @{ @"type": self.valueType,
-                                                         @"value": self.value }
-                                             ];
+    if (self.value != nil && self.valueType != nil) {
+        if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+            return [(id<EVCRMDataSetDelegate>)delegate setField:self.field
+                                                inPage:(EVCRMPageType)self.page
+                                                  withId:self.subPage
+                                                 toValue: @{ @"type": self.valueType,
+                                                             @"value": self.value }
+                                                 ];
+        }
     }
     return [EVCallbackResult resultWithNone];
 }

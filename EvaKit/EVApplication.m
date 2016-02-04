@@ -330,15 +330,14 @@
         [urlStr appendFormat:@"&context=%@", [self.context requestParameterValue]];
     }
     if (self.currentPage != EVCRMPageTypeOther) {
+        [urlStr appendFormat:@"&page=crm/%@/", [EVCRMAttributes pageTypeToString:self.currentPage]];
+        
         if (self.currentSubPage != nil) {
-            [urlStr appendFormat:@"&page=%@/%@", [EVCRMAttributes pageTypeToString:self.currentPage],
-                                                    self.currentSubPage];
+            [urlStr appendString: self.currentSubPage];
         }
-        else {
-            [urlStr appendFormat:@"&page=%@", [EVCRMAttributes pageTypeToString:self.currentPage]];
-        }
+        [urlStr appendString:@"/"];
         if (self.subPageFilter != EVCRMFilterTypeNone) {
-            [urlStr appendFormat:@"/%@",  [EVCRMAttributes filterTypeToString:self.subPageFilter]];
+            [urlStr appendString:[EVCRMAttributes filterTypeToString:self.subPageFilter]];
         }
     }
     [urlStr appendFormat:@"&audio_files_used=%@%@%@%@",

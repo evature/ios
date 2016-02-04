@@ -9,125 +9,118 @@
 #import "EVCallbackResult.h"
 
 @interface EVCallbackResult () {
-    EVCallbackResultType _type;
+    //NSInteger resultsCount;
 }
 
-@property (nonatomic, copy) id data;
+@property (nonatomic, copy) EVCallbackResultData* data;
 
-- (instancetype)initWithType:(EVCallbackResultType)type andData:(id)data;
+- (instancetype)initWithDisplay:(EVStyledString *)displayString andSayString:(NSString*)sayString andPromise:(RXPromise*)promise;
+
+//@property (nonatomic, assign) NSInteger resultsCount;
+
 
 @end
 
+
 @implementation EVCallbackResult
 
+
+// default handling - say+display Eva's text  - same as returning nil
++ (instancetype)resultDefault {
+    return [[[self alloc] initWithDisplay:nil andSayString:nil andPromise:nil] autorelease];
+}
++ (instancetype) resultWithNone {
+    return [EVCallbackResult resultDefault];
+}
+
+// do nothing (no say nor display)
++ (instancetype)resultDoNothing {
+    return [[[self alloc] initWithDisplay:[EVStyledString styledStringWithString:@""] andSayString:@"" andPromise:nil] autorelease];
+}
+
+// display+say the same string
++ (instancetype)resultWithStyledString:(EVStyledString*)stringValue {
+    return [[[self alloc] initWithDisplay:stringValue andSayString:[stringValue string] andPromise:nil] autorelease];
+}
++ (instancetype)resultWithString:(NSString*)stringValue {
+    return [[[self alloc] initWithDisplay:[EVStyledString styledStringWithString:stringValue] andSayString:stringValue andPromise:nil] autorelease];
+}
+
+
+// display one string and say another
++ (instancetype)resultWithDisplayString:(EVStyledString*)displayValue andSayString:(NSString*)sayString {
+    return [[[self alloc] initWithDisplay:displayValue andSayString:sayString andPromise:nil] autorelease];
+}
+
+// the promise will resolve to a EVCallbackResult, nothing will be spoken/displayed until then
 + (instancetype)resultWithPromise:(RXPromise*)promise {
-    return [[[self alloc] initWithType:EVCallbackResultTypePromise andData:promise] autorelease];
+    return [[[self alloc] initWithDisplay:[EVStyledString styledStringWithString:@""] andSayString:@"" andPromise:promise] autorelease];
 }
 
-+ (instancetype)resultWithBool:(BOOL)boolValue {
-    return [[[self alloc] initWithType:EVCallbackResultTypeBool andData:[NSNumber numberWithBool:boolValue]] autorelease];
+// handle the immediate result (eg. say/display) and then replace it with the result which will be resolved by the promise
++ (instancetype)resultWithPromise:(RXPromise*)promise andImmediateResult:(EVCallbackResult*)immediate {
+    EVCallbackResult *result = [[[self alloc] initWithDisplay:immediate.data.displayIt andSayString:immediate.data.sayIt andPromise:promise] autorelease];
+    result.data.closeChat = immediate.data.closeChat;
+    result.data.appendToEvaSayIt = immediate.data.appendToEvaSayIt;
+    return result;
 }
 
-+ (instancetype)resultWithString:(EVStyledString*)stringValue {
-    return [[[self alloc] initWithType:EVCallbackResultTypeString andData:stringValue] autorelease];
+- (EVStyledString*)displayIt {
+    return [_data displayIt];
+}
+- (NSString*)sayIt {
+    return [_data sayIt];
+}
+- (RXPromise*)deferredResult {
+    return [_data deferredResult];
+}
+- (BOOL)closeChat {
+    return [_data closeChat];
+}
+- (BOOL)appendToEvaSayIt {
+    return [_data appendToEvaSayIt];
 }
 
-+ (instancetype)resultWithResultData:(EVCallbackResultData*)resultData {
-    return [[[self alloc] initWithType:EVCallbackResultTypeData andData:resultData] autorelease];
-}
 
-+ (instancetype)resultWithNone {
-    return [[[self alloc] initWithType:EVCallbackResultTypeNone andData:nil] autorelease];
-}
-
-+ (instancetype)resultWithCloseChatAction {
-    return [[[self alloc] initWithType:EVCallbackResultTypeCloseChatAction andData:nil] autorelease];
-}
-
-- (instancetype)initWithType:(EVCallbackResultType)type andData:(id)data {
+- (instancetype)initWithDisplay:(EVStyledString *)displayString andSayString:(NSString*)sayString andPromise:(RXPromise*)promise {
     self = [super init];
     if (self != nil) {
-        _type = type;
-        self.data = data;
+        _data = [[EVCallbackResultData alloc] init];
+        _data.sayIt = sayString;
+        _data.displayIt = displayString;
+        _data.deferredResult = promise;
     }
     return self;
 }
 
 - (void)dealloc {
-    self.data = nil;
+    _data = nil;
     [super dealloc];
-}
-
-- (EVCallbackResultType)resultType {
-    return _type;
-}
-
-- (BOOL)boolValue {
-    if (_type != EVCallbackResultTypeBool && _type != EVCallbackResultTypeNone) {
-        @throw [NSException exceptionWithName:@"EVCallbackResultWrongType" reason:@"Can't get BOOL from Response" userInfo:@{@"EVCallbackResult": self}];
-    }
-    return _type == EVCallbackResultTypeNone || [self.data boolValue];
-}
-
-- (EVStyledString*)stringValue {
-    switch (_type) {
-        case EVCallbackResultTypeBool:
-            return [EVStyledString styledStringWithString:[self.data description]];
-            break;
-        case EVCallbackResultTypeString:
-            return self.data;
-            break;
-        default:
-            @throw [NSException exceptionWithName:@"EVCallbackResultWrongType" reason:@"Can't get NSString from Response" userInfo:@{@"EVCallbackResult": self}];
-            break;
-    }
-    return nil;
-}
-
-
-- (BOOL)isNone {
-    return _type == EVCallbackResultTypeNone;
-}
-
-- (BOOL)isCloseChatAction {
-    return _type == EVCallbackResultTypeCloseChatAction;
-}
-
-- (EVCallbackResultData*)resultDataValue {
-    if (_type != EVCallbackResultTypeData) {
-        @throw [NSException exceptionWithName:@"EVCallbackResultWrongType" reason:@"Can't get Data from Response" userInfo:@{@"EVCallbackResult": self}];
-    }
-    return self.data;
-}
-
-- (RXPromise*)promiseValue {
-    if (_type != EVCallbackResultTypePromise) {
-        @throw [NSException exceptionWithName:@"EVCallbackResultWrongType" reason:@"Can't get Promise from Response" userInfo:@{@"EVCallbackResult": self}];
-    }
-    return self.data;
 }
 
 @end
 
+
 @implementation EVCallbackResultData
 
-+ (instancetype)resultData {
-    return [[[self alloc] init] autorelease];
-}
 
 -(id)copyWithZone:(NSZone*)zone {
     EVCallbackResultData *copy = [[[self class] allocWithZone: zone] init];
-    copy.sayIt = self.sayIt;
-    copy.displayIt = self.displayIt;
+    copy.sayIt = [self.sayIt copy];
+    copy.displayIt = [self.displayIt copy];
+    copy.deferredResult = self.deferredResult;
     copy.appendToEvaSayIt = self.appendToEvaSayIt;
+    copy.closeChat = self.closeChat;
     return copy;
 }
 
 
 - (void)dealloc {
-    self.sayIt = nil;
-    self.displayIt = nil;
-    [super dealloc];
-}
+        self.sayIt = nil;
+        self.displayIt = nil;
+        [super dealloc];
+    }
 
 @end
+
+

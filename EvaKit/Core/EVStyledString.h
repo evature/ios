@@ -21,6 +21,4 @@
 - (NSString*)string;
 - (NSAttributedString*)attributedString;
 
--(id)copyWithZone:(NSZone*)zone;
-
 @end
