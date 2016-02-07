@@ -27,7 +27,7 @@
 
 
 
-// default handling - say+display Eva's text  - same as returning nil
+// default handling - say+display Eva's text  - same as returning nil from the callback
 + (instancetype)resultDefault;
 + (instancetype)resultWithNone;
 

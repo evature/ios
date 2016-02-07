@@ -40,6 +40,21 @@ NSString* const kSenderDisplayNameEva = @"Eva";
     self = [super initWithSenderId:senderId senderDisplayName:senderDisplayName date:date text:[(EVStyledString*)text string]];
     if (self != nil) {
         self.styledText = text;
+        if (senderDisplayName == kSenderDisplayNameEva) {
+            if (self.styledText.hasStyle) {
+                NSAttributedString *orig = [self.styledText attributedString];
+                UIColor* EV_EVA_TEXT_COLOR = [UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.0f]; // TODO: use same constant
+                NSMutableAttributedString *str = [[[NSMutableAttributedString alloc] initWithString:[orig string] attributes:@{NSForegroundColorAttributeName:EV_EVA_TEXT_COLOR}] autorelease];
+
+                
+                [orig enumerateAttributesInRange:NSMakeRange(0, [orig length]) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
+                    [str addAttributes:attributes range:range];
+                }];
+                
+                self.styledText = [EVStyledString styledStringWithAttributedString:str];
+            }
+        }
+
     }
     return self;
 }

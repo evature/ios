@@ -42,9 +42,10 @@
             UIColor* highlightColor = [UIColor colorWithRed:0.9f green:0.9f blue:0.2f alpha:1.0f];
             [text addAttribute:NSForegroundColorAttributeName value:highlightColor range:NSMakeRange(22, 12)];
             EVCallbackResult *result = [EVCallbackResult resultWithDisplayString:[EVStyledString styledStringWithAttributedString:text] andSayString:@"10,000,000 $"];
+//            EVCallbackResult *result = [EVCallbackResult resultWithDisplayString:[EVStyledString styledStringWithString:@"The expected value is 10,000,000 $"] andSayString:@"10,000,000 $"];
             [promise fulfillWithValue:result];
         });
-        EVCallbackResult *immediate = [EVCallbackResult resultWithString:@"The expected value is "];
+        EVCallbackResult *immediate = [EVCallbackResult resultWithString:@"The expected value is..."];
         return [EVCallbackResult resultWithPromise:promise andImmediateResult:immediate];
     }
     
