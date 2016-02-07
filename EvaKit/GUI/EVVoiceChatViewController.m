@@ -330,6 +330,8 @@ void reloadData(id collectionView, SEL selector) {
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Trash pressed!");
     self.isNewSession = YES;
+    [self stopSpeaking];
+    self.evApplication.currentSessionID = EV_NEW_SESSION_ID;
     [self.evApplication.sessionMessages removeAllObjects];
     [self setHelloMessage];
     [self.collectionView reloadData];
@@ -397,6 +399,10 @@ void reloadData(id collectionView, SEL selector) {
 
 - (IBAction)hideChatView:(id)sender {
     [self stopSpeaking];
+    [self hideChatView];
+}
+
+- (void)hideChatView {
     self.evApplication.context = self.oldContext;
     [self.evApplication hideChatViewController:self];
 }
@@ -626,7 +632,7 @@ void reloadData(id collectionView, SEL selector) {
                     }
                     case EVStatementFlowElementTypeChat:
                         if (response.originalInputText != nil && [[response.originalInputText lowercaseString] isEqualToString:@"bye bye"]) {
-                            [self hideChatView:self];
+                            [self hideChatView];
                         }
                         break;
                     default:
@@ -691,7 +697,7 @@ void reloadData(id collectionView, SEL selector) {
     }
     
     if ([result closeChat]) {
-        [self hideChatView:self];
+        [self hideChatView];
     }
 
 }

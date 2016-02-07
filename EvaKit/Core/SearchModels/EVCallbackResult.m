@@ -8,9 +8,22 @@
 
 #import "EVCallbackResult.h"
 
+
+@interface EVCallbackResultData : NSObject
+
+@property (nonatomic, assign, readwrite) BOOL appendToEvaSayIt;  // append the display/say strings to the Eva reply
+@property (nonatomic, assign, readwrite) BOOL closeChat;  // set to true to close the chat screen immediately after the result handling is complete
+
+@property (nonatomic, strong, readwrite) NSString* sayIt;
+@property (nonatomic, strong, readwrite) EVStyledString* displayIt;
+@property (nonatomic, strong, readwrite) RXPromise* deferredResult;
+
+@end
+
 @interface EVCallbackResult () {
     //NSInteger resultsCount;
 }
+
 
 @property (nonatomic, copy) EVCallbackResultData* data;
 
@@ -80,6 +93,28 @@
 - (BOOL)appendToEvaSayIt {
     return [_data appendToEvaSayIt];
 }
+
+- (void) setDisplayIt:(EVStyledString*)displayIt {
+    if (_data != nil)
+        _data.displayIt = displayIt;
+}
+- (void)setSayIt:(NSString*)sayIt {
+    if (_data != nil)
+        _data.sayIt = sayIt;
+}
+- (void)setDeferredResult:(RXPromise*)deferredResult {
+    if (_data != nil)
+        _data.deferredResult = deferredResult;
+}
+- (void)setCloseChat:(BOOL)closeChat {
+    if (_data != nil)
+        _data.closeChat = closeChat;
+}
+- (void)setAppendToEvaSayIt:(BOOL)appendToEvaSayIt {
+    if (_data != nil)
+        _data.appendToEvaSayIt = appendToEvaSayIt;
+}
+
 
 
 - (instancetype)initWithDisplay:(EVStyledString *)displayString andSayString:(NSString*)sayString andPromise:(RXPromise*)promise {

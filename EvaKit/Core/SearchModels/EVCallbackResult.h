@@ -12,16 +12,6 @@
 
 
 
-@interface EVCallbackResultData : NSObject
-
-@property (nonatomic, assign, readwrite) BOOL appendToEvaSayIt;  // append the display/say strings to the Eva reply
-@property (nonatomic, assign, readwrite) BOOL closeChat;  // set to true to close the chat screen immediately after the result handling is complete
-
-@property (nonatomic, strong, readwrite) NSString* sayIt;
-@property (nonatomic, strong, readwrite) EVStyledString* displayIt;
-@property (nonatomic, strong, readwrite) RXPromise* deferredResult;
-
-@end
 
 @interface EVCallbackResult : NSObject
 
@@ -48,12 +38,12 @@
 + (instancetype)resultWithPromise:(RXPromise*)promise andImmediateResult:(EVCallbackResult*)immediate;
 
 
+@property (nonatomic, assign, readwrite) BOOL appendToEvaSayIt;  // append the display/say strings to the Eva reply
+@property (nonatomic, assign, readwrite) BOOL closeChat;  // set to true to close the chat screen immediately after the result handling is complete
+@property (nonatomic, strong, readwrite) NSString* sayIt;
+@property (nonatomic, strong, readwrite) EVStyledString* displayIt;
+@property (nonatomic, strong, readwrite) RXPromise* deferredResult;
 
 
-- (EVStyledString*)displayIt;
-- (NSString*)sayIt;
-- (RXPromise*)deferredResult;
-- (BOOL)closeChat;
-- (BOOL)appendToEvaSayIt;
 
 @end
