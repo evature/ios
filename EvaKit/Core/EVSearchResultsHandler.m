@@ -11,6 +11,7 @@
 #import "EVLogger.h"
 #import "EVQuestionFlowElement.h"
 #import "EVDataFlowElement.h"
+#import "EVPhoneFlowElement.h"
 #import "EVNavigateFlowElement.h"
 #import "NSDate+EVA.h"
 #import "EVFlightSearchModel.h"
@@ -18,6 +19,7 @@
 #import "EVCRMDataSetModel.h"
 #import "EVCRMDataGetModel.h"
 #import "EVCRMNavigateModel.h"
+#import "EVCRMPhoneModel.h"
 #import "EVFlightNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
@@ -31,6 +33,8 @@
 + (EVCallbackResult*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
 + (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
+
++ (EVCallbackResult*)handlePhoneWithResponse:(EVResponse*)response withFlow:(EVPhoneFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
 + (EVCallbackResult*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate;
@@ -167,6 +171,26 @@ delegate;
     }
 //    }
     return [EVCallbackResult resultWithNone];
+}
+
+
++ (EVCallbackResult*)handlePhoneWithResponse:(EVResponse*)response withFlow:(EVPhoneFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
+delegate {
+    EVCallbackResult* cbR = nil;
+    EVSearchModel* model = [EVCRMPhoneModel modelComplete:true
+                                                     inPage:flow.page
+                                                    subPage:flow.subPage
+                                                   phoneType:flow.phoneType
+                            ];
+    
+    if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+        cbR = [model triggerSearchForDelegate:delegate];
+    }
+    else {
+        // TODO: insert new chat item saying the app doesn't support search?
+        EV_LOG_ERROR(@"App reached crm phone, but has no matching handler");
+    }
+    return cbR;
 }
 
 
@@ -558,6 +582,9 @@ delegate {
         case EVFlowElementTypeData: {
             return [self handleDataWithResponse:response withFlow:(EVDataFlowElement*)flow andResponseDelegate:delegate];
             break;
+        }
+        case EVFlowElementTypePhone: {
+            return [self handlePhoneWithResponse:response withFlow:(EVPhoneFlowElement *)flow andResponseDelegate:delegate];
         }
         default:
             break;

@@ -26,6 +26,11 @@
     //return nil;
 }
 
+- (EVCallbackResult*)phoneCall:(EVCRMPageType)page withId:(NSString*)objId withPhoneType:(EVCRMPhoneType)phoneType {
+    NSLog(@"Calling %@  type %d", objId, phoneType);
+    return nil;
+}
+
 - (EVCallbackResult*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
     return nil;

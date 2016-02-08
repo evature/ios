@@ -6,22 +6,17 @@
 //
 
 #import "EVFlowElement.h"
-
+#import "EVCRMAttributes.h"
 
 
 
 @interface EVPhoneFlowElement : EVFlowElement
 
-typedef NS_ENUM(int16_t, EVPhoneType) {
-    EVPhoneTypeOther = -1,
-    EVPhoneTypeMobile = 0,
-    EVPhoneTypeHome,
-    EVPhoneTypeLandLine,
-    EVPhoneTypWork,
-};
 
-@property (nonatomic, assign, readwrite) EVPhoneType phoneType;
-@property (nonatomic, assign, readwrite) NSString* phoneNumber;
+@property (nonatomic, assign, readwrite) EVCRMPhoneType phoneType;
+@property (nonatomic, assign, readwrite) EVCRMPageType page;
+@property (nonatomic, strong, readwrite) NSString* subPage;
+
 
 
 @end

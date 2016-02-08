@@ -28,6 +28,13 @@ typedef NS_ENUM(int16_t, EVCRMFilterType) {
     EVCRMFilterTypeTeamAccounts
 };
 
+typedef NS_ENUM(int16_t, EVCRMPhoneType) {
+    EVCRMPhoneTypeOther = -1,
+    EVCRMPhoneTypeMobile = 0,
+    EVCRMPhoneTypeHome,
+    EVCRMPhoneTypeLandLine,
+    EVCRMPhoneTypeWork
+};
 
 @interface EVCRMAttributes : NSObject
 
