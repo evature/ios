@@ -121,9 +121,8 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         }
     }
     else {
-        EV_LOG_DEBUG(@"Setting session to Play");
-        
-        [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+        EV_LOG_DEBUG(@"Setting session to PlayAndRecord");
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord  withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
         }

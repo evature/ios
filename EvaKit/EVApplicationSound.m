@@ -17,7 +17,7 @@ void endSound (
                )
 {
     EVApplicationSound *_self = (EVApplicationSound*)clientData;
-    EV_LOG_DEBUG(@"Finished playing %@", _self.filePath);
+    //EV_LOG_DEBUG(@"Finished playing %@", _self.filePath);
     if (_self.delegate) {
         [_self.delegate didFinishPlay:_self];
     }
