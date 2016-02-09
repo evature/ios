@@ -133,6 +133,7 @@ void reloadData(id collectionView, SEL selector) {
         self.senderId = [EVChatMessage clientID];
         self.senderDisplayName = [EVChatMessage clientDisplayName];
         self.startRecordingOnShow = NO;
+        self.startRecordingOnQuestion = NO;
         self.semanticHighlightingEnabled = YES;
         self.semanticHighlightLocations = YES;
         self.semanticHighlightTimes = YES;
@@ -602,14 +603,14 @@ void reloadData(id collectionView, SEL selector) {
             case EVFlowElementTypeData: {
                 // ignore all but the last action-elements
                 if (lastActionElement == element) {
-                    EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate];
+                    EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate andStartRecordOnQestion:self.startRecordingOnQuestion];
                     [self handleCallbackResult:result withElement:element forChatMessage:nil withTransactionId:[response transactionId]];
                 }
                 break;
             }
                 
             case EVFlowElementTypeQuestion: {
-                EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate];
+                EVCallbackResult *result = [EVSearchResultsHandler handleSearchResultWithResponse:response flow:element andResponseDelegate:self.delegate andStartRecordOnQestion:self.startRecordingOnQuestion];
                 [self handleCallbackResult:result withElement:element  forChatMessage:nil withTransactionId:[response transactionId]];
                 break;
             }
@@ -675,8 +676,9 @@ void reloadData(id collectionView, SEL selector) {
         }
     }
     
-    
+    _startRecordAfterSpeech = result.startRecordAfterSpeak ? EVBoolTrue : EVBoolNotSet;
     EVChatMessage *chatMessage = [self showEvaMessage:displayString withSpeakText:sayString updateLast:message andMessageId:transactionId];
+
     
     if ([result deferredResult] != nil) {
         [element retain];

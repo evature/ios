@@ -13,10 +13,12 @@
 
 @property (nonatomic, assign, readwrite) BOOL appendToEvaSayIt;  // append the display/say strings to the Eva reply
 @property (nonatomic, assign, readwrite) BOOL closeChat;  // set to true to close the chat screen immediately after the result handling is complete
+@property (nonatomic, assign, readwrite) BOOL startRecordAfterSpeak; // set to true to automatically start recording as soon as the speak is finished
 
 @property (nonatomic, strong, readwrite) NSString* sayIt;
 @property (nonatomic, strong, readwrite) EVStyledString* displayIt;
 @property (nonatomic, strong, readwrite) RXPromise* deferredResult;
+
 
 @end
 
@@ -93,6 +95,10 @@
 - (BOOL)appendToEvaSayIt {
     return [_data appendToEvaSayIt];
 }
+- (BOOL)startRecordAfterSpeak {
+    return [_data startRecordAfterSpeak];
+}
+
 
 - (void) setDisplayIt:(EVStyledString*)displayIt {
     if (_data != nil)
@@ -114,7 +120,10 @@
     if (_data != nil)
         _data.appendToEvaSayIt = appendToEvaSayIt;
 }
-
+-(void)setStartRecordAfterSpeak:(BOOL)startRecord {
+    if (_data != nil)
+        _data.startRecordAfterSpeak = startRecord;
+}
 
 
 - (instancetype)initWithDisplay:(EVStyledString *)displayString andSayString:(NSString*)sayString andPromise:(RXPromise*)promise {

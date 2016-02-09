@@ -24,7 +24,8 @@ static NSDictionary* questionCategories = nil;
                             @"Missing Date": @(EVQuestionFlowElementCategoryMissingDate),
                             @"Missing Duration": @(EVQuestionFlowElementCategoryMissingDuration),
                             @"Missing Location": @(EVQuestionFlowElementCategoryMissingLocation),
-                            @"Informative": @(EVQuestionFlowElementCategoryInformative)
+                            @"Informative": @(EVQuestionFlowElementCategoryInformative),
+                            @"Missing Attribute": @(EVQuestionFlowElementCategoryMissingAttribute)
                             } retain];
     [self registerClass:self forElementType:EVFlowElementTypeQuestion];
 }
@@ -54,6 +55,9 @@ static NSDictionary* questionCategories = nil;
         }
         if ([response objectForKey:@"ActionType"] != nil) {
             self.actionType = [[self class] typeForTypeString:[response objectForKey:@"ActionType"]];
+        }
+        else {
+            self.actionType = EVFlowElementTypeOther;
         }
         self.questionSubCategory = [response objectForKey:@"QuestionSubCategory"];
         self.choices = [response objectForKey:@"QuestionChoices"];

@@ -23,6 +23,7 @@
 
 // This options can be set from Button or Settings Dictionary
 @property (assign, nonatomic) BOOL startRecordingOnShow;
+@property (assign, nonatomic) BOOL startRecordingOnQuestion;
 @property (assign, nonatomic) BOOL speakEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightingEnabled;
 @property (assign, nonatomic) BOOL semanticHighlightTimes;

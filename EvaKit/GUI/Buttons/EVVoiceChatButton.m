@@ -39,6 +39,7 @@ NSMethodSignature* setterSignatureForProperty(objc_property_t property);
 @dynamic chatControllerDelegate;
 
 @dynamic chatControllerStartRecordingOnShow;
+@dynamic chatControllerStartRecordingOnQuestion;
 @dynamic chatControllerSpeakEnabled;
 @dynamic chatControllerSemanticHighlightingEnabled;
 @dynamic chatControllerSemanticHighlightTimes;

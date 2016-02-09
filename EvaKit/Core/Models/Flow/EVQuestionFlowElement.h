@@ -21,7 +21,8 @@ typedef NS_ENUM(int16_t, EVQuestionFlowElementCategory) {
     EVQuestionFlowElementCategoryMissingDate,
     EVQuestionFlowElementCategoryMissingDuration,
     EVQuestionFlowElementCategoryMissingLocation,
-    EVQuestionFlowElementCategoryInformative
+    EVQuestionFlowElementCategoryInformative,
+    EVQuestionFlowElementCategoryMissingAttribute
 };
 
 @interface EVQuestionFlowElement : EVFlowElement

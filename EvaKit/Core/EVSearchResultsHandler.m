@@ -532,7 +532,7 @@ delegate {
     return [EVCallbackResult resultWithNone];
 }
 
-+ (EVCallbackResult*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate {
++ (EVCallbackResult*)handleSearchResultWithResponse:(EVResponse*)response flow:(EVFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)delegate andStartRecordOnQestion:(BOOL)startRecordOnQuestion {
     EVLocation* from = nil;
     EVLocation* to = nil;
     EVFlowElementType searchType = EVFlowElementTypeOther;
@@ -590,27 +590,32 @@ delegate {
             break;
     }
     
-    if (searchType == EVFlowElementTypeOther) {
-        return [EVCallbackResult resultWithNone];
-    }
+    EVCallbackResult *result = nil;
     
     switch (searchType) {
         case EVFlowElementTypeCruise:
-            return [self handleCruiseResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
+            result = [self handleCruiseResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
             break;
             
         case EVFlowElementTypeFlight:
-            return [self handleFlightResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
+            result = [self handleFlightResultsWithResponse:response isComplete:isComplete fromLocation:from toLocation:to andResponseDelegate:delegate];
             break;
             
         case EVFlowElementTypeHotel:
-            return [self handleHotelResultsWithResponse:response isComplete:isComplete location:from andResponseDelegate:delegate];
+            result = [self handleHotelResultsWithResponse:response isComplete:isComplete location:from andResponseDelegate:delegate];
             break;
         
         default:
             break;
     }
-    return [EVCallbackResult resultWithNone];
+    if (startRecordOnQuestion && !isComplete) {
+        if (result == nil) {
+            result = [EVCallbackResult resultDefault];
+        }
+        result.startRecordAfterSpeak = YES;
+    }
+    
+    return result;
 }
 
 @end

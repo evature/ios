@@ -44,6 +44,7 @@ IB_DESIGNABLE
 
 //Chat controller properties
 @property (nonatomic, assign) IBInspectable BOOL chatControllerStartRecordingOnShow;
+@property (nonatomic, assign) IBInspectable BOOL chatControllerStartRecordingOnQuestion;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSpeakEnabled;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSemanticHighlightingEnabled;
 @property (nonatomic, assign) IBInspectable BOOL chatControllerSemanticHighlightTimes;
