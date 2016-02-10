@@ -68,7 +68,7 @@ void reloadData(id collectionView, SEL selector) {
     BOOL _undoRequest;
     BOOL _shownWarningsTutorial;
     BOOL _isIOS9;
-    EVBool _startRecordAfterSpeech;
+    EVBool _startRecordAfterSpeech; // YES/NO = start with auto-stop YES/NO     EVBoolNotSet - do not start recording when the speech finishes
 }
 
 @property (nonatomic, strong) NSDictionary* viewSettings;
@@ -556,6 +556,7 @@ void reloadData(id collectionView, SEL selector) {
 - (void)stopSpeaking {
     if (self.speechSynthesizer.speaking) {
         EV_LOG_DEBUG(@"stopSpeaking");
+        _startRecordAfterSpeech = EVBoolNotSet;
         [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     }
 }
@@ -735,7 +736,7 @@ void reloadData(id collectionView, SEL selector) {
     
     if (response.flow != nil) {
         [response retain];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [response autorelease];
             [self handleFlowForResponse:response];
             
@@ -782,9 +783,9 @@ void reloadData(id collectionView, SEL selector) {
     EV_LOG_DEBUG(@"Record started!");
     isRecording = YES;
     [(EVChatToolbarContentView *)self.inputToolbar.contentView audioSessionStarted];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [(EVChatToolbarContentView *)self.inputToolbar.contentView setUserInteractionEnabled:YES];
-    });
+//    });
 }
 
 - (void)evApplicationRecordingIsStoped:(EVApplication *)application {

@@ -132,6 +132,10 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 
 - (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop {
     if (!self.isRecording) {
+        // moved to start of function to fake quicker reaction - the UI animation starts, delay will be (perhaps partially) masked by the microphone icon animation
+        [self.dataProviderDelegate providerStarted:self];
+        [self.delegate recorderStartedRecording:self];
+        
         _autoStop = autoStop;
         NSError* error = nil;
         [self setAVSessionWithRecord:YES];
@@ -142,9 +146,11 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         }
         if ([self startAudioQueue:[self audioFormatDescription]]) {
             self.isRecording = YES;
-            [self.dataProviderDelegate providerStarted:self];
             [self.autoStopper startWithMaxTime:maxRecordingTime];
-            [self.delegate recorderStartedRecording:self];
+            EV_LOG_INFO(@"Started to record");
+        }
+        else {
+            [self.delegate recorderFinishedRecording:self];
         }
     }
 }
