@@ -21,14 +21,15 @@ static NSDictionary* fieldPageKeys = nil;
                   @"accounts": @(EVCRMPageTypeAccounts),
                   @"contacts": @(EVCRMPageTypeContacts),
                   @"activities": @(EVCRMPageTypeActivities),
-                  @"todaysappointments": @(EVCRMPageTypeTodaysAppointments),
+                  @"appointments": @(EVCRMPageTypeAppointments),
                    } retain];
     fieldPageKeys = [@{@"lead": @(EVCRMPageTypeLeads),
                        @"opportunity": @(EVCRMPageTypeOpportunities),
                        @"salesquote": @(EVCRMPageTypeSalesQuotes),
                        @"account": @(EVCRMPageTypeAccounts),
                        @"contact": @(EVCRMPageTypeContacts),
-                       @"activity": @(EVCRMPageTypeActivities)
+                       @"activity": @(EVCRMPageTypeActivities),
+                       @"appointment":@(EVCRMPageTypeAppointments)
                        } retain];
 }
 
@@ -66,7 +67,7 @@ static NSDictionary* fieldPageKeys = nil;
         case EVCRMPageTypeAccounts: return @"Accounts";
         case EVCRMPageTypeContacts: return @"Contacts";
         case EVCRMPageTypeActivities: return @"Activities";
-        case EVCRMPageTypeTodaysAppointments: return @"TodaysAppointments";
+        case EVCRMPageTypeAppointments: return @"Appointments";
         default: return @"Other";
     }
 }
@@ -87,17 +88,6 @@ static NSDictionary* fieldPageKeys = nil;
         if ([response objectForKey:@"Navigate"]) {
             NSDictionary *navigateDict = [response objectForKey:@"Navigate"];
             self.page = [EVCRMAttributes stringToPageType: [navigateDict objectForKey:@"Destination"]];
-
-            if ([navigateDict objectForKey:@"Team"] != nil) {
-                if ([[navigateDict objectForKey:@"Team"] boolValue]) {
-                    self.filter = EVCRMFilterTypeTeamAccounts;
-                }
-                else {
-                    self.filter = EVCRMFilterTypeMyAccounts;
-                }
-            } else {
-                self.filter = EVCRMFilterTypeMyAccounts;
-            }
         }
         
     }

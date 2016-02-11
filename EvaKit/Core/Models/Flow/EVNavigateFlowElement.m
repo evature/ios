@@ -18,6 +18,7 @@
     self = [super initWithResponse:response andLocations:locations];
     if (self != nil) {
         self.pagePath = [response objectForKey:@"URL"];
+        self.filter = [response objectForKey:@"Filter"];
     }
     return self;
 }

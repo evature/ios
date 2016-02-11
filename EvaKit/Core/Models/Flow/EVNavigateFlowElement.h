@@ -13,6 +13,6 @@
 @interface EVNavigateFlowElement : EVFlowElement
 
 @property (nonatomic, assign, readwrite) NSString* pagePath;
-
+@property (nonatomic, assign, readwrite) NSDictionary* filter;
 
 @end

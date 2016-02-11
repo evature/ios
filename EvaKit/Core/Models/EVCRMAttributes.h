@@ -19,7 +19,7 @@ typedef NS_ENUM(int16_t, EVCRMPageType) {
     EVCRMPageTypeAccounts,
     EVCRMPageTypeContacts,
     EVCRMPageTypeActivities,
-    EVCRMPageTypeTodaysAppointments
+    EVCRMPageTypeAppointments
 };
 
 typedef NS_ENUM(int16_t, EVCRMFilterType) {
@@ -39,7 +39,6 @@ typedef NS_ENUM(int16_t, EVCRMPhoneType) {
 @interface EVCRMAttributes : NSObject
 
 @property (nonatomic, assign, readwrite) EVCRMPageType page;
-@property (nonatomic, assign, readwrite) EVCRMFilterType filter;
 
 
 - (instancetype)initWithResponse:(NSDictionary *)response;

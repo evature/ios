@@ -15,17 +15,17 @@
 @property (nonatomic, strong, readonly) EVCRMAttributes* attributes;
 @property (nonatomic, assign, readonly) EVCRMPageType page;
 @property (nonatomic, strong, readonly) NSString* subPage;
-
+@property (nonatomic, strong, readonly) NSDictionary* filter;
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
                          subPage:(NSString*)subPage
-                   crmAttributes:(EVCRMAttributes *)attributes;
+                          filter:(NSDictionary*)filter;
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
                       subPage:(NSString*)subPage
-                crmAttributes:(EVCRMAttributes *)attributes;
+                       filter:(NSDictionary*)filter;
 
 
 

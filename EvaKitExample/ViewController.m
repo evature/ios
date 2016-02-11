@@ -12,10 +12,17 @@
 
 @implementation ViewController
 
-- (EVCallbackResult*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId  ofTeam:(EVCRMFilterType)filter {
+- (EVCallbackResult*) navigateTo:(EVCRMPageType)page  withSubPage:(NSString*)subPageId withFilter:(NSDictionary*)filter {
     NSLog(@"Handled CRM Navigate!");
     NSLog(@"navigate to %d,   subpage %@", page, subPageId);
-    NSLog(@"navigate isTeam %d", filter);
+    NSError *error;
+    if (filter != nil) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:filter
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"navigate filter %@", jsonStr );
+    }
 //    EVStyledString *result = [EVStyledString styledStringWithString:@"Navigate!"];
 //    return [EVCallbackResult responseWithString:result];
     return [EVCallbackResult resultWithNone];

@@ -288,7 +288,7 @@ delegate {
         EVSearchModel* model = [EVCRMNavigateModel  modelComplete:true
                                                            inPage:(EVCRMPageType)page
                                                           subPage:(NSString*)subPage
-                                                    crmAttributes:response.crmAttributes];
+                                                           filter:flow.filter];
         
         if ([delegate conformsToProtocol:@protocol(EVCRMNavigateDelegate)]) {
             return [model triggerSearchForDelegate:delegate];
