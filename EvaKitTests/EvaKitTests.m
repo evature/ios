@@ -7,12 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EvaKit.h"
-#import "EVAPIRequest.h"
-
-@interface EVApplication (Testing)
-    - (void)apiRequest:(EVAPIRequest*)request gotResponse:(NSDictionary*)response;
-@end
+#import "EvaBaseTest.h"
 
 @interface NavigateHandler : UIViewController<EVFlightNavigateDelegate>
     - (EVCallbackResult*)navigateTo:(EVFlightPageType)page;
@@ -35,7 +30,7 @@
 }
 @end
 
-@interface EvaKitTests : XCTestCase
+@interface EvaKitTests : EvaBaseTest
 
 @end
 

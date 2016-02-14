@@ -32,6 +32,8 @@
 		94613E711C50DF5E003F5D42 /* EvaKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E701C50DF5E003F5D42 /* EvaKitTests.m */; };
 		94613E731C50DF5E003F5D42 /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
 		94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */; };
+		94F7BFF71C6CC5020045E190 /* EvaKitTestHotelSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */; };
+		94F7BFF91C6CC7680045E190 /* EvaBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */; };
 		94FAAFFC1C634DCD00D1989B /* EVPhoneFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAAFFB1C634DCD00D1989B /* EVPhoneFlowElement.m */; };
 		94FAAFFE1C634DE100D1989B /* EVPhoneFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAAFFD1C634DE100D1989B /* EVPhoneFlowElement.h */; };
 		9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */; };
@@ -267,6 +269,9 @@
 		94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestFlightSearch.m; sourceTree = "<group>"; };
 		94E64DA41C583A3D002E3F31 /* credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credentials.h; sourceTree = "<group>"; };
+		94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestHotelSearch.m; sourceTree = "<group>"; };
+		94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaBaseTest.m; sourceTree = "<group>"; };
+		94F7BFFA1C6CC7C00045E190 /* EvaBaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaBaseTest.h; sourceTree = "<group>"; };
 		94FAAFFB1C634DCD00D1989B /* EVPhoneFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVPhoneFlowElement.m; sourceTree = "<group>"; };
 		94FAAFFD1C634DE100D1989B /* EVPhoneFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVPhoneFlowElement.h; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
@@ -525,9 +530,12 @@
 		94613E6F1C50DF5E003F5D42 /* EvaKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */,
 				94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */,
 				94613E701C50DF5E003F5D42 /* EvaKitTests.m */,
 				94613E721C50DF5E003F5D42 /* Info.plist */,
+				94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */,
+				94F7BFFA1C6CC7C00045E190 /* EvaBaseTest.h */,
 			);
 			path = EvaKitTests;
 			sourceTree = "<group>";
@@ -1227,6 +1235,8 @@
 			files = (
 				94613E711C50DF5E003F5D42 /* EvaKitTests.m in Sources */,
 				94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */,
+				94F7BFF71C6CC5020045E190 /* EvaKitTestHotelSearch.m in Sources */,
+				94F7BFF91C6CC7680045E190 /* EvaBaseTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,7 +1539,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitSap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1553,7 +1563,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.evature.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitSap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

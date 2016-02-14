@@ -7,16 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "EvaKit.h"
-#import "EVAPIRequest.h"
+#import "EvaBaseTest.h"
 
-
-@interface EVApplication (Testing)
-// expose the private method:
-- (void)apiRequest:(EVAPIRequest*)request gotResponse:(NSDictionary*)response;
-@end
-
-@interface FlightSearchHandler : UIViewController<EVFlightSearchDelegate, EVSearchDelegate>
+@interface FlightSearchHandler : UIViewController<SearchHandler, EVFlightSearchDelegate, EVSearchDelegate>
     @property __block BOOL waitingForSearch;
     @property BOOL isComplete;
     @property EVLocation *origin;
@@ -83,40 +76,11 @@
 @end
 
 
-@interface EvaKitTestFlightSearch : XCTestCase
+@interface EvaKitTestFlightSearch : EvaBaseTest
 
 @end
 
 @implementation EvaKitTestFlightSearch
-
-NSDateFormatter *formatter;
-
-
-- (void)setUp {
-    [super setUp];
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-}
-
-- (void)tearDown {
-    formatter = nil;
-    [super tearDown];
-}
-
-- (void) simulateJSON: (NSString*)jsonString withHandler:(FlightSearchHandler*)handler {
-    EVApplication *app = [EVApplication sharedApplication];
-    NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    id response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-    
-    [app showChatViewController:(UIResponder*)handler];
-    [app apiRequest:nil gotResponse:response];
-    // Run the loop
-    while([handler waitingForSearch]) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    }
-}
 
 
 
@@ -283,9 +247,9 @@ NSDateFormatter *formatter;
     XCTAssertEqual([handler isComplete], true);
     XCTAssertEqualObjects([[handler origin] allAirportCode], @"NYC");
     XCTAssertEqualObjects([[[handler destination] airports] objectAtIndex:0], @"LAX");
-    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMin]], @"2025-12-13" );
+    XCTAssertEqualObjects([[self formatter] stringFromDate:[handler departDateMin]], @"2025-12-13" );
 //    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMax]], @"2025-12-13" );
-    XCTAssertEqualObjects([formatter stringFromDate:[handler returnDateMin]], @"2025-12-16" );
+    XCTAssertEqualObjects([[self formatter] stringFromDate:[handler returnDateMin]], @"2025-12-16" );
 //    XCTAssertEqualObjects([formatter stringFromDate:[handler returnDateMax]], @"2025-12-16" );
 
     XCTAssertEqualObjects([handler travelers], nil );
@@ -392,7 +356,7 @@ NSDateFormatter *formatter;
     XCTAssertEqual([handler isComplete], true);
     XCTAssertEqualObjects([[handler origin] allAirportCode], @"ROM");
     XCTAssertEqualObjects([[[handler destination] airports] objectAtIndex:0], @"JFK");
-    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMin]], @"2025-07-15" );
+    XCTAssertEqualObjects([[self formatter] stringFromDate:[handler departDateMin]], @"2025-07-15" );
     //    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMax]], @"2025-12-13" );
     XCTAssertEqualObjects([handler returnDateMin], nil );
     //    XCTAssertEqualObjects([formatter stringFromDate:[handler returnDateMax]], @"2025-12-16" );
@@ -590,7 +554,7 @@ NSDateFormatter *formatter;
     XCTAssertEqual([handler isComplete], true);
     XCTAssertEqualObjects([[handler origin] allAirportCode], @"NYC");
     XCTAssertEqualObjects([[handler destination] allAirportCode] , @"LON");
-    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMin]], @"2025-09-17" );
+    XCTAssertEqualObjects([[self formatter] stringFromDate:[handler departDateMin]], @"2025-09-17" );
     //    XCTAssertEqualObjects([formatter stringFromDate:[handler departDateMax]], @"2025-12-13" );
 
     XCTAssertEqualObjects([handler returnDateMin], nil );
