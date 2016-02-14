@@ -183,7 +183,7 @@ delegate {
                                                    phoneType:flow.phoneType
                             ];
     
-    if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+    if ([delegate conformsToProtocol:@protocol(EVCRMPhoneDelegate)]) {
         cbR = [model triggerSearchForDelegate:delegate];
     }
     else {
@@ -227,8 +227,7 @@ delegate {
                                                         ofValueType:flow.valueType
                                                             toValue:flow.value
                                     ];
-            
-            if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
+            if ([delegate respondsToSelector:@selector(setField:inPage:withId:toValue:)]) {
                 cbR = [model triggerSearchForDelegate:delegate];
             }
             else {
@@ -243,7 +242,7 @@ delegate {
                                                            setField:field
                                     ];
             
-            if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
+            if ([delegate respondsToSelector:@selector(getField:inPage:withId:)]) {
                 cbR = [model triggerSearchForDelegate:delegate];
             }
             else {

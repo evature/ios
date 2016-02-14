@@ -7,7 +7,7 @@
 //
 
 #import "EVSearchModel.h"
-#import "EVCRMDataSetDelegate.h"
+#import "EVCRMDataDelegate.h"
 #import "EVCRMAttributes.h"
 
 @interface EVCRMDataSetModel : EVSearchModel

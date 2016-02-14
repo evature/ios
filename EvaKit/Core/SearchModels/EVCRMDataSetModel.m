@@ -6,7 +6,7 @@
 //
 
 #import "EVCRMDataSetModel.h"
-#import "EVCRMDataSetDelegate.h"
+#import "EVCRMDataDelegate.h"
 
 @interface EVCRMDataSetModel ()
 
@@ -58,8 +58,8 @@
 
 - (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
     if (self.value != nil && self.valueType != nil) {
-        if ([delegate conformsToProtocol:@protocol(EVCRMDataSetDelegate)]) {
-            return [(id<EVCRMDataSetDelegate>)delegate setField:self.field
+        if ([delegate respondsToSelector:@selector(setField:inPage:withId:toValue:)]) {
+            return [(id<EVCRMDataDelegate>)delegate setField:self.field
                                                 inPage:(EVCRMPageType)self.page
                                                   withId:self.subPage
                                                  toValue: @{ @"type": self.valueType,

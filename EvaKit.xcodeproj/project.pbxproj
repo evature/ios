@@ -21,7 +21,6 @@
 		9412C4D31C0DD95E00ECA87C /* EVDataFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */; };
 		9412C4D41C0DD95E00ECA87C /* EVDataFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */; };
 		941824F41C5E72ED00D70F7A /* EVApplicationSoundDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		943F7A241C42923900B67894 /* EVCRMDataGetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		943F7A261C42929000B67894 /* EVCRMDataGetModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A251C42929000B67894 /* EVCRMDataGetModel.h */; };
 		943F7A281C4292A600B67894 /* EVCRMDataGetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */; };
 		943F7A2B1C42A1A900B67894 /* EVNavigateFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 943F7A291C42A1A900B67894 /* EVNavigateFlowElement.h */; };
@@ -34,6 +33,7 @@
 		94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */; };
 		94F7BFF71C6CC5020045E190 /* EvaKitTestHotelSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */; };
 		94F7BFF91C6CC7680045E190 /* EvaBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */; };
+		94F7C0001C70C3B30045E190 /* EVCRMDataDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F7BFFF1C70C3B30045E190 /* EVCRMDataDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94FAAFFC1C634DCD00D1989B /* EVPhoneFlowElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FAAFFB1C634DCD00D1989B /* EVPhoneFlowElement.m */; };
 		94FAAFFE1C634DE100D1989B /* EVPhoneFlowElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FAAFFD1C634DE100D1989B /* EVPhoneFlowElement.h */; };
 		9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */; };
@@ -48,7 +48,6 @@
 		961221C91C299ED2004AE998 /* EVStyledString.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221C71C299ED2004AE998 /* EVStyledString.m */; };
 		961221CC1C29A692004AE998 /* EVCallbackResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 961221CA1C29A692004AE998 /* EVCallbackResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		961221CD1C29A692004AE998 /* EVCallbackResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221CB1C29A692004AE998 /* EVCallbackResult.m */; };
-		961221CE1C29A82F004AE998 /* EVCRMDataSetDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */; };
 		9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */; };
 		9615BED31B727E5000F31F38 /* EVAudioDataStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */; };
@@ -254,8 +253,6 @@
 		9412C4D11C0DD95E00ECA87C /* EVDataFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataFlowElement.h; sourceTree = "<group>"; };
 		9412C4D21C0DD95E00ECA87C /* EVDataFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataFlowElement.m; sourceTree = "<group>"; };
 		941824F31C5E6B7B00D70F7A /* EVApplicationSoundDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVApplicationSoundDelegate.h; sourceTree = "<group>"; };
-		9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EVCRMDataSetDelegate.h; path = SearchModels/EVCRMDataSetDelegate.h; sourceTree = "<group>"; };
-		943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVCRMDataGetDelegate.h; path = SearchModels/EVCRMDataGetDelegate.h; sourceTree = "<group>"; };
 		943F7A251C42929000B67894 /* EVCRMDataGetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCRMDataGetModel.h; sourceTree = "<group>"; };
 		943F7A271C4292A600B67894 /* EVCRMDataGetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCRMDataGetModel.m; sourceTree = "<group>"; };
 		943F7A291C42A1A900B67894 /* EVNavigateFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVNavigateFlowElement.h; sourceTree = "<group>"; };
@@ -272,6 +269,7 @@
 		94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestHotelSearch.m; sourceTree = "<group>"; };
 		94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaBaseTest.m; sourceTree = "<group>"; };
 		94F7BFFA1C6CC7C00045E190 /* EvaBaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaBaseTest.h; sourceTree = "<group>"; };
+		94F7BFFF1C70C3B30045E190 /* EVCRMDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVCRMDataDelegate.h; path = SearchModels/EVCRMDataDelegate.h; sourceTree = "<group>"; };
 		94FAAFFB1C634DCD00D1989B /* EVPhoneFlowElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVPhoneFlowElement.m; sourceTree = "<group>"; };
 		94FAAFFD1C634DE100D1989B /* EVPhoneFlowElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVPhoneFlowElement.h; sourceTree = "<group>"; };
 		9608E80B1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVVoiceChatMicButtonLayer.h; sourceTree = "<group>"; };
@@ -518,8 +516,7 @@
 		941037741C01E951009A9A3F /* CRMDelegates */ = {
 			isa = PBXGroup;
 			children = (
-				943F7A231C42923900B67894 /* EVCRMDataGetDelegate.h */,
-				9429385E1C0EF4F8006CE9BB /* EVCRMDataSetDelegate.h */,
+				94F7BFFF1C70C3B30045E190 /* EVCRMDataDelegate.h */,
 				940849251C68D70F00D95BDB /* EVCRMPhoneDelegate.h */,
 				941037721C01E943009A9A3F /* EVCRMNavigateDelegate.h */,
 			);
@@ -888,13 +885,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94F7C0001C70C3B30045E190 /* EVCRMDataDelegate.h in Headers */,
 				961221CC1C29A692004AE998 /* EVCallbackResult.h in Headers */,
 				969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */,
 				941037731C01E943009A9A3F /* EVCRMNavigateDelegate.h in Headers */,
 				941824F41C5E72ED00D70F7A /* EVApplicationSoundDelegate.h in Headers */,
 				944C72A91C47AB76005B9EF3 /* EVFlightNavigateDelegate.h in Headers */,
 				968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */,
-				961221CE1C29A82F004AE998 /* EVCRMDataSetDelegate.h in Headers */,
 				96C1EAFB1B78D34800C6FEA4 /* EVLogger.h in Headers */,
 				943F7A2B1C42A1A900B67894 /* EVNavigateFlowElement.h in Headers */,
 				9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */,
@@ -919,7 +916,6 @@
 				96454A951B851BA000C26FFD /* EVParsedText.h in Headers */,
 				967948421B84A14200198130 /* EVLocation.h in Headers */,
 				96804C2E1B85E1E500FA9998 /* EVFlowElement.h in Headers */,
-				943F7A241C42923900B67894 /* EVCRMDataGetDelegate.h in Headers */,
 				96804C2A1B85E12E00FA9998 /* EVFlow.h in Headers */,
 				96804C321B85E89800FA9998 /* EVFlightFlowElement.h in Headers */,
 				96454A7D1B84D4D200C26FFD /* EVServiceAttributes.h in Headers */,

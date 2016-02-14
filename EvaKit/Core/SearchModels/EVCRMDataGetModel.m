@@ -6,7 +6,7 @@
 //
 
 #import "EVCRMDataGetModel.h"
-#import "EVCRMDataGetDelegate.h"
+#import "EVCRMDataDelegate.h"
 
 @interface EVCRMDataGetModel ()
 
@@ -48,12 +48,19 @@
 
 
 - (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
-    if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
+    if ([delegate respondsToSelector:@selector(getField:inPage:withId:)]) {
+        return [(id<EVCRMDataDelegate>)delegate getField:self.field
+                                                     inPage:(EVCRMPageType)self.page
+                                                     withId:self.subPage
+                ];
+
+    }
+    /*if ([delegate conformsToProtocol:@protocol(EVCRMDataGetDelegate)]) {
         return [(id<EVCRMDataGetDelegate>)delegate getField:self.field
                                             inPage:(EVCRMPageType)self.page
                                               withId:self.subPage
                                              ];
-    }
+    }*/
     return [EVCallbackResult resultWithNone];
 }
 

@@ -8,7 +8,19 @@
 #import "EVSearchDelegate.h"
 #import "EVCRMAttributes.h"
 
-@protocol EVCRMDataSetDelegate <EVSearchDelegate>
+@protocol EVCRMDataDelegate <EVSearchDelegate>
+
+@optional
+//  getField
+//  --------
+//
+//  If the user says "Get the probability of coca cola opportunity"
+//  Then -
+//  This delegate will be activated with:
+//    fieldPath = @"probability"
+//         page = EVCRMPageTypeOpportunities
+//        objId = UUID of the object, or nil
+- (EVCallbackResult*)getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId;
 
 //  setField
 //  --------
