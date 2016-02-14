@@ -38,6 +38,11 @@
     return nil;
 }
 
+- (EVCallbackResult*)openMap:(EVCRMPageType)page withId:(NSString*)objId {
+    NSLog(@"Open map %@ ", objId);
+    return nil;
+}
+
 - (EVCallbackResult*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
     return nil;

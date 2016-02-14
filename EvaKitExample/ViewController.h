@@ -12,7 +12,7 @@
 
 @interface ViewController : UIViewController <EVHotelSearchDelegate, EVFlightSearchDelegate,
                                     EVCRMNavigateDelegate, EVCRMDataDelegate,
-                                    EVFlightNavigateDelegate, EVCRMPhoneDelegate>
+                                    EVFlightNavigateDelegate, EVCRMPhoneActionDelegate>
 
 @end
 

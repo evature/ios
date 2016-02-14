@@ -8,7 +8,9 @@
 #import "EVSearchDelegate.h"
 #import "EVCRMAttributes.h"
 
-@protocol EVCRMPhoneDelegate <EVSearchDelegate>
+
+// Actions that are activated outside of the App, eg. make a phone call, navigate a car, etc...
+@protocol EVCRMPhoneActionDelegate <EVSearchDelegate>
 
 //  phoneCall
 //  --------
@@ -20,6 +22,18 @@
 //        objId = UUID of the contact, or nil
 //        phoneType = EVPhoneTypeMobile
 - (EVCallbackResult*)phoneCall:(EVCRMPageType)page withId:(NSString*)objId withPhoneType:(EVCRMPhoneType)phoneType;
+
+
+//  open map
+//  --------
+//
+//  If the user says "navigate to the office of Coca Cola"
+//  Then -
+//  This delegate will be activated with:
+//         page = EVCRMPageTypeAccount
+//        objId = UUID of the account, or nil
+- (EVCallbackResult*)openMap:(EVCRMPageType)page withId:(NSString*)objId;
+
 
 
 @end

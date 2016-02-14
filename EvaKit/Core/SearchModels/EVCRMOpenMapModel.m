@@ -1,32 +1,29 @@
 //
 //  EvaKit
 //
-//  Copyright (c) 2015 Evature. All rights reserved.
+//  Copyright (c) 2016 Evature. All rights reserved.
 //
 
-#import "EVCRMPhoneModel.h"
+#import "EVCRMOpenMapModel.h"
 #import "EVCRMPhoneActionDelegate.h"
 
-@interface EVCRMPhoneModel ()
+@interface EVCRMOpenMapModel ()
 
 @property (nonatomic, assign, readwrite) EVCRMPageType page;
-@property (nonatomic, assign, readwrite) EVCRMPhoneType phoneType;
 @property (nonatomic, strong, readwrite) NSString* subPage;
 
 @end
 
-@implementation EVCRMPhoneModel
+@implementation EVCRMOpenMapModel
 
 
 - (instancetype)initWithComplete:(BOOL)isComplete
                           inPage:(EVCRMPageType)page
-                         subPage:(NSString*)subPage
-                       phoneType:(EVCRMPhoneType)phoneType {
+                         subPage:(NSString*)subPage{
     self = [super initWithComplete:isComplete];
     if (self != nil) {
         self.page = page;
         self.subPage = subPage;
-        self.phoneType = phoneType;
     }
     return self;
     
@@ -34,20 +31,18 @@
 
 + (instancetype)modelComplete:(BOOL)isComplete
                        inPage:(EVCRMPageType)page
-                      subPage:(NSString*)subPage
-                    phoneType:(EVCRMPhoneType)phoneType {
+                      subPage:(NSString*)subPage {
 
     return [[[self alloc] initWithComplete:isComplete
                                     inPage:page
-                                   subPage:subPage
-                                  phoneType:phoneType] autorelease];
+                                   subPage:subPage] autorelease];
 }
 
 
 
 - (EVCallbackResult*)triggerSearchForDelegate:(id<EVSearchDelegate>)delegate {
-    if ([delegate respondsToSelector:@selector(phoneCall:withId:withPhoneType:)]) {
-        return [(id<EVCRMPhoneActionDelegate>)delegate phoneCall:self.page withId:self.subPage withPhoneType:self.phoneType];
+    if ([delegate respondsToSelector:@selector(openMap:withId:)]) {
+        return [(id<EVCRMPhoneActionDelegate>)delegate openMap:self.page withId:self.subPage];
     }
     return [EVCallbackResult resultWithNone];
 }

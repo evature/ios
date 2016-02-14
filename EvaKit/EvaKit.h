@@ -31,7 +31,7 @@ FOUNDATION_EXPORT const unsigned char EvaKitVersionString[];
 #import "EVCRMNavigateDelegate.h"
 #import "EVFlightNavigateDelegate.h"
 #import "EVCRMDataDelegate.h"
-#import "EVCRMPhoneDelegate.h"
+#import "EVCRMPhoneActionDelegate.h"
 #import "EVViewControllerVisibilityObserverDelegate.h"
 #import "EVVoiceChatButton.h"
 #import "EVChatToolbarView.h"

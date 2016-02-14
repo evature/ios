@@ -20,6 +20,7 @@
 #import "EVCRMDataGetModel.h"
 #import "EVCRMNavigateModel.h"
 #import "EVCRMPhoneModel.h"
+#import "EVCRMOpenMapModel.h"
 #import "EVFlightNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
@@ -34,7 +35,7 @@
 
 + (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
-+ (EVCallbackResult*)handlePhoneWithResponse:(EVResponse*)response withFlow:(EVPhoneFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
++ (EVCallbackResult*)handlePhoneActionWithResponse:(EVResponse*)response withFlow:(EVPhoneActionFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
 + (EVCallbackResult*)handleNavigateWithResponse:(EVResponse*)response  withFlow:(EVNavigateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate;
@@ -174,22 +175,46 @@ delegate;
 }
 
 
-+ (EVCallbackResult*)handlePhoneWithResponse:(EVResponse*)response withFlow:(EVPhoneFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
++ (EVCallbackResult*)handlePhoneActionWithResponse:(EVResponse*)response withFlow:(EVPhoneActionFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate {
     EVCallbackResult* cbR = nil;
-    EVSearchModel* model = [EVCRMPhoneModel modelComplete:true
-                                                     inPage:flow.page
-                                                    subPage:flow.subPage
-                                                   phoneType:flow.phoneType
-                            ];
-    
-    if ([delegate conformsToProtocol:@protocol(EVCRMPhoneDelegate)]) {
-        cbR = [model triggerSearchForDelegate:delegate];
+    switch (flow.action) {
+        case EVPhoneActionFlowElementActionTypeCall: {
+            EVSearchModel* model = [EVCRMPhoneModel modelComplete:true
+                                                             inPage:flow.page
+                                                            subPage:flow.subPage
+                                                           phoneType:flow.phoneType
+                                    ];
+            
+            if ([delegate respondsToSelector:@selector(phoneCall:withId:withPhoneType:)]) {
+                cbR = [model triggerSearchForDelegate:delegate];
+            }
+            else {
+                // TODO: insert new chat item saying the app doesn't support search?
+                EV_LOG_ERROR(@"App reached crm phone, but has no matching handler");
+            }
+            break;
+        }
+        case EVPhoneActionFlowElementActionTypeOpenMap: {
+            EVSearchModel* model = [EVCRMOpenMapModel modelComplete:true
+                                                           inPage:flow.page
+                                                          subPage:flow.subPage
+                                    ];
+            
+            if ([delegate respondsToSelector:@selector(openMap:withId:)]) {
+                cbR = [model triggerSearchForDelegate:delegate];
+            }
+            else {
+                // TODO: insert new chat item saying the app doesn't support search?
+                EV_LOG_ERROR(@"App reached crm open map, but has no matching handler");
+            }
+
+            break;
+        }
+        default:
+            break;
     }
-    else {
-        // TODO: insert new chat item saying the app doesn't support search?
-        EV_LOG_ERROR(@"App reached crm phone, but has no matching handler");
-    }
+
     return cbR;
 }
 
@@ -582,8 +607,8 @@ delegate {
             return [self handleDataWithResponse:response withFlow:(EVDataFlowElement*)flow andResponseDelegate:delegate];
             break;
         }
-        case EVFlowElementTypePhone: {
-            return [self handlePhoneWithResponse:response withFlow:(EVPhoneFlowElement *)flow andResponseDelegate:delegate];
+        case EVFlowElementTypePhoneAction: {
+            return [self handlePhoneActionWithResponse:response withFlow:(EVPhoneActionFlowElement *)flow andResponseDelegate:delegate];
         }
         default:
             break;

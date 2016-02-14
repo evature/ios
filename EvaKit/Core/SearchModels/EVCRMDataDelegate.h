@@ -11,6 +11,7 @@
 @protocol EVCRMDataDelegate <EVSearchDelegate>
 
 @optional
+
 //  getField
 //  --------
 //
@@ -21,6 +22,7 @@
 //         page = EVCRMPageTypeOpportunities
 //        objId = UUID of the object, or nil
 - (EVCallbackResult*)getField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId;
+
 
 //  setField
 //  --------
@@ -33,6 +35,10 @@
 //        objId = UUID of the object, or nil
 //        value = @{ @"type" : EVValueTypeNumber,  @"value" : [NSNumber numberWithFloat:0.7f] }
 - (EVCallbackResult*)setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value;
+
+
+// create
+// ------
 
 
 @end

@@ -28,7 +28,7 @@ static NSMutableDictionary* childsRegistry = nil;
                   @"Service": @(EVFlowElementTypeService),
                   @"Reply": @(EVFlowElementTypeReply),                  
                   @"Data": @(EVFlowElementTypeData),
-                  @"PhoneAction": @(EVFlowElementTypePhone)
+                  @"PhoneAction": @(EVFlowElementTypePhoneAction)
                   } retain];
     NSNumber* otherType = @(EVFlowElementTypeOther);
     childsRegistry = [[NSMutableDictionary alloc] initWithObjects:&self forKeys:&otherType count:1];
