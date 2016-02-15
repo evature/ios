@@ -43,6 +43,11 @@
     return nil;
 }
 
+- (EVCallbackResult*)createMeetingOnDate:(NSDate*)date withDuration:(NSNumber*)hours withSubject:(NSString*)subject withParticipants:(NSArray*)participants {
+    NSLog(@"Creating a meeting on %@ for %@  with subject [%@]", date, hours, subject);
+    return nil;
+}
+
 - (EVCallbackResult*) setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value {
     NSLog(@"Data Setting %@ in page %d to value %@", fieldPath, page, [value objectForKey:@"value"]);
     return nil;

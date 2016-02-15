@@ -601,6 +601,7 @@ void reloadData(id collectionView, SEL selector) {
             case EVFlowElementTypeCruise:
             case EVFlowElementTypeNavigate:
             case EVFlowElementTypePhoneAction:
+            case EVFlowElementTypeCreate:
             case EVFlowElementTypeData: {
                 // ignore all but the last action-elements
                 if (lastActionElement == element) {

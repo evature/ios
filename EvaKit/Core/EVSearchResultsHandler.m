@@ -13,6 +13,7 @@
 #import "EVDataFlowElement.h"
 #import "EVPhoneFlowElement.h"
 #import "EVNavigateFlowElement.h"
+#import "EVCreateFlowElement.h"
 #import "NSDate+EVA.h"
 #import "EVFlightSearchModel.h"
 #import "EVCruiseSearchModel.h"
@@ -21,6 +22,7 @@
 #import "EVCRMNavigateModel.h"
 #import "EVCRMPhoneModel.h"
 #import "EVCRMOpenMapModel.h"
+#import "EVCRMCreateMeetingModel.h"
 #import "EVFlightNavigateModel.h"
 #import "EVHotelSearchModel.h"
 
@@ -34,6 +36,8 @@
 + (EVCallbackResult*)handleHotelResultsWithResponse:(EVResponse*)response isComplete:(BOOL)isComplete location:(EVLocation*)location andResponseDelegate:(id<EVSearchDelegate>)delegate;
 
 + (EVCallbackResult*)handleDataWithResponse:(EVResponse*)response withFlow:(EVDataFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
+
++ (EVCallbackResult*)handleCreateWithResponse:(EVResponse*)response withFlow:(EVCreateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
 + (EVCallbackResult*)handlePhoneActionWithResponse:(EVResponse*)response withFlow:(EVPhoneActionFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>) delegate;
 
@@ -174,6 +178,68 @@ delegate;
     return [EVCallbackResult resultWithNone];
 }
 
++ (EVCallbackResult*)handleCreateWithResponse:(EVResponse*)response withFlow:(EVCreateFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
+delegate {
+    EVCallbackResult* cbR = nil;
+    switch (flow.itemType) {
+        case EVCreateFlowElementItemTypeAppointment: {
+            NSNumber *duration = [flow.details objectForKey:@"Duration"];
+
+            NSCalendar *g = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] autorelease];
+            NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+            NSDictionary *time = [flow.details objectForKey:@"Time"];
+            comps.year = [(NSNumber*)[time objectForKey:@"year"] intValue];
+            comps.month = [(NSNumber*)[time objectForKey:@"month"] intValue];
+            comps.day = [(NSNumber*)[time objectForKey:@"day"] intValue];
+            comps.hour = [(NSNumber*)[time objectForKey:@"hour"] intValue];
+            comps.minute = [(NSNumber*)[time objectForKey:@"minute"] intValue];
+            NSDate *date = [g dateFromComponents:comps];
+            
+            NSString *subject = [flow.details objectForKey:@"Subject"];
+            
+            NSMutableArray* participants = [[[NSMutableArray alloc] init] autorelease];
+            NSArray* flowParticipants = (NSArray*)[flow.details objectForKey:@"Participants"];
+            for (int i=0; i<[flowParticipants count]; i++) {
+                NSString *url = (NSString*)[flowParticipants objectAtIndex:i];
+                NSArray *split = [url componentsSeparatedByString:@"/"];
+                if (![split[0] isEqualToString:@"crm"]) {
+                    EV_LOG_ERROR(@"Expected participant path to start with CRM but was %@", url);
+                    continue;
+                }
+                
+                // expecting:
+                //         crm/page/sub-page-id
+                EVCRMPageType page = EVCRMPageTypeOther;
+                NSString *subPage = nil;
+                NSUInteger count = [split count];
+                if (count >= 2) {
+                    page = [EVCRMAttributes fieldPathToPageType:[split objectAtIndex:1]];
+                }
+                if (count >= 3) {
+                    subPage = [split objectAtIndex:2];
+                }
+                NSDictionary *participant = [[[NSDictionary alloc] initWithDictionary: @{ @"id": subPage,  @"type":[NSNumber numberWithInt:page] }] autorelease];
+                [participants addObject:participant];
+            }
+            
+            
+            EVSearchModel *model = [EVCRMCreateMeetingModel modelComplete:true date:date duration:duration subject:subject participants:participants];
+            
+            if ([delegate respondsToSelector:@selector(createMeetingOnDate:withDuration:withSubject:withParticipants:)]) {
+                cbR = [model triggerSearchForDelegate:delegate];
+            }
+            else {
+                // TODO: insert new chat item saying the app doesn't support search?
+                EV_LOG_ERROR(@"App reached crm phone, but has no matching handler");
+            }
+
+            break;
+        }
+        default:
+            break;
+    }
+    return cbR;
+}
 
 + (EVCallbackResult*)handlePhoneActionWithResponse:(EVResponse*)response withFlow:(EVPhoneActionFlowElement*)flow andResponseDelegate:(id<EVSearchDelegate>)
 delegate {
@@ -609,6 +675,9 @@ delegate {
         }
         case EVFlowElementTypePhoneAction: {
             return [self handlePhoneActionWithResponse:response withFlow:(EVPhoneActionFlowElement *)flow andResponseDelegate:delegate];
+        }
+        case EVFlowElementTypeCreate: {
+            return [self handleCreateWithResponse:response withFlow:(EVCreateFlowElement *)flow andResponseDelegate:delegate];
         }
         default:
             break;

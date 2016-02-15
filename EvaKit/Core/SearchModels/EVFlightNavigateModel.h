@@ -1,5 +1,4 @@
 //
-//  EVCruiseSearchModel.h
 //  EvaKit
 //
 //  Created by Yegor Popovych on 8/24/15.

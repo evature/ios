@@ -1,5 +1,4 @@
 //
-//  EVCruiseSearchDelegate.h
 //  EvaKit
 //
 //  Copyright (c) 2015 Evature. All rights reserved.
@@ -37,8 +36,13 @@
 - (EVCallbackResult*)setField:(NSString*)fieldPath inPage:(EVCRMPageType)page withId:(NSString*)objId toValue:(NSDictionary*)value;
 
 
-// create
-// ------
+// create methods:
+// ---------------
+
+
+// createMeeting
+//  paticipants are array of NSDictionary containing
+- (EVCallbackResult*)createMeetingOnDate:(NSDate*)date withDuration:(NSNumber*)hours withSubject:(NSString*)subject withParticipants:(NSArray*)participants;
 
 
 @end

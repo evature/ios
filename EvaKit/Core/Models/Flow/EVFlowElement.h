@@ -26,7 +26,8 @@ typedef NS_ENUM(int16_t, EVFlowElementType) {
     EVFlowElementTypeStatement,
     EVFlowElementTypeService,
     EVFlowElementTypeReply,
-    EVFlowElementTypeData
+    EVFlowElementTypeData,
+    EVFlowElementTypeCreate
 };
 
 @interface EVFlowElement : NSObject

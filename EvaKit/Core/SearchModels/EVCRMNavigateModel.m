@@ -1,5 +1,4 @@
 //
-//  EVCruiseSearchModel.m
 //  EvaKit
 //
 //  Copyright (c) 2015 Evature. All rights reserved.
