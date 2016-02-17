@@ -15,11 +15,11 @@ static NSDictionary* phoneTypes = nil;
 
 + (void)load {
     phoneTypes = [@{@"other": @(EVCRMPhoneTypeOther),
-                            @"mobile": @(EVCRMPhoneTypeMobile),
-                            @"home": @(EVCRMPhoneTypeHome),
-                            @"landline": @(EVCRMPhoneTypeLandLine),
-                            @"work": @(EVCRMPhoneTypeWork),
-                            } retain];
+                    @"mobile": @(EVCRMPhoneTypeMobile),
+                    @"home": @(EVCRMPhoneTypeHome),
+                    @"landline": @(EVCRMPhoneTypeLandLine),
+                    @"work": @(EVCRMPhoneTypeWork),
+                    } retain];
     
     [self registerClass:self forElementType:EVFlowElementTypePhoneAction];
 }
@@ -53,20 +53,20 @@ static NSDictionary* phoneTypes = nil;
         self.page = EVCRMPageTypeContacts;
         self.subPage = nil;
         NSUInteger count = [pathArray count];
-        if (count > 2) {
+        if (count >= 2) {
             self.page = [EVCRMAttributes fieldPathToPageType:[pathArray objectAtIndex:1]];
         }
-        if (count > 3) {
+        if (count >= 3) {
             self.subPage = [pathArray objectAtIndex:2];
         }
-        if (count > 4) {
+        if (count >= 4) {
             self.phoneType = EVCRMPhoneTypeOther;
             if (self.action != EVPhoneActionFlowElementActionTypeCall) {
                 EV_LOG_ERROR(@"Unexpected phone-action phone type %@ with action %@", [pathArray objectAtIndex:3], action);
             }
             NSNumber* val = [phoneTypes objectForKey:[[[[pathArray objectAtIndex:3] lowercaseString]
-                                                          stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                                         stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+                                                       stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                                      stringByReplacingOccurrencesOfString:@"'" withString:@""]];
             if (val != nil) {
                 self.phoneType = [val shortValue];
             }
