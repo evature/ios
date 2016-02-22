@@ -37,6 +37,7 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 @property (nonatomic, assign, readwrite) id<EVApplicationDelegate> delegate;
 
 @property (nonatomic, assign, readonly) BOOL isReady;
+@property (nonatomic, assign, readonly) BOOL isControllerShown;
 
 @property (nonatomic, assign, readwrite) BOOL highlightText;
 @property (nonatomic, assign, readwrite) BOOL useLocationServices;

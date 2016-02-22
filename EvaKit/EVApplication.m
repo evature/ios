@@ -24,13 +24,14 @@
 #define EV_HOST_ADDRESS_FOR_TEXT  EV_HOST_ADDRESS
 #define EV_API_VERSION @"v1.0"
 
-@interface EVApplication () <EVAudioRecorderDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate, EVAPIRequestDelegate, EVApplicationSoundDelegate>
+@interface EVApplication () <EVAudioRecorderDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate, EVAPIRequestDelegate, EVApplicationSoundDelegate, EVErrorHandler>
 
 @property (nonatomic, strong, readwrite) NSString* APIKey;
 @property (nonatomic, strong, readwrite) NSString* siteCode;
 @property (nonatomic, strong, readwrite) NSString* apiVersion;
 
 @property (nonatomic, assign, readwrite) BOOL isReady;
+@property (nonatomic, assign, readwrite) BOOL isControllerShown;
 
 @property (nonatomic, strong, readwrite) NSMutableDictionary* chatViewControllerPathRewrites;
 @property (nonatomic, strong, readwrite) EVLocationManager *locationManager;
@@ -109,9 +110,24 @@
     return sharedInstance;
 }
 
+- (void)provider:(id<NSObject>)provider gotAnError:(NSError *)error {
+    EV_LOG_ERROR(@"Provider %@ got an Error: %@", provider, error);
+    [error retain];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [error autorelease];
+        [[self soundForState:EVApplicationStateSoundRequestError] play];
+        [self.delegate evApplication:self didObtainError:error];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.isReady = YES;
+        });
+    });
+}
+
+
 - (void)setupRecorderChain {
     self.soundRecorder = [[EVAudioRecorder new] autorelease];
     self.soundRecorder.delegate = self;
+    self.soundRecorder.errorHandler = self;
     
     self.soundRecorder.audioFormat = kAudioFormatLinearPCM;
     self.soundRecorder.audioFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
@@ -129,13 +145,15 @@
     self.flacConverter.sampleRate = 16000;
     self.flacConverter.bitsPerSample = 16;
     self.flacConverter.numberOfChannels = 1;
+    self.flacConverter.errorHandler = self;
     
     self.dataStreamer = [[[EVAudioDataStreamer alloc] initWithOperationChainLength:10] autorelease];
     self.dataStreamer.sampleRate = 16000;
     self.dataStreamer.delegate = self;
+    self.dataStreamer.errorHandler = self;
     
-    self.soundRecorder.dataProviderDelegate = self.flacConverter;
-    self.flacConverter.dataProviderDelegate = self.dataStreamer;
+    self.soundRecorder.dataConsumer = self.flacConverter;
+    self.flacConverter.dataConsumer = self.dataStreamer;
 }
 
 - (instancetype)init {
@@ -244,6 +262,7 @@
 }
 
 - (void)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings {
+    self.isControllerShown = YES;
     UIViewController *ctrl = nil;
     id delegate = nil;
     if ([sender isKindOfClass:[UIViewController class]]) {
@@ -286,6 +305,7 @@
 }
 
 - (void)hideChatViewController:(UIResponder*)sender {
+    self.isControllerShown = NO;
     if (self.soundRecorder.isRecording) {
         [self cancelRecording];
     }
@@ -458,6 +478,9 @@
         EV_LOG_ERROR(@"EVApplication is not ready!");
         return;
     }
+    if (!self.isControllerShown) {
+        EV_LOG_INFO(@"Can't start recording when chat controller is hidden");
+    }
     if (withNewSession) {
         self.currentSessionID = EV_NEW_SESSION_ID;
     }
@@ -482,7 +505,18 @@
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (void)cancelRecording {
     [self.currentApiRequest cancel];
-    [self.soundRecorder cancelRecording];
+    [self.dataStreamer cancel];
+    [self.flacConverter cancel];
+    [self.soundRecorder cancel];
+
+    [[self soundForState:EVApplicationStateSoundCancelled] play];
+    if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
+        [self.delegate evApplicationRecordingIsCancelled:self];
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.isReady = YES;
+    });
+
 }
 
 
@@ -490,7 +524,7 @@
     self.isReady = NO;
     EV_LOG_DEBUG(@"API Query: %@", url);
     self.currentApiRequest = [[EVAPIRequest alloc] initWithURL:url timeout:self.connectionTimeout andDelegate:self];
-    [self.currentApiRequest release];
+    [self.currentApiRequest autorelease];
     [self.currentApiRequest start];
 }
 
@@ -522,25 +556,6 @@
 
 #pragma mark === Managers Delegates Methods ===
 
-- (void)audioDataStreamerFailed:(EVAudioDataStreamer*)streamer withError:(NSError*)error {
-    [error retain];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [error autorelease];
-        EV_LOG_ERROR(@"Streamer failed with error: %@", error);
-        if ([error code] == EVAudioRecorderCancelledErrorCode) {
-            [[self soundForState:EVApplicationStateSoundCancelled] play];
-            if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
-                [self.delegate evApplicationRecordingIsCancelled:self];
-            }
-        } else {
-            [[self soundForState:EVApplicationStateSoundRequestError] play];
-            [self.delegate evApplication:self didObtainError:error];
-        }
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.isReady = YES;
-        });
-    });
-}
 
 - (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response {
     EV_LOG_DEBUG(@"Response: %@", response);
@@ -558,7 +573,7 @@
         });
     }
     @catch (NSException *exception) {
-        [self audioDataStreamerFailed:streamer withError:[NSError errorWithCode:100 andDescription:[exception reason]]];
+        [self provider:streamer gotAnError:[NSError errorWithCode:100 andDescription:[exception reason]]];
     }
 }
 
@@ -568,7 +583,7 @@
 }
 
 - (void)apiRequest:(EVAPIRequest *)request gotAnError:(NSError*)error {
-    [self audioDataStreamerFailed:nil withError:error];
+    [self provider:request gotAnError:error];
     self.currentApiRequest = nil;
 }
 

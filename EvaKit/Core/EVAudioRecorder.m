@@ -33,14 +33,15 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     EVAudioRecorder* recorder = (EVAudioRecorder*)inUserData;
     if (inNumberPacketDescriptions > 0) {
         NSData* data = [NSData dataWithBytes:inBuffer->mAudioData length:inBuffer->mAudioDataByteSize];
-        [recorder.dataProviderDelegate provider:recorder hasNewData:data];
+        [recorder.dataConsumer producer:recorder hasNewData:data];
     }
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
 }
 
 @implementation EVAudioRecorder
 
-@synthesize dataProviderDelegate;
+@synthesize errorHandler;
+@synthesize dataConsumer;
 @dynamic minNoiseTime;
 @dynamic preRecordingTime;
 @dynamic levelSampleTime;
@@ -117,14 +118,16 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         
         [session setCategory:AVAudioSessionCategoryRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
         if (error != nil) {
-            EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
+            EV_LOG_ERROR(@"Failed to setCategory AVAudioSessionCategoryRecord for AVAudioSession! %@", error);
+            [self.errorHandler provider:self gotAnError:error];
         }
     }
     else {
         EV_LOG_DEBUG(@"Setting session to PlayAndRecord");
         [session setCategory:AVAudioSessionCategoryPlayAndRecord  withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
         if (error != nil) {
-            EV_LOG_ERROR(@"Failed to setCategory for AVAudioSession! %@", error);
+            EV_LOG_ERROR(@"Failed to setCategory AVAudioSessionCategoryPlayAndRecord for AVAudioSession! %@", error);
+            [self.errorHandler provider:self gotAnError:error];
         }
     }
 }
@@ -138,11 +141,11 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setActive:YES for AVAudioSession! %@", error);
-            [self.dataProviderDelegate provider:self gotAnError:error];
+            [self.errorHandler provider:self gotAnError:error];
         }
         if ([self startAudioQueue:[self audioFormatDescription]]) {
             self.isRecording = YES;
-            [self.dataProviderDelegate providerStarted:self];
+            [self.dataConsumer producerStarted:self];
             [self.delegate recorderStartedRecording:self];
             [self.autoStopper startWithMaxTime:maxRecordingTime];
             EV_LOG_INFO(@"Started to record");
@@ -161,7 +164,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 //    }
     [self setAVSessionWithRecord:NO];
     self.isRecording = NO;
-    [self.dataProviderDelegate providerFinished:self];
+    [self.dataConsumer producerFinished:self];
 }
 
 - (void)stopRecording {
@@ -169,16 +172,12 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     [self.delegate recorderFinishedRecording:self];
 }
 
-- (void)cancelRecording {
-    [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:EVAudioRecorderCancelledErrorCode andDescription:@"Cancelled"]];
-    [self stopRecordingNoDelegate];
-}
 
 - (BOOL)startAudioQueue:(AudioStreamBasicDescription)format {
     OSStatus result = AudioQueueNewInput(&format, AudioInputCallback, self, CFRunLoopGetMain(), NULL, 0, &_audioQueue);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueNewInput", (int)result);
-        [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueNewInput"]];
+        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueNewInput"]];
         return NO;
     }
     
@@ -188,7 +187,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     result = AudioQueueAllocateBuffer(_audioQueue, self.audioBufferSize, &_audioBuffer);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueAllocateBuffer", (int)result);
-        [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueAllocateBuffer"]];
+        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueAllocateBuffer"]];
         [self stopAudioQueue];
         return NO;
     }
@@ -197,13 +196,13 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         AudioQueueFreeBuffer(_audioQueue, _audioBuffer);
         [self stopAudioQueue];
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueEnqueueBuffer", (int)result);
-        [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueEnqueueBuffer"]];
+        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueEnqueueBuffer"]];
         return NO;
     }
     result = AudioQueueStart(_audioQueue, NULL);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueStart", (int)result);
-        [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueStart"]];
+        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueStart"]];
         [self stopAudioQueue];
         return NO;
     }
@@ -219,10 +218,11 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     }
 }
 
-- (void)stopDataProvider {
-    dispatch_async(dispatch_get_main_queue(), ^{
+
+- (void)cancel {
+   // dispatch_async(dispatch_get_main_queue(), ^{
         [self stopRecordingNoDelegate];
-    });
+   // });
 }
 
 #pragma mark ==== Audio Stopper Delegate

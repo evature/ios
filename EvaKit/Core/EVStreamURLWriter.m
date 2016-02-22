@@ -58,6 +58,8 @@
 
 @implementation EVStreamURLWriter
 
+@synthesize errorHandler;
+
 - (instancetype)initWithURL:(NSURL*)anURL
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
@@ -106,27 +108,27 @@
     [super dealloc];
 }
 
-- (void)provider:(id<EVDataProvider>)provider hasNewData:(NSData*)data {
+- (void)producer:(id<EVDataProducer>)producer hasNewData:(NSData*)data {
     if (!_streamOpened && !_connectionError) {
         [_dataStream open];
         _streamOpened = YES;
         //Wait for opening
         usleep(200);
     }
-    size_t writed = 0;
+    size_t wrote = 0;
     size_t length = [data length];
     const uint8_t* bytes = [data bytes];
-    while (!_connectionError && writed < length) {
+    while (!_connectionError && wrote < length) {
         //Wait for space in stream
         while(!_connectionError && !_dataStream.hasSpaceAvailable) usleep(100);
-        //Write so many how we can. Save how many we writed
+        //Write so many how we can. Save how many we wrote
         if (!_connectionError) {
-            writed += [_dataStream write:(bytes+writed) maxLength:(length-writed)];
+            wrote += [_dataStream write:(bytes+wrote) maxLength:(length-wrote)];
         }
     }
 }
 
-- (void)provider:(id<EVDataProvider>)provider gotAnError:(NSError*)error {
+- (void)cancel {
     [self.connection cancel];
     if (_streamOpened) {
         [_dataStream close];
@@ -136,11 +138,11 @@
     self.connection = nil;
 }
 
-- (void)providerStarted:(id<EVDataProvider>)provider {
+- (void)producerStarted:(id<EVDataProducer>)producer {
     // Do nothing.
 }
 
-- (void)providerFinished:(id<EVDataProvider>)provider {
+- (void)producerFinished:(id<EVDataProducer>)producer {
     if (_streamOpened) {
         _streamOpened = NO;
         [_dataStream close];
@@ -152,7 +154,7 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     _connectionError = YES;
     self.connection = nil;
-    [self.delegate streamWriter:self gotAnError:error];
+    [self.errorHandler provider:self gotAnError:error];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

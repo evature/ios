@@ -21,11 +21,12 @@
 @property (nonatomic, assign, readwrite) NSTimeInterval connectionTimeout;
 @property (nonatomic, assign, readwrite) id<EVAudioDataStreamerDelegate> delegate;
 
+- (void)cancel;
+
 @end
 
 @protocol EVAudioDataStreamerDelegate <NSObject>
 
-- (void)audioDataStreamerFailed:(EVAudioDataStreamer*)streamer withError:(NSError*)error;
 - (void)audioDataStreamerFinished:(EVAudioDataStreamer *)streamer withResponse:(NSDictionary*)response;
                                  
 @end

@@ -250,6 +250,9 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressLeftBarButton:(UIButton *)sender {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     EV_LOG_DEBUG(@"Undo pressed!");
     [self stopSpeaking];
     [self.evApplication editLastQueryWithText:nil];
@@ -257,6 +260,9 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)startRecordingWithAutoStop:(BOOL)autoStop {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     [self stopSpeaking];
     if (self.speechSynthesizer.speaking) {
         EV_LOG_DEBUG(@"Delaying recording to when speaking is done");
@@ -312,6 +318,9 @@ void reloadData(id collectionView, SEL selector) {
 
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar didPressCenterBarButton:(UIButton *)sender {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     if (isRecording) {
         [self.evApplication stopRecording];
     } else {
@@ -321,14 +330,23 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressStarted:(UIButton*)sender {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     [self startRecordingWithAutoStop:NO];
 }
 
 - (void)messagesInputToolbar:(EVChatToolbarView *)toolbar centerButtonLongPressEnded:(UIButton*)sender {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     [self.evApplication stopRecording];
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
+    if (!self.evApplication.isControllerShown) {
+        return;
+    }
     EV_LOG_DEBUG(@"Trash pressed!");
     self.isNewSession = YES;
     [self stopSpeaking];

@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EVDataProvider.h"
+#import "EVDataProducer.h"
 
 //Provider delegate methods in this class stops caller run lopp. So Use only in background loops
 @protocol EVStreamURLWriterDelegate;
 
-@interface EVStreamURLWriter : NSObject <EVDataProviderDelegate>
+@interface EVStreamURLWriter : NSObject <EVDataConsumer>
 
 - (instancetype)initWithURL:(NSURL*)anURL
                     headers:(NSDictionary*)headers
@@ -22,13 +22,14 @@
 
 @property (nonatomic, assign, readwrite) id<EVStreamURLWriterDelegate> delegate;
 
+-(void)cancel;
+
 @end
 
 
 @protocol EVStreamURLWriterDelegate <NSObject>
 
 - (void)streamWriter:(EVStreamURLWriter*)writer gotResponseData:(NSData*)data;
-- (void)streamWriter:(EVStreamURLWriter *)writer gotAnError:(NSError*)error;
 - (void)streamWriterFinished:(EVStreamURLWriter *)writer;
 
 @end

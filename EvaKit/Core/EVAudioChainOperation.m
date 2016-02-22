@@ -15,18 +15,18 @@
     BOOL _cancelled;
 }
 
-@property (nonatomic, strong) NSMutableSet* providers;
+@property (nonatomic, strong) NSMutableSet* producers;
 
 // Send data to next in chain
 - (void)sendDataToConsumer:(NSData*)data;
-- (void)sendErrorToConsumer:(NSError*)error;
 - (void)checkAndWaitForSpaceInQueue;
 
 @end
 
 @implementation EVAudioChainOperation
 
-@synthesize dataProviderDelegate;
+@synthesize errorHandler;
+@synthesize dataConsumer;
 @dynamic operationQueue;
 
 - (instancetype)init {
@@ -38,7 +38,7 @@
     if (self != nil) {
         _queue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
         _queueSemaphore = dispatch_semaphore_create(length);
-        self.providers = [NSMutableSet set];
+        self.producers = [NSMutableSet set];
     }
     return self;
 }
@@ -46,50 +46,38 @@
 - (void)dealloc {
     dispatch_release(_queue);
     dispatch_release(_queueSemaphore);
-    self.providers = nil;
+    self.producers = nil;
     [super dealloc];
 }
 
-- (void)sendErrorToConsumer:(NSError*)error {
-    [self.dataProviderDelegate provider:self gotAnError:error];
-}
-
 - (void)sendDataToConsumer:(NSData*)data {
-    [self.dataProviderDelegate provider:self hasNewData:data];
+    [self.dataConsumer producer:self hasNewData:data];
 }
 
 - (dispatch_queue_t)operationQueue {
     return _queue;
 }
 
-- (void)stopDataProvider {
-    _cancelled = YES;
-    dispatch_async(_queue, ^{
-        for (id<EVDataProvider> provider in self.providers) {
-            [provider stopDataProvider];
-        }
-    });
-}
 
-- (void)providerStarted:(id<EVDataProvider>)provider {
+- (void)producerStarted:(id<EVDataProducer>)producer {
     _cancelled = NO;
     [self checkAndWaitForSpaceInQueue];
-    [provider retain];
+    [producer retain];
     dispatch_async(_queue, ^{
-        [provider autorelease];
-        [self.providers addObject:provider];
-        [self.dataProviderDelegate providerStarted:self];
+        [producer autorelease];
+        [self.producers addObject:producer];
+        [self.dataConsumer producerStarted:self];
         dispatch_semaphore_signal(_queueSemaphore);
     });
 }
 
-- (void)providerFinished:(id<EVDataProvider>)provider {
+- (void)producerFinished:(id<EVDataProducer>)producer {
     [self checkAndWaitForSpaceInQueue];
-    [provider retain];
+    [producer retain];
     dispatch_async(_queue, ^{
-        [provider autorelease];
-        [self.providers removeObject:provider];
-        [self.dataProviderDelegate providerFinished:self];
+        [producer autorelease];
+        [self.producers removeObject:producer];
+        [self.dataConsumer producerFinished:self];
         dispatch_semaphore_signal(_queueSemaphore);
     });
 }
@@ -101,7 +89,7 @@
     }
 }
 
-- (void)provider:(id<EVDataProvider>)provider hasNewData:(NSData*)data {
+- (void)producer:(id<EVDataProducer>)producer hasNewData:(NSData*)data {
     if (_cancelled) return;
     [self checkAndWaitForSpaceInQueue];
     [data retain];
@@ -110,8 +98,7 @@
         NSError* error = nil;
         NSData* pData = [self processData:data error:&error];
         if (error != nil) {
-            [provider stopDataProvider];
-            [self sendErrorToConsumer:error];
+            [self.errorHandler provider:self gotAnError:error];
         } else {
             [self sendDataToConsumer:pData];
         }
@@ -119,17 +106,21 @@
     });
 }
 
-- (void)provider:(id<EVDataProvider>)provider gotAnError:(NSError*)error {
+/*
+- (void)producer:(id<EVDataProducer>)producer gotAnError:(NSError*)error {
     [error retain];
-    [provider retain];
+    [producer retain];
     dispatch_async(_queue, ^{
         [error autorelease];
-        [provider autorelease];
-        [self.providers removeObject:provider];
+        [producer autorelease];
+        [self.producers removeObject:producer];
         [self sendErrorToConsumer:error];
     });
-}
+}*/
 
+-(void)cancel {
+    _cancelled = YES;
+}
 
 // Overload this method and implement operation logic
 - (NSData*)processData:(NSData*)data error:(NSError**)error {

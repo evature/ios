@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
-#import "EVDataProvider.h"
+#import "EVDataProducer.h"
 #import "EVAudioRecorderAutoStopper.h"
 #import "NSError+EVA.h"
 
-#define EVAudioRecorderCancelledErrorCode ERROR_STR_TO_CODE("EARD")
 
 @class EVAudioRecorder;
 
@@ -24,7 +23,7 @@
 
 @end
 
-@interface EVAudioRecorder : NSObject <EVDataProvider, EVAudioRecorderAutoStopperDelegate>
+@interface EVAudioRecorder : NSObject <EVDataProducer, EVAudioRecorderAutoStopperDelegate>
 
 @property (nonatomic, assign) UInt32 audioBufferSize;
 
@@ -41,12 +40,13 @@
 
 @property (nonatomic, assign) BOOL isRecording;
 
+- (void)cancel;
+
 @property (nonatomic, assign) id<EVAudioRecorderDelegate> delegate;
 
 
 - (void)startRecording:(NSTimeInterval)maxRecordingTime;
 - (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop;
 - (void)stopRecording;
-- (void)cancelRecording;
 
 @end

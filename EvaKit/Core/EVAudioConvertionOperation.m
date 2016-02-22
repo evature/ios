@@ -59,8 +59,8 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
     });
 }
 
-- (void)providerStarted:(id<EVDataProvider>)provider {
-    [super providerStarted:provider];
+- (void)producerStarted:(id<EVDataProducer>)producer {
+    [super producerStarted:producer];
     dispatch_async(self.operationQueue, ^{
         _encoder = FLAC__stream_encoder_new();
         self.currentEncodedData = [NSMutableData new];
@@ -77,24 +77,23 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         
         if (init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
             EV_LOG_ERROR(@"ERROR: FLAC Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
-            [self.dataProviderDelegate provider:self gotAnError:[NSError errorWithCode:init_status andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderInitStatusString[init_status]]]];
+            [self.errorHandler provider:self gotAnError:[NSError errorWithCode:init_status andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderInitStatusString[init_status]]]];
             self.currentEncodedData = nil;
-            [self stopDataProvider];
         } else {
             if ([self.currentEncodedData length] > 0) {
-                [self.dataProviderDelegate provider:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
+                [self.dataConsumer producer:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
                 [self.currentEncodedData setLength:0];
             }
         }
     });
 }
 
-- (void)providerFinished:(id<EVDataProvider>)provider {
+- (void)producerFinished:(id<EVDataProducer>)producer {
     dispatch_sync(self.operationQueue, ^{
         if (_encoder != NULL) {
             FLAC__stream_encoder_finish(_encoder);
             if ([self.currentEncodedData length] > 0) {
-                [self.dataProviderDelegate provider:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
+                [self.dataConsumer producer:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
             }
             FLAC__stream_encoder_delete(_encoder);
             _encoder = NULL;
@@ -102,7 +101,7 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         self.currentEncodedData = nil;
         
     });
-    [super providerFinished:provider];
+    [super producerFinished:producer];
 }
 
 - (NSData*)processData:(NSData*)data error:(NSError**)error {

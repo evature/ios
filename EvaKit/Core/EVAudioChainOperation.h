@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EVDataProvider.h"
+#import "EVDataProducer.h"
 #import <dispatch/dispatch.h>
 
-@interface EVAudioChainOperation : NSObject <EVDataProvider, EVDataProviderDelegate>
+// Consumes data from one producer, process it,  produce it to the consumer
+//
+@interface EVAudioChainOperation : NSObject <EVDataProducer, EVDataConsumer>
 
 @property (nonatomic, assign, readonly) dispatch_queue_t operationQueue;
 
@@ -18,5 +20,6 @@
 
 // Overload this method and implement operation logic
 - (NSData*)processData:(NSData*)data error:(NSError**)error;
+- (void)cancel;
 
 @end

@@ -445,7 +445,7 @@
 		96D9C8581B54702300276ADA /* EvaKit_Undo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EvaKit_Undo.svg; sourceTree = "<group>"; };
 		96DEEA801B6A511000B000D2 /* EVAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioRecorder.h; sourceTree = "<group>"; };
 		96DEEA811B6A511000B000D2 /* EVAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioRecorder.m; sourceTree = "<group>"; };
-		96DEEA871B6A841700B000D2 /* EVDataProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVDataProvider.h; sourceTree = "<group>"; };
+		96DEEA871B6A841700B000D2 /* EVDataProducer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVDataProducer.h; sourceTree = "<group>"; };
 		96DEEA881B6A872700B000D2 /* EVAudioChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioChainOperation.h; sourceTree = "<group>"; };
 		96DEEA891B6A872700B000D2 /* EVAudioChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioChainOperation.m; sourceTree = "<group>"; };
 		96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVButtonLayer.h; sourceTree = "<group>"; };
@@ -885,7 +885,7 @@
 		96DEEA841B6A823D00B000D2 /* IO */ = {
 			isa = PBXGroup;
 			children = (
-				96DEEA871B6A841700B000D2 /* EVDataProvider.h */,
+				96DEEA871B6A841700B000D2 /* EVDataProducer.h */,
 				96DEEA881B6A872700B000D2 /* EVAudioChainOperation.h */,
 				96DEEA891B6A872700B000D2 /* EVAudioChainOperation.m */,
 				9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */,
