@@ -37,6 +37,7 @@ static const char* kEVCollectionViewReloadDataKey = "kEVCollectionViewReloadData
 
 typedef void (*R_IMP)(void*, SEL);
 R_IMP oldReloadData;
+BOOL replacedMethods= FALSE;
 
 id emptyInitMethod(id lookupObject, SEL selector, id pr1, id p2, id p3, id p4) {
     [lookupObject init];
@@ -50,9 +51,10 @@ void reloadData(id collectionView, SEL selector) {
         [collectionView performBatchUpdates:^{
             [collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
         } completion:^(BOOL finished){
-            if (finished) {
+            EV_LOG_DEBUG(@"completion block: finished=%d", finished);
+//            if (finished) {
                 objc_setAssociatedObject(collectionView, kEVCollectionViewReloadDataKey, @NO, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            }
+//            }
         }];
     } else {
         oldReloadData(collectionView, selector);
@@ -103,13 +105,20 @@ void reloadData(id collectionView, SEL selector) {
 
 
 + (void)initialize {
-    SEL allocSel = @selector(initWithTextView:contextView:panGestureRecognizer:delegate:);
-    class_replaceMethod([JSQMessagesKeyboardController class], allocSel, (IMP)emptyInitMethod, "@@:@@@@");
-    
-    SEL reloadDataSel = @selector(reloadData);
-    oldReloadData = (R_IMP)class_replaceMethod([JSQMessagesCollectionView class], reloadDataSel, (IMP)reloadData, "v@:");
-    if (oldReloadData == NULL) {
-        oldReloadData = (R_IMP)class_getMethodImplementation([UICollectionView class], reloadDataSel);
+    if (!replacedMethods) {
+        replacedMethods = true;
+        
+        // Not needed to replace initWithTextView because fixed in JSQ 7.2
+        //SEL allocSel = @selector(initWithTextView:contextView:panGestureRecognizer:delegate:);
+        ///class_replaceMethod([JSQMessagesKeyboardController class], allocSel, (IMP)emptyInitMethod, "@@:@@@@");
+        
+        
+        // Not replacing reloadData because buggy implmentation animates all but the last item
+//        SEL reloadDataSel = @selector(reloadData);
+//        oldReloadData = (R_IMP)class_replaceMethod([JSQMessagesCollectionView class], reloadDataSel, (IMP)reloadData, "v@:");
+//        if (oldReloadData == NULL) {
+//            oldReloadData = (R_IMP)class_getMethodImplementation([UICollectionView class], reloadDataSel);
+//        }
     }
 }
 
@@ -165,9 +174,12 @@ void reloadData(id collectionView, SEL selector) {
     self.incomingBubbleImage = nil;
     self.oldContext = nil;
     // [self stopSpeaking];
+    [self.speechSynthesizer setDelegate:nil];
     self.speechSynthesizer = nil;
     [super dealloc];
 }
+
+
 
 - (void)setHelloMessage {
     EVStyledString* message = nil;

@@ -306,6 +306,7 @@
 
 - (void)hideChatViewController:(UIResponder*)sender {
     self.isControllerShown = NO;
+    self.delegate = nil;
     if (self.soundRecorder.isRecording) {
         [self cancelRecording];
     }
@@ -545,7 +546,7 @@
 - (void)editLastQueryWithText:(NSString*)text {
     NSString* urlStr = [self getURLStringWithServer:self.textServerHost];
     if (text != nil) {
-        urlStr = [urlStr stringByAppendingFormat:@"&edit_last_utterance=true&input_text=%@", [text stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+        urlStr = [urlStr stringByAppendingFormat:@"&edit_last_utterance=true&input_text=%@", [[text stringByReplacingOccurrencesOfString:@" " withString:@"+"] stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
     } else {
         urlStr = [urlStr stringByAppendingFormat:@"&edit_last_utterance=true&input_text="];
     }
