@@ -12,14 +12,12 @@
 
 // Consumes data from one producer, process it,  produce it to the consumer
 //
-@interface EVAudioChainOperation : NSObject <EVDataProducer, EVDataConsumer>
+@interface EVAudioChainOperation : EVDataProducer <EVDataConsumer>
 
-@property (nonatomic, assign, readonly) dispatch_queue_t operationQueue;
+- (void)producer:(EVDataProducer*)producer hasNewData:(NSData*)data;
 
-- (instancetype)initWithOperationChainLength:(NSUInteger)length;
 
 // Overload this method and implement operation logic
 - (NSData*)processData:(NSData*)data error:(NSError**)error;
-- (void)cancel;
 
 @end

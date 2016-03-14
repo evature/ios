@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [EVLogger logger].logLevel = EVLoggerLogLevelDebug;
+    [EVLogger logger].logLevel = EVLoggerLogLevelInfo;
     
     [[EVApplication sharedApplication] setAPIKey:API_KEY andSiteCode:SITE_CODE];
     [EVApplication sharedApplication].scope = [EVSearchScope scopeWithContextTypes:SCOPE];

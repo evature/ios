@@ -13,19 +13,20 @@
 #import "EVLogger.h"
 #import "EVApplication.h"
 
+//#define MIN_BUFFER_SIZE 32768
+#define MIN_BUFFER_SIZE 8000
 
 @interface EVAudioRecorder () {
     AudioQueueRef _audioQueue;
     AudioQueueBufferRef _audioBuffer;
     BOOL _autoStop;
+    dispatch_source_t _timer;
 }
 
-@property (nonatomic, strong) EVAudioRecorderAutoStopper* autoStopper;
 
 - (AudioStreamBasicDescription)audioFormatDescription;
 - (BOOL)startAudioQueue:(AudioStreamBasicDescription)format;
 - (void)stopAudioQueue;
-- (void)stopRecordingNoDelegate;
 
 @end
 
@@ -33,27 +34,21 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     EVAudioRecorder* recorder = (EVAudioRecorder*)inUserData;
     if (inNumberPacketDescriptions > 0) {
         NSData* data = [NSData dataWithBytes:inBuffer->mAudioData length:inBuffer->mAudioDataByteSize];
-        [recorder.dataConsumer producer:recorder hasNewData:data];
+        [recorder propagateHasNewData:data];
     }
     AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
 }
 
 @implementation EVAudioRecorder
 
-@synthesize errorHandler;
-@synthesize dataConsumer;
-@dynamic minNoiseTime;
-@dynamic preRecordingTime;
-@dynamic levelSampleTime;
-@dynamic silentStopRecordTime;
 
-- (id)init {
-    self = [super init];
+- (id)initWithErrorHandler:(id<EVErrorHandler>)errorHandler {
+    self = [super initWithOperationChainLength:30 andName:@"AudioRecorder" andErrorHandler:errorHandler];
     if (self != nil) {
         _audioQueue = nil;
         _audioBuffer = nil;
+        _timer = nil;
         self.audioBufferSize = 0; //Set default buffer
-        self.autoStopper = [[[EVAudioRecorderAutoStopper alloc] initWithDelegate:self] autorelease];
         [self setAVSessionWithRecord:NO];
     }
     return self;
@@ -61,7 +56,6 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 
 - (void)dealloc {
     [self setAVSessionWithRecord:NO];
-    self.autoStopper = nil;
     [self stopAudioQueue];
     [super dealloc];
 }
@@ -80,13 +74,10 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 }
 
 - (void)setAudioBufferSize:(UInt32)audioBufferSize {
-    audioBufferSize = audioBufferSize > 32768 ? audioBufferSize : 32768; //32Kb buffer
+    audioBufferSize = audioBufferSize > MIN_BUFFER_SIZE ? audioBufferSize : MIN_BUFFER_SIZE;
     _audioBufferSize = audioBufferSize;
 }
 
-- (void)startRecording:(NSTimeInterval)maxRecordingTime {
-    [self startRecording:maxRecordingTime withAutoStop:YES];
-}
 
 /*
  - (void)setAVSession {
@@ -119,7 +110,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         [session setCategory:AVAudioSessionCategoryRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setCategory AVAudioSessionCategoryRecord for AVAudioSession! %@", error);
-            [self.errorHandler provider:self gotAnError:error];
+            [self.errorHandler node:self gotAnError:error];
         }
     }
     else {
@@ -127,36 +118,69 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         [session setCategory:AVAudioSessionCategoryPlayAndRecord  withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setCategory AVAudioSessionCategoryPlayAndRecord for AVAudioSession! %@", error);
-            [self.errorHandler provider:self gotAnError:error];
+            [self.errorHandler node:self gotAnError:error];
         }
     }
 }
 
 
-- (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop {
+- (void)startRecordingWithAutoStop:(BOOL)autoStop {
     if (!self.isRecording) {
         _autoStop = autoStop;
+        //// @@@@@@@@@@@@
         NSError* error = nil;
         [self setAVSessionWithRecord:YES];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         if (error != nil) {
             EV_LOG_ERROR(@"Failed to setActive:YES for AVAudioSession! %@", error);
-            [self.errorHandler provider:self gotAnError:error];
+            [self.errorHandler node:self gotAnError:error];
         }
         if ([self startAudioQueue:[self audioFormatDescription]]) {
             self.isRecording = YES;
-            [self.dataConsumer producerStarted:self];
+            [self propagateProducerStarted];
             [self.delegate recorderStartedRecording:self];
-            [self.autoStopper startWithMaxTime:maxRecordingTime];
             EV_LOG_INFO(@"Started to record");
         }
+        
+        /// @@@@@@@@@@@
+//        self.isRecording = YES;
+//        [self propagateProducerStarted];
+//        [self.delegate recorderStartedRecording:self];
+//        EV_LOG_INFO(@"Started to record");
+//        _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+//        NSTimeInterval interval = 0.05; //  should be 0.25 because 8000 bytes = 4000 samples = 0.25 second,   but made x5 faster to save time
+//        if (_timer)
+//        {
+//            FILE *fp = fopen([[[NSBundle bundleForClass:[self class]] pathForResource:@"white_noise_test" ofType:@"raw"] UTF8String], "r");
+//            dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, interval * NSEC_PER_SEC), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);
+//            dispatch_source_set_event_handler(_timer, ^{
+//                int NN = 800;
+//                short buf[NN];
+//                fread (buf, 1, NN, fp);
+//                if (feof (fp)) {
+//                    [self stopRecording];
+//                }
+//                else {
+//                    NSData* data = [NSData dataWithBytes:buf length:NN];
+//                    [self propagateHasNewData:data];
+//                }
+//            });
+//            dispatch_resume(_timer);
+//        }
+
     }
 }
 
-- (void)stopRecordingNoDelegate {
-    [self.autoStopper stop];
+- (void)stopRecording {
+    //@@@@@@@@@@@
     [self stopAudioQueue];
-//    NSError* error = nil;
+    if (_timer) {
+        dispatch_source_cancel(_timer);
+        dispatch_release(_timer);
+        _timer = nil;
+    }
+    
+    //    NSError* error = nil;
 //    [[AVAudioSession sharedInstance] setActive:NO error:&error];
 //    if (error != nil) {
 //        EV_LOG_ERROR(@"Failed to setActive:NO for AVAudioSession! %@", error);
@@ -164,20 +188,16 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 //    }
     [self setAVSessionWithRecord:NO];
     self.isRecording = NO;
-    [self.dataConsumer producerFinished:self];
+    [self propagateProducerFinished];
 }
 
-- (void)stopRecording {
-    [self stopRecordingNoDelegate];
-    [self.delegate recorderFinishedRecording:self];
-}
 
 
 - (BOOL)startAudioQueue:(AudioStreamBasicDescription)format {
     OSStatus result = AudioQueueNewInput(&format, AudioInputCallback, self, CFRunLoopGetMain(), NULL, 0, &_audioQueue);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueNewInput", (int)result);
-        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueNewInput"]];
+        [self.errorHandler node:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueNewInput"]];
         return NO;
     }
     
@@ -187,7 +207,7 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     result = AudioQueueAllocateBuffer(_audioQueue, self.audioBufferSize, &_audioBuffer);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueAllocateBuffer", (int)result);
-        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueAllocateBuffer"]];
+        [self.errorHandler node:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueAllocateBuffer"]];
         [self stopAudioQueue];
         return NO;
     }
@@ -196,13 +216,13 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
         AudioQueueFreeBuffer(_audioQueue, _audioBuffer);
         [self stopAudioQueue];
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueEnqueueBuffer", (int)result);
-        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueEnqueueBuffer"]];
+        [self.errorHandler node:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueEnqueueBuffer"]];
         return NO;
     }
     result = AudioQueueStart(_audioQueue, NULL);
     if (result != 0) {
         EV_LOG_ERROR(@"ERROR: Error %d on AudioQueueStart", (int)result);
-        [self.errorHandler provider:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueStart"]];
+        [self.errorHandler node:self gotAnError:[NSError errorWithCode:result andDescription:@"ERROR: Error on AudioQueueStart"]];
         [self stopAudioQueue];
         return NO;
     }
@@ -221,23 +241,14 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
 
 - (void)cancel {
    // dispatch_async(dispatch_get_main_queue(), ^{
-        [self stopRecordingNoDelegate];
+    [super cancel];
+    [self stopRecording];
    // });
 }
 
 #pragma mark ==== Audio Stopper Delegate
 
-- (void)stopperSilenceStopEvent:(EVAudioRecorderAutoStopper*)stopper {
-    if (_autoStop) {
-        [self stopRecording];
-    }
-}
-
-- (void)stopperTimeStopEvent:(EVAudioRecorderAutoStopper *)stopper {
-    [self stopRecording];
-}
-
-- (void)currentPeakPower:(float*)peakPower andAveragePower:(float*)averagePower {
+- (void)provideCurrentPeakPower:(float*)peakPower andAveragePower:(float*)averagePower {
     *peakPower = -150.0f;
     *averagePower = 0.0f;
     
@@ -253,44 +264,6 @@ void AudioInputCallback(void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRe
     free(levels);
 }
 
-- (void)stopperVoiceLevelPeak:(float)peakLevel andVoiceLevelAverage:(float)averageLevel {
-    if (self.delegate != nil) {
-        [self.delegate recorder:self peakVolumeLevel:peakLevel andAverageVolumeLevel:averageLevel];
-    }
-}
 
-#pragma mark === Audio Stopper Properties ===
-
-- (NSTimeInterval)minNoiseTime {
-    return self.autoStopper.minNoiseTime;
-}
-
-- (void)setMinNoiseTime:(NSTimeInterval)minNoiseTime {
-    self.autoStopper.minNoiseTime = minNoiseTime;
-}
-
-- (NSTimeInterval)preRecordingTime {
-    return self.autoStopper.preRecordingTime;
-}
-
-- (void)setPreRecordingTime:(NSTimeInterval)preRecordingTime {
-    self.autoStopper.preRecordingTime = preRecordingTime;
-}
-
-- (NSTimeInterval)levelSampleTime {
-    return self.autoStopper.levelSampleTime;
-}
-
-- (void)setLevelSampleTime:(NSTimeInterval)levelSampleTime {
-    self.autoStopper.levelSampleTime = levelSampleTime;
-}
-
-- (NSTimeInterval)silentStopRecordTime {
-    return self.autoStopper.silentStopRecordTime;
-}
-
-- (void)setSilentStopRecordTime:(NSTimeInterval)silentStopRecordTime {
-    self.autoStopper.silentStopRecordTime = silentStopRecordTime;
-}
 
 @end

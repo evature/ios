@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 #import "EVDataProducer.h"
-#import "EVAudioRecorderAutoStopper.h"
 #import "NSError+EVA.h"
 
 
@@ -18,12 +17,10 @@
 @protocol EVAudioRecorderDelegate <NSObject>
 
 - (void)recorderStartedRecording:(EVAudioRecorder*)recorder;
-- (void)recorderFinishedRecording:(EVAudioRecorder *)recorder;
-- (void)recorder:(EVAudioRecorder*)recorder peakVolumeLevel:(float)peakLevel andAverageVolumeLevel:(float)averageLevel;
 
 @end
 
-@interface EVAudioRecorder : NSObject <EVDataProducer, EVAudioRecorderAutoStopperDelegate>
+@interface EVAudioRecorder : EVDataProducer
 
 @property (nonatomic, assign) UInt32 audioBufferSize;
 
@@ -33,20 +30,14 @@
 @property (nonatomic, assign) UInt32 audioNumberOfChannels;
 @property (nonatomic, assign) UInt32 audioBitsPerSample;
 
-@property (nonatomic, assign) NSTimeInterval minNoiseTime;  // must have noise for at least this much time to start considering silence
-@property (nonatomic, assign) NSTimeInterval preRecordingTime; // will start listening to noise/silence only after this time
-@property (nonatomic, assign) NSTimeInterval levelSampleTime; // time of audio sample for level meter
-@property (nonatomic, assign) NSTimeInterval silentStopRecordTime; // time of silence for record stop
 
 @property (nonatomic, assign) BOOL isRecording;
 
-- (void)cancel;
 
 @property (nonatomic, assign) id<EVAudioRecorderDelegate> delegate;
 
-
-- (void)startRecording:(NSTimeInterval)maxRecordingTime;
-- (void)startRecording:(NSTimeInterval)maxRecordingTime withAutoStop:(BOOL)autoStop;
+- (id)initWithErrorHandler:(id<EVErrorHandler>)errorHandler;
+- (void)startRecordingWithAutoStop:(BOOL)autoStop;
 - (void)stopRecording;
-
+- (void)provideCurrentPeakPower:(float*)peakPower andAveragePower:(float*)averagePower;
 @end

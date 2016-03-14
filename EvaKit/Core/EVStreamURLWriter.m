@@ -56,16 +56,21 @@
 
 @end
 
+int streamWriters = 0;
+int streamWritersDealloced = 0;
+
 @implementation EVStreamURLWriter
 
-@synthesize errorHandler;
 
 - (instancetype)initWithURL:(NSURL*)anURL
                     headers:(NSDictionary*)headers
                  bufferSize:(NSUInteger)bufferSize
           connectionTimeout:(NSTimeInterval)timeout
                    delegate:(id<EVStreamURLWriterDelegate>)delegate {
-    self = [super init];
+    
+    streamWriters++;
+    NSString *name = [NSString stringWithFormat:@"StreamWriter-%d", streamWriters];
+    self = [super initWithName:name andErrorHandler:delegate];
     if (self != nil) {
         self.delegate = delegate;
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:anURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
@@ -98,17 +103,22 @@
             self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
         });
     }
+    EV_LOG_DEBUG(@"%@ initialized", self.name);
     return self;
 }
 
 
 - (void)dealloc {
+    streamWritersDealloced++;
+    EV_LOG_DEBUG(@"Deallocated StreamWriters %d", streamWritersDealloced);
     self.connection = nil;
     self.dataStream = nil;
     [super dealloc];
 }
 
-- (void)producer:(id<EVDataProducer>)producer hasNewData:(NSData*)data {
+
+- (void)producer:(EVDataProducer*)producer hasNewData:(NSData*)data {
+    EV_LOG_DEBUG(@"%@ Has new data of length %lu from %@", self.name, (unsigned long)[data length], producer.name);
     if (!_streamOpened && !_connectionError) {
         [_dataStream open];
         _streamOpened = YES;
@@ -129,6 +139,7 @@
 }
 
 - (void)cancel {
+    [super cancel];
     [self.connection cancel];
     if (_streamOpened) {
         [_dataStream close];
@@ -138,11 +149,7 @@
     self.connection = nil;
 }
 
-- (void)producerStarted:(id<EVDataProducer>)producer {
-    // Do nothing.
-}
-
-- (void)producerFinished:(id<EVDataProducer>)producer {
+- (void)producerFinished:(EVDataProducer*)producer {
     if (_streamOpened) {
         _streamOpened = NO;
         [_dataStream close];
@@ -154,7 +161,7 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     _connectionError = YES;
     self.connection = nil;
-    [self.errorHandler provider:self gotAnError:error];
+    [self.errorHandler node:self gotAnError:error];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

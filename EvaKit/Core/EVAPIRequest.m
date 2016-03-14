@@ -19,7 +19,7 @@
 @implementation EVAPIRequest
 
 - (instancetype)initWithURL:(NSURL*)URL timeout:(NSTimeInterval)timeout andDelegate:(id<EVAPIRequestDelegate>)delegate {
-    self = [super init];
+    self = [super initWithName:@"APIRequest" andErrorHandler:delegate];
     if (self != nil) {
         NSURLRequest* request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
         self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
@@ -43,11 +43,12 @@
 - (void)cancel {
     [self.connection cancel];
     self.connection = nil;
+    [super cancel];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     self.connection = nil;
-    [self.delegate apiRequest:self gotAnError:error];
+    [self.delegate node:self gotAnError:error];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -60,7 +61,7 @@
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
     if (error != nil) {
         EV_LOG_ERROR("Can't read json: %@", error);
-        [self.delegate apiRequest:self gotAnError:error];
+        [self.delegate node:self gotAnError:error];
     } else {
         [self.delegate apiRequest:self gotResponse:json];
     }

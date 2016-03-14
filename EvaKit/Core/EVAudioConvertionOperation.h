@@ -19,4 +19,6 @@
 //This option used for precalculations in encoder. Can be 0
 @property (nonatomic, assign) unsigned int maxRecordingTime;
 
+- (id)initWithErrorHandler:(id<EVErrorHandler>)errorHandler;
+
 @end

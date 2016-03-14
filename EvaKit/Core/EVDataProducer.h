@@ -8,33 +8,51 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol EVDataConsumer;
 @protocol EVErrorHandler;
+@protocol EVDataConsumer;
 
-@protocol EVDataProducer <NSObject>
+// Nodes have a name (for debug) and can be canceled or notify an error
+@interface EVDataNode : NSObject
+- (instancetype) initWithName:(NSString*)name andErrorHandler:(id<EVErrorHandler>) errorHandler;
+- (void)cancel;
 
-@property (nonatomic, assign, readwrite) id<EVDataConsumer> dataConsumer;
-@property (nonatomic, assign, readwrite) id<EVErrorHandler> errorHandler;
+@property (atomic, assign, readwrite) bool canceled;
+@property (nonatomic, strong, readonly) NSString* name;
+@property (nonatomic, strong, readwrite) id<EVErrorHandler> errorHandler;
+
+@end
+
+
+// producer has a FIFO queue of operations it produced,  and a consumer which handles these operations
+@interface EVDataProducer: EVDataNode
+
+// async Fifo, pass the events to the consumer
+- (void)propagateCancel;
+- (void)propagateProducerStarted;
+- (void)propagateProducerFinished;
+- (void)propagateHasNewData:(NSData*)data;
+        
+- (void)checkAndWaitForSpaceInQueue;
+
+- (instancetype)initWithOperationChainLength:(NSUInteger)length  andName:(NSString*)name andErrorHandler:(id<EVErrorHandler>) errorHandler;
+
+@property (nonatomic, assign, readwrite) EVDataNode<EVDataConsumer>* dataConsumer;
+@property (nonatomic, assign, readonly, getter=getOperationQueue) dispatch_queue_t operationQueue;
 
 
 @end
 
 
-@protocol EVDataConsumer <NSObject>
-
-@required
-- (void)producer:(id<EVDataProducer>)producer hasNewData:(NSData*)data;
-@property (nonatomic, assign, readwrite) id<EVErrorHandler> errorHandler;
-
+// Consumer processes the events
+@protocol EVDataConsumer
+- (void)producer:(EVDataProducer*)producer hasNewData:(NSData*)data;
 @optional
-- (void)producerStarted:(id<EVDataProducer>)producer;
-- (void)producerFinished:(id<EVDataProducer>)producer;
+- (void)producerStarted:(EVDataProducer*)producer;
+- (void)producerFinished:(EVDataProducer*)producer;
 @end
 
 
 
 @protocol EVErrorHandler <NSObject>
-
-- (void)provider:(id<NSObject>)provider gotAnError:(NSError*)error;  //either consumer or producer
-
+- (void)node:(EVDataNode*)node gotAnError:(NSError*)error;  //either consumer or producer
 @end

@@ -15,6 +15,7 @@
 #import "EVAudioRecorder.h"
 #import "EVAudioConvertionOperation.h"
 #import "EVAudioDataStreamer.h"
+#import "EVAudioAutoStopper.h"
 #import "EVLocationManager.h"
 #import "EVApplicationSoundDelegate.h"
 #import "NSTimeZone+EVA.h"
@@ -24,7 +25,7 @@
 #define EV_HOST_ADDRESS_FOR_TEXT  EV_HOST_ADDRESS
 #define EV_API_VERSION @"v1.0"
 
-@interface EVApplication () <EVAudioRecorderDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate, EVAPIRequestDelegate, EVApplicationSoundDelegate, EVErrorHandler>
+@interface EVApplication () <EVAudioRecorderDelegate, EVAutoStopperDelegate, EVAudioDataStreamerDelegate, EVLocationManagerDelegate, EVAPIRequestDelegate, EVApplicationSoundDelegate, EVErrorHandler>
 
 @property (nonatomic, strong, readwrite) NSString* APIKey;
 @property (nonatomic, strong, readwrite) NSString* siteCode;
@@ -37,6 +38,7 @@
 @property (nonatomic, strong, readwrite) EVLocationManager *locationManager;
 
 @property (nonatomic, strong, readwrite) EVAudioRecorder* soundRecorder;
+@property (nonatomic, strong, readwrite) EVAudioAutoStopper* autoStopper;
 @property (nonatomic, strong, readwrite) EVAudioConvertionOperation* flacConverter;
 @property (nonatomic, strong, readwrite) EVAudioDataStreamer* dataStreamer;
 
@@ -110,8 +112,11 @@
     return sharedInstance;
 }
 
-- (void)provider:(id<NSObject>)provider gotAnError:(NSError *)error {
-    EV_LOG_ERROR(@"Provider %@ got an Error: %@", provider, error);
+- (void)node:(EVDataNode*)node gotAnError:(NSError *)error {
+    EV_LOG_ERROR(@"Node %@ got an Error: %@", node.name, error);
+    [[self currentApiRequest] cancel];
+    self.currentApiRequest = nil;
+    [[self soundRecorder] cancel];
     [error retain];
     dispatch_async(dispatch_get_main_queue(), ^{
         [error autorelease];
@@ -125,9 +130,8 @@
 
 
 - (void)setupRecorderChain {
-    self.soundRecorder = [[EVAudioRecorder new] autorelease];
+    self.soundRecorder = [[[EVAudioRecorder alloc] initWithErrorHandler:self] autorelease];
     self.soundRecorder.delegate = self;
-    self.soundRecorder.errorHandler = self;
     
     self.soundRecorder.audioFormat = kAudioFormatLinearPCM;
     self.soundRecorder.audioFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
@@ -135,24 +139,32 @@
     self.soundRecorder.audioNumberOfChannels = 1;
     self.soundRecorder.audioBitsPerSample = 16;
     
-    self.soundRecorder.levelSampleTime = 0.03; // how often check silence moments
-    self.soundRecorder.minNoiseTime = 0.10;  // must have noise for at least this much time to start considering silence
-    self.soundRecorder.preRecordingTime = 0.12; // will start listening to noise/silence only after this time
-    self.soundRecorder.silentStopRecordTime = 0.7; // time of silence for record stop
-
     
-    self.flacConverter = [[EVAudioConvertionOperation new] autorelease];
+    self.autoStopper = [[[EVAudioAutoStopper alloc] initWithDelegate:self] autorelease];
+    self.autoStopper.errorHandler = self;
+    self.autoStopper.minNoiseTime = 0.2;  // must have noise for at least this much time to start considering silence
+    self.autoStopper.preRecordingTime = 0.15; // will start listening to noise/silence only after this time
+    //    self.autoStopper.silentStopRecordTime = 0.3; // time of silence for record stop
+    self.autoStopper.silentPeriodValueAtT0 = 0.3;
+    self.autoStopper.silentPeriodValueAtT1 = 0.3;
+    self.autoStopper.timeT0 = 1.0;
+    self.autoStopper.timeT1 = 3.0;
+    self.autoStopper.maxRecordingTime = self.maxRecordingTime;
+    self.autoStopper.levelSampleTime = 0.03; // how oft to visualize the sound
+    self.autoStopper.vadMode = 3; // aggressive mode 0..3   - 3 is the highest chance to detect silence
+    
+    self.flacConverter = [[[EVAudioConvertionOperation alloc] initWithErrorHandler:self] autorelease];
     self.flacConverter.sampleRate = 16000;
     self.flacConverter.bitsPerSample = 16;
     self.flacConverter.numberOfChannels = 1;
-    self.flacConverter.errorHandler = self;
+    self.flacConverter.maxRecordingTime = self.maxRecordingTime;
     
-    self.dataStreamer = [[[EVAudioDataStreamer alloc] initWithOperationChainLength:10] autorelease];
+    self.dataStreamer = [[[EVAudioDataStreamer alloc] initWithOperationChainLength:10 andErrorHandler:self] autorelease];
     self.dataStreamer.sampleRate = 16000;
     self.dataStreamer.delegate = self;
-    self.dataStreamer.errorHandler = self;
     
-    self.soundRecorder.dataConsumer = self.flacConverter;
+    self.soundRecorder.dataConsumer = self.autoStopper;
+    self.autoStopper.dataConsumer = self.flacConverter;
     self.flacConverter.dataConsumer = self.dataStreamer;
 }
 
@@ -295,7 +307,7 @@
     viewCtrl.evApplication = self;
     self.delegate = viewCtrl;
     viewCtrl.delegate = delegate;
-   
+    
     [viewCtrl updateViewFromSettings:viewSettings];
     [ctrl presentViewController:viewCtrl animated:YES completion:^{
         if (self.useLocationServices) {
@@ -307,6 +319,7 @@
 - (void)hideChatViewController:(UIResponder*)sender {
     self.isControllerShown = NO;
     self.delegate = nil;
+    self.isReady = YES;
     if (self.soundRecorder.isRecording) {
         [self cancelRecording];
     }
@@ -362,10 +375,10 @@
         }
     }
     [urlStr appendFormat:@"&audio_files_used=%@%@%@%@",
-                         [self soundForState:EVApplicationStateSoundRecordingStarted] == nil ? @"N": @"Y",
-                         [self soundForState:EVApplicationStateSoundRequestFinished] == nil ? @"N" : @"Y",
-                         [self soundForState:EVApplicationStateSoundRecordingStoped] == nil ? @"N" : @"Y",
-                         [self soundForState:EVApplicationStateSoundCancelled] == nil ? @"N" : @"Y"];
+     [self soundForState:EVApplicationStateSoundRecordingStarted] == nil ? @"N": @"Y",
+     [self soundForState:EVApplicationStateSoundRequestFinished] == nil ? @"N" : @"Y",
+     [self soundForState:EVApplicationStateSoundRecordingStoped] == nil ? @"N" : @"Y",
+     [self soundForState:EVApplicationStateSoundCancelled] == nil ? @"N" : @"Y"];
     
     for (NSString* param in [self.extraParameters allKeys]) {
         id val = [self.extraParameters objectForKey:param];
@@ -454,7 +467,7 @@
     if (state == EVApplicationStateSoundRecordingStarted && [self soundForState:state]) {
         [self soundForState:state].delegate = nil;
     }
-
+    
     if (sound == nil) {
         [dict removeObjectForKey:@(state)];
     } else {
@@ -466,7 +479,8 @@
 }
 
 -(void)didFinishPlay:(EVApplicationSound*)sound {
-    [self.soundRecorder startRecording:self.maxRecordingTime withAutoStop:self.autoStop];
+    EV_LOG_INFO(@"Did finish play");
+    [self.soundRecorder startRecordingWithAutoStop:self.autoStop];
 }
 
 // Start record from current active Audio, If 'withNewSession' is set to 'FALSE' the function keeps last session. //
@@ -487,10 +501,12 @@
     }
     self.isReady = NO;
     self.autoStop = autoStop;
-
+    
     if ([self soundForState:EVApplicationStateSoundRecordingStarted] != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self soundForState:EVApplicationStateSoundRecordingStarted] play];
+            // startRecording will be triggered by the didFinishPlay
+            //[self.soundRecorder startRecording:self.maxRecordingTime withAutoStop:self.autoStop];
         });
     }
     else {
@@ -501,15 +517,30 @@
 // Stop record, Would send the record to Eva for analyze //
 - (void)stopRecording {
     [self.soundRecorder stopRecording];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self soundForState:EVApplicationStateSoundRecordingStoped] play];
+        if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsStoped:)]) {
+            [self.delegate evApplicationRecordingIsStoped:self];
+        }
+    });
 }
+
+- (void)stopperTimeStopEvent:(EVAudioAutoStopper*)stopper {
+    [self stopRecording];
+}
+- (void)stopperSilenceStopEvent:(EVAudioAutoStopper*)stopper   stoppedAtFrame:(int)frame {
+    if (_autoStop) {
+        [self stopRecording];
+    }
+}
+
+
 
 // Cancel record, Would cancel operation, record won't send to Eva (don't expect response) //
 - (void)cancelRecording {
     [self.currentApiRequest cancel];
-    [self.dataStreamer cancel];
-    [self.flacConverter cancel];
     [self.soundRecorder cancel];
-
+    
     [[self soundForState:EVApplicationStateSoundCancelled] play];
     if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsCancelled:)]) {
         [self.delegate evApplicationRecordingIsCancelled:self];
@@ -517,7 +548,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.isReady = YES;
     });
-
+    
 }
 
 
@@ -538,7 +569,7 @@
         self.currentSessionID = EV_NEW_SESSION_ID;
     }
     NSString* urlStr = [self getURLStringWithServer:self.textServerHost];
-    urlStr = [urlStr stringByAppendingFormat:@"&input_text=%@", [text stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+    urlStr = [urlStr stringByAppendingFormat:@"&input_text=%@", [[text stringByReplacingOccurrencesOfString:@" " withString:@"+"] stringByReplacingOccurrencesOfString:@"&" withString:@"%26"]];
     NSURL* url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [self apiQuery:url];
 }
@@ -574,7 +605,7 @@
         });
     }
     @catch (NSException *exception) {
-        [self provider:streamer gotAnError:[NSError errorWithCode:100 andDescription:[exception reason]]];
+        [self node:streamer gotAnError:[NSError errorWithCode:100 andDescription:[exception reason]]];
     }
 }
 
@@ -583,10 +614,6 @@
     self.currentApiRequest = nil;
 }
 
-- (void)apiRequest:(EVAPIRequest *)request gotAnError:(NSError*)error {
-    [self provider:request gotAnError:error];
-    self.currentApiRequest = nil;
-}
 
 - (void)locationManager:(EVLocationManager*)manager didObtainNewLongitude:(double)lng andLatitude:(double)lat {
     self.deviceLatitude = lat;
@@ -599,7 +626,14 @@
 }
 
 
-- (void)recorder:(EVAudioRecorder*)recorder peakVolumeLevel:(float)peakLevel andAverageVolumeLevel:(float)averageLevel {
+
+// Provide this for obtaining sound power
+- (void)provideCurrentPeakPower:(float*)peakPower andAveragePower:(float*)averagePower {
+    [self.soundRecorder provideCurrentPeakPower:peakPower andAveragePower:averagePower];
+}
+
+
+- (void)visualizePeakVolumeLevel:(float)peakLevel andAverageVolumeLevel:(float)averageLevel {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.sendVolumeLevelUpdates && [self.delegate respondsToSelector:@selector(evApplication:recordingVolumePeak:andAverage:)]) {
             [self.delegate evApplication:self recordingVolumePeak:peakLevel andAverage:averageLevel];
@@ -613,13 +647,5 @@
     }
 }
 
-- (void)recorderFinishedRecording:(EVAudioRecorder *)recorder {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[self soundForState:EVApplicationStateSoundRecordingStoped] play];
-        if ([self.delegate respondsToSelector:@selector(evApplicationRecordingIsStoped:)]) {
-            [self.delegate evApplicationRecordingIsStoped:self];
-        }
-    });
-}
 
 @end

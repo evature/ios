@@ -31,6 +31,63 @@
 		94613E711C50DF5E003F5D42 /* EvaKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E701C50DF5E003F5D42 /* EvaKitTests.m */; };
 		94613E731C50DF5E003F5D42 /* EvaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96675F321B457F1D00494BAA /* EvaKit.framework */; };
 		94613E891C51330B003F5D42 /* EvaKitTestFlightSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */; };
+		94F42CB11C96CF5F00BAE2D7 /* EVDataProducer.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CAD1C96CF5F00BAE2D7 /* EVDataProducer.h */; };
+		94F42CB21C96CF5F00BAE2D7 /* EVDataProducer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CAE1C96CF5F00BAE2D7 /* EVDataProducer.m */; };
+		94F42CB31C96CF5F00BAE2D7 /* EVAudioChainOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CAF1C96CF5F00BAE2D7 /* EVAudioChainOperation.h */; };
+		94F42CB41C96CF5F00BAE2D7 /* EVAudioChainOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CB01C96CF5F00BAE2D7 /* EVAudioChainOperation.m */; };
+		94F42CBD1C96CFC200BAE2D7 /* EVAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CB51C96CFC200BAE2D7 /* EVAudioRecorder.h */; };
+		94F42CBE1C96CFC200BAE2D7 /* EVAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CB61C96CFC200BAE2D7 /* EVAudioRecorder.m */; };
+		94F42CBF1C96CFC200BAE2D7 /* EVAudioConvertionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CB71C96CFC200BAE2D7 /* EVAudioConvertionOperation.h */; };
+		94F42CC01C96CFC200BAE2D7 /* EVAudioConvertionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CB81C96CFC200BAE2D7 /* EVAudioConvertionOperation.m */; };
+		94F42CC11C96CFC200BAE2D7 /* EVAudioAutoStopper.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CB91C96CFC200BAE2D7 /* EVAudioAutoStopper.h */; };
+		94F42CC21C96CFC200BAE2D7 /* EVAudioAutoStopper.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CBA1C96CFC200BAE2D7 /* EVAudioAutoStopper.m */; };
+		94F42CC31C96CFC200BAE2D7 /* EVAudioDataStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42CBB1C96CFC200BAE2D7 /* EVAudioDataStreamer.h */; };
+		94F42CC41C96CFC200BAE2D7 /* EVAudioDataStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F42CBC1C96CFC200BAE2D7 /* EVAudioDataStreamer.m */; };
+		94F42D3A1C96D16500BAE2D7 /* complex_bit_reverse.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D051C96D16500BAE2D7 /* complex_bit_reverse.c */; };
+		94F42D3B1C96D16500BAE2D7 /* complex_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D061C96D16500BAE2D7 /* complex_fft.c */; };
+		94F42D3C1C96D16500BAE2D7 /* copy_set_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D071C96D16500BAE2D7 /* copy_set_operations.c */; };
+		94F42D3D1C96D16500BAE2D7 /* cross_correlation.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D081C96D16500BAE2D7 /* cross_correlation.c */; };
+		94F42D3E1C96D16500BAE2D7 /* division_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D091C96D16500BAE2D7 /* division_operations.c */; };
+		94F42D3F1C96D16500BAE2D7 /* downsample_fast.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0A1C96D16500BAE2D7 /* downsample_fast.c */; };
+		94F42D401C96D16500BAE2D7 /* energy.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0B1C96D16500BAE2D7 /* energy.c */; };
+		94F42D411C96D16500BAE2D7 /* get_hanning_window.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0C1C96D16500BAE2D7 /* get_hanning_window.c */; };
+		94F42D421C96D16500BAE2D7 /* get_scaling_square.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0D1C96D16500BAE2D7 /* get_scaling_square.c */; };
+		94F42D431C96D16500BAE2D7 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0E1C96D16500BAE2D7 /* Makefile */; };
+		94F42D441C96D16500BAE2D7 /* min_max_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0F1C96D16500BAE2D7 /* min_max_operations.c */; };
+		94F42D451C96D16500BAE2D7 /* real_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D101C96D16500BAE2D7 /* real_fft.c */; };
+		94F42D461C96D16500BAE2D7 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D111C96D16500BAE2D7 /* resample.c */; };
+		94F42D471C96D16500BAE2D7 /* resample_48khz.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D121C96D16500BAE2D7 /* resample_48khz.c */; };
+		94F42D481C96D16500BAE2D7 /* resample_by_2.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D131C96D16500BAE2D7 /* resample_by_2.c */; };
+		94F42D491C96D16500BAE2D7 /* resample_by_2_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D141C96D16500BAE2D7 /* resample_by_2_internal.c */; };
+		94F42D4A1C96D16500BAE2D7 /* resample_fractional.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D151C96D16500BAE2D7 /* resample_fractional.c */; };
+		94F42D4B1C96D16500BAE2D7 /* spl_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D161C96D16500BAE2D7 /* spl_init.c */; };
+		94F42D4C1C96D16500BAE2D7 /* spl_sqrt.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D171C96D16500BAE2D7 /* spl_sqrt.c */; };
+		94F42D4D1C96D16500BAE2D7 /* spl_sqrt_floor.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */; };
+		94F42D4E1C96D16500BAE2D7 /* spl_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D191C96D16500BAE2D7 /* spl_version.c */; };
+		94F42D4F1C96D16500BAE2D7 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1A1C96D16500BAE2D7 /* test.c */; };
+		94F42D501C96D16500BAE2D7 /* testnoise.raw in Resources */ = {isa = PBXBuildFile; fileRef = 94F42D1B1C96D16500BAE2D7 /* testnoise.raw */; };
+		94F42D511C96D16500BAE2D7 /* testnoise.vad in Resources */ = {isa = PBXBuildFile; fileRef = 94F42D1C1C96D16500BAE2D7 /* testnoise.vad */; };
+		94F42D521C96D16500BAE2D7 /* vad_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1D1C96D16500BAE2D7 /* vad_core.c */; };
+		94F42D531C96D16500BAE2D7 /* vad_filterbank.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */; };
+		94F42D541C96D16500BAE2D7 /* vad_gmm.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */; };
+		94F42D551C96D16500BAE2D7 /* vad_sp.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D201C96D16500BAE2D7 /* vad_sp.c */; };
+		94F42D561C96D16500BAE2D7 /* vector_scaling_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D211C96D16500BAE2D7 /* vector_scaling_operations.c */; };
+		94F42D571C96D16500BAE2D7 /* complex_fft_tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D251C96D16500BAE2D7 /* complex_fft_tables.h */; };
+		94F42D581C96D16500BAE2D7 /* real_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D271C96D16500BAE2D7 /* real_fft.h */; };
+		94F42D591C96D16500BAE2D7 /* signal_processing_library.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D281C96D16500BAE2D7 /* signal_processing_library.h */; };
+		94F42D5A1C96D16500BAE2D7 /* spl_inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D291C96D16500BAE2D7 /* spl_inl.h */; };
+		94F42D5B1C96D16500BAE2D7 /* spl_inl_armv7.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D2A1C96D16500BAE2D7 /* spl_inl_armv7.h */; };
+		94F42D5C1C96D16500BAE2D7 /* spl_inl_mips.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D2B1C96D16500BAE2D7 /* spl_inl_mips.h */; };
+		94F42D5D1C96D16500BAE2D7 /* resample_by_2_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D2C1C96D16500BAE2D7 /* resample_by_2_internal.h */; };
+		94F42D5E1C96D16500BAE2D7 /* webrtc_vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D2F1C96D16500BAE2D7 /* webrtc_vad.h */; };
+		94F42D5F1C96D16500BAE2D7 /* vad_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D301C96D16500BAE2D7 /* vad_core.h */; };
+		94F42D601C96D16500BAE2D7 /* vad_filterbank.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D311C96D16500BAE2D7 /* vad_filterbank.h */; };
+		94F42D611C96D16500BAE2D7 /* vad_gmm.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D321C96D16500BAE2D7 /* vad_gmm.h */; };
+		94F42D621C96D16500BAE2D7 /* vad_sp.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D331C96D16500BAE2D7 /* vad_sp.h */; };
+		94F42D631C96D16500BAE2D7 /* vad_unittest.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D341C96D16500BAE2D7 /* vad_unittest.h */; };
+		94F42D641C96D16500BAE2D7 /* cpu_features_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D371C96D16500BAE2D7 /* cpu_features_wrapper.h */; };
+		94F42D651C96D16500BAE2D7 /* typedefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F42D381C96D16500BAE2D7 /* typedefs.h */; };
+		94F42D661C96D16500BAE2D7 /* webrtc_vad.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D391C96D16500BAE2D7 /* webrtc_vad.c */; };
 		94F7BFF71C6CC5020045E190 /* EvaKitTestHotelSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */; };
 		94F7BFF91C6CC7680045E190 /* EvaBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */; };
 		94F7C0001C70C3B30045E190 /* EVCRMDataDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94F7BFFF1C70C3B30045E190 /* EVCRMDataDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,10 +113,6 @@
 		961221CD1C29A692004AE998 /* EVCallbackResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 961221CB1C29A692004AE998 /* EVCallbackResult.m */; };
 		9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */; };
 		9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */; };
-		9615BED31B727E5000F31F38 /* EVAudioDataStreamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */; };
-		9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615BED21B727E5000F31F38 /* EVAudioDataStreamer.m */; };
-		9634D3451B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9634D3431B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h */; };
-		9634D3461B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634D3441B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m */; };
 		96454A791B84D37A00C26FFD /* EVSabre.h in Headers */ = {isa = PBXBuildFile; fileRef = 96454A771B84D37A00C26FFD /* EVSabre.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96454A7A1B84D37A00C26FFD /* EVSabre.m in Sources */ = {isa = PBXBuildFile; fileRef = 96454A781B84D37A00C26FFD /* EVSabre.m */; };
 		96454A7D1B84D4D200C26FFD /* EVServiceAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 96454A7B1B84D4D200C26FFD /* EVServiceAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -176,8 +229,6 @@
 		969B71091B5CF20100588413 /* EVCollectionViewFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */; };
 		969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */; };
 		96A2D5F31B985F3400E9AF37 /* EVBool.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A2D5F21B985F3400E9AF37 /* EVBool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		96A7FA1C1B6B6861009D6561 /* EVAudioConvertionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A7FA1A1B6B6861009D6561 /* EVAudioConvertionOperation.h */; };
-		96A7FA1D1B6B6861009D6561 /* EVAudioConvertionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A7FA1B1B6B6861009D6561 /* EVAudioConvertionOperation.m */; };
 		96A7FA201B6B6F44009D6561 /* NSError+EVA.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */; };
 		96A7FA211B6B6F44009D6561 /* NSError+EVA.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */; };
 		96B46C9A1B60236400507A04 /* EVApplicationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B46C991B6009A500507A04 /* EVApplicationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -192,10 +243,6 @@
 		96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */; };
 		96D9C8571B546D5C00276ADA /* EvaKit_Trash.svg in Resources */ = {isa = PBXBuildFile; fileRef = 96D9C8561B546D5C00276ADA /* EvaKit_Trash.svg */; };
 		96D9C8591B54702300276ADA /* EvaKit_Undo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 96D9C8581B54702300276ADA /* EvaKit_Undo.svg */; };
-		96DEEA821B6A511000B000D2 /* EVAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 96DEEA801B6A511000B000D2 /* EVAudioRecorder.h */; };
-		96DEEA831B6A511000B000D2 /* EVAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEEA811B6A511000B000D2 /* EVAudioRecorder.m */; };
-		96DEEA8A1B6A872700B000D2 /* EVAudioChainOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 96DEEA881B6A872700B000D2 /* EVAudioChainOperation.h */; };
-		96DEEA8B1B6A872700B000D2 /* EVAudioChainOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEEA891B6A872700B000D2 /* EVAudioChainOperation.m */; };
 		96E014881B514FBE00E8ADE4 /* EVButtonLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */; };
 		96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E014871B514FBE00E8ADE4 /* EVButtonLayer.m */; };
 		96E0148C1B51533900E8ADE4 /* EVSVGLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E0148A1B51533900E8ADE4 /* EVSVGLayer.h */; };
@@ -272,6 +319,63 @@
 		94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestFlightSearch.m; sourceTree = "<group>"; };
 		94E64DA41C583A3D002E3F31 /* credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credentials.h; sourceTree = "<group>"; };
+		94F42CAD1C96CF5F00BAE2D7 /* EVDataProducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataProducer.h; sourceTree = "<group>"; };
+		94F42CAE1C96CF5F00BAE2D7 /* EVDataProducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataProducer.m; sourceTree = "<group>"; };
+		94F42CAF1C96CF5F00BAE2D7 /* EVAudioChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioChainOperation.h; sourceTree = "<group>"; };
+		94F42CB01C96CF5F00BAE2D7 /* EVAudioChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioChainOperation.m; sourceTree = "<group>"; };
+		94F42CB51C96CFC200BAE2D7 /* EVAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioRecorder.h; sourceTree = "<group>"; };
+		94F42CB61C96CFC200BAE2D7 /* EVAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioRecorder.m; sourceTree = "<group>"; };
+		94F42CB71C96CFC200BAE2D7 /* EVAudioConvertionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioConvertionOperation.h; sourceTree = "<group>"; };
+		94F42CB81C96CFC200BAE2D7 /* EVAudioConvertionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioConvertionOperation.m; sourceTree = "<group>"; };
+		94F42CB91C96CFC200BAE2D7 /* EVAudioAutoStopper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioAutoStopper.h; sourceTree = "<group>"; };
+		94F42CBA1C96CFC200BAE2D7 /* EVAudioAutoStopper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioAutoStopper.m; sourceTree = "<group>"; };
+		94F42CBB1C96CFC200BAE2D7 /* EVAudioDataStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioDataStreamer.h; sourceTree = "<group>"; };
+		94F42CBC1C96CFC200BAE2D7 /* EVAudioDataStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioDataStreamer.m; sourceTree = "<group>"; };
+		94F42D051C96D16500BAE2D7 /* complex_bit_reverse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = complex_bit_reverse.c; sourceTree = "<group>"; };
+		94F42D061C96D16500BAE2D7 /* complex_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = complex_fft.c; sourceTree = "<group>"; };
+		94F42D071C96D16500BAE2D7 /* copy_set_operations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = copy_set_operations.c; sourceTree = "<group>"; };
+		94F42D081C96D16500BAE2D7 /* cross_correlation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cross_correlation.c; sourceTree = "<group>"; };
+		94F42D091C96D16500BAE2D7 /* division_operations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = division_operations.c; sourceTree = "<group>"; };
+		94F42D0A1C96D16500BAE2D7 /* downsample_fast.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = downsample_fast.c; sourceTree = "<group>"; };
+		94F42D0B1C96D16500BAE2D7 /* energy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = energy.c; sourceTree = "<group>"; };
+		94F42D0C1C96D16500BAE2D7 /* get_hanning_window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get_hanning_window.c; sourceTree = "<group>"; };
+		94F42D0D1C96D16500BAE2D7 /* get_scaling_square.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get_scaling_square.c; sourceTree = "<group>"; };
+		94F42D0E1C96D16500BAE2D7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		94F42D0F1C96D16500BAE2D7 /* min_max_operations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = min_max_operations.c; sourceTree = "<group>"; };
+		94F42D101C96D16500BAE2D7 /* real_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = real_fft.c; sourceTree = "<group>"; };
+		94F42D111C96D16500BAE2D7 /* resample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample.c; sourceTree = "<group>"; };
+		94F42D121C96D16500BAE2D7 /* resample_48khz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample_48khz.c; sourceTree = "<group>"; };
+		94F42D131C96D16500BAE2D7 /* resample_by_2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample_by_2.c; sourceTree = "<group>"; };
+		94F42D141C96D16500BAE2D7 /* resample_by_2_internal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample_by_2_internal.c; sourceTree = "<group>"; };
+		94F42D151C96D16500BAE2D7 /* resample_fractional.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample_fractional.c; sourceTree = "<group>"; };
+		94F42D161C96D16500BAE2D7 /* spl_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_init.c; sourceTree = "<group>"; };
+		94F42D171C96D16500BAE2D7 /* spl_sqrt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_sqrt.c; sourceTree = "<group>"; };
+		94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_sqrt_floor.c; sourceTree = "<group>"; };
+		94F42D191C96D16500BAE2D7 /* spl_version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_version.c; sourceTree = "<group>"; };
+		94F42D1A1C96D16500BAE2D7 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		94F42D1B1C96D16500BAE2D7 /* testnoise.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = testnoise.raw; sourceTree = "<group>"; };
+		94F42D1C1C96D16500BAE2D7 /* testnoise.vad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testnoise.vad; sourceTree = "<group>"; };
+		94F42D1D1C96D16500BAE2D7 /* vad_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_core.c; sourceTree = "<group>"; };
+		94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_filterbank.c; sourceTree = "<group>"; };
+		94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_gmm.c; sourceTree = "<group>"; };
+		94F42D201C96D16500BAE2D7 /* vad_sp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_sp.c; sourceTree = "<group>"; };
+		94F42D211C96D16500BAE2D7 /* vector_scaling_operations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vector_scaling_operations.c; sourceTree = "<group>"; };
+		94F42D251C96D16500BAE2D7 /* complex_fft_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = complex_fft_tables.h; sourceTree = "<group>"; };
+		94F42D271C96D16500BAE2D7 /* real_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = real_fft.h; sourceTree = "<group>"; };
+		94F42D281C96D16500BAE2D7 /* signal_processing_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signal_processing_library.h; sourceTree = "<group>"; };
+		94F42D291C96D16500BAE2D7 /* spl_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spl_inl.h; sourceTree = "<group>"; };
+		94F42D2A1C96D16500BAE2D7 /* spl_inl_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spl_inl_armv7.h; sourceTree = "<group>"; };
+		94F42D2B1C96D16500BAE2D7 /* spl_inl_mips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spl_inl_mips.h; sourceTree = "<group>"; };
+		94F42D2C1C96D16500BAE2D7 /* resample_by_2_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resample_by_2_internal.h; sourceTree = "<group>"; };
+		94F42D2F1C96D16500BAE2D7 /* webrtc_vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtc_vad.h; sourceTree = "<group>"; };
+		94F42D301C96D16500BAE2D7 /* vad_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad_core.h; sourceTree = "<group>"; };
+		94F42D311C96D16500BAE2D7 /* vad_filterbank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad_filterbank.h; sourceTree = "<group>"; };
+		94F42D321C96D16500BAE2D7 /* vad_gmm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad_gmm.h; sourceTree = "<group>"; };
+		94F42D331C96D16500BAE2D7 /* vad_sp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad_sp.h; sourceTree = "<group>"; };
+		94F42D341C96D16500BAE2D7 /* vad_unittest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vad_unittest.h; sourceTree = "<group>"; };
+		94F42D371C96D16500BAE2D7 /* cpu_features_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_features_wrapper.h; sourceTree = "<group>"; };
+		94F42D381C96D16500BAE2D7 /* typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typedefs.h; sourceTree = "<group>"; };
+		94F42D391C96D16500BAE2D7 /* webrtc_vad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = webrtc_vad.c; sourceTree = "<group>"; };
 		94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestHotelSearch.m; sourceTree = "<group>"; };
 		94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaBaseTest.m; sourceTree = "<group>"; };
 		94F7BFFA1C6CC7C00045E190 /* EvaBaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaBaseTest.h; sourceTree = "<group>"; };
@@ -298,10 +402,6 @@
 		961221CB1C29A692004AE998 /* EVCallbackResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCallbackResult.m; sourceTree = "<group>"; };
 		9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVStreamURLWriter.h; sourceTree = "<group>"; };
 		9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVStreamURLWriter.m; sourceTree = "<group>"; };
-		9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioDataStreamer.h; sourceTree = "<group>"; };
-		9615BED21B727E5000F31F38 /* EVAudioDataStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioDataStreamer.m; sourceTree = "<group>"; };
-		9634D3431B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioRecorderAutoStopper.h; sourceTree = "<group>"; };
-		9634D3441B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioRecorderAutoStopper.m; sourceTree = "<group>"; };
 		96454A771B84D37A00C26FFD /* EVSabre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSabre.h; sourceTree = "<group>"; };
 		96454A781B84D37A00C26FFD /* EVSabre.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVSabre.m; sourceTree = "<group>"; };
 		96454A7B1B84D4D200C26FFD /* EVServiceAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVServiceAttributes.h; sourceTree = "<group>"; };
@@ -427,8 +527,6 @@
 		969B71071B5CF20100588413 /* EVCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		969B71081B5CF20100588413 /* EVCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		96A2D5F21B985F3400E9AF37 /* EVBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVBool.h; sourceTree = "<group>"; };
-		96A7FA1A1B6B6861009D6561 /* EVAudioConvertionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioConvertionOperation.h; sourceTree = "<group>"; };
-		96A7FA1B1B6B6861009D6561 /* EVAudioConvertionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioConvertionOperation.m; sourceTree = "<group>"; };
 		96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+EVA.h"; sourceTree = "<group>"; };
 		96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+EVA.m"; sourceTree = "<group>"; };
 		96B46C991B6009A500507A04 /* EVApplicationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVApplicationDelegate.h; sourceTree = "<group>"; };
@@ -443,11 +541,6 @@
 		96CDF6831B4C76E7001FC7B5 /* EVVoiceChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVVoiceChatViewController.m; sourceTree = "<group>"; };
 		96D9C8561B546D5C00276ADA /* EvaKit_Trash.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EvaKit_Trash.svg; sourceTree = "<group>"; };
 		96D9C8581B54702300276ADA /* EvaKit_Undo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EvaKit_Undo.svg; sourceTree = "<group>"; };
-		96DEEA801B6A511000B000D2 /* EVAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioRecorder.h; sourceTree = "<group>"; };
-		96DEEA811B6A511000B000D2 /* EVAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioRecorder.m; sourceTree = "<group>"; };
-		96DEEA871B6A841700B000D2 /* EVDataProducer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EVDataProducer.h; sourceTree = "<group>"; };
-		96DEEA881B6A872700B000D2 /* EVAudioChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioChainOperation.h; sourceTree = "<group>"; };
-		96DEEA891B6A872700B000D2 /* EVAudioChainOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAudioChainOperation.m; sourceTree = "<group>"; };
 		96E014861B514FBE00E8ADE4 /* EVButtonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVButtonLayer.h; sourceTree = "<group>"; };
 		96E014871B514FBE00E8ADE4 /* EVButtonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVButtonLayer.m; sourceTree = "<group>"; };
 		96E0148A1B51533900E8ADE4 /* EVSVGLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVSVGLayer.h; sourceTree = "<group>"; };
@@ -549,6 +642,122 @@
 			path = EvaKitTests;
 			sourceTree = "<group>";
 		};
+		94F42D041C96D16500BAE2D7 /* webrtc-vad */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D051C96D16500BAE2D7 /* complex_bit_reverse.c */,
+				94F42D061C96D16500BAE2D7 /* complex_fft.c */,
+				94F42D071C96D16500BAE2D7 /* copy_set_operations.c */,
+				94F42D081C96D16500BAE2D7 /* cross_correlation.c */,
+				94F42D091C96D16500BAE2D7 /* division_operations.c */,
+				94F42D0A1C96D16500BAE2D7 /* downsample_fast.c */,
+				94F42D0B1C96D16500BAE2D7 /* energy.c */,
+				94F42D0C1C96D16500BAE2D7 /* get_hanning_window.c */,
+				94F42D0D1C96D16500BAE2D7 /* get_scaling_square.c */,
+				94F42D0E1C96D16500BAE2D7 /* Makefile */,
+				94F42D0F1C96D16500BAE2D7 /* min_max_operations.c */,
+				94F42D101C96D16500BAE2D7 /* real_fft.c */,
+				94F42D111C96D16500BAE2D7 /* resample.c */,
+				94F42D121C96D16500BAE2D7 /* resample_48khz.c */,
+				94F42D131C96D16500BAE2D7 /* resample_by_2.c */,
+				94F42D141C96D16500BAE2D7 /* resample_by_2_internal.c */,
+				94F42D151C96D16500BAE2D7 /* resample_fractional.c */,
+				94F42D161C96D16500BAE2D7 /* spl_init.c */,
+				94F42D171C96D16500BAE2D7 /* spl_sqrt.c */,
+				94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */,
+				94F42D191C96D16500BAE2D7 /* spl_version.c */,
+				94F42D1A1C96D16500BAE2D7 /* test.c */,
+				94F42D1B1C96D16500BAE2D7 /* testnoise.raw */,
+				94F42D1C1C96D16500BAE2D7 /* testnoise.vad */,
+				94F42D1D1C96D16500BAE2D7 /* vad_core.c */,
+				94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */,
+				94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */,
+				94F42D201C96D16500BAE2D7 /* vad_sp.c */,
+				94F42D211C96D16500BAE2D7 /* vector_scaling_operations.c */,
+				94F42D221C96D16500BAE2D7 /* webrtc */,
+				94F42D391C96D16500BAE2D7 /* webrtc_vad.c */,
+			);
+			path = "webrtc-vad";
+			sourceTree = "<group>";
+		};
+		94F42D221C96D16500BAE2D7 /* webrtc */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D231C96D16500BAE2D7 /* common_audio */,
+				94F42D351C96D16500BAE2D7 /* system_wrappers */,
+				94F42D381C96D16500BAE2D7 /* typedefs.h */,
+			);
+			path = webrtc;
+			sourceTree = "<group>";
+		};
+		94F42D231C96D16500BAE2D7 /* common_audio */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D241C96D16500BAE2D7 /* signal_processing */,
+				94F42D2D1C96D16500BAE2D7 /* vad */,
+			);
+			path = common_audio;
+			sourceTree = "<group>";
+		};
+		94F42D241C96D16500BAE2D7 /* signal_processing */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D251C96D16500BAE2D7 /* complex_fft_tables.h */,
+				94F42D261C96D16500BAE2D7 /* include */,
+				94F42D2C1C96D16500BAE2D7 /* resample_by_2_internal.h */,
+			);
+			path = signal_processing;
+			sourceTree = "<group>";
+		};
+		94F42D261C96D16500BAE2D7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D271C96D16500BAE2D7 /* real_fft.h */,
+				94F42D281C96D16500BAE2D7 /* signal_processing_library.h */,
+				94F42D291C96D16500BAE2D7 /* spl_inl.h */,
+				94F42D2A1C96D16500BAE2D7 /* spl_inl_armv7.h */,
+				94F42D2B1C96D16500BAE2D7 /* spl_inl_mips.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		94F42D2D1C96D16500BAE2D7 /* vad */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D2E1C96D16500BAE2D7 /* include */,
+				94F42D301C96D16500BAE2D7 /* vad_core.h */,
+				94F42D311C96D16500BAE2D7 /* vad_filterbank.h */,
+				94F42D321C96D16500BAE2D7 /* vad_gmm.h */,
+				94F42D331C96D16500BAE2D7 /* vad_sp.h */,
+				94F42D341C96D16500BAE2D7 /* vad_unittest.h */,
+			);
+			path = vad;
+			sourceTree = "<group>";
+		};
+		94F42D2E1C96D16500BAE2D7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D2F1C96D16500BAE2D7 /* webrtc_vad.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		94F42D351C96D16500BAE2D7 /* system_wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D361C96D16500BAE2D7 /* interface */,
+			);
+			path = system_wrappers;
+			sourceTree = "<group>";
+		};
+		94F42D361C96D16500BAE2D7 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				94F42D371C96D16500BAE2D7 /* cpu_features_wrapper.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
 		9608E80F1B4D40E200EB603D /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +784,7 @@
 				9659512C1B55BE3200B15AA2 /* UIImageEffects.m */,
 				969797A61B4BDF6700C0244D /* PocketSVG.h */,
 				969797A71B4BDF6700C0244D /* PocketSVG.m */,
+				94F42D041C96D16500BAE2D7 /* webrtc-vad */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -585,18 +795,18 @@
 				96804C441B86163E00FA9998 /* SearchModels */,
 				9679482F1B84911400198130 /* Models */,
 				96DEEA841B6A823D00B000D2 /* IO */,
-				96DEEA801B6A511000B000D2 /* EVAudioRecorder.h */,
-				96DEEA811B6A511000B000D2 /* EVAudioRecorder.m */,
-				96A7FA1A1B6B6861009D6561 /* EVAudioConvertionOperation.h */,
-				96A7FA1B1B6B6861009D6561 /* EVAudioConvertionOperation.m */,
 				96A7FA1E1B6B6F44009D6561 /* NSError+EVA.h */,
 				96A7FA1F1B6B6F44009D6561 /* NSError+EVA.m */,
-				9634D3431B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h */,
-				9634D3441B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m */,
-				9615BED11B727E5000F31F38 /* EVAudioDataStreamer.h */,
-				9615BED21B727E5000F31F38 /* EVAudioDataStreamer.m */,
 				9696BCF61B7375C8000E2104 /* EVLocationManager.h */,
 				9696BCF71B7375C8000E2104 /* EVLocationManager.m */,
+				94F42CB51C96CFC200BAE2D7 /* EVAudioRecorder.h */,
+				94F42CB61C96CFC200BAE2D7 /* EVAudioRecorder.m */,
+				94F42CB71C96CFC200BAE2D7 /* EVAudioConvertionOperation.h */,
+				94F42CB81C96CFC200BAE2D7 /* EVAudioConvertionOperation.m */,
+				94F42CB91C96CFC200BAE2D7 /* EVAudioAutoStopper.h */,
+				94F42CBA1C96CFC200BAE2D7 /* EVAudioAutoStopper.m */,
+				94F42CBB1C96CFC200BAE2D7 /* EVAudioDataStreamer.h */,
+				94F42CBC1C96CFC200BAE2D7 /* EVAudioDataStreamer.m */,
 				9696BCFA1B73C172000E2104 /* NSTimeZone+EVA.h */,
 				9696BCFB1B73C172000E2104 /* NSTimeZone+EVA.m */,
 				96C1EAF91B78D34800C6FEA4 /* EVLogger.h */,
@@ -885,9 +1095,10 @@
 		96DEEA841B6A823D00B000D2 /* IO */ = {
 			isa = PBXGroup;
 			children = (
-				96DEEA871B6A841700B000D2 /* EVDataProducer.h */,
-				96DEEA881B6A872700B000D2 /* EVAudioChainOperation.h */,
-				96DEEA891B6A872700B000D2 /* EVAudioChainOperation.m */,
+				94F42CAD1C96CF5F00BAE2D7 /* EVDataProducer.h */,
+				94F42CAE1C96CF5F00BAE2D7 /* EVDataProducer.m */,
+				94F42CAF1C96CF5F00BAE2D7 /* EVAudioChainOperation.h */,
+				94F42CB01C96CF5F00BAE2D7 /* EVAudioChainOperation.m */,
 				9615BECD1B725B5100F31F38 /* EVStreamURLWriter.h */,
 				9615BECE1B725B5100F31F38 /* EVStreamURLWriter.m */,
 				96804C401B8605C800FA9998 /* EVAPIRequest.h */,
@@ -910,31 +1121,41 @@
 				941824F41C5E72ED00D70F7A /* EVApplicationSoundDelegate.h in Headers */,
 				944C72A91C47AB76005B9EF3 /* EVFlightNavigateDelegate.h in Headers */,
 				968BBA681B95110F001EF0C9 /* EVSearchModel.h in Headers */,
+				94F42D611C96D16500BAE2D7 /* vad_gmm.h in Headers */,
 				96C1EAFB1B78D34800C6FEA4 /* EVLogger.h in Headers */,
 				94F7C0051C70C7F00045E190 /* EVCRMOpenMapModel.h in Headers */,
+				94F42CBD1C96CFC200BAE2D7 /* EVAudioRecorder.h in Headers */,
 				943F7A2B1C42A1A900B67894 /* EVNavigateFlowElement.h in Headers */,
 				9615BECF1B725B5100F31F38 /* EVStreamURLWriter.h in Headers */,
+				94F42D5F1C96D16500BAE2D7 /* vad_core.h in Headers */,
 				96CDF6801B4C6DEA001FC7B5 /* EVApplication.h in Headers */,
 				94F7C00D1C70D4870045E190 /* EVCRMCreateMeetingModel.h in Headers */,
+				94F42D5D1C96D16500BAE2D7 /* resample_by_2_internal.h in Headers */,
 				9608E8141B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.h in Headers */,
 				968BBA7E1B951F0E001EF0C9 /* EVChatMessage.h in Headers */,
+				94F42D5A1C96D16500BAE2D7 /* spl_inl.h in Headers */,
 				96454A851B84F44600C26FFD /* EVTravelers.h in Headers */,
 				9679ABC81B4E891300F475DE /* EVChatToolbarView.h in Headers */,
 				96454A791B84D37A00C26FFD /* EVSabre.h in Headers */,
+				94F42CB31C96CF5F00BAE2D7 /* EVAudioChainOperation.h in Headers */,
 				968BBA741B951266001EF0C9 /* EVCruiseSearchModel.h in Headers */,
+				94F42CC11C96CFC200BAE2D7 /* EVAudioAutoStopper.h in Headers */,
 				967948461B84A3C000198130 /* EVTime.h in Headers */,
 				967948321B84917B00198130 /* EVResponse.h in Headers */,
 				9679ABC41B4E82B600F475DE /* EVChatToolbarContentView.h in Headers */,
+				94F42D5E1C96D16500BAE2D7 /* webrtc_vad.h in Headers */,
 				96454A891B84FBF600C26FFD /* EVMoney.h in Headers */,
 				968934CF1B6160BA00885DAA /* EVViewControllerVisibilityObserverDelegate.h in Headers */,
 				9679484E1B84BC7A00198130 /* EVFlightAttributes.h in Headers */,
 				943F7A261C42929000B67894 /* EVCRMDataGetModel.h in Headers */,
+				94F42D5B1C96D16500BAE2D7 /* spl_inl_armv7.h in Headers */,
 				96454A911B851A3600C26FFD /* EVWarning.h in Headers */,
 				96454A8D1B85193A00C26FFD /* EVPNRAttributes.h in Headers */,
 				9679483A1B84950A00198130 /* EVDialog.h in Headers */,
 				9679483E1B84981C00198130 /* EVRequestAttributes.h in Headers */,
 				96454A951B851BA000C26FFD /* EVParsedText.h in Headers */,
 				967948421B84A14200198130 /* EVLocation.h in Headers */,
+				94F42D581C96D16500BAE2D7 /* real_fft.h in Headers */,
 				96804C2E1B85E1E500FA9998 /* EVFlowElement.h in Headers */,
 				96804C2A1B85E12E00FA9998 /* EVFlow.h in Headers */,
 				96804C321B85E89800FA9998 /* EVFlightFlowElement.h in Headers */,
@@ -944,8 +1165,10 @@
 				96804C361B85EA1700FA9998 /* EVReplyFlowElement.h in Headers */,
 				9412C4D31C0DD95E00ECA87C /* EVDataFlowElement.h in Headers */,
 				968BBA791B9512A2001EF0C9 /* EVHotelSearchDelegate.h in Headers */,
+				94F42CB11C96CF5F00BAE2D7 /* EVDataProducer.h in Headers */,
 				968BBA771B95128A001EF0C9 /* EVCruiseSearchDelegate.h in Headers */,
 				96454A811B84D7F200C26FFD /* EVCruiseAttributes.h in Headers */,
+				94F42D591C96D16500BAE2D7 /* signal_processing_library.h in Headers */,
 				961221C81C299ED2004AE998 /* EVStyledString.h in Headers */,
 				96804C471B86166300FA9998 /* EVSearchScope.h in Headers */,
 				968BBA631B950CED001EF0C9 /* EVFlightSearchDelegate.h in Headers */,
@@ -954,6 +1177,7 @@
 				940849261C68D70F00D95BDB /* EVCRMPhoneActionDelegate.h in Headers */,
 				940849241C68D6A600D95BDB /* EVCRMPhoneModel.h in Headers */,
 				941037771C01EDC1009A9A3F /* EVCRMAttributes.h in Headers */,
+				94F42D5C1C96D16500BAE2D7 /* spl_inl_mips.h in Headers */,
 				96A2D5F31B985F3400E9AF37 /* EVBool.h in Headers */,
 				96804C4B1B861E6400FA9998 /* EVSearchContext.h in Headers */,
 				96804C4F1B861F5700FA9998 /* EVSearchContextBase.h in Headers */,
@@ -963,18 +1187,22 @@
 				967948361B8492CE00198130 /* EVChat.h in Headers */,
 				9679484A1B84A6F000198130 /* EVHotelAttributes.h in Headers */,
 				9696BCF81B7375C8000E2104 /* EVLocationManager.h in Headers */,
+				94F42D651C96D16500BAE2D7 /* typedefs.h in Headers */,
 				96CDF6841B4C76E7001FC7B5 /* EVVoiceChatViewController.h in Headers */,
-				96DEEA8A1B6A872700B000D2 /* EVAudioChainOperation.h in Headers */,
+				94F42D641C96D16500BAE2D7 /* cpu_features_wrapper.h in Headers */,
+				94F42D571C96D16500BAE2D7 /* complex_fft_tables.h in Headers */,
+				94F42D601C96D16500BAE2D7 /* vad_filterbank.h in Headers */,
+				94F42CC31C96CFC200BAE2D7 /* EVAudioDataStreamer.h in Headers */,
 				96675F551B458F3900494BAA /* EVVoiceChatButton.h in Headers */,
-				96DEEA821B6A511000B000D2 /* EVAudioRecorder.h in Headers */,
 				968BBA701B951256001EF0C9 /* EVFlightSearchModel.h in Headers */,
 				9653D4261B5C6F9E00FC37AF /* EVDownButtonItem.h in Headers */,
+				94F42CBF1C96CFC200BAE2D7 /* EVAudioConvertionOperation.h in Headers */,
 				968934CC1B61587500885DAA /* EVViewControllerVisibilityObserver.h in Headers */,
 				94FAAFFE1C634DE100D1989B /* EVPhoneFlowElement.h in Headers */,
-				9615BED31B727E5000F31F38 /* EVAudioDataStreamer.h in Headers */,
+				94F42D621C96D16500BAE2D7 /* vad_sp.h in Headers */,
 				9608E80D1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.h in Headers */,
+				94F42D631C96D16500BAE2D7 /* vad_unittest.h in Headers */,
 				969797A81B4BDF6700C0244D /* PocketSVG.h in Headers */,
-				9634D3451B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.h in Headers */,
 				9653D41A1B5C164E00FC37AF /* EVSpringAnimation.h in Headers */,
 				968BBA601B9503F0001EF0C9 /* NSDate+EVA.h in Headers */,
 				9410377B1C01FE4D009A9A3F /* EVCRMNavigateModel.h in Headers */,
@@ -988,7 +1216,6 @@
 				966298031BBAC3E1005AC730 /* UIView+SizeCalculations.h in Headers */,
 				944C72AA1C47AB76005B9EF3 /* EVFlightNavigateModel.h in Headers */,
 				9696BCFC1B73C172000E2104 /* NSTimeZone+EVA.h in Headers */,
-				96A7FA1C1B6B6861009D6561 /* EVAudioConvertionOperation.h in Headers */,
 				968BBA6C1B951239001EF0C9 /* EVHotelSearchModel.h in Headers */,
 				9659512D1B55BE3200B15AA2 /* UIImageEffects.h in Headers */,
 				96E014901B5154E800E8ADE4 /* EVResizableShapeLayer.h in Headers */,
@@ -1147,9 +1374,11 @@
 				96804C551B8677AF00FA9998 /* EvaKit_voice_high.aif in Resources */,
 				96804C561B8677AF00FA9998 /* EvaKit_voice_low.aif in Resources */,
 				96D9C8571B546D5C00276ADA /* EvaKit_Trash.svg in Resources */,
+				94F42D501C96D16500BAE2D7 /* testnoise.raw in Resources */,
 				96D9C8591B54702300276ADA /* EvaKit_Undo.svg in Resources */,
 				9653D4231B5C6F7800FC37AF /* EvaKit_DownArrow.svg in Resources */,
 				96612BEE1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif in Resources */,
+				94F42D511C96D16500BAE2D7 /* testnoise.vad in Resources */,
 				9679ABCB1B4E8BC500F475DE /* EVVoiceChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1269,22 +1498,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				96C1EAFC1B78D34800C6FEA4 /* EVLogger.m in Sources */,
+				94F42D3F1C96D16500BAE2D7 /* downsample_fast.c in Sources */,
 				943F7A2C1C42A1A900B67894 /* EVNavigateFlowElement.m in Sources */,
 				9679484B1B84A6F000198130 /* EVHotelAttributes.m in Sources */,
 				944C72AC1C47D4EE005B9EF3 /* EVFlightNavigateModel.m in Sources */,
 				967948431B84A14200198130 /* EVLocation.m in Sources */,
-				9615BED41B727E5000F31F38 /* EVAudioDataStreamer.m in Sources */,
 				96804C3F1B85EFF300FA9998 /* EVQuestionFlowElement.m in Sources */,
+				94F42CB21C96CF5F00BAE2D7 /* EVDataProducer.m in Sources */,
 				9410377C1C01FE4D009A9A3F /* EVCRMNavigateModel.m in Sources */,
+				94F42CC01C96CFC200BAE2D7 /* EVAudioConvertionOperation.m in Sources */,
+				94F42D3D1C96D16500BAE2D7 /* cross_correlation.c in Sources */,
+				94F42D491C96D16500BAE2D7 /* resample_by_2_internal.c in Sources */,
 				9412C4D01C0DC7A300ECA87C /* EVCRMDataSetModel.m in Sources */,
+				94F42D531C96D16500BAE2D7 /* vad_filterbank.c in Sources */,
 				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,
 				9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */,
+				94F42D431C96D16500BAE2D7 /* Makefile in Sources */,
+				94F42D541C96D16500BAE2D7 /* vad_gmm.c in Sources */,
 				966298041BBAC3E1005AC730 /* UIView+SizeCalculations.m in Sources */,
+				94F42D461C96D16500BAE2D7 /* resample.c in Sources */,
 				940849221C68D69000D95BDB /* EVCRMPhoneModel.m in Sources */,
 				94F7C00E1C70D4870045E190 /* EVCRMCreateMeetingModel.m in Sources */,
 				96454A861B84F44600C26FFD /* EVTravelers.m in Sources */,
 				94FAAFFC1C634DCD00D1989B /* EVPhoneFlowElement.m in Sources */,
 				9679484F1B84BC7A00198130 /* EVFlightAttributes.m in Sources */,
+				94F42D471C96D16500BAE2D7 /* resample_48khz.c in Sources */,
 				96804C501B861F5700FA9998 /* EVSearchContextBase.m in Sources */,
 				9615BED01B725B5100F31F38 /* EVStreamURLWriter.m in Sources */,
 				9679483F1B84981C00198130 /* EVRequestAttributes.m in Sources */,
@@ -1294,30 +1532,47 @@
 				941037781C01EDC1009A9A3F /* EVCRMAttributes.m in Sources */,
 				969B710A1B5CF20100588413 /* EVCollectionViewFlowLayout.m in Sources */,
 				96A7FA211B6B6F44009D6561 /* NSError+EVA.m in Sources */,
+				94F42D4A1C96D16500BAE2D7 /* resample_fractional.c in Sources */,
+				94F42D661C96D16500BAE2D7 /* webrtc_vad.c in Sources */,
 				968BBA691B95110F001EF0C9 /* EVSearchModel.m in Sources */,
 				969797A91B4BDF6700C0244D /* PocketSVG.m in Sources */,
 				96E014891B514FBE00E8ADE4 /* EVButtonLayer.m in Sources */,
 				96454A7E1B84D4D200C26FFD /* EVServiceAttributes.m in Sources */,
+				94F42D521C96D16500BAE2D7 /* vad_core.c in Sources */,
+				94F42CBE1C96CFC200BAE2D7 /* EVAudioRecorder.m in Sources */,
+				94F42D421C96D16500BAE2D7 /* get_scaling_square.c in Sources */,
 				968934CD1B61587500885DAA /* EVViewControllerVisibilityObserver.m in Sources */,
 				96454A8A1B84FBF600C26FFD /* EVMoney.m in Sources */,
 				967948471B84A3C000198130 /* EVTime.m in Sources */,
+				94F42D551C96D16500BAE2D7 /* vad_sp.c in Sources */,
 				96CDF6811B4C6DEA001FC7B5 /* EVApplication.m in Sources */,
 				94F7C00A1C70CBF60045E190 /* EVCreateFlowElement.m in Sources */,
 				96804C2B1B85E12E00FA9998 /* EVFlow.m in Sources */,
+				94F42D561C96D16500BAE2D7 /* vector_scaling_operations.c in Sources */,
 				968BBA751B951266001EF0C9 /* EVCruiseSearchModel.m in Sources */,
-				9634D3461B6FDD3500C0A708 /* EVAudioRecorderAutoStopper.m in Sources */,
 				96454A961B851BA000C26FFD /* EVParsedText.m in Sources */,
 				968BBA7F1B951F0E001EF0C9 /* EVChatMessage.m in Sources */,
+				94F42D3A1C96D16500BAE2D7 /* complex_bit_reverse.c in Sources */,
 				96E014911B5154E800E8ADE4 /* EVResizableShapeLayer.m in Sources */,
+				94F42D3E1C96D16500BAE2D7 /* division_operations.c in Sources */,
 				96454A921B851A3600C26FFD /* EVWarning.m in Sources */,
 				96804C481B86166300FA9998 /* EVSearchScope.m in Sources */,
+				94F42D451C96D16500BAE2D7 /* real_fft.c in Sources */,
 				968BBA611B9503F0001EF0C9 /* NSDate+EVA.m in Sources */,
+				94F42D4D1C96D16500BAE2D7 /* spl_sqrt_floor.c in Sources */,
+				94F42D3C1C96D16500BAE2D7 /* copy_set_operations.c in Sources */,
 				961221CD1C29A692004AE998 /* EVCallbackResult.m in Sources */,
+				94F42D401C96D16500BAE2D7 /* energy.c in Sources */,
 				9679ABC91B4E891300F475DE /* EVChatToolbarView.m in Sources */,
 				9608E8151B4DB37E00EB603D /* EVVoiceLevelMicButtonLayer.m in Sources */,
+				94F42D4B1C96D16500BAE2D7 /* spl_init.c in Sources */,
+				94F42D411C96D16500BAE2D7 /* get_hanning_window.c in Sources */,
+				94F42D4C1C96D16500BAE2D7 /* spl_sqrt.c in Sources */,
+				94F42CC41C96CFC200BAE2D7 /* EVAudioDataStreamer.m in Sources */,
 				96675F561B458F3900494BAA /* EVVoiceChatButton.m in Sources */,
 				96CDF6851B4C76E7001FC7B5 /* EVVoiceChatViewController.m in Sources */,
 				96454A7A1B84D37A00C26FFD /* EVSabre.m in Sources */,
+				94F42D3B1C96D16500BAE2D7 /* complex_fft.c in Sources */,
 				9659512E1B55BE3200B15AA2 /* UIImageEffects.m in Sources */,
 				9653D4271B5C6F9E00FC37AF /* EVDownButtonItem.m in Sources */,
 				96804C431B8605C800FA9998 /* EVAPIRequest.m in Sources */,
@@ -1326,24 +1581,27 @@
 				9608E80E1B4D3D3700EB603D /* EVVoiceChatMicButtonLayer.m in Sources */,
 				9412C4D41C0DD95E00ECA87C /* EVDataFlowElement.m in Sources */,
 				96454A821B84D7F200C26FFD /* EVCruiseAttributes.m in Sources */,
+				94F42CC21C96CFC200BAE2D7 /* EVAudioAutoStopper.m in Sources */,
 				967948371B8492CE00198130 /* EVChat.m in Sources */,
 				943F7A281C4292A600B67894 /* EVCRMDataGetModel.m in Sources */,
 				96804C331B85E89800FA9998 /* EVFlightFlowElement.m in Sources */,
 				96804C3B1B85EC1300FA9998 /* EVStatementFlowElement.m in Sources */,
+				94F42D4E1C96D16500BAE2D7 /* spl_version.c in Sources */,
+				94F42D481C96D16500BAE2D7 /* resample_by_2.c in Sources */,
 				96804C371B85EA1700FA9998 /* EVReplyFlowElement.m in Sources */,
 				9653D41B1B5C164E00FC37AF /* EVSpringAnimation.m in Sources */,
-				96A7FA1D1B6B6861009D6561 /* EVAudioConvertionOperation.m in Sources */,
 				9696BCFD1B73C172000E2104 /* NSTimeZone+EVA.m in Sources */,
 				96E0148D1B51533900E8ADE4 /* EVSVGLayer.m in Sources */,
 				961221C91C299ED2004AE998 /* EVStyledString.m in Sources */,
+				94F42CB41C96CF5F00BAE2D7 /* EVAudioChainOperation.m in Sources */,
 				9679483B1B84950A00198130 /* EVDialog.m in Sources */,
 				96804C5A1B86797400FA9998 /* EVApplicationSound.m in Sources */,
-				96DEEA8B1B6A872700B000D2 /* EVAudioChainOperation.m in Sources */,
 				96804C2F1B85E1E500FA9998 /* EVFlowElement.m in Sources */,
+				94F42D441C96D16500BAE2D7 /* min_max_operations.c in Sources */,
+				94F42D4F1C96D16500BAE2D7 /* test.c in Sources */,
 				967948331B84917B00198130 /* EVResponse.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,
 				968BBA5D1B94FC3A001EF0C9 /* EVSearchResultsHandler.m in Sources */,
-				96DEEA831B6A511000B000D2 /* EVAudioRecorder.m in Sources */,
 				968BBA6D1B951239001EF0C9 /* EVHotelSearchModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1546,6 +1804,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1554,6 +1813,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/EvaKit/Frameworks",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"WEBRTC_POSIX=1",
 				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1563,6 +1827,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad";
 			};
 			name = Debug;
 		};
@@ -1570,6 +1835,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1579,6 +1845,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/EvaKit/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"WEBRTC_POSIX=1",
+				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1586,6 +1857,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitSap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad";
 			};
 			name = Release;
 		};

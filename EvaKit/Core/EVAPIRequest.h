@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "NSError+EVA.h"
+#import "EVDataProducer.h"
 
 #define EVAPIRequestCancelledErrorCode ERROR_STR_TO_CODE("EAIC")
 
 @class EVAPIRequest;
 
-@protocol EVAPIRequestDelegate <NSObject>
+@protocol EVAPIRequestDelegate <EVErrorHandler>
 
 - (void)apiRequest:(EVAPIRequest*)request gotResponse:(NSDictionary*)response;
-- (void)apiRequest:(EVAPIRequest *)request gotAnError:(NSError*)error;
 
 @end
 
-@interface EVAPIRequest : NSObject
+@interface EVAPIRequest : EVDataNode
 
 //@property (nonatomic, strong, readwrite) NSString* name;
 @property (nonatomic, assign, readwrite) id<EVAPIRequestDelegate> delegate;

@@ -10,10 +10,14 @@
 #import <FLAC/stream_encoder.h>
 #import "NSError+EVA.h"
 #import "EVLogger.h"
+#include <CoreFoundation/CFByteOrder.h>
+
+
 
 @interface EVAudioConvertionOperation () {
     FLAC__StreamEncoder *_encoder;
     FLAC__int32 *_flacBuffer;
+    BOOL _finished;
 }
 
 @property (nonatomic, strong) NSMutableData* currentEncodedData;
@@ -30,9 +34,8 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
 
 @implementation EVAudioConvertionOperation
 
-
-- (instancetype)initWithOperationChainLength:(NSUInteger)length {
-    self = [super initWithOperationChainLength:length];
+- (id)initWithErrorHandler:(id<EVErrorHandler>)errorHandler {
+    self = [super initWithOperationChainLength:20 andName:@"AudioConversion" andErrorHandler:errorHandler];
     if (self != nil) {
         self.numberOfChannels = 1;
         self.currentEncodedData = nil;
@@ -59,9 +62,12 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
     });
 }
 
-- (void)producerStarted:(id<EVDataProducer>)producer {
+- (void)producerStarted:(EVDataProducer*)producer {
     [super producerStarted:producer];
-    dispatch_async(self.operationQueue, ^{
+    
+    _finished = NO;
+    
+//    dispatch_async(self.operationQueue, ^{
         _encoder = FLAC__stream_encoder_new();
         self.currentEncodedData = [NSMutableData new];
         [self.currentEncodedData release];
@@ -77,34 +83,49 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         
         if (init_status != FLAC__STREAM_ENCODER_INIT_STATUS_OK) {
             EV_LOG_ERROR(@"ERROR: FLAC Failed to initialize encoder: %s", FLAC__StreamEncoderInitStatusString[init_status]);
-            [self.errorHandler provider:self gotAnError:[NSError errorWithCode:init_status andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderInitStatusString[init_status]]]];
+            [self.errorHandler node:self gotAnError:[NSError errorWithCode:init_status andDescription:[NSString stringWithUTF8String:FLAC__StreamEncoderInitStatusString[init_status]]]];
             self.currentEncodedData = nil;
         } else {
             if ([self.currentEncodedData length] > 0) {
-                [self.dataConsumer producer:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
+                [self propagateHasNewData:[NSData dataWithData:self.currentEncodedData]];
                 [self.currentEncodedData setLength:0];
             }
         }
-    });
+    //});
+
 }
 
-- (void)producerFinished:(id<EVDataProducer>)producer {
-    dispatch_sync(self.operationQueue, ^{
+- (void)producerFinished:(EVDataProducer*)producer {
+//    dispatch_sync(self.operationQueue, ^{
+    _finished = YES;
         if (_encoder != NULL) {
             FLAC__stream_encoder_finish(_encoder);
             if ([self.currentEncodedData length] > 0) {
-                [self.dataConsumer producer:self hasNewData:[NSData dataWithData:self.currentEncodedData]];
+                [self propagateHasNewData:[NSData dataWithData:self.currentEncodedData]];
             }
             FLAC__stream_encoder_delete(_encoder);
             _encoder = NULL;
         }
         self.currentEncodedData = nil;
         
-    });
+//    });
     [super producerFinished:producer];
 }
 
+- (void)cancel {
+    [super cancel];
+    _finished = YES;
+    FLAC__stream_encoder_delete(_encoder);
+    _encoder = NULL;
+    
+}
+
 - (NSData*)processData:(NSData*)data error:(NSError**)error {
+    if (_finished) {
+        EV_LOG_INFO(@"Encoder asked to process data after finished");
+        return nil;
+    }
+    EV_LOG_DEBUG(@"Audio Conversion new data of length %lu", (unsigned long)[data length]);
     FLAC__bool ok = true;
     unsigned int samplesLeft = (unsigned)([data length] / (self.numberOfChannels * self.bitsPerSample / 8)); //Calculate number of samples in data
     const uint8_t* buffer = [data bytes];
@@ -113,10 +134,20 @@ FLAC__StreamEncoderWriteStatus part_encoded(const FLAC__StreamEncoder *encoder, 
         unsigned int samples = samplesLeft > _flacBufferMaxSamples ? _flacBufferMaxSamples : samplesLeft;
         
         unsigned int i;
-        for(i = 0; i < samples * self.numberOfChannels; i++) {
-            /* inefficient but simple and works on big- or little-endian machines */
-            _flacBuffer[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[offset + 1] << 8) | (FLAC__int16)buffer[offset]);
-            offset += 2;
+        if (CFByteOrderGetCurrent() != OSLittleEndian) {
+            for(i = 0; i < samples * self.numberOfChannels; i++) {
+                /* inefficient but simple and works on big- or little-endian machines */
+                _flacBuffer[i] = (FLAC__int32)(((FLAC__int16)(FLAC__int8)buffer[offset + 1] << 8) | (FLAC__int16)buffer[offset]);
+                offset += 2;
+            }
+        }
+        else {
+            // convert 16bit array to 32bit array
+            int16_t* arr16 = (int16_t*) buffer;
+            for(i = 0; i < samples * self.numberOfChannels; i++) {
+                _flacBuffer[i] = (FLAC__int32)(arr16[offset]);
+                offset++;
+            }
         }
         
         /* feed samples to encoder */
