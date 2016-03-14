@@ -43,16 +43,20 @@
     if (self != nil) {
         self.keyPath = path;
         self.duration = duration;
-        self.values = [self animationValuesFromValue:fromValue toValue:toValue usingSpringWithDumping:(dumping*10.0) andInitialVelocity:(velocity*10.0)];
+        self.values = [self animationValuesFromValue:fromValue toValue:toValue usingSpringWithDumping:dumping  andInitialVelocity:velocity];
     }
     return self;
 }
 
-- (NSArray*)animationValuesFromValue:(CGFloat)fromValue toValue:(CGFloat)toValue usingSpringWithDumping:(CGFloat)dumping andInitialVelocity:(CGFloat)velocity {
+- (NSArray*)animationValuesFromValue:(CGFloat)fromValue toValue:(CGFloat)toValue usingSpringWithDumping:(CGFloat)dumping  andInitialVelocity:(CGFloat)velocity {
     int numOfPoints = NUMBER_OF_ANIMATION_POINTS;
+    velocity *= 10.0;
+    dumping *= 10.0;
     NSMutableArray *values = [NSMutableArray arrayWithCapacity:numOfPoints];
-    CGFloat distanceBetweenValues = toValue - fromValue;
     
+ 
+    
+    CGFloat distanceBetweenValues = toValue - fromValue;
     for (int point = 0; point < numOfPoints; point++) {
         CGFloat x = (double)point / (double)numOfPoints;
         CGFloat valueNormalized = pow(M_E, -dumping * x) * cos(velocity * x);
@@ -60,6 +64,14 @@
         [values addObject:@(value)];
     }
     
+    /* overshoot from Android: */
+    /*float tension = 2;
+    for (int point=0; point< numOfPoints; point++) {
+        CGFloat t = ((double)point /(double)numOfPoints) - 1.0;
+        float xf = t * t * ((tension + 1) * t + tension) + 1.0f;
+        float value = fromValue + distanceBetweenValues * xf;
+        [values addObject:@(value)];
+    }*/
     return [NSArray arrayWithArray:values];
 }
 

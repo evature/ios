@@ -268,10 +268,16 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
                                                            initialVelocity:1.2f
                                                                  fromValue:self.micButtonLayer.position.x
                                                                    toValue:self.bounds.size.width/2.0f];
-    [self.micButtonLayer addAnimation:animation forKey:@"PositionSpringAnimation"];
-    self.micButtonLayer.position = CGPointMake(self.bounds.size.width/2.0f, self.bounds.size.height/2.0f);
     
+    [self.micButtonLayer addAnimation:animation forKey:@"PositionSpringAnimation"];
+    [CATransaction begin];
+    [CATransaction setValue: (id) kCFBooleanTrue forKey: kCATransactionDisableActions];
+    self.micButtonLayer.position = CGPointMake(self.bounds.size.width/2.0f, self.bounds.size.height/2.0f);
+    [CATransaction commit];
+
     [self.micButtonLayer released];
+    
+    
     [self.micButtonLayer showMic];
     //[CATransaction commit];
     
