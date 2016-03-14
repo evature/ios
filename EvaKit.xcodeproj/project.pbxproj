@@ -318,7 +318,6 @@
 		94613E721C50DF5E003F5D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94613E7D1C51100A003F5D42 /* EvaKitExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvaKitExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94613E881C51330B003F5D42 /* EvaKitTestFlightSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestFlightSearch.m; sourceTree = "<group>"; };
-		94E64DA41C583A3D002E3F31 /* credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = credentials.h; sourceTree = "<group>"; };
 		94F42CAD1C96CF5F00BAE2D7 /* EVDataProducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVDataProducer.h; sourceTree = "<group>"; };
 		94F42CAE1C96CF5F00BAE2D7 /* EVDataProducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVDataProducer.m; sourceTree = "<group>"; };
 		94F42CAF1C96CF5F00BAE2D7 /* EVAudioChainOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAudioChainOperation.h; sourceTree = "<group>"; };
@@ -376,6 +375,7 @@
 		94F42D371C96D16500BAE2D7 /* cpu_features_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_features_wrapper.h; sourceTree = "<group>"; };
 		94F42D381C96D16500BAE2D7 /* typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typedefs.h; sourceTree = "<group>"; };
 		94F42D391C96D16500BAE2D7 /* webrtc_vad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = webrtc_vad.c; sourceTree = "<group>"; };
+		94F42D671C97017000BAE2D7 /* credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = credentials.h; sourceTree = "<group>"; };
 		94F7BFF61C6CC5020045E190 /* EvaKitTestHotelSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaKitTestHotelSearch.m; sourceTree = "<group>"; };
 		94F7BFF81C6CC7680045E190 /* EvaBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaBaseTest.m; sourceTree = "<group>"; };
 		94F7BFFA1C6CC7C00045E190 /* EvaBaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaBaseTest.h; sourceTree = "<group>"; };
@@ -1042,7 +1042,7 @@
 				969797B01B4BE13E00C0244D /* Supporting Files */,
 				9674AE971B5FD7B100BFBEB5 /* TableViewController.h */,
 				9674AE981B5FD7B100BFBEB5 /* TableViewController.m */,
-				94E64DA41C583A3D002E3F31 /* credentials.h */,
+				94F42D671C97017000BAE2D7 /* credentials.h */,
 			);
 			path = EvaKitExample;
 			sourceTree = "<group>";
