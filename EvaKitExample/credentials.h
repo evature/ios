@@ -10,10 +10,11 @@
 #define credentials_h
 
 // register at http://www.evature.com/registration/form to get your credentials
-#define API_KEY        @"Your_API_KEY_here"
-#define SITE_CODE      @"Your_SITE_CODE_here
+// Place your API_KEY and SITE_CODE instead of the `nil`s below
+#define API_KEY        nil
+#define SITE_CODE      nil
 
 // scope should be bit OR of the EVSearchContextType enums - whatever your App supports
-#define SCOPE  EVSearchContextTypeFlight
+#define SCOPE       EVSearchContextTypeCRM
 
 #endif /* credentials_h */

@@ -145,13 +145,13 @@
     self.autoStopper.minNoiseTime = 0.2;  // must have noise for at least this much time to start considering silence
     self.autoStopper.preRecordingTime = 0.15; // will start listening to noise/silence only after this time
     //    self.autoStopper.silentStopRecordTime = 0.3; // time of silence for record stop
-    self.autoStopper.silentPeriodValueAtT0 = 0.3;
-    self.autoStopper.silentPeriodValueAtT1 = 0.3;
-    self.autoStopper.timeT0 = 1.0;
-    self.autoStopper.timeT1 = 3.0;
+    self.autoStopper.silentPeriodValueAtT0 = 0.7;
+    self.autoStopper.silentPeriodValueAtT1 = 0.07;
+    self.autoStopper.timeT0 = 0.4;
+    self.autoStopper.timeT1 = 1.2;
+    self.autoStopper.vadMode = 3; // aggressive mode 0..3   - 3 is the highest chance to detect silence
     self.autoStopper.maxRecordingTime = self.maxRecordingTime;
     self.autoStopper.levelSampleTime = 0.03; // how oft to visualize the sound
-    self.autoStopper.vadMode = 3; // aggressive mode 0..3   - 3 is the highest chance to detect silence
     
     self.flacConverter = [[[EVAudioConvertionOperation alloc] initWithErrorHandler:self] autorelease];
     self.flacConverter.sampleRate = 16000;
@@ -214,6 +214,8 @@
         [self setSound:vlow forApplicationState:EVApplicationStateSoundRequestError];
         
         [self setupRecorderChain];
+        
+        EV_LOG_INFO(@"Voice Kit version %@ initialized", EV_KIT_VERSION);
     }
     return self;
 }
@@ -410,6 +412,7 @@
         self.isReady = YES;
     } else {
         self.isReady = NO;
+        EV_LOG_ERROR(@"Need to setup API_KEY and SITE_CODE");
     }
     [self updateURL];
 }

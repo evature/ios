@@ -10,7 +10,7 @@
 
 
 
-const bool LOG_VAD = NO;
+#define LOG_VAD  NO
 
 
 // Sets the VAD operating mode. A more aggressive (higher mode) VAD is more
@@ -28,7 +28,9 @@ const bool LOG_VAD = NO;
     unsigned int _silentMoments;
     unsigned int _noisyMoments;
     unsigned int _totalMoments;
+    unsigned int _frameDetectedSpeechStart;
     BOOL _startSilenceDetection;
+    float silentStopRecordTime;
     BOOL _doneVAD;
     NSTimeInterval _timeBeforeStop;
     int16_t *_leftOverChunk;
@@ -96,9 +98,9 @@ const bool LOG_VAD = NO;
 }
 
 -(void)producerStarted:(EVDataProducer*)producer {
-    if (LOG_VAD) {
+#if LOG_VAD
         EV_LOG_DEBUG(@"> > > VAD INIT mode=%lu",(long) _vadMode);
-    }
+#endif
     int err = WebRtcVad_Init(_vadHandle);
     if (err) {
         [self.errorHandler node:self gotAnError:[NSError errorWithCode:EVVadError andDescription:@"Can't initialize VAD"]];
@@ -109,6 +111,7 @@ const bool LOG_VAD = NO;
         [self.errorHandler node:self gotAnError:[NSError errorWithCode:EVVadError andDescription:@"Failed setting VAD Aggressive mode"]];
         return;
     }
+    silentStopRecordTime = 0;
     NSTimeInterval interval = self.levelSampleTime;
     if (interval > 0) {
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
@@ -137,24 +140,25 @@ const bool LOG_VAD = NO;
         return;
     }
     _totalMoments++;
-
+    
     int vad = WebRtcVad_Process (_vadHandle, 16000, chunk, SAMPLES_PER_VAD_FRAME);
-    if (LOG_VAD) {
-        EV_LOG_DEBUG(@">>>>>>>> VAD %d: %@    noise=%d, silence=%d", _totalMoments, vad ? @"SPEECH!" : @"silence",  _noisyMoments, _silentMoments );
-
+#if LOG_VAD
+    EV_LOG_DEBUG(@">>>>>>>> VAD %d: %@    noise=%d, silence=%d,  silenceNeeded=%f", _totalMoments, vad ? @"SPEECH!" : @"silence",  _noisyMoments, _silentMoments, silentStopRecordTime );
+        
         if (_totalMoments > (self.preRecordingTime/VAD_FRAME_TIMESLICE) && _totalMoments <= 1+(self.preRecordingTime/VAD_FRAME_TIMESLICE)) {
             EV_LOG_DEBUG(@"> > > > Waited enough time from start, looking for speech!");
         }
-    }
+#endif
     
     if (!_startSilenceDetection && _totalMoments > (self.preRecordingTime/VAD_FRAME_TIMESLICE)) {
         if (vad) {
             _noisyMoments++;
             if (_noisyMoments >= self.minNoiseTime/VAD_FRAME_TIMESLICE) {
                 _startSilenceDetection = TRUE;
-                if (LOG_VAD) {
+                _frameDetectedSpeechStart = _totalMoments;
+#if LOG_VAD
                     EV_LOG_DEBUG(@"> > > > Found enough consecutive speech! looking for silence");
-                }
+#endif
             }
         } else {
             _noisyMoments = 0;
@@ -163,38 +167,45 @@ const bool LOG_VAD = NO;
     
     // not using "else" here because the flag could be just set to true in the previous 'if' block
     if (_startSilenceDetection) {
-        if (!vad) {
-            _silentMoments++;
-        } else {
+        if (vad) {
+            _noisyMoments++;
             _silentMoments = 0;
-        }
-        float silentStopRecordTime;
-        float curTime = _totalMoments * VAD_FRAME_TIMESLICE;
-        if (curTime < _timeT0) {
-            silentStopRecordTime = _silentPeriodValueAtT0;
-        }
-        else if (curTime > _timeT1) {
-            silentStopRecordTime = _silentPeriodValueAtT1;
-        }
-        else {
-            // linear from T0 to T1
-            silentStopRecordTime = _silentPeriodValueAtT0 + (_silentPeriodValueAtT1 - _silentPeriodValueAtT0) * (curTime - _timeT0) / (_timeT1 - _timeT0);
+            if (_noisyMoments > 3) {
+                _frameDetectedSpeechStart = _totalMoments;
+            }
+        } else {
+            _noisyMoments = 0;
+            _silentMoments++;
+            float curTime = (_totalMoments- _frameDetectedSpeechStart) * VAD_FRAME_TIMESLICE;
+            if (curTime < _timeT0) {
+                silentStopRecordTime = _silentPeriodValueAtT0;
+            }
+            else if (curTime > _timeT1) {
+                silentStopRecordTime = _silentPeriodValueAtT1;
+            }
+            else {
+                // linear from T0 to T1
+                silentStopRecordTime = _silentPeriodValueAtT0 + (_silentPeriodValueAtT1 - _silentPeriodValueAtT0) * (curTime - _timeT0) / (_timeT1 - _timeT0);
+            }
+            
+            if (_silentMoments >= silentStopRecordTime/VAD_FRAME_TIMESLICE) {
+                _doneVAD = true;
+#if LOG_VAD
+                EV_LOG_DEBUG(@"> > > > Found enough consecutive silence! done with VAD!");
+#endif
+                [self.delegate stopperSilenceStopEvent:self stoppedAtFrame:_totalMoments];
+            }
         }
         
-        if (_silentMoments >= silentStopRecordTime/VAD_FRAME_TIMESLICE) {
-            _doneVAD = true;
-            if (LOG_VAD) {
-                EV_LOG_DEBUG(@"> > > > Found enough consecutive silence! done with VAD!");
-            }
-            [self.delegate stopperSilenceStopEvent:self stoppedAtFrame:_totalMoments];
-        }
     }
 }
 
 
 - (NSData*)processData:(NSData*)data error:(NSError**)error {
     if (_doneVAD) {
-        EV_LOG_INFO(@"> > > > Continued to get data after VAD is done - data of size %lu", (unsigned long)[data length]);
+#if LOG_VAD
+        EV_LOG_DEBUG(@"> > > > Continued to get data after VAD is done - data of size %lu", (unsigned long)[data length]);
+#endif
         return nil;
     }
 //    int8_t* dataBytes = (int8_t*)[data bytes];

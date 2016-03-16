@@ -146,7 +146,7 @@
 
 // cancel does not use the async FIFO, but immediately propagates on the main thread
 - (void)propagateCancel {
-    EV_LOG_DEBUG(@"Propagating cancel %@", self.name);
+//    EV_LOG_DEBUG(@"Propagating cancel %@", self.name);
     [[self dataConsumer] cancel];
 }
 

@@ -93,6 +93,7 @@ int streamWritersDealloced = 0;
             return nil;
         }
         
+        EV_LOG_INFO(@"URLWriter:  prod=%x cons=%x", (unsigned int)prodStream, (unsigned int)consStream);
         _streamOpened = NO;
         self.dataStream = prodStream;
         _connectionError = NO;
@@ -124,16 +125,24 @@ int streamWritersDealloced = 0;
         _streamOpened = YES;
         //Wait for opening
         usleep(200);
+        EV_LOG_INFO(@"Stream %x opened", (unsigned int)_dataStream);
     }
+
     size_t wrote = 0;
     size_t length = [data length];
     const uint8_t* bytes = [data bytes];
-    while (!_connectionError && wrote < length) {
+    while (!_connectionError && wrote < length && _streamOpened) {
         //Wait for space in stream
-        while(!_connectionError && !_dataStream.hasSpaceAvailable) usleep(100);
+        while(!_connectionError && !_dataStream.hasSpaceAvailable) {
+            EV_LOG_INFO(@"no space avail");
+            usleep(100);
+        }
         //Write so many how we can. Save how many we wrote
         if (!_connectionError) {
             wrote += [_dataStream write:(bytes+wrote) maxLength:(length-wrote)];
+            if (wrote < length) {
+                EV_LOG_INFO(@"wrote = %lu  length= %lu", wrote, length);
+            }
         }
     }
 }
@@ -142,8 +151,9 @@ int streamWritersDealloced = 0;
     [super cancel];
     [self.connection cancel];
     if (_streamOpened) {
-        [_dataStream close];
         _streamOpened = NO;
+        [_dataStream close];
+        EV_LOG_INFO(@"Stream %x closed", (unsigned int)_dataStream);
     }
     self.dataStream = nil;
     self.connection = nil;
