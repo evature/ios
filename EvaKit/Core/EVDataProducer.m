@@ -17,12 +17,12 @@
         _name = [name retain];
         _errorHandler = errorHandler;
         _canceled = NO;
-        EV_LOG_DEBUG(@"Node %@ was initialized", _name);
+        EV_LOG_DEBUG(@"%@ was initialized", _name);
     }
     return self;
 }
 - (void)cancel {
-    EV_LOG_DEBUG(@"Node %@ was canceled", _name);
+    EV_LOG_DEBUG(@"%@ was canceled", _name);
     self.canceled = YES;
 }
 

@@ -14,22 +14,22 @@
     self = [super init];
     if (self != nil) {
         if ([response isKindOfClass:[NSDictionary class]]) {
-            self.name = [response objectForKey:@"Name"];
-            self.simpleName = [response objectForKey:@"simple_name"];
-            self.gdsCode = [response objectForKey:@"gds_code"];
-            self.evaCode = [response objectForKey:@"eva_code"];
+            _name = [response objectForKey:@"Name"];
+            _simpleName = [response objectForKey:@"simple_name"];
+            _gdsCode = [response objectForKey:@"gds_code"];
+            _evaCode = [response objectForKey:@"eva_code"];
         } else {
-            self.name = response;
+            _name = response;
         }
     }
     return self;
 }
 
 - (void)dealloc {
-    self.name = nil;
-    self.simpleName = nil;
-    self.gdsCode = nil;
-    self.evaCode = nil;
+    _name = nil;
+    _simpleName = nil;
+    _gdsCode = nil;
+    _evaCode = nil;
     [super dealloc];
 }
 
@@ -99,21 +99,42 @@ static NSDictionary* accomodationKeys = nil;
                           @"Inn": @(EVHotelAttributesAccommodationTypeInn)} retain];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self != nil) {
+        _selfCatering = EVBoolNotSet;
+        _bedAndBreakfast = EVBoolNotSet;
+        _halfBoard = EVBoolNotSet;
+        _fullBoard = EVBoolNotSet;
+        _allInclusive = EVBoolNotSet;
+        _drinksInclusive = EVBoolNotSet;
+        _parkingFacilities = EVBoolNotSet;
+        _parkingValet = EVBoolNotSet;
+        _parkingFree = EVBoolNotSet;
+        _accommodationType = EVHotelAttributesAccommodationTypeUnknown;
+        _poolType = EVHotelAttributesPoolTypeUnknown;
+        _minStars = -1;
+        _maxStars = -1;
+        
+    }
+    return self;
+}
+
 - (instancetype)initWithResponse:(NSDictionary *)response {
     self = [super init];
     if (self != nil) {
         
-        self.selfCatering = EVBoolNotSet;
-        self.bedAndBreakfast = EVBoolNotSet;
-        self.halfBoard = EVBoolNotSet;
-        self.fullBoard = EVBoolNotSet;
-        self.allInclusive = EVBoolNotSet;
-        self.drinksInclusive = EVBoolNotSet;
-        self.parkingFacilities = EVBoolNotSet;
-        self.parkingValet = EVBoolNotSet;
-        self.parkingFree = EVBoolNotSet;
-        self.minStars = -1;
-        self.maxStars = -1;
+        _selfCatering = EVBoolNotSet;
+        _bedAndBreakfast = EVBoolNotSet;
+        _halfBoard = EVBoolNotSet;
+        _fullBoard = EVBoolNotSet;
+        _allInclusive = EVBoolNotSet;
+        _drinksInclusive = EVBoolNotSet;
+        _parkingFacilities = EVBoolNotSet;
+        _parkingValet = EVBoolNotSet;
+        _parkingFree = EVBoolNotSet;
+        _minStars = -1;
+        _maxStars = -1;
         
         if ([response objectForKey:@"Chain"] != nil) {
             id object = [response objectForKey:@"Chain"];
@@ -122,66 +143,66 @@ static NSDictionary* accomodationKeys = nil;
                 for (NSDictionary* elem in object) {
                     [chain addObject:[[[EVHotelChain alloc] initWithResponse:elem] autorelease]];
                 }
-                self.chains = [NSArray arrayWithArray:chain];
+                _chains = [NSArray arrayWithArray:chain];
             } else {
-                self.chains = [NSArray arrayWithObject:[[[EVHotelChain alloc] initWithResponse:object] autorelease]];
+                _chains = [NSArray arrayWithObject:[[[EVHotelChain alloc] initWithResponse:object] autorelease]];
             }
         } else {
-            self.chains = [NSArray array];
+            _chains = [NSArray array];
         }
         
         NSArray* board = [response objectForKey:@"Board"];
         if (board != nil) {
             if ([board containsObject:@"Self Catering"]) {
-                self.selfCatering = EV_TRUE;
+                _selfCatering = EV_TRUE;
             }
             if ([board containsObject:@"Bed and Breakfast"]) {
-                self.bedAndBreakfast = EV_TRUE;
+                _bedAndBreakfast = EV_TRUE;
             }
             if ([board containsObject:@"Half Board"]) {
-                self.halfBoard = EV_TRUE;
+                _halfBoard = EV_TRUE;
             }
             if ([board containsObject:@"Full Board"]) {
-                self.fullBoard = EV_TRUE;
+                _fullBoard = EV_TRUE;
             }
             if ([board containsObject:@"All Inclusive"]) {
-                self.allInclusive = EV_TRUE;
+                _allInclusive = EV_TRUE;
             }
             if ([board containsObject:@"Drinks Inclusive"]) {
-                self.drinksInclusive = EV_TRUE;
+                _drinksInclusive = EV_TRUE;
             }
         }
         
         if ([response objectForKey:@"Quality"] != nil) {
             NSArray* quality = [response objectForKey:@"Quality"];
-            self.minStars = [[quality objectAtIndex:0] isEqual:[NSNull null]] ? -1 : [[quality objectAtIndex:0] integerValue];
-            self.maxStars = [[quality objectAtIndex:1] isEqual:[NSNull null]] ? -1 : [[quality objectAtIndex:1] integerValue];
+            _minStars = [[quality objectAtIndex:0] isEqual:[NSNull null]] ? -1 : [[quality objectAtIndex:0] integerValue];
+            _maxStars = [[quality objectAtIndex:1] isEqual:[NSNull null]] ? -1 : [[quality objectAtIndex:1] integerValue];
         }
         if ([response objectForKey:@"Pool"] != nil) {
             NSNumber* val = [poolKeys objectForKey:[response objectForKey:@"Pool"]];
             if (val != nil) {
-                self.poolType = [val shortValue];
+                _poolType = [val shortValue];
             } else {
-                self.poolType = EVHotelAttributesPoolTypeUnknown;
+                _poolType = EVHotelAttributesPoolTypeUnknown;
             }
         } else {
-            self.poolType = EVHotelAttributesPoolTypeUnknown;
+            _poolType = EVHotelAttributesPoolTypeUnknown;
         }
         if ([response objectForKey:@"Accommodation Type"] != nil) {
             NSNumber* val = [accomodationKeys objectForKey:[response objectForKey:@"Accommodation Type"]];
             if (val != nil) {
-                self.accommodationType = [val shortValue];
+                _accommodationType = [val shortValue];
             } else {
-                self.accommodationType = EVHotelAttributesAccommodationTypeUnknown;
+                _accommodationType = EVHotelAttributesAccommodationTypeUnknown;
             }
         } else {
-            self.accommodationType = EVHotelAttributesAccommodationTypeUnknown;
+            _accommodationType = EVHotelAttributesAccommodationTypeUnknown;
         }
         if ([response objectForKey:@"Parking"] != nil) {
             NSDictionary* parking = [response objectForKey:@"Parking"];
-            self.parkingFacilities = [parking objectForKey:@"Facilities"] != nil ?[[parking objectForKey:@"Facilities"] boolValue] : EVBoolNotSet;
-            self.parkingValet = [parking objectForKey:@"Valet"] != nil ? [[parking objectForKey:@"Valet"] boolValue] : EVBoolNotSet;
-            self.parkingFree = [parking objectForKey:@"Free"]  != nil ? [[parking objectForKey:@"Free"] boolValue] : EVBoolNotSet;
+            _parkingFacilities = [parking objectForKey:@"Facilities"] != nil ?[[parking objectForKey:@"Facilities"] boolValue] : EVBoolNotSet;
+            _parkingValet = [parking objectForKey:@"Valet"] != nil ? [[parking objectForKey:@"Valet"] boolValue] : EVBoolNotSet;
+            _parkingFree = [parking objectForKey:@"Free"]  != nil ? [[parking objectForKey:@"Free"] boolValue] : EVBoolNotSet;
         }
         NSMutableArray* amenities = [NSMutableArray array];
         for (NSString* ament in [amenitiesKeys allKeys]) {
@@ -189,14 +210,14 @@ static NSDictionary* accomodationKeys = nil;
                 [amenities addObject:[amenitiesKeys objectForKey:ament]];
             }
         }
-        self.amenities = [NSSet setWithArray:amenities];
+        _amenities = [NSSet setWithArray:amenities];
     }
     return self;
 }
 
 - (void)dealloc {
-    self.amenities = nil;
-    self.chains = nil;
+    _amenities = nil;
+    _chains = nil;
     [super dealloc];
 }
 

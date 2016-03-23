@@ -10,16 +10,9 @@
 
 
 
-#define LOG_VAD  NO
+#define LOG_VAD  false
 
 
-// Sets the VAD operating mode. A more aggressive (higher mode) VAD is more
-// restrictive in reporting speech. Put in other words the probability of being
-// speech when the VAD returns 1 is increased with increasing mode. As a
-// consequence also the missed detection rate goes up.
-//
-// - mode   [i]   : Aggressiveness mode (0, 1, 2, or 3).
-//
 
 @interface EVAudioAutoStopper () {
     dispatch_source_t _timer;
@@ -99,7 +92,7 @@
 
 -(void)producerStarted:(EVDataProducer*)producer {
 #if LOG_VAD
-        EV_LOG_DEBUG(@"> > > VAD INIT mode=%lu",(long) _vadMode);
+    EV_LOG_DEBUG(@"> > > VAD INIT T0=%f  T1=%f  V0=%f  V1=%f  mode=%lu", _timeT0, _timeT1, _silentPeriodValueAtT0, _silentPeriodValueAtT1,  (long) _vadMode);
 #endif
     int err = WebRtcVad_Init(_vadHandle);
     if (err) {

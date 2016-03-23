@@ -125,7 +125,7 @@ int streamWritersDealloced = 0;
         _streamOpened = YES;
         //Wait for opening
         usleep(200);
-        EV_LOG_INFO(@"Stream %x opened", (unsigned int)_dataStream);
+        EV_LOG_DEBUG(@"Stream %x opened", (unsigned int)_dataStream);
     }
 
     size_t wrote = 0;
@@ -153,7 +153,7 @@ int streamWritersDealloced = 0;
     if (_streamOpened) {
         _streamOpened = NO;
         [_dataStream close];
-        EV_LOG_INFO(@"Stream %x closed", (unsigned int)_dataStream);
+        EV_LOG_DEBUG(@"Stream %x closed", (unsigned int)_dataStream);
     }
     self.dataStream = nil;
     self.connection = nil;

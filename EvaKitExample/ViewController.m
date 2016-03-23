@@ -116,18 +116,10 @@
                          arriveDateMax:(NSDate*)arriveDateMax
                            durationMin:(NSInteger)durationMin
                            durationMax:(NSInteger)durationMax
+                          checkoutDate:(NSDate*)checkoutDate
                              travelers:(EVTravelers*)travelers
-                           hotelsChain:(NSArray*)chain
-                          selfCatering:(EVBool)selfCatering
-                       bedAndBreakfast:(EVBool)bedAndBreakfast
-                             halfBoard:(EVBool)halfBoard
-                             fullBoard:(EVBool)fullBoard
-                          allInclusive:(EVBool)allInclusive
-                       drinksInclusive:(EVBool)drinksInclusive
-                              minStars:(NSInteger)minStars
-                              maxStars:(NSInteger)maxStars
-                             amenities:(NSSet*)amenities
-                                sortBy:(EVRequestAttributesSort)sortBy
+                            attributes:(EVHotelAttributes*)attributes
+                            sortBy:(EVRequestAttributesSort)sortBy
                              sortOrder:(EVRequestAttributesSortOrder)sortOrder {
     
     NSLog(@"Handled hotel search! Complete: %@", isComplete ? @"YES" : @"NO");
@@ -150,7 +142,7 @@
 }
 
 - (void)evSearchGotResponse:(EVResponse*)response {
-    NSLog(@"Some response from eva chat");
+    NSLog(@"Some response from eva chat: \n %@", [response rawResponse]);
 }
 
 @end

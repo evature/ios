@@ -471,7 +471,7 @@ delegate {
         }
         else {
             // TODO: insert new chat item saying the app doesn't support search?
-            EV_LOG_ERROR(@"App reached hotel search, but has no matching handler");
+            EV_LOG_ERROR(@"App reached Cruise search, but has no matching handler");
         }
 //    }
     return [EVCallbackResult resultWithNone];
@@ -513,72 +513,68 @@ delegate {
         sortOrder = response.requestAttributes.sortOrder;
     }
     
-    NSArray* chains = [NSArray array];
-    // The hotel board:
-    EVBool selfCatering = EVBoolNotSet;
-    EVBool bedAndBreakfast = EVBoolNotSet;
-    EVBool halfBoard = EVBoolNotSet;
-    EVBool fullBoard = EVBoolNotSet;
-    EVBool allInclusive = EVBoolNotSet;
-    EVBool drinksInclusive = EVBoolNotSet;
-    
-    // The quality of the hotel, measure in Stars
-    NSInteger minStars = -1;
-    NSInteger maxStars = -1;
-    
-    NSSet* amenities = [NSSet set];
-    
+    EVHotelAttributes *merged = [[EVHotelAttributes alloc] init];
+    NSMutableArray *attributesArray =  [NSMutableArray array];
     if (response.hotelAttributes != nil) {
-        EVHotelAttributes* ha = response.hotelAttributes;
-        selfCatering = ha.selfCatering;
-        bedAndBreakfast = ha.bedAndBreakfast;
-        halfBoard = ha.halfBoard;
-        fullBoard = ha.fullBoard;
-        allInclusive = ha.allInclusive;
-        drinksInclusive = ha.drinksInclusive;
-        
-        chains = ha.chains;
-        minStars = ha.minStars;
-        maxStars = ha.maxStars;
-        amenities = ha.amenities;
+        [attributesArray addObject:response.hotelAttributes];
     }
-    
     if (location.hotelAttributes != nil) {
-        EVHotelAttributes* ha = location.hotelAttributes;
+        [attributesArray addObject:location.hotelAttributes];
+    }
+    for (int i=0; i<[attributesArray count]; i++) {
+        EVHotelAttributes* ha = (EVHotelAttributes*)[attributesArray objectAtIndex:i];
+        
         if (EV_IS_BOOL_SET(ha.selfCatering)) {
-            selfCatering = ha.selfCatering;
+            merged.selfCatering = ha.selfCatering;
         }
         if (EV_IS_BOOL_SET(ha.bedAndBreakfast)) {
-            bedAndBreakfast = ha.bedAndBreakfast;
+            merged.bedAndBreakfast = ha.bedAndBreakfast;
         }
         if (EV_IS_BOOL_SET(ha.halfBoard)) {
-            halfBoard = ha.halfBoard;
+            merged.halfBoard = ha.halfBoard;
         }
         if (EV_IS_BOOL_SET(ha.fullBoard)) {
-            fullBoard = ha.fullBoard;
-        }
-        if (EV_IS_BOOL_SET(ha.allInclusive)) {
-            allInclusive = ha.allInclusive;
+            merged.fullBoard = ha.fullBoard;
         }
         if (EV_IS_BOOL_SET(ha.drinksInclusive)) {
-            drinksInclusive = ha.drinksInclusive;
+            merged.drinksInclusive = ha.drinksInclusive;
         }
-        if ([ha.chains count] > 0) {
-            chains = ha.chains;
-        }
-        if (ha.minStars != -1) {
-            minStars = ha.minStars;
-        }
-        if (ha.maxStars != -1) {
-            maxStars = ha.maxStars;
+        if (EV_IS_BOOL_SET(ha.allInclusive)) {
+            merged.allInclusive = ha.allInclusive;
         }
         if ([ha.amenities count] > 0) {
-            amenities = ha.amenities;
+            merged.amenities = ha.amenities;
+        }
+        if (EV_IS_BOOL_SET(ha.parkingFacilities)) {
+            merged.parkingFacilities = ha.parkingFacilities;
+        }
+        if (EV_IS_BOOL_SET(ha.parkingFree)) {
+            merged.parkingFree = ha.parkingFree;
+        }
+        if (EV_IS_BOOL_SET(ha.parkingValet)) {
+            merged.parkingValet = ha.parkingValet;
         }
         
+        if (ha.poolType != EVHotelAttributesPoolTypeUnknown) {
+            merged.poolType = ha.poolType;
+        }
+        if (ha.accommodationType != EVHotelAttributesAccommodationTypeUnknown) {
+            merged.accommodationType = ha.accommodationType;
+        }
+        
+        if (ha.minStars != -1) {
+            merged.minStars = ha.minStars;
+        }
+        if (ha.maxStars != -1) {
+            merged.maxStars = ha.maxStars;
+        }
+        if ([ha.chains count] > 0) {
+            merged.chains = ha.chains;
+        }
     }
     
-    EVSearchModel *model = [EVHotelSearchModel modelComplete:isComplete location:location arriveDateMin:arriveDateMin arriveDateMax:arriveDateMax durationMin:durationMin durationMax:durationMax travelers:response.travelers hotelsChain:chains selfCatering:selfCatering bedAndBreakfast:bedAndBreakfast halfBoard:halfBoard fullBoard:fullBoard allInclusive:allInclusive drinksInclusive:drinksInclusive minStars:minStars maxStars:maxStars amenities:amenities sortBy:sortBy sortOrder:sortOrder];
+    
+    EVSearchModel *model = [EVHotelSearchModel modelComplete:isComplete location:location arriveDateMin:arriveDateMin arriveDateMax:arriveDateMax durationMin:durationMin durationMax:durationMax travelers:response.travelers attributes:merged sortBy:sortBy sortOrder:sortOrder];
     
 //    if (EvaComponent.evaAppHandler instanceof HotelCount) {
 //        chatItem.setStatus(ChatItem.Status.SEARCHING);
@@ -654,12 +650,20 @@ delegate {
         case EVFlowElementTypeQuestion: {
             EVQuestionFlowElement* qe = (EVQuestionFlowElement*)flow;
             searchType = qe.actionType;
-            // cruises have (for now) only origin and destination
-            if ([response.locations count] > 0) {
-                from = response.locations[0];
+            if ([flow.relatedLocations count] > 0) {
+                from = flow.relatedLocations[0];
+                if ([flow.relatedLocations count] > 1) {
+                    to = flow.relatedLocations[1];
+                }
             }
-            if ([response.locations count] > 1) {
-                to = response.locations[1];
+            else {
+                // cruises have (for now) only origin and destination
+                if ([response.locations count] > 0) {
+                    from = response.locations[0];
+                }
+                if ([response.locations count] > 1) {
+                    to = response.locations[1];
+                }
             }
             isComplete = false;
             break;

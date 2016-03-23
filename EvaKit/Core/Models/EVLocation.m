@@ -157,7 +157,7 @@ static NSDictionary* typeKeys = nil;
         }
         if ([response objectForKey:@"Name"] != nil) {
             NSString* name = [response objectForKey:@"Name"];
-            NSUInteger ind = [name rangeOfString:@" (GID="].location;
+            NSUInteger ind = [name rangeOfString:@" (GID"].location;
             if (ind != NSNotFound) {
                 self.name = [name substringToIndex:ind];
             } else {
