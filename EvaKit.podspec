@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EvaKit"
-  s.version      = "2.0.28"
+  s.version      = "2.0.29"
   s.summary      = "Evature voice search API for iOS"
 
   # This description is used to generate tags and improve search results.
@@ -114,7 +114,7 @@ Pod::Spec.new do |s|
   #  you can include multiple dependencies to ensure it works.
 
   s.requires_arc = false
-  
+  s.xcconfig = {  "GCC_PREPROCESSOR_DEFINITIONS" => '$(inherited) WEBRTC_POSIX=1' } 
   
   # ――― Dependencies ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   

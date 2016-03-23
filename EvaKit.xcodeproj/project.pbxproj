@@ -64,9 +64,6 @@
 		94F42D4C1C96D16500BAE2D7 /* spl_sqrt.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D171C96D16500BAE2D7 /* spl_sqrt.c */; };
 		94F42D4D1C96D16500BAE2D7 /* spl_sqrt_floor.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */; };
 		94F42D4E1C96D16500BAE2D7 /* spl_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D191C96D16500BAE2D7 /* spl_version.c */; };
-		94F42D4F1C96D16500BAE2D7 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1A1C96D16500BAE2D7 /* test.c */; };
-		94F42D501C96D16500BAE2D7 /* testnoise.raw in Resources */ = {isa = PBXBuildFile; fileRef = 94F42D1B1C96D16500BAE2D7 /* testnoise.raw */; };
-		94F42D511C96D16500BAE2D7 /* testnoise.vad in Resources */ = {isa = PBXBuildFile; fileRef = 94F42D1C1C96D16500BAE2D7 /* testnoise.vad */; };
 		94F42D521C96D16500BAE2D7 /* vad_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1D1C96D16500BAE2D7 /* vad_core.c */; };
 		94F42D531C96D16500BAE2D7 /* vad_filterbank.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */; };
 		94F42D541C96D16500BAE2D7 /* vad_gmm.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */; };
@@ -351,9 +348,6 @@
 		94F42D171C96D16500BAE2D7 /* spl_sqrt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_sqrt.c; sourceTree = "<group>"; };
 		94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_sqrt_floor.c; sourceTree = "<group>"; };
 		94F42D191C96D16500BAE2D7 /* spl_version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spl_version.c; sourceTree = "<group>"; };
-		94F42D1A1C96D16500BAE2D7 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		94F42D1B1C96D16500BAE2D7 /* testnoise.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = testnoise.raw; sourceTree = "<group>"; };
-		94F42D1C1C96D16500BAE2D7 /* testnoise.vad */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testnoise.vad; sourceTree = "<group>"; };
 		94F42D1D1C96D16500BAE2D7 /* vad_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_core.c; sourceTree = "<group>"; };
 		94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_filterbank.c; sourceTree = "<group>"; };
 		94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vad_gmm.c; sourceTree = "<group>"; };
@@ -666,9 +660,6 @@
 				94F42D171C96D16500BAE2D7 /* spl_sqrt.c */,
 				94F42D181C96D16500BAE2D7 /* spl_sqrt_floor.c */,
 				94F42D191C96D16500BAE2D7 /* spl_version.c */,
-				94F42D1A1C96D16500BAE2D7 /* test.c */,
-				94F42D1B1C96D16500BAE2D7 /* testnoise.raw */,
-				94F42D1C1C96D16500BAE2D7 /* testnoise.vad */,
 				94F42D1D1C96D16500BAE2D7 /* vad_core.c */,
 				94F42D1E1C96D16500BAE2D7 /* vad_filterbank.c */,
 				94F42D1F1C96D16500BAE2D7 /* vad_gmm.c */,
@@ -1374,11 +1365,9 @@
 				96804C551B8677AF00FA9998 /* EvaKit_voice_high.aif in Resources */,
 				96804C561B8677AF00FA9998 /* EvaKit_voice_low.aif in Resources */,
 				96D9C8571B546D5C00276ADA /* EvaKit_Trash.svg in Resources */,
-				94F42D501C96D16500BAE2D7 /* testnoise.raw in Resources */,
 				96D9C8591B54702300276ADA /* EvaKit_Undo.svg in Resources */,
 				9653D4231B5C6F7800FC37AF /* EvaKit_DownArrow.svg in Resources */,
 				96612BEE1BCE8FF100EC6AC8 /* EvaKit_voice_verylow.aif in Resources */,
-				94F42D511C96D16500BAE2D7 /* testnoise.vad in Resources */,
 				9679ABCB1B4E8BC500F475DE /* EVVoiceChatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1598,7 +1587,6 @@
 				96804C5A1B86797400FA9998 /* EVApplicationSound.m in Sources */,
 				96804C2F1B85E1E500FA9998 /* EVFlowElement.m in Sources */,
 				94F42D441C96D16500BAE2D7 /* min_max_operations.c in Sources */,
-				94F42D4F1C96D16500BAE2D7 /* test.c in Sources */,
 				967948331B84917B00198130 /* EVResponse.m in Sources */,
 				9679ABC51B4E82B600F475DE /* EVChatToolbarContentView.m in Sources */,
 				968BBA5D1B94FC3A001EF0C9 /* EVSearchResultsHandler.m in Sources */,
