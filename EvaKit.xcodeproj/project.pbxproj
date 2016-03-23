@@ -1804,7 +1804,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB15E134511A80D665F0A798 /* Pods-EvaKit.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1818,6 +1818,10 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 					"WEBRTC_POSIX=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad",
 				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1827,7 +1831,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -1835,7 +1839,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E90AFED714CAE7F8312160AA /* Pods-EvaKit.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1850,6 +1854,10 @@
 					"COCOAPODS=1",
 					"WEBRTC_POSIX=1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad",
+				);
 				INFOPLIST_FILE = EvaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1857,7 +1865,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evature.EvaKitSap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/EvaKit/ThirdParty/webrtc-vad";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
