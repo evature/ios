@@ -16,11 +16,11 @@
 #define WEBRTC_SPL_SPL_INL_H_
 
 #ifdef WEBRTC_ARCH_ARM_V7
-#include "webrtc/common_audio/signal_processing/include/spl_inl_armv7.h"
+#include "../../../../webrtc/common_audio/signal_processing/include/spl_inl_armv7.h"
 #else
 
 #if defined(MIPS32_LE)
-#include "webrtc/common_audio/signal_processing/include/spl_inl_mips.h"
+#include "../../../../webrtc/common_audio/signal_processing/include/spl_inl_mips.h"
 #endif
 
 #if !defined(MIPS_DSP_R1_LE)
