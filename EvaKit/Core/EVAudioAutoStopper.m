@@ -5,7 +5,7 @@
 //
 
 #import "EVAudioAutoStopper.h"
-#import "../../ThirdParty/webrtc-vad/webrtc/common_audio/vad/include/webrtc_vad.h"
+#import "../ThirdParty/webrtc-vad/webrtc/common_audio/vad/include/webrtc_vad.h"
 #import "EVLogger.h"
 
 
