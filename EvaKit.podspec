@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EvaKit"
-  s.version      = "2.0.24"
+  s.version      = "2.0.25"
   s.summary      = "Evature voice search API for iOS"
 
   # This description is used to generate tags and improve search results.
@@ -83,7 +83,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "EvaKit/*.{h,m}", "EvaKit/Core/**/*.{h,m}", "EvaKit/GUI/**/*.{h,m}", "EvaKit/ThirdParty/*.{h,m}", "EvaKit/ThirdParty/webrtc-vad/*.{h,m}"
+  s.source_files  = "EvaKit/*.{h,m}", "EvaKit/Core/**/*.{h,m}", "EvaKit/GUI/**/*.{h,m}", "EvaKit/ThirdParty/*.{h,m,c}", "EvaKit/ThirdParty/**/*.{h,c,m}"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
