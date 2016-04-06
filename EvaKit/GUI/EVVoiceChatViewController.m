@@ -276,6 +276,10 @@ void reloadData(id collectionView, SEL selector) {
         return;
     }
     [self stopSpeaking];
+    [self startRecordingWithoutStoppingSpeechWithAutoStop:autoStop];
+}
+
+- (void)startRecordingWithoutStoppingSpeechWithAutoStop:(BOOL)autoStop {
     if (self.speechSynthesizer.speaking) {
         EV_LOG_DEBUG(@"Delaying recording to when speaking is done");
         _startRecordAfterSpeech = autoStop;
@@ -455,7 +459,7 @@ void reloadData(id collectionView, SEL selector) {
     context.invalidateFlowLayoutMessagesCache = YES;
     [self.collectionView.collectionViewLayout invalidateLayoutWithContext:context];
     if (self.startRecordingOnShow) {
-        [self messagesInputToolbar:((EVChatToolbarView*)self.inputToolbar) didPressCenterBarButton:nil];
+        [self startRecordingWithoutStoppingSpeechWithAutoStop:true];
     }
 }
 

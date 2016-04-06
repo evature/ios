@@ -400,6 +400,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
             _micButtonState = EVMicButtonStateShowingVoice;
         }
     }];
+    [self moveCenterButtonBack];
     [self.micButtonLayer hideMic];
     _micButtonState = EVMicButtonStateHidingMic;
     [CATransaction commit];

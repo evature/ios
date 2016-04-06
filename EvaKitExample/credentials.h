@@ -14,7 +14,8 @@
 #define API_KEY        nil
 #define SITE_CODE      nil
 
-// scope should be bit OR of the EVSearchContextType enums - whatever your App supports
-#define SCOPE       EVSearchContextTypeCRM
+// SCOPE is whatever your App supports,  eg. EVSearchContextTypeFlight, EVSearchContextTypeHotel, etc...
+// if your app supports multiple scopes you can pass bit OR of the EVSearchContextType enums -  eg.   (EVSearchContextTypeFlight | EVSearchContextTypeHotel)
+#define SCOPE       EVSearchContextTypeFlight
 
 #endif /* credentials_h */
