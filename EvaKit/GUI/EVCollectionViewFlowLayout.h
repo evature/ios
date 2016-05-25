@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Evature. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessagesViewController.h>
+#import <JSQMessages/JSQMessagesViewController.h>
 
 @interface EVCollectionViewFlowLayout : JSQMessagesCollectionViewFlowLayout
 

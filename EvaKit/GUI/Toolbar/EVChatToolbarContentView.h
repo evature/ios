@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <JSQMessagesViewController/JSQMessages.h>
+#import <JSQMessages/JSQMessages.h>
 
 @class EVChatToolbarContentView;
 
