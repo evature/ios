@@ -2,6 +2,7 @@
 
 
 ![Version](https://img.shields.io/badge/Version-2.0-blue.svg?style=flat) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/evature/ios/blob/master/license.md)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -44,14 +45,35 @@ The beautiful user interface conforms to the latest design guidelines and is ful
 The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
 ## Step 1: Include the SDK in your Xcode project
-1. Add EvaKit to your Podfile. If you don't need to deploy on iOS 7 then add `use_frameworks!` too.  
+
+1. Option 1 - Using CocoaPods
+
+  Add EvaKit to your Podfile.
+
   ``` podfile
     source 'https://github.com/CocoaPods/Specs.git'
     source 'https://github.com/evature/Eva-Pods.git'
     pod 'EvaKit', '~>2.0'
   ```
+  If you don't need to deploy on iOS 7 then add `use_frameworks!` too.  
 
-2. Import the EvaKit header in your App Delegate   
+  Then run `pod install` from the shell.
+
+2. Option 2 - Using Carthage
+
+   Add `github "evature/ios" ~> 2.0` to you Carfile and run `carthage update` from the shell. Then add the resulting frameworks from Carthage/Build to your project.
+
+3. Option 3 - Use the compiled binaries.
+
+    a. Download EvaKit.framework and the dependencies frameworks from the files attached to the latest release in https://github.com/evature/ios/releases.
+
+    b. Unzip the files and drag & drop the *.framework files into your project.
+
+    c. Add the framework files to the "Embedded Binaries" in your project settings (under the General tab) - eg. ![Read more words!](Docs/project_settings_img.png)
+
+
+
+Import the EvaKit header in your App Delegate   
   ``` objc
   #import <EvaKit/EvaKit.h>
   ```
@@ -102,14 +124,14 @@ You will need credentials from Evature - register for a free account [here](http
   Chat View parameters can be provided with a `controller.` prefix. Chat Toolbar parameters with a `toolbar.` prefix. The complete list of configurable parameters is detailed in `EVVoiceChatViewController.h` and in `EVChatToolbarContentView.h`
 
 Repeat this for every applicable user interface destnation in your application.
-  
+
 ## Step 4: Implement one or more Delegates
   At this point Eva can interact with the end users using voice. The end user can say "Hi" and Eva will respond using both text-to-speech and a chat overlay. If information is required from the end user, Eva will ask questions.
-  When action is needed from the application (e.g. showing a boarding pass) a Delegate function will be called. 
+  When action is needed from the application (e.g. showing a boarding pass) a Delegate function will be called.
   You can implement the Delegate functions in current View Controller or in the Application Delegate. You can also provide your own object for this. If you want to use your own object, set it to the `chatControllerDelegate` property of the Microphone Chat Button or provide a `controller.delegate` value in the Settings Dictionary.  
   The complete list of Delegate callbacks can be found in the `Core/SearchModels/SearchDelegates` folder.
   Eva will infer the capabilities of the application by the Delegates that are, or are not implemented. For example if you do not implement the Car Search Delegate and the end user will request a "Car rental", Eva will reply that car rentals are not supported by this application.
-  
+
 ## More details
 
   The  Eva VoiceKit is also available for Android: [Android GitHub Repository](https://github.com/evature/android)

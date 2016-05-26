@@ -7,7 +7,7 @@
 //
 
 #import "EVAudioConvertionOperation.h"
-#import <FLAC/stream_encoder.h>
+#import <libFlac/libFlac.h>
 #import "NSError+EVA.h"
 #import "EVLogger.h"
 #include <CoreFoundation/CFByteOrder.h>

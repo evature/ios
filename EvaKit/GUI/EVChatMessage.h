@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Evature. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessages.h>
+#import <JSQMessages/JSQMessages.h>
 #import "EVSearchModel.h"
 #import "EVStyledString.h"
 
