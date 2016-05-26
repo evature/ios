@@ -46,7 +46,7 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
 ## Step 1: Include the SDK in your Xcode project
 
-1. Option 1 - Using CocoaPods
+1. *Option 1* - Using CocoaPods
 
   Add EvaKit to your Podfile.
 
@@ -59,11 +59,11 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
   Then run `pod install` from the shell.
 
-2. Option 2 - Using Carthage
+2. *Option 2* - Using Carthage
 
-   Add `github "evature/ios" ~> 2.0` to you Carfile and run `carthage update` from the shell. Then add the resulting frameworks from Carthage/Build to your project.
+   Add `github "evature/ios" ~> 2.0` to you Carfile and run `carthage update` from the shell. Then add the resulting frameworks from Carthage/Build to your project, as described in [Carthage docs](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
 
-3. Option 3 - Use the compiled binaries.
+3. *Option 3* - Use the compiled binaries.
 
     a. Download EvaKit.framework and the dependencies frameworks from the files attached to the latest release in https://github.com/evature/ios/releases.
 
@@ -72,8 +72,10 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
     c. Add the framework files to the "Embedded Binaries" in your project settings (under the General tab) - eg. ![Read more words!](Docs/project_settings_img.png)
 
 
+----
+Verify that your project is setup correctly:
 
-Import the EvaKit header in your App Delegate   
+Import the EvaKit header in your App Delegate and check that it compiles without an error.
   ``` objc
   #import <EvaKit/EvaKit.h>
   ```
