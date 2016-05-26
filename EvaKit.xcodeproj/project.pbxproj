@@ -60,7 +60,6 @@
 		94F42D401C96D16500BAE2D7 /* energy.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0B1C96D16500BAE2D7 /* energy.c */; };
 		94F42D411C96D16500BAE2D7 /* get_hanning_window.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0C1C96D16500BAE2D7 /* get_hanning_window.c */; };
 		94F42D421C96D16500BAE2D7 /* get_scaling_square.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0D1C96D16500BAE2D7 /* get_scaling_square.c */; };
-		94F42D431C96D16500BAE2D7 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0E1C96D16500BAE2D7 /* Makefile */; };
 		94F42D441C96D16500BAE2D7 /* min_max_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D0F1C96D16500BAE2D7 /* min_max_operations.c */; };
 		94F42D451C96D16500BAE2D7 /* real_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D101C96D16500BAE2D7 /* real_fft.c */; };
 		94F42D461C96D16500BAE2D7 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 94F42D111C96D16500BAE2D7 /* resample.c */; };
@@ -1411,7 +1410,6 @@
 				94F42D531C96D16500BAE2D7 /* vad_filterbank.c in Sources */,
 				960C05DC1B52CC9C0079AB6D /* EVSVGButtonWithCircleBackgroundLayer.m in Sources */,
 				9696BCF91B7375C8000E2104 /* EVLocationManager.m in Sources */,
-				94F42D431C96D16500BAE2D7 /* Makefile in Sources */,
 				94F42D541C96D16500BAE2D7 /* vad_gmm.c in Sources */,
 				966298041BBAC3E1005AC730 /* UIView+SizeCalculations.m in Sources */,
 				94F42D461C96D16500BAE2D7 /* resample.c in Sources */,
