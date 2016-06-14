@@ -132,6 +132,10 @@
     EVVoiceChatButton* button = [[EVApplication sharedApplication] addButtonInController:self];
     button.chatToolbarCenterButtonBackgroundShadowRadius = 3.0f;
     button.chatToolbarCenterButtonBackgroundShadowOffset = CGSizeMake(1.0, 1.0);
+    
+    button.chatControllerStartRecordingOnShow = YES;
+    button.chatControllerStartRecordingOnQuestion = YES;
+    
     //CGSize test = button.chatToolbarCenterButtonBackgroundShadowOffset;
     [button ev_pinToBottomCenteredWithOffset:90.0f];
 }
