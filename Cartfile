@@ -1,3 +1,3 @@
 github "iftahh/flac-ios" ~> 0.131
-github "couchdeveloper/RXPromise"
-github "hemantasapkota/JSQMessagesViewController"
+github "iftahh/RXPromise"
+github "iftahh/JSQMessagesViewController"

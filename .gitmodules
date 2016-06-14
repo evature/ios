@@ -3,7 +3,7 @@
 	url = https://github.com/iftahh/flac-ios.git
 [submodule "Carthage/Checkouts/JSQMessagesViewController"]
 	path = Carthage/Checkouts/JSQMessagesViewController
-	url = https://github.com/hemantasapkota/JSQMessagesViewController.git
+	url = https://github.com/iftahh/JSQMessagesViewController.git
 [submodule "Carthage/Checkouts/RXPromise"]
 	path = Carthage/Checkouts/RXPromise
-	url = https://github.com/couchdeveloper/RXPromise.git
+	url = https://github.com/iftahh/RXPromise.git
