@@ -65,9 +65,9 @@ The SDK is open source. Fork us [on Github](https://github.com/evature/ios)!
 
 3. *Option 3* - Use the compiled binaries.
 
-    a. Download EvaKit.framework and the dependencies frameworks from the files attached to the latest release in https://github.com/evature/ios/releases.
+    a. Download the dependencies.zip from the files attached to the latest release in https://github.com/evature/ios/releases.
 
-    b. Unzip the files and drag & drop the *.framework files into your project.
+    b. Unzip the file and drag & drop the *.framework folders into your project.
 
     c. Add the framework files to the "Embedded Binaries" in your project settings (under the General tab) - eg. ![Read more words!](Docs/project_settings_img.png)
 
