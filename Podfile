@@ -7,13 +7,13 @@ use_frameworks!
 
 target 'EvaKit' do
     pod 'JSQMessagesViewController', '~>7.0'
-    pod 'libFLAC', '~>1.3.0'
+    pod 'libFLAC', '1.3.1'
     pod 'RXPromise', '~>0.13.0'
 end
 
 target 'EvaKitExample' do
     pod 'JSQMessagesViewController', '~>7.0'
-    pod 'libFLAC', '~>1.3.0'
+    pod 'libFLAC', '1.3.1'
     pod 'RXPromise', '~>0.13.0'
 end
 
