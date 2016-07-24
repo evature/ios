@@ -118,7 +118,7 @@ Pod::Spec.new do |s|
   
   # ――― Dependencies ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   
-  s.dependency 'libFLAC', "~>1.3.0"
+  s.dependency 'libFLAC', "1.3.1"
   s.dependency 'JSQMessagesViewController', "~>7.2.0"
   s.dependency 'RXPromise', "~>0.13.0"
 
