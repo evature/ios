@@ -271,12 +271,11 @@
     return button;
 }
 
-- (void)showChatViewController:(UIResponder*)sender {
-    [self showChatViewController:sender withViewSettings:@{}];
+- (EVVoiceChatViewController*)showChatViewController:(UIResponder*)sender {
+    return [self showChatViewController:sender withViewSettings:@{}];
 }
 
-- (void)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings {
-    self.isControllerShown = YES;
+- (EVVoiceChatViewController*)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings {
     UIViewController *ctrl = nil;
     id delegate = nil;
     if ([sender isKindOfClass:[UIViewController class]]) {
@@ -305,6 +304,13 @@
     if (delegate == nil) {
         EV_LOG_ERROR(@"Delegate not found in responder chain. Check protocols on delegate");
     }
+
+    return [self showChatViewController:ctrl withDelegate:delegate withViewSettings:viewSettings];
+}
+
+
+- (EVVoiceChatViewController*)showChatViewController:(UIViewController*)ctrl withDelegate:(id<EVSearchDelegate>)delegate withViewSettings:(NSDictionary*)viewSettings {
+    self.isControllerShown = YES;
     EVVoiceChatViewController* viewCtrl = [[[self.chatViewControllerClass alloc] init] autorelease];
     viewCtrl.evApplication = self;
     self.delegate = viewCtrl;
@@ -316,6 +322,7 @@
             [self.locationManager startLocationService];
         }
     }];
+    return viewCtrl;
 }
 
 - (void)hideChatViewController:(UIResponder*)sender {
@@ -588,6 +595,7 @@
     NSURL* url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [self apiQuery:url];
 }
+
 
 #pragma mark === Managers Delegates Methods ===
 

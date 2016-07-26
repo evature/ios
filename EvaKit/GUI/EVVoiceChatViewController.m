@@ -360,18 +360,26 @@ void reloadData(id collectionView, SEL selector) {
 }
 
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
+    EV_LOG_DEBUG(@"Trash pressed!");
+    [self resetSession];
+}
+
+- (void)resetSession {
+    self.isNewSession = YES;
+    if (!self.evApplication) {
+        return;
+    }
+    self.evApplication.currentSessionID = EV_NEW_SESSION_ID;
+    [self.evApplication.sessionMessages removeAllObjects];
     if (!self.evApplication.isControllerShown) {
         return;
     }
-    EV_LOG_DEBUG(@"Trash pressed!");
-    self.isNewSession = YES;
     [self stopSpeaking];
-    self.evApplication.currentSessionID = EV_NEW_SESSION_ID;
-    [self.evApplication.sessionMessages removeAllObjects];
     [self setHelloMessage];
     [self.collectionView reloadData];
-    //[self.evApplication queryText:@"" withNewSession:self.isNewSession];
+
 }
+
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     return [self.evApplication.sessionMessages objectAtIndex:indexPath.item];

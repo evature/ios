@@ -37,6 +37,7 @@
 @property (nonatomic, assign) EVApplication* evApplication;
 
 - (IBAction)hideChatView:(id)sender;
+- (void) resetSession;
 
 - (void)updateViewFromSettings:(NSDictionary*)settings;
 

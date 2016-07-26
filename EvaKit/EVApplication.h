@@ -13,6 +13,7 @@
 #import "EVSearchScope.h"
 #import "EVSearchContext.h"
 #import "EVApplicationSound.h"
+#import "EVVoiceChatViewController.h"
 
 
 #define EV_NEW_SESSION_ID @"1"
@@ -105,8 +106,9 @@ typedef NS_ENUM(char, EVApplicationStateSound) {
 - (EVVoiceChatButton*)addButtonInView:(UIView*)view inController:(UIViewController *)viewController;
 
 // Sender can be View Controller or View //
-- (void)showChatViewController:(UIResponder*)sender;
-- (void)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings;
+- (EVVoiceChatViewController*)showChatViewController:(UIResponder*)sender;
+- (EVVoiceChatViewController*)showChatViewController:(UIResponder*)sender withViewSettings:(NSDictionary*)viewSettings;
+- (EVVoiceChatViewController*)showChatViewController:(UIViewController*)ctrl withDelegate:(id<EVSearchDelegate>)delegate withViewSettings:(NSDictionary*)viewSettings;
 - (void)hideChatViewController:(UIResponder*)sender;
 
 // Sounds APIs //
