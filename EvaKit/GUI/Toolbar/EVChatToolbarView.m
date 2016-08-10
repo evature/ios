@@ -18,7 +18,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    NSLog(@"Scale: %lf", [UIScreen mainScreen].scale);
+//    NSLog(@"Scale: %lf", [UIScreen mainScreen].scale);
     self.preferredDefaultHeight = [self recalculateSizeForDeviceFrom1xSize:BAR_HEIGHT_X1];
     [(EVChatToolbarContentView*)self.contentView setTouchDelegate:self];
 }

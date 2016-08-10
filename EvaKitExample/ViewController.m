@@ -28,10 +28,10 @@
     return [EVCallbackResult resultWithNone];
 }
 
-- (EVStyledString*)helloMessage {
-    return [EVStyledString styledStringWithString:@"This is a demo app, hello there!"];
-    //return nil;
-}
+//- (EVStyledString*)helloMessage {
+//    return [EVStyledString styledStringWithString:@"This is a demo app, hello there!"];
+//    //return nil;
+//}
 
 - (EVCallbackResult*)phoneCall:(EVCRMPageType)page withId:(NSString*)objId withPhoneType:(EVCRMPhoneType)phoneType {
     NSLog(@"Calling %@  type %d", objId, phoneType);
@@ -126,6 +126,32 @@
     return [EVCallbackResult resultWithNone];
 }
 
+
+- (EVCallbackResult*)handleCruiseSearchWhichComplete:(BOOL)isComplete
+                                                from:(EVLocation*)from
+                                                  to:(EVLocation*)to
+                                            fromDate:(NSDate*)fromDate
+                                              toDate:(NSDate*)toDate
+                                         minDuration:(NSInteger)minDuration
+                                         maxDuration:(NSInteger)maxDuration
+                                          attributes:(EVCruiseAttributes*)attributes
+                                              sortBy:(EVRequestAttributesSort)sortBy
+                                           sortOrder:(EVRequestAttributesSortOrder)sortOrder {
+    NSLog(@"Handled cruise search! Complete: %@", isComplete ? @"YES" : @"NO");
+    return [EVCallbackResult resultWithNone];
+}
+- (IBAction)clickedMicrophone:(id)button {
+    NSDictionary *chatProperties = @{
+                                     @"controller.startRecordingOnQuestion" : @true,
+                                     @"controller.startRecordingOnShow" : @true,
+                                     @"toolbar.centerButtonBackgroundShadowOffset" : [NSValue valueWithCGSize:CGSizeMake(1.0, 1.0)],
+                                     @"toolbar.centerButtonBackgroundShadowRadius" : @3.0f,
+                                     @"resetSession": @true
+                                     };
+    [[EVApplication sharedApplication] showChatViewController:self withDelegate:self withViewSettings:chatProperties];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -138,6 +164,10 @@
     
     //CGSize test = button.chatToolbarCenterButtonBackgroundShadowOffset;
     [button ev_pinToBottomCenteredWithOffset:90.0f];
+    
+    [button addTarget:self action:@selector(clickedMicrophone:) forControlEvents:UIControlEventTouchUpInside];
+
+
 }
 
 - (void)didReceiveMemoryWarning {

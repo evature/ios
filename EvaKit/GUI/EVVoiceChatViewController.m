@@ -224,6 +224,9 @@ void reloadData(id collectionView, SEL selector) {
         if ([obj isKindOfClass:[NSValue class]] && strcmp([(NSValue*)obj objCType], @encode(void*)) == 0) {
             obj = [obj nonretainedObjectValue];
         }
+        if ([path isEqualToString:@"resetSession"]) {
+            continue;
+        }
         [self setValue:obj forKeyPath:path];
     }
     self.oldContext = self.evApplication.context;
@@ -362,6 +365,13 @@ void reloadData(id collectionView, SEL selector) {
 - (void)messagesInputToolbar:(JSQMessagesInputToolbar *)toolbar didPressRightBarButton:(UIButton *)sender {
     EV_LOG_DEBUG(@"Trash pressed!");
     [self resetSession];
+    [self stopSpeaking];
+    [self setHelloMessage];
+    [self.collectionView reloadData];
+    
+    if (self.startRecordingOnShow) {
+        [self startRecordingWithoutStoppingSpeechWithAutoStop:true];
+    }
 }
 
 - (void)resetSession {
@@ -374,8 +384,6 @@ void reloadData(id collectionView, SEL selector) {
     if (!self.evApplication.isControllerShown) {
         return;
     }
-    [self stopSpeaking];
-    [self setHelloMessage];
     [self.collectionView reloadData];
 
 }
@@ -582,11 +590,15 @@ void reloadData(id collectionView, SEL selector) {
 
 - (void)speakText:(NSString *)text {
     if (self.speakEnabled && !isRecording) {
-        AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:text];
+        NSError *error = nil;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@" cruises" options:NSRegularExpressionCaseInsensitive error:&error];
+        NSString *modifiedString = [regex stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, [text length]) withTemplate:@" Croozs"];
+
+        AVSpeechUtterance* utterance = [AVSpeechUtterance speechUtteranceWithString:modifiedString];
         if (!_isIOS9) {
             utterance.rate = EV_SPEECH_RATE;
         }
-        EV_LOG_DEBUG(@"Speaking: %@", text);
+        EV_LOG_DEBUG(@"Speaking: %@", modifiedString);
         [self.speechSynthesizer speakUtterance:utterance];
         
         // sometimes the speechSynthesizer doesn't speak!

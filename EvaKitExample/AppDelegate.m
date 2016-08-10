@@ -19,10 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [EVLogger logger].logLevel = EVLoggerLogLevelDebug;
     
     [[EVApplication sharedApplication] setAPIKey:API_KEY andSiteCode:SITE_CODE];
     [[EVApplication sharedApplication] setScope:[EVSearchScope scopeWithContextTypes:SCOPE]];
 //    [[EVApplication sharedApplication] setCurrentPage:EVCRMPageTypeAccounts andSubPage:@"abcde" andFilter:EVCRMFilterTypeNone];
+    [[EVApplication sharedApplication] setConnectionTimeout:5.0];
+    
     return YES;
 }
 

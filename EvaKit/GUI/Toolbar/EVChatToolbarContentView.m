@@ -11,6 +11,7 @@
 #import "EVSVGButtonWithCircleBackgroundLayer.h"
 #import "EVResizableShapeLayer.h"
 #import "EVSpringAnimation.h"
+#import "EVLogger.h"
 
 #define BUTTON_MARGIN 8.0f
 //#define BUTTON_TOP_BOTTOM_MARGIN 8.0f
@@ -246,6 +247,7 @@ typedef NS_ENUM(uint8_t, EVMicButtonState) {
 
 
 - (void)moveCenterButtonBack {
+    EV_LOG_DEBUG(@"Moving center button back");
     CGRect frame = [self.micButtonLayer frame];
     if (CGRectIntersectsRect(frame, self.leftButtonLayer.frame)) {
         CGFloat intersect = (frame.origin.x - self.leftButtonLayer.frame.origin.x) / frame.size.width;

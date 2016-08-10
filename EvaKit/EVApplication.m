@@ -311,6 +311,11 @@
 
 - (EVVoiceChatViewController*)showChatViewController:(UIViewController*)ctrl withDelegate:(id<EVSearchDelegate>)delegate withViewSettings:(NSDictionary*)viewSettings {
     self.isControllerShown = YES;
+    if ([(NSNumber*)[viewSettings objectForKey:@"resetSession"] boolValue]) {
+        self.currentSessionID = EV_NEW_SESSION_ID;
+        [self.sessionMessages removeAllObjects];
+    }
+
     EVVoiceChatViewController* viewCtrl = [[[self.chatViewControllerClass alloc] init] autorelease];
     viewCtrl.evApplication = self;
     self.delegate = viewCtrl;
